@@ -1,3 +1,16 @@
 {
-    "cSpell.enabled": false
+    "cSpell.caseSensitive": true,
+    "cSpell.checkOnlyEnabledFileTypes": true,
+    "cSpell.useGitignore": true,
+    "cSpell.languageSettings": [
+        { "languageId": "*", "locale": "en-GB", "dictionaries": ["wordsEnGb"] },
+        { "languageId": "*", "dictionaries": ["companies", "softwareTerms", "misc"] }
+    ],
+    "cSpell.words": [
+        "CMSIS",
+        "Gomboc",
+        "licence",
+        "Matej",
+        "microcontrollers"
+    ]
 }
