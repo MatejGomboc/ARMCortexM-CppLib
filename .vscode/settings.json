@@ -8,11 +8,15 @@
     ],
     "cSpell.words": [
         "CMSIS",
+        "cortexm0plus",
         "Gomboc",
         "licence",
         "licences",
         "Matej",
-        "microcontrollers"
+        "microcontrollers",
+        "nvic",
+        "special_regs",
+        "systick"
     ],
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
