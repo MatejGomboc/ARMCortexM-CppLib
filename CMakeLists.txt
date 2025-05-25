@@ -17,11 +17,11 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 )
 
 target_sources(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}"/utils.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/exceptions.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/mpu.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/nvic.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/scb.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/special_regs.hpp
-    "${CMAKE_CURRENT_SOURCE_DIR}"/cortexm0plus/systick.hpp
+    "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
 )
