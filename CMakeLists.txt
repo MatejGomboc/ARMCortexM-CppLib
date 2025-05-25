@@ -1,29 +1,27 @@
 cmake_minimum_required(VERSION 3.16...3.31.6)
 
-project(ARMCortexM-CppLib
+project(ARMCortexM
+    LANGUAGES CXX
     VERSION 1.0.0
     DESCRIPTION "CMSIS-like C++ library for ARM Cortex-M microcontrollers"
-    LANGUAGES CXX
+    HOMEPAGE_URL "https://github.com/MatejGomboc/ARMCortexM-CppLib"
 )
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
+
 target_include_directories(${PROJECT_NAME} INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES
-    utils.hpp
-    cortexm0plus/exceptions.hpp
-    cortexm0plus/mpu.hpp
-    cortexm0plus/nvic.hpp
-    cortexm0plus/scb.hpp
-    cortexm0plus/special_regs.hpp
-    cortexm0plus/systick.hpp
+target_sources(${PROJECT_NAME} INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp
 )
