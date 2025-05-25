@@ -6,27 +6,16 @@
         "editorconfig.editorconfig",
         "felipecaputo.git-project-manager",
         "github.vscode-github-actions",
-        "johnstoncode.svn-scm",
-        "marus25.cortex-debug",
-        "mcu-debug.debug-tracker-vscode",
-        "mcu-debug.memory-view",
-        "mcu-debug.peripheral-viewer",
-        "mcu-debug.rtos-views",
-        "mechatroner.rainbow-csv",
         "ms-vscode.cpptools-extension-pack",
         "ms-vscode.cpptools-themes",
-        "ms-vscode.hexeditor",
         "ms-vscode.notepadplusplus-keybindings",
         "ms-vscode.cmake-tools",
-        "nixon.env-cmd-file-syntax",
         "redhat.vscode-yaml",
         "streetsidesoftware.code-spell-checker",
         "streetsidesoftware.code-spell-checker-british-english",
         "streetsidesoftware.code-spell-checker-medical-terms",
         "streetsidesoftware.code-spell-checker-scientific-terms",
         "streetsidesoftware.code-spell-checker-win32",
-        "trond-snekvik.gnu-mapfiles",
-        "xaver.clang-format",
-        "zixuanwang.linkerscript"
+        "xaver.clang-format"
     ]
 }
