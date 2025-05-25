@@ -1,0 +1,34 @@
+@PACKAGE_INIT@
+
+# ARMCortexM-CppLib Package Configuration File
+# This file allows users to find and use ARMCortexM-CppLib with find_package()
+
+include(CMakeFindDependencyMacro)
+
+# Check that the required C++ standard is supported
+if(CMAKE_CXX_STANDARD AND CMAKE_CXX_STANDARD LESS 17)
+    message(FATAL_ERROR "ARMCortexM-CppLib requires C++17 or later")
+endif()
+
+# Set the minimum C++ standard if not already set
+if(NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
+# Include the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/ARMCortexM-CppLibTargets.cmake")
+
+# Verify that the targets are available
+check_required_components(ARMCortexM-CppLib)
+
+# Set up some helpful variables for users
+set(ARMCortexM-CppLib_VERSION @PROJECT_VERSION@)
+set(ARMCortexM-CppLib_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(ARMCortexM-CppLib_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(ARMCortexM-CppLib_VERSION_PATCH @PROJECT_VERSION_PATCH@)
+
+# Display found message
+if(NOT ARMCortexM-CppLib_FIND_QUIETLY)
+    message(STATUS "Found ARMCortexM-CppLib version ${ARMCortexM-CppLib_VERSION}")
+endif()
