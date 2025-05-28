@@ -117,7 +117,7 @@ namespace CortexM0::Scb {
         }
     };
 
-    //! is a read-only register and indicates some aspects of the behavior of the processor
+    //! is a read-only register and indicates some aspects of the behaviour of the processor
     union Ccr {
         struct Bits {
             uint32_t reserved0: 3;
@@ -179,7 +179,7 @@ namespace CortexM0::Scb {
         volatile uint32_t vtor; //!< vector table offset register
         volatile uint32_t aircr; //!< enables system reset
         volatile uint32_t scr; //!< controls features of entry to and exit from low power state
-        volatile uint32_t ccr; //!< is a read-only register and indicates some aspects of the behavior of the processor
+        volatile uint32_t ccr; //!< is a read-only register and indicates some aspects of the behaviour of the processor
         volatile uint32_t reserved1;
         volatile uint32_t shpr2; //!< sets the priority level of the exception handlers that have configurable priority (SVCall)
         volatile uint32_t shpr3; //!< sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
