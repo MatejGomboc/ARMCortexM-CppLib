@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>
 
-    Licensed under the Apache Licence, Version 2.0 (the "Licence");
+    Licensed under the Apache License, Version 2.0 (the "Licence");
     you may not use this file except in compliance with the Licence.
     You may obtain a copy of the Licence at
 
@@ -78,7 +78,7 @@ namespace CortexM0Plus::Scb {
             uint32_t vect_clr_active: 1; //!< reserved, write '0' to this bit
             uint32_t sys_reset_req: 1; //!< requests a system reset
             uint32_t reserved1: 12;
-            uint32_t endianess: 1; //!< reads as 0 - little endian
+            uint32_t endianness: 1; //!< reads as 0 - little endian
             uint32_t vect_key: 16; //!< on writes, VECT_KEY to this field, otherwise the write is ignored
         } bits;
 
@@ -117,7 +117,7 @@ namespace CortexM0Plus::Scb {
         }
     };
 
-    //! is a read-only register and indicates some aspects of the behavior of the processor
+    //! is a read-only register and indicates some aspects of the behaviour of the processor
     union Ccr {
         struct Bits {
             uint32_t reserved0: 3;
@@ -179,7 +179,7 @@ namespace CortexM0Plus::Scb {
         volatile uint32_t vtor; //!< vector table offset register
         volatile uint32_t aircr; //!< enables system reset
         volatile uint32_t scr; //!< controls features of entry to and exit from low power state
-        volatile uint32_t ccr; //!< is a read-only register and indicates some aspects of the behavior of the processor
+        volatile uint32_t ccr; //!< is a read-only register and indicates some aspects of the behaviour of the processor
         volatile uint32_t reserved1;
         volatile uint32_t shpr2; //!< sets the priority level of the exception handlers that have configurable priority (SVCall)
         volatile uint32_t shpr3; //!< sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
