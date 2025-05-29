@@ -31,4 +31,11 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
+    # Cortex-M3 headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/nvic.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/scb.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
 )
