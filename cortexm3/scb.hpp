@@ -87,7 +87,7 @@ namespace CortexM3::Scb {
         }
     };
 
-    //! application interrupt and reset control register
+    //! enables system reset
     union Aircr {
         static constexpr uint16_t VECT_KEY = 0x05FA; //!< magic number used for enabling writing to Aircr
 
@@ -119,7 +119,11 @@ namespace CortexM3::Scb {
             uint32_t sleep_on_isr_exit: 1; //!< enter sleep or deep sleep on return from ISR
             uint32_t use_deep_sleep: 1; //!< use deep sleep as low power mode
             uint32_t reserved1: 1;
-            uint32_t send_event_on_except_pending: 1; //!< send event on pending
+
+            //! 0: only enabled exceptions or events can wakeup the processor, disabled exceptions are excluded
+            //! 1: enabled events and all exceptions, including disabled exceptions, can wakeup the processor
+            uint32_t send_event_on_except_pending: 1;
+
             uint32_t reserved2: 27;
         } bits;
 
@@ -133,7 +137,7 @@ namespace CortexM3::Scb {
         }
     };
 
-    //! configuration and control register
+    //! is a read-only register and indicates some aspects of the behaviour of the processor
     union Ccr {
         struct Bits {
             uint32_t non_base_thread_enable: 1; //!< configures how the processor enters Thread mode
@@ -157,7 +161,7 @@ namespace CortexM3::Scb {
         }
     };
 
-    //! system handlers priority register 1
+    //! sets the priority level of the exception handlers that have configurable priority (memory management, bus fault, usage fault)
     union Shpr1 {
         struct Bits {
             uint32_t mem_manage_priority: 8; //!< priority of memory management fault exception
@@ -176,7 +180,7 @@ namespace CortexM3::Scb {
         }
     };
 
-    //! system handlers priority register 2
+    //! sets the priority level of the exception handlers that have configurable priority (SVCall)
     union Shpr2 {
         struct Bits {
             uint32_t reserved0: 24;
@@ -193,7 +197,7 @@ namespace CortexM3::Scb {
         }
     };
 
-    //! system handlers priority register 3
+    //! sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
     union Shpr3 {
         struct Bits {
             uint32_t reserved0: 16;

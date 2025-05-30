@@ -19,24 +19,41 @@
 #include <cstdint>
 
 namespace CortexM3 {
-    enum class Exception : uint8_t {
-        RESET = 1, //!< reset
-        NMI = 2, //!< non-maskable interrupt
-        HARD_FAULT = 3, //!< hard fault
-        MEM_MANAGE = 4, //!< memory management fault
-        BUS_FAULT = 5, //!< bus fault
-        USAGE_FAULT = 6, //!< usage fault
-        RESERVED_7 = 7, //!< reserved
-        RESERVED_8 = 8, //!< reserved
-        RESERVED_9 = 9, //!< reserved
-        RESERVED_10 = 10, //!< reserved
-        SV_CALL = 11, //!< supervisor call
-        DEBUG_MONITOR = 12, //!< debug monitor
-        RESERVED_13 = 13, //!< reserved
-        PEND_SV = 14, //!< pendable request for system service
-        SYS_TICK = 15, //!< system tick timer
-        IRQ_0 = 16, //!< external interrupt 0
-        IRQ_1 = 17, //!< external interrupt 1
-        // ... up to IRQ_239 (255 total)
+    static constexpr uint8_t NUM_OF_IRQS = 240;
+
+    enum class ExceptionNumber : uint8_t {
+        THREAD_MODE = 0,
+        RESET = 1,
+        NMI = 2,
+        HARD_FAULT = 3,
+        MEM_MNG_FAULT = 4,
+        BUS_FAULT = 5,
+        USAGE_FAULT = 6,
+        SV_CALL = 11,
+        DEBUG_MONITOR = 12,
+        PEND_SV = 14,
+        SYS_TICK = 15,
+        FIRST_IRQ = 16,
+        LAST_IRQ = FIRST_IRQ + NUM_OF_IRQS - 1
     };
+
+    static inline void enableExceptions()
+    {
+        asm volatile("cpsie i" : : : "memory");
+        asm volatile("dsb" : : : "memory");
+        asm volatile("isb" : : : "memory");
+    }
+
+    static inline void disableExceptions()
+    {
+        asm volatile("cpsid i" : : : "memory");
+        asm volatile("dsb" : : : "memory");
+        asm volatile("isb" : : : "memory");
+    }
+
+    static inline bool isIrqNumber(ExceptionNumber exception)
+    {
+        return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
+            static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+    }
 }

@@ -7,9 +7,15 @@
         { "languageId": "*", "dictionaries": ["companies", "softwareTerms", "misc"] }
     ],
     "cSpell.words": [
+        "bufferable",
         "CMSIS",
         "cortexm0plus",
         "Gomboc",
+        "iabr",
+        "icer",
+        "icpr",
+        "iser",
+        "ispr",
         "licence",
         "licences",
         "Matej",

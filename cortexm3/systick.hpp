@@ -21,21 +21,27 @@
 namespace CortexM3::SysTick {
     static uint32_t* const BASE_ADDR = reinterpret_cast<uint32_t*>(0xE000E010);
 
-    union Control {
+    union CtrlStatus {
+        //! timer clock source
+        enum class ClkSource : bool {
+            EXTERNAL = false, //!< external reference clock
+            CPU = true //!< processor clock
+        };
+
         struct Bits {
-            uint32_t enabled: 1; //!< enables the counter
-            uint32_t exception_enabled: 1; //!< enables exception request
-            uint32_t use_processor_clock: 1; //!< clock source (0 = external, 1 = processor clock)
-            uint32_t reserved: 13;
-            uint32_t count_flag: 1; //!< true if timer counted to 0 since last time this was read
-            uint32_t reserved2: 15;
+            uint32_t timer_enabled: 1; //!< enables counting
+            uint32_t exception_enabled: 1; //!< enables SysTick exception
+            uint32_t clk_source: 1; //!< selects the timer clock source
+            uint32_t reserved0: 13;
+            uint32_t reached_zero: 1; //!< '1' if counter reached 0 since last time this bit was read
+            uint32_t reserved1: 15;
         } bits;
 
         uint32_t value = 0;
 
-        Control() = default;
+        CtrlStatus() = default;
 
-        Control(uint32_t new_value)
+        CtrlStatus(uint32_t new_value)
         {
             value = new_value;
         }
@@ -43,10 +49,14 @@ namespace CortexM3::SysTick {
 
     union Calibration {
         struct Bits {
-            uint32_t ten_ms: 24; //!< calibration value
+            /*!
+                Indicates the calibration value when the SysTick counter runs on HCLK max/8 as external clock.
+                When HCLK is programmed at the maximum frequency, the SysTick period is 1ms.
+            */
+            uint32_t calib_val: 24;
             uint32_t reserved: 6;
-            uint32_t skew: 1; //!< true if calibration value is inexact
-            uint32_t no_ref: 1; //!< true if reference clock is not provided
+            uint32_t skew: 1; //!< always '1'
+            uint32_t noref: 1; //!< always '0', indicates that a separate reference clock is provided (HCLK/8)
         } bits;
 
         uint32_t value = 0;
@@ -59,11 +69,12 @@ namespace CortexM3::SysTick {
         }
     };
 
-    struct Registers {
-        volatile uint32_t control; //!< SysTick control and status
-        volatile uint32_t reload; //!< reload value
-        volatile uint32_t current; //!< current value
-        volatile uint32_t calibration; //!< calibration value
+    struct Registers
+    {
+        volatile uint32_t ctrl_status; //!< control and status register
+        volatile uint32_t reload_val; //!< reload value at the restart of counting
+        volatile uint32_t current_val; //!< current counter value
+        volatile uint32_t calibration; //!< controls timer calibration
     };
 
     static inline volatile Registers* registers()
@@ -73,27 +84,27 @@ namespace CortexM3::SysTick {
 
     static inline void setReloadValue(uint32_t reload_value)
     {
-        registers()->reload = reload_value & 0x00FFFFFF;
+        registers()->reload_val = reload_value & 0x00FFFFFF;
     }
 
     static inline uint32_t getReloadValue()
     {
-        return registers()->reload & 0x00FFFFFF;
+        return registers()->reload_val & 0x00FFFFFF;
     }
 
     static inline uint32_t getCurrentValue()
     {
-        return registers()->current & 0x00FFFFFF;
+        return registers()->current_val & 0x00FFFFFF;
     }
 
     static inline void clearCurrentValue()
     {
-        registers()->current = 0;
+        registers()->current_val = 0;
     }
 
     static inline bool hasCountedToZero()
     {
-        Control ctrl { registers()->control };
-        return ctrl.bits.count_flag;
+        CtrlStatus ctrl { registers()->ctrl_status };
+        return ctrl.bits.reached_zero;
     }
 }
