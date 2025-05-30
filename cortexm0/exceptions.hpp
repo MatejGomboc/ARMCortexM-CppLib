@@ -19,22 +19,37 @@
 #include <cstdint>
 
 namespace CortexM0 {
-    //! Cortex-M0 exceptions
-    enum class Exception : uint8_t {
-        RESET = 1, //!< reset exception
-        NMI = 2, //!< non-maskable interrupt
-        HARD_FAULT = 3, //!< hard fault exception
-        RESERVED_4 = 4,
-        RESERVED_5 = 5,
-        RESERVED_6 = 6,
-        RESERVED_7 = 7,
-        RESERVED_8 = 8,
-        RESERVED_9 = 9,
-        RESERVED_10 = 10,
-        SV_CALL = 11, //!< supervisor call exception
-        RESERVED_12 = 12,
-        RESERVED_13 = 13,
-        PEND_SV = 14, //!< pendable service exception
-        SYS_TICK = 15 //!< system tick exception
+    static constexpr uint8_t NUM_OF_IRQS = 32;
+
+    enum class ExceptionNumber : uint8_t {
+        THREAD_MODE = 0,
+        RESET = 1,
+        NMI = 2,
+        HARD_FAULT = 3,
+        SV_CALL = 11,
+        PEND_SV = 14,
+        SYS_TICK = 15,
+        FIRST_IRQ = 16,
+        LAST_IRQ = FIRST_IRQ + NUM_OF_IRQS - 1
     };
+
+    static inline void enableExceptions()
+    {
+        asm volatile("cpsie i" : : : "memory");
+        asm volatile("dsb" : : : "memory");
+        asm volatile("isb" : : : "memory");
+    }
+
+    static inline void disableExceptions()
+    {
+        asm volatile("cpsid i" : : : "memory");
+        asm volatile("dsb" : : : "memory");
+        asm volatile("isb" : : : "memory");
+    }
+
+    static inline bool isIrqNumber(ExceptionNumber exception)
+    {
+        return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
+            static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+    }
 }
