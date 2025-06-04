@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>
 
-    Licensed under the Apache License, Version 2.0 (the "Licence");
+    Licensed under the Apache Licence, Version 2.0 (the "Licence");
     you may not use this file except in compliance with the Licence.
     You may obtain a copy of the Licence at
 
@@ -80,31 +80,5 @@ namespace CortexM3::SysTick {
     static inline volatile Registers* registers()
     {
         return reinterpret_cast<volatile Registers*>(BASE_ADDR);
-    }
-
-    static inline void setReloadValue(uint32_t reload_value)
-    {
-        registers()->reload_val = reload_value & 0x00FFFFFF;
-    }
-
-    static inline uint32_t getReloadValue()
-    {
-        return registers()->reload_val & 0x00FFFFFF;
-    }
-
-    static inline uint32_t getCurrentValue()
-    {
-        return registers()->current_val & 0x00FFFFFF;
-    }
-
-    static inline void clearCurrentValue()
-    {
-        registers()->current_val = 0;
-    }
-
-    static inline bool hasCountedToZero()
-    {
-        CtrlStatus ctrl { registers()->ctrl_status };
-        return ctrl.bits.reached_zero;
     }
 }
