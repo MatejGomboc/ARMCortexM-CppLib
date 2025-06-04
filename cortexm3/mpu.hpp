@@ -72,7 +72,7 @@ namespace CortexM3::Mpu {
             NORMAL_WT_NO_WA = 0b010, //!< normal, write-through, no write allocate
             NORMAL_WB_NO_WA = 0b011, //!< normal, write-back, no write allocate
             NORMAL_NON_CACHEABLE = 0b100, //!< normal, non-cacheable
-            RESERVED1 = 0b101, //!< reserved
+            RESERVED = 0b101, //!< reserved
             NORMAL_WB_WA = 0b110, //!< normal, write-back, write allocate
             DEVICE_NON_SHAREABLE = 0b111 //!< device, non-shareable
         };
