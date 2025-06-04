@@ -26,7 +26,7 @@ namespace CortexM0Plus {
         RESET = 1,
         NMI = 2,
         HARD_FAULT = 3,
-        SVC_CALL = 11,
+        SV_CALL = 11,
         PEND_SV = 14,
         SYS_TICK = 15,
         FIRST_IRQ = 16,
