@@ -3,15 +3,15 @@
 
     Licensed under the Apache License, Version 2.0 (the "Licence");
     you may not use this file except in compliance with the Licence.
-    You may obtain a copy of the Licence at
+    You may obtain a copy of the License at
 
         http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
-    distributed under the Licence is distributed on an "AS IS" BASIS,
+    distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the Licence for the specific language governing permissions and
-    limitations under the Licence.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 #pragma once
@@ -80,31 +80,5 @@ namespace CortexM3::SysTick {
     static inline volatile Registers* registers()
     {
         return reinterpret_cast<volatile Registers*>(BASE_ADDR);
-    }
-
-    static inline void setReloadValue(uint32_t reload_value)
-    {
-        registers()->reload_val = reload_value & 0x00FFFFFF;
-    }
-
-    static inline uint32_t getReloadValue()
-    {
-        return registers()->reload_val & 0x00FFFFFF;
-    }
-
-    static inline uint32_t getCurrentValue()
-    {
-        return registers()->current_val & 0x00FFFFFF;
-    }
-
-    static inline void clearCurrentValue()
-    {
-        registers()->current_val = 0;
-    }
-
-    static inline bool hasCountedToZero()
-    {
-        CtrlStatus ctrl { registers()->ctrl_status };
-        return ctrl.bits.reached_zero;
     }
 }
