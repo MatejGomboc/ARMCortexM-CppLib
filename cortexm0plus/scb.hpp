@@ -69,6 +69,23 @@ namespace CortexM0Plus::Scb {
         }
     };
 
+    //! vector table offset register
+    union Vtor {
+        struct Bits {
+            uint32_t reserved: 7; //!< reserved, must be zero
+            uint32_t table_offset: 25; //!< vector table offset from memory address 0x00000000
+        } bits;
+
+        uint32_t value = 0;
+
+        Vtor() = default;
+
+        Vtor(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
     //! enables system reset
     union Aircr {
         static constexpr uint16_t VECT_KEY = 0x05FA; //!< magic number used for enabling writing to Aircr
