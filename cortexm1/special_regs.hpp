@@ -18,172 +18,189 @@
 
 #include <cstdint>
 
-namespace CortexM1::SpecialRegs {
-    enum class Register : uint8_t {
-        APSR = 0,
-        IPSR = 5,
-        EPSR = 6,
-        IEPSR = 7,
-        MSP = 8,
-        PSP = 9,
-        PRIMASK = 16,
-        CONTROL = 20
+namespace CortexM1 {
+    //! the following values are saved into LR on exception entry
+    enum class LrExceptionReturn : uint32_t {
+        HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
+        THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
+        THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
     };
 
-    enum class ControlSpSel : uint8_t {
-        MSP = 0,
-        PSP = 1
+    //! program status register
+    union Psr {
+        struct Bits {
+            uint32_t current_exception: 6; //!< number of the currently executing exception
+            uint32_t reserved0: 18;
+            uint32_t thumb_mode: 1; //!< CPU running in Thumb mode
+            uint32_t reserved1: 3;
+            uint32_t v: 1; //!< overflow flag
+            uint32_t c: 1; //!< carry or borrow flag
+            uint32_t z: 1; //!< zero flag
+            uint32_t n: 1; //!< negative or less than flag
+        } bits;
+
+        uint32_t value = 0;
+
+        Psr() = default;
+
+        Psr(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
-    static inline uint32_t getApsr()
+    //! priority mask register
+    union Primask {
+        struct Bits {
+            uint32_t exceptions_disabled: 1; //!< all exceptions except NMI and hard fault are disabled
+            uint32_t reserved: 31;
+        } bits;
+
+        uint32_t value = 0;
+
+        Primask() = default;
+
+        Primask(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    //! control register
+    union Control {
+        //! thread mode privilege level
+        enum class ThreadModePrivilegeLevel : bool {
+            PRIVILEGED = false, //!< privileged thread mode
+            UNPRIVILEGED = true //!< unprivileged thread mode
+        };
+
+        //! currently used stack pointer
+        enum class StackPointer : bool {
+            MSP = false, //!< main stack pointer
+            PSP = true //!< process stack pointer
+        };
+
+        struct Bits {
+            uint32_t thread_mode_privilege_level: 1; //!< thread mode privilege level
+            uint32_t active_stack_pointer: 1; //!< currently used stack pointer
+            uint32_t reserved1: 30;
+        } bits;
+
+        uint32_t value = 0;
+
+        Control() = default;
+
+        Control(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    static inline uint32_t getLr()
     {
-        uint32_t result;
-        asm volatile("MRS %0, APSR" : "=r" (result));
-        return result;
+        uint32_t value;
+        asm volatile("MOV %0, LR" : "=r" (value) : : "cc");
+        return value;
     }
 
-    static inline void setApsr(uint32_t value)
+    static inline Psr getApsrReg()
     {
-        asm volatile("MSR APSR_nzcvq, %0" : : "r" (value) : "memory");
+        Psr psr;
+        asm volatile("MRS %0, APSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline uint32_t getIpsr()
+    static inline Psr getIpsrReg()
     {
-        uint32_t result;
-        asm volatile("MRS %0, IPSR" : "=r" (result));
-        return result;
+        Psr psr;
+        asm volatile("MRS %0, IPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline uint32_t getEpsr()
+    static inline Psr getEpsrReg()
     {
-        uint32_t result;
-        asm volatile("MRS %0, EPSR" : "=r" (result));
-        return result;
+        Psr psr;
+        asm volatile("MRS %0, EPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline uint32_t getMsp()
+    static inline Psr getIepsrReg()
     {
-        uint32_t result;
-        asm volatile("MRS %0, MSP" : "=r" (result));
-        return result;
+        Psr psr;
+        asm volatile("MRS %0, IEPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline void setMsp(uint32_t value)
+    static inline Psr getIapsrReg()
     {
-        asm volatile("MSR MSP, %0" : : "r" (value) : "memory");
+        Psr psr;
+        asm volatile("MRS %0, IAPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline uint32_t getPsp()
+    static inline Psr getEapsrReg()
     {
-        uint32_t result;
-        asm volatile("MRS %0, PSP" : "=r" (result));
-        return result;
+        Psr psr;
+        asm volatile("MRS %0, EAPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline void setPsp(uint32_t value)
+    static inline Psr getPsrReg()
     {
-        asm volatile("MSR PSP, %0" : : "r" (value) : "memory");
+        Psr psr;
+        asm volatile("MRS %0, PSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
-    static inline uint32_t getPrimask()
+    static inline uint32_t getMspReg()
     {
-        uint32_t result;
-        asm volatile("MRS %0, PRIMASK" : "=r" (result));
-        return result;
+        uint32_t value;
+        asm volatile("MRS %0, MSP" : "=r" (value) : : "cc");
+        return value;
     }
 
-    static inline void setPrimask(uint32_t value)
+    static inline void setMspReg(uint32_t value)
     {
-        asm volatile("MSR PRIMASK, %0" : : "r" (value) : "memory");
-    }
-
-    static inline void enableInterrupts()
-    {
-        asm volatile("CPSIE I" : : : "memory");
-    }
-
-    static inline void disableInterrupts()
-    {
-        asm volatile("CPSID I" : : : "memory");
-    }
-
-    static inline uint32_t getControl()
-    {
-        uint32_t result;
-        asm volatile("MRS %0, CONTROL" : "=r" (result));
-        return result;
-    }
-
-    static inline void setControl(uint32_t value)
-    {
-        asm volatile("MSR CONTROL, %0" : : "r" (value) : "memory");
+        asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
         asm volatile("ISB" : : : "memory");
     }
 
-    static inline ControlSpSel getStackPointerSelect()
+    static inline uint32_t getPspReg()
     {
-        return static_cast<ControlSpSel>((getControl() >> 1) & 0x1);
+        uint32_t value;
+        asm volatile("MRS %0, PSP" : "=r" (value) : : "cc");
+        return value;
     }
 
-    static inline void setStackPointerSelect(ControlSpSel sp_sel)
+    static inline void setPspReg(uint32_t value)
     {
-        uint32_t control = getControl();
-        control = (control & ~0x2) | (static_cast<uint32_t>(sp_sel) << 1);
-        setControl(control);
+        asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
+        asm volatile("ISB" : : : "memory");
     }
 
-    static inline uint32_t getRegister(Register reg)
+    static inline Primask getPrimaskReg()
     {
-        uint32_t result;
-        switch (reg) {
-            case Register::APSR:
-                result = getApsr();
-                break;
-            case Register::IPSR:
-                result = getIpsr();
-                break;
-            case Register::EPSR:
-                result = getEpsr();
-                break;
-            case Register::MSP:
-                result = getMsp();
-                break;
-            case Register::PSP:
-                result = getPsp();
-                break;
-            case Register::PRIMASK:
-                result = getPrimask();
-                break;
-            case Register::CONTROL:
-                result = getControl();
-                break;
-            default:
-                result = 0;
-                break;
-        }
-        return result;
+        Primask primask;
+        asm volatile("MRS %0, PRIMASK" : "=r" (primask.value) : : "cc");
+        return primask;
     }
 
-    static inline void setRegister(Register reg, uint32_t value)
+    static inline void setPrimaskReg(Primask primask)
     {
-        switch (reg) {
-            case Register::APSR:
-                setApsr(value);
-                break;
-            case Register::MSP:
-                setMsp(value);
-                break;
-            case Register::PSP:
-                setPsp(value);
-                break;
-            case Register::PRIMASK:
-                setPrimask(value);
-                break;
-            case Register::CONTROL:
-                setControl(value);
-                break;
-            default:
-                break;
-        }
+        asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
+        asm volatile("ISB" : : : "memory");
+    }
+
+    static inline Control getControlReg()
+    {
+        Control control;
+        asm volatile("MRS %0, CONTROL" : "=r" (control.value) : : "cc");
+        return control;
+    }
+
+    static inline void setControlReg(Control control)
+    {
+        asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
+        asm volatile("ISB" : : : "memory");
     }
 }
