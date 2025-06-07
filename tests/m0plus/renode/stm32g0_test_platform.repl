@@ -1,5 +1,5 @@
 // STM32G0 Cortex-M0+ test platform (based on STM32G071)
-// STM32G0 series: Cortex-M0+ up to 64 MHz, no MPU
+// STM32G0 series: Cortex-M0+ up to 64 MHz with MPU
 
 // System bus with STM32G0 memory map
 sysbus:
@@ -21,12 +21,12 @@ ram: Memory.MappedMemory @ sysbus 0x20000000
 systemMemory: Memory.MappedMemory @ sysbus 0x1FFF0000
     size: 0x7000   // 28KB
 
-// CPU - STM32G0 uses Cortex-M0+ without MPU
+// CPU - STM32G0 uses Cortex-M0+ WITH MPU (8 regions)
 cpu: CPU.CortexM @ sysbus
     cpuType: "cortex-m0plus"
     cpuFrequency: 64000000  // 64 MHz max for STM32G0
     nvic: nvic
-    model: "NoMPU"         // STM32G0 doesn't have MPU
+    model: "BaselineMPU"    // STM32G0 has MPU with 8 regions!
     init: """
         # STM32G0 boots from 0x08000000 (aliased to 0x00000000)
         # Stack pointer and reset vector are loaded from vector table
@@ -49,7 +49,7 @@ testComplete: Memory.MappedMemory @ sysbus 0x40001000
 // Note: STM32G0 specifics included in CPU model:
 // - System Control Block (SCB) at 0xE000ED00
 // - SysTick Timer at 0xE000E010 (part of NVIC)
+// - MPU at 0xE000ED90 (8 regions available)
 // - VTOR register (configurable vector table)
-// - No MPU support
 // - 2-bit interrupt priority (4 levels)
 // - Little-endian only

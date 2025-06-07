@@ -24,10 +24,10 @@ The test suite covers all major Cortex-M0+ peripherals and features:
   - Calibration value reading
 
 - **MPU** (Memory Protection Unit)
-  - Region configuration
+  - Region configuration (8 regions)
   - Access permissions
   - Enable/disable control
-  - Note: Gracefully skipped on STM32G0 (no MPU)
+  - Note: Both generic and STM32G0 platforms include MPU
 
 - **Special Registers**
   - PRIMASK (interrupt masking)
@@ -43,13 +43,14 @@ The test framework includes:
    - 256KB Flash at 0x00000000
    - 64KB RAM at 0x20000000
    - Generic configuration
+   - MPU support (optional)
 
 2. **STM32G0 Platform** (`stm32g0_test_platform.repl`)
    - Based on STM32G071 configuration
    - 128KB Flash at 0x08000000
    - 36KB RAM at 0x20000000
    - 64 MHz CPU frequency
-   - No MPU support
+   - **MPU with 8 regions** (Baseline MPU)
    - 2-bit interrupt priority (4 levels)
 
 ## Prerequisites
@@ -106,7 +107,7 @@ renode test_runner_stm32g0.resc
 ```
 
 This runs the same tests but on an STM32G0-specific platform configuration, which:
-- Has no MPU (tests will detect and skip MPU tests)
+- Has MPU with 8 regions (tests will run full MPU suite)
 - Uses 2-bit interrupt priority
 - Runs at 64 MHz
 - Has STM32G0 memory layout
@@ -138,16 +139,28 @@ Final summary shows:
 ## Platform Differences
 
 ### Generic Platform
-- May include MPU (depends on configuration)
+- May or may not include MPU (configurable)
 - Generic memory layout
 - 1 MHz SysTick for simple timing
 
 ### STM32G0 Platform  
-- No MPU (typical for STM32G0)
+- **Has MPU with 8 regions** (Baseline MPU)
 - STM32-specific memory map
 - 64 MHz CPU/SysTick frequency
 - 2-bit interrupt priority (4 levels)
 - Flash at 0x08000000 (aliased to 0x00000000)
+
+## STM32G0 MPU Details
+
+The STM32G0 series includes a Baseline MPU with:
+- 8 configurable regions
+- Minimum region size of 256 bytes
+- Support for overlapping regions
+- Execute Never (XN) attribute
+- Access permissions (privileged/unprivileged)
+- Cacheable/Bufferable/Shareable attributes
+
+All MPU tests will run successfully on STM32G0!
 
 ## Extending the Tests
 
@@ -196,10 +209,9 @@ Renode provides excellent debugging capabilities:
 - Check test_output.txt file after run
 - Try the monitor mode runner for live output
 
-### MPU tests fail on STM32G0
-- This is expected! STM32G0 has no MPU
-- Tests should detect this and skip MPU tests
-- Look for "[INFO] MPU not present" message
+### MPU tests on different platforms
+- Generic platform: MPU presence depends on configuration
+- STM32G0: MPU is present with 8 regions - all tests should pass
 
 ### Tests timeout
 - Increase timeout in test runner scripts
@@ -208,10 +220,9 @@ Renode provides excellent debugging capabilities:
 
 ## Known Limitations
 
-- Some Cortex-M0+ implementations may not include all features (e.g., MPU, VTOR)
-- The test platform uses a generic M0+ configuration
-- STM32G0 platform accurately reflects no MPU limitation
+- The test platform uses simplified peripheral models
 - Timing-dependent tests may behave differently in simulation vs hardware
+- Some advanced MPU features may not be fully modeled in Renode
 
 ## Contributing
 

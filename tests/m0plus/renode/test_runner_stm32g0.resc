@@ -53,9 +53,11 @@ def check_complete():
                         
                         # Note STM32G0 specifics tested
                         print("\nSTM32G0 Configuration:")
-                        print("- No MPU (correctly handled)")
+                        print("- MPU with 8 regions (tested)")
                         print("- 2-bit priority (4 levels)")  
                         print("- 64 MHz capable")
+                        print("- 128KB Flash at 0x08000000")
+                        print("- 36KB RAM")
                         print("="*50)
                         
                         if failed == 0:
@@ -78,7 +80,7 @@ machine CreateExecutionModeController "checker" 100000
 checker Command "python check_complete()"
 
 echo "Starting Cortex-M0+ tests on STM32G0 platform..."
-echo "Configuration: 128KB Flash, 36KB RAM, 64MHz, No MPU"
+echo "Configuration: 128KB Flash, 36KB RAM, 64MHz, MPU with 8 regions"
 echo "Test output: $outputFile"
 echo ""
 
