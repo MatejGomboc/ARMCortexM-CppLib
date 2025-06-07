@@ -1,4 +1,9 @@
-// Generic Cortex-M0+ test platform
+// Generic Cortex-M0+ test platform for Renode
+
+// CPU 
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0plus"
+    nvic: nvic
 
 // Memory regions
 flash: Memory.MappedMemory @ sysbus 0x00000000
@@ -7,29 +12,18 @@ flash: Memory.MappedMemory @ sysbus 0x00000000
 ram: Memory.MappedMemory @ sysbus 0x20000000
     size: 0x10000  // 64KB
 
-// Test output peripheral - using Python peripheral for flexibility
-testOutput: Python.PythonPeripheral @ sysbus 0x40000000
-    size: 0x1000
-    initable: true
-    script: '''
-if request.isWrite:
-    char = chr(request.value & 0xFF)
-    self.machine.GetLogger().Log(LogLevel.Info, char, append=True)
-'''
+// NVIC - Nested Vectored Interrupt Controller
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 1000000  // 1MHz
+    IRQ -> cpu@0
 
-// Test completion signal - simple memory location
+// Test output peripheral - using AnalyzableUART for compatibility
+testOutput: UART.AnalyzableUART @ sysbus 0x40000000
+    size: 0x1000
+
+// Test completion register - simple memory location
 testComplete: Memory.MappedMemory @ sysbus 0x40001000
     size: 0x4
 
-// CPU
-cpu: CPU.CortexM @ sysbus
-    cpuType: "cortex-m0plus"
-    nvic: nvic
-
-// NVIC (Nested Vectored Interrupt Controller)
-nvic: IRQControllers.NVIC @ sysbus 0xE000E000
-    -> cpu@0
-    systickFrequency: 1000000  // 1MHz for testing
-
-// Note: SysTick is integrated in NVIC for Cortex-M
-// MPU is optional and automatically handled by CPU model
+// Optional: System Control Space (SCS) peripherals are part of CPU model
+// This includes SCB, SysTick (in NVIC), MPU (if present), etc.

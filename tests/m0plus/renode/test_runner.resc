@@ -2,87 +2,112 @@
 
 # Create machine
 mach create "cortex-m0plus-test"
+
+# Load platform
 machine LoadPlatformDescription @cortex_m0plus_test_platform.repl
 
+# Configure test output to save to file
+testOutput CreateFileBackend @test_output.txt true
+
 # Load the test binary
+$bin?=@../build/m0plus_tests
+
 macro reset
 """
-    sysbus LoadELF @../build/m0plus_tests
+    sysbus LoadELF $bin
 """
+
 runMacro $reset
 
-# Set up logging  
-logLevel 3 cpu.nvic
-logLevel 3 testOutput
+# Enable logging
+logLevel -1 testOutput  
 
-# Create output file for test results
-logFile @test_output.txt true
-
-# Python script to monitor test completion and extract results
+# Python monitor for test completion
 python """
-import struct
+global test_complete_addr
+global test_result_addr
+
+test_complete_addr = 0x40001000
+test_result_addr = None
+
+def find_test_results():
+    """Search RAM for test result structure"""
+    global test_result_addr
+    
+    # Search first 8KB of RAM for test results
+    for addr in range(0x20000000, 0x20002000, 4):
+        try:
+            total = sysbus.ReadDoubleWord(addr)
+            passed = sysbus.ReadDoubleWord(addr + 4)
+            failed = sysbus.ReadDoubleWord(addr + 8)
+            
+            # Validate reasonable test counts
+            if 0 < total < 1000 and total == (passed + failed):
+                test_result_addr = addr
+                return True
+        except:
+            pass
+    return False
 
 def check_test_complete():
-    complete_flag = sysbus.ReadDoubleWord(0x40001000)
-    if complete_flag == 0xDEADBEEF:
-        # Find g_test_result location from ELF symbols
-        # For now, we'll search for the test result pattern in RAM
-        
-        # Search for test results in first part of RAM
-        found = False
-        for addr in range(0x20000000, 0x20002000, 4):
-            try:
-                # Look for reasonable test counts (less than 1000 tests)
-                total = sysbus.ReadDoubleWord(addr)
-                passed = sysbus.ReadDoubleWord(addr + 4)
-                failed = sysbus.ReadDoubleWord(addr + 8)
+    """Check if tests completed and print results"""
+    global test_complete_addr
+    global test_result_addr
+    
+    try:
+        flag = sysbus.ReadDoubleWord(test_complete_addr)
+        if flag == 0xDEADBEEF:
+            print("\n" + "="*40)
+            print("TEST EXECUTION COMPLETE")
+            print("="*40)
+            
+            if find_test_results():
+                total = sysbus.ReadDoubleWord(test_result_addr)
+                passed = sysbus.ReadDoubleWord(test_result_addr + 4)
+                failed = sysbus.ReadDoubleWord(test_result_addr + 8)
                 
-                if total > 0 and total < 1000 and total == (passed + failed):
-                    print(f"\n=== Test Results ===")
-                    print(f"Total tests: {total}")
-                    print(f"Passed: {passed}")
-                    print(f"Failed: {failed}")
-                    
-                    # Read current test name
-                    test_name = ""
-                    for i in range(64):
-                        byte = sysbus.ReadByte(addr + 12 + i)
-                        if byte == 0:
-                            break
-                        test_name += chr(byte)
-                    print(f"Final state: {test_name}")
-                    
-                    if failed == 0:
-                        print("\nAll tests PASSED! ✓")
-                        monitor.Parse("quit")
-                    else:
-                        print("\nSome tests FAILED! ✗")
-                        monitor.Parse("quit 1")
-                    found = True
-                    break
-            except:
-                pass
+                # Read test state string
+                state = ""
+                for i in range(64):
+                    b = sysbus.ReadByte(test_result_addr + 12 + i)
+                    if b == 0:
+                        break
+                    state += chr(b)
                 
-        if not found:
-            print("Could not find test results in memory")
-            monitor.Parse("quit 2")
+                print(f"Total Tests: {total}")
+                print(f"Passed:      {passed}")
+                print(f"Failed:      {failed}")
+                print(f"Final State: {state}")
+                print("="*40)
+                
+                if failed == 0:
+                    print("RESULT: ALL TESTS PASSED ✓")
+                    self.machine.Pause()
+                    Exit()
+                else:
+                    print("RESULT: SOME TESTS FAILED ✗")
+                    self.machine.Pause()
+                    Exit(1)
+            else:
+                print("ERROR: Could not find test results in memory")
+                self.machine.Pause()
+                Exit(2)
+    except Exception as e:
+        # Ignore exceptions during normal execution
+        pass
 """
 
-# Hook to check for test completion
-machine PyExecFunction("import functools")
-machine PyExecFunction("completion_hook = functools.partial(check_test_complete)")
-sysbus.testComplete SetHookAfterWrite "python completion_hook()"
+# Set up periodic check for completion
+machine CreateExecutionModeController "test_monitor" 10000  # Check every 10ms
+test_monitor Command "python check_test_complete()"
 
-# Optional: Set timeout for tests
-machine SetAdvanceImmediately true
+# Watchdog timer - stop after 10 seconds
+machine CreateExecutionModeController "watchdog" 10000000000  # 10 seconds
+watchdog Command "echo 'TEST TIMEOUT!'; quit 3"
 
-# Start execution
-echo "Starting Cortex-M0+ tests..."
+echo "Starting Cortex-M0+ library tests..."
+echo "Test output will be saved to: test_output.txt"
+echo ""
+
+# Start the simulation
 start
-
-# Run for maximum 10 seconds (simulation time)
-emulation RunFor "10"
-
-# If we get here, tests timed out
-echo "Tests timed out!"
-quit 3
