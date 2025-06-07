@@ -260,7 +260,7 @@ namespace CortexM3::Scb {
             uint32_t mlsperr: 1; //!< memory management fault during lazy FP state preservation
             uint32_t reserved1: 1;
             uint32_t mmarvalid: 1; //!< memory management fault address register valid
-            
+
             // Bus Fault Status Register (BFSR)
             uint32_t ibuserr: 1; //!< instruction bus error
             uint32_t preciserr: 1; //!< precise data bus error
@@ -270,7 +270,7 @@ namespace CortexM3::Scb {
             uint32_t lsperr: 1; //!< bus fault during lazy FP state preservation
             uint32_t reserved2: 1;
             uint32_t bfarvalid: 1; //!< bus fault address register valid
-            
+
             // Usage Fault Status Register (UFSR)
             uint32_t undefinstr: 1; //!< undefined instruction
             uint32_t invstate: 1; //!< invalid state
@@ -317,7 +317,7 @@ namespace CortexM3::Scb {
         return reinterpret_cast<volatile Registers*>(BASE_ADDR);
     }
 
-    __attribute__((noreturn)) static inline void systemReset()
+    [[noreturn]] static inline void systemReset()
     {
         asm volatile("DSB" : : : "memory");
 
@@ -336,12 +336,12 @@ namespace CortexM3::Scb {
     static inline void setPriorityGrouping(uint32_t pri_group)
     {
         Aircr aircr { registers()->aircr };
-        
+
         aircr.bits.pri_group = pri_group & 0x7;
         aircr.bits.vect_key = Aircr::VECT_KEY;
-        
+
         registers()->aircr = aircr.value;
-        
+
         asm volatile("DSB" : : : "memory");
         asm volatile("ISB" : : : "memory");
     }

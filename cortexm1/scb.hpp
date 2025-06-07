@@ -190,7 +190,7 @@ namespace CortexM1::Scb {
         return reinterpret_cast<volatile Registers*>(BASE_ADDR);
     }
 
-    __attribute__((noreturn)) static inline void systemReset()
+    [[noreturn]] static inline void systemReset()
     {
         asm volatile("DSB" : : : "memory");
 
