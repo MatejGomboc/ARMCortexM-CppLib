@@ -52,45 +52,72 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=../../arm_none_eabi_gcc.cmake
 make
 ```
 
+Or use the helper script:
+```bash
+cd tests/m0plus
+./build_and_run.sh
+```
+
 ## Running Tests
 
-### Manual Execution with Renode
-
+### Option 1: Standard Test Runner
 ```bash
 cd tests/m0plus/renode
 renode test_runner.resc
 ```
+This runner captures output to `test_output.txt` and provides detailed results.
 
-### Automated Testing with Robot Framework
+### Option 2: Monitor Mode (Live Output)
+```bash
+cd tests/m0plus/renode
+renode test_runner_monitor.resc
+```
+This runner shows test output in real-time on the console.
 
+### Option 3: Simple Mode (Debugging)
+```bash
+cd tests/m0plus/renode
+renode test_runner_simple.resc
+```
+Minimal setup for debugging specific issues.
+
+### Option 4: Automated Testing with Robot Framework
 ```bash
 cd tests/m0plus
 robot robot/cortex_m0plus_tests.robot
 ```
 
-## Test Structure
+## Test Output
 
-- **main.cpp**: Test harness and result tracking
-- **test_*.cpp**: Individual test files for each component
-- **startup.S**: Minimal startup code and vector table
-- **linker_script.ld**: Memory layout definition
-- **renode/**: Renode platform and scripts
-  - **cortex_m0plus_test_platform.repl**: Hardware platform description
-  - **test_runner.resc**: Main test execution script
-- **robot/**: Robot Framework test cases
+The test application outputs results through memory-mapped I/O:
+- **Test output**: Written to address `0x40000000` (character by character)
+- **Completion signal**: Write `0xDEADBEEF` to address `0x40001000`
+- **Test results**: Stored in RAM (searched by Renode)
 
-## Understanding Test Results
-
-The test application outputs results through a mock UART peripheral at address 0x40000000. Each test reports:
-
+Each test reports:
 - `[PASS]` - Test passed
 - `[FAIL]` - Test failed (with expected vs actual values)
 - `[INFO]` - Informational messages
 
-At the end, a summary shows:
+Final summary shows:
 - Total number of tests
 - Number of passed tests  
 - Number of failed tests
+
+## Platform Description
+
+The `cortex_m0plus_test_platform.repl` file defines:
+- 256KB Flash at `0x00000000`
+- 64KB RAM at `0x20000000`
+- Test output region at `0x40000000`
+- Completion flag at `0x40001000`
+- Cortex-M0+ CPU with NVIC
+
+The CPU model includes:
+- System Control Block (SCB) at `0xE000ED00`
+- SysTick timer (part of NVIC) at `0xE000E010`
+- MPU at `0xE000ED90` (if present)
+- Special registers (PRIMASK, CONTROL, etc.)
 
 ## Extending the Tests
 
@@ -121,6 +148,28 @@ Renode provides excellent debugging capabilities:
    ```
    (monitor) sysbus LogPeripheralAccess nvic
    ```
+
+4. **Memory Inspection**:
+   ```
+   (monitor) sysbus ReadDoubleWord 0x20000000
+   ```
+
+## Troubleshooting
+
+### Tests don't run
+- Ensure the ELF file exists: `build/m0plus_tests`
+- Check that addresses in linker script match platform description
+- Verify Renode version compatibility
+
+### No output visible
+- Use `logLevel 3` commands in Renode
+- Check test_output.txt file after run
+- Try the monitor mode runner for live output
+
+### Tests timeout
+- Increase timeout in test runner scripts
+- Check for infinite loops in test code
+- Verify SysTick configuration if using delays
 
 ## Known Limitations
 
