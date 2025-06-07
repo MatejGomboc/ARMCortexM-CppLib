@@ -9,8 +9,8 @@ struct TestResult {
     char current_test[64];
 };
 
-// Global test result accessible by Renode
-volatile TestResult g_test_result __attribute__((section(".bss")));
+// Global test result accessible by Renode - placed at start of RAM
+volatile TestResult g_test_result __attribute__((section(".data")));
 
 // Test functions declarations
 extern void test_nvic();
@@ -19,20 +19,12 @@ extern void test_systick();
 extern void test_mpu();
 extern void test_special_regs();
 
-// Simple UART-like output for Renode (memory-mapped)
-// Using AnalyzableUART compatible register layout
-struct TestUART {
-    volatile uint32_t data;     // 0x00 - Data register
-    volatile uint32_t status;   // 0x04 - Status register (unused)
-    volatile uint32_t control;  // 0x08 - Control register (unused)
-};
-
-volatile TestUART* const TEST_OUTPUT = reinterpret_cast<volatile TestUART*>(0x40000000);
+// Simple output for Renode - just write characters to memory location
+volatile uint32_t* const TEST_OUTPUT = reinterpret_cast<volatile uint32_t*>(0x40000000);
 
 void test_print(const char* str) {
     while (*str) {
-        // Write to data register
-        TEST_OUTPUT->data = static_cast<uint32_t>(*str);
+        *TEST_OUTPUT = static_cast<uint32_t>(*str);
         str++;
     }
 }
@@ -139,4 +131,6 @@ extern "C" {
         }
         test_print("\n");
     }
+    
+    void test_print_hex(uint32_t value);  // Forward declaration for C linkage
 }
