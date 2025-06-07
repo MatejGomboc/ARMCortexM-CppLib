@@ -1,0 +1,46 @@
+# Renode script to run Cortex-M0+ tests
+
+# Create machine
+mach create "cortex-m0plus-test"
+machine LoadPlatformDescription @cortex_m0plus_test_platform.repl
+
+# Load the test binary
+macro reset
+"""
+    sysbus LoadELF @../build/m0plus_tests
+"""
+runMacro $reset
+
+# Set up logging
+logLevel 3
+testOutput CreateFileBackend @test_output.txt
+
+# Python script to monitor test completion
+python """
+def check_test_complete():
+    complete_flag = sysbus.ReadDoubleWord(0x40001000)
+    if complete_flag == 0xDEADBEEF:
+        # Read test results from memory
+        test_result_addr = 0x20000000  # Adjust based on actual location
+        total_tests = sysbus.ReadDoubleWord(test_result_addr)
+        passed_tests = sysbus.ReadDoubleWord(test_result_addr + 4)
+        failed_tests = sysbus.ReadDoubleWord(test_result_addr + 8)
+        
+        print(f"\nTest Results:")
+        print(f"Total tests: {total_tests}")
+        print(f"Passed: {passed_tests}")
+        print(f"Failed: {failed_tests}")
+        
+        if failed_tests == 0:
+            print("All tests PASSED!")
+            monitor.Parse("quit")
+        else:
+            print("Some tests FAILED!")
+            monitor.Parse("quit 1")
+"""
+
+# Hook to check for test completion
+machine SetHookAfterPeripheralWrite "sysbus.testComplete" "python check_test_complete()"
+
+# Start execution
+start
