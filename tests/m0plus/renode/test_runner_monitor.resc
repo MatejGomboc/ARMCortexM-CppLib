@@ -1,0 +1,51 @@
+# Renode test runner with output monitoring
+# This version prints test output directly to console
+
+# Create machine
+mach create "cortex-m0plus-test"
+machine LoadPlatformDescription @cortex_m0plus_test_platform.repl
+
+# Load test binary
+sysbus LoadELF @../build/m0plus_tests
+
+# Python monitor for test output and completion
+python """
+output_line = ""
+last_write = 0
+
+def monitor_memory():
+    global output_line, last_write
+    
+    # Check test output
+    current = sysbus.ReadDoubleWord(0x40000000)
+    if current != last_write and current != 0:
+        char = chr(current & 0xFF)
+        if char == '\n':
+            print(output_line)
+            output_line = ""
+        else:
+            output_line += char
+        last_write = current
+    
+    # Check completion
+    if sysbus.ReadDoubleWord(0x40001000) == 0xDEADBEEF:
+        print("\n*** TEST COMPLETED ***")
+        # Find and print results
+        for addr in range(0x20000000, 0x20001000, 4):
+            try:
+                total = sysbus.ReadDoubleWord(addr)
+                passed = sysbus.ReadDoubleWord(addr + 4)
+                failed = sysbus.ReadDoubleWord(addr + 8)
+                if 0 < total < 1000 and total == (passed + failed):
+                    print(f"Total: {total}, Passed: {passed}, Failed: {failed}")
+                    quit(0 if failed == 0 else 1)
+            except:
+                pass
+"""
+
+# Monitor execution
+machine CreateExecutionModeController "monitor" 1000
+monitor Command "python monitor_memory()"
+
+echo "Running Cortex-M0+ tests with live output..."
+start
