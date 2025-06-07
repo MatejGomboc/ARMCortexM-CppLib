@@ -1,0 +1,30 @@
+// Generic Cortex-M0+ test platform
+
+// Memory regions
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000  // 256KB
+
+ram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x10000  // 64KB
+
+// Test output peripheral (simple UART-like)
+testOutput: Mocks.MockUART @ sysbus 0x40000000
+    size: 0x1000
+
+// Test completion signal
+testComplete: Mocks.MockWordPeripheral @ sysbus 0x40001000
+    size: 0x4
+
+// CPU
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0plus"
+    nvic: nvic
+
+// NVIC (Nested Vectored Interrupt Controller)
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 1000000  // 1MHz for testing
+    IRQ -> cpu@0
+
+// Connect test peripherals
+testOutput:
+    -> cpu@32  // Connect to IRQ 0 for testing if needed
