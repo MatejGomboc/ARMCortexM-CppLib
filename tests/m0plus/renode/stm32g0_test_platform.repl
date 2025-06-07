@@ -1,0 +1,55 @@
+// STM32G0 Cortex-M0+ test platform (based on STM32G071)
+// STM32G0 series: Cortex-M0+ up to 64 MHz, no MPU
+
+// System bus with STM32G0 memory map
+sysbus:
+    init:
+        Tag <0x40000000 0x1000> "TEST_OUTPUT"
+        Tag <0x40001000 0x4> "TEST_COMPLETE"
+        Tag <0x1FFF0000 0x10000> "SYSTEM_MEMORY"  // Bootloader ROM
+        Tag <0x1FFF7800 0x200> "OPTION_BYTES"
+
+// Flash memory - 128KB for STM32G071
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x20000  // 128KB
+
+// SRAM - 36KB for STM32G071  
+ram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x9000   // 36KB
+
+// System memory (bootloader ROM)
+systemMemory: Memory.MappedMemory @ sysbus 0x1FFF0000
+    size: 0x7000   // 28KB
+
+// CPU - STM32G0 uses Cortex-M0+ without MPU
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0plus"
+    cpuFrequency: 64000000  // 64 MHz max for STM32G0
+    nvic: nvic
+    model: "NoMPU"         // STM32G0 doesn't have MPU
+    init: """
+        # STM32G0 boots from 0x08000000 (aliased to 0x00000000)
+        # Stack pointer and reset vector are loaded from vector table
+    """
+
+// NVIC - STM32G0 specific configuration
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    -> cpu@0
+    systickFrequency: 64000000  // Same as CPU frequency
+    priorityBits: 2              // STM32G0 has 2 priority bits (4 levels)
+    IRQ: 32                      // 32 external interrupts
+
+// Test peripherals (custom for testing)
+testOutput: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x1000
+
+testComplete: Memory.MappedMemory @ sysbus 0x40001000  
+    size: 0x4
+
+// Note: STM32G0 specifics included in CPU model:
+// - System Control Block (SCB) at 0xE000ED00
+// - SysTick Timer at 0xE000E010 (part of NVIC)
+// - VTOR register (configurable vector table)
+// - No MPU support
+// - 2-bit interrupt priority (4 levels)
+// - Little-endian only

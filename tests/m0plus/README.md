@@ -27,12 +27,30 @@ The test suite covers all major Cortex-M0+ peripherals and features:
   - Region configuration
   - Access permissions
   - Enable/disable control
+  - Note: Gracefully skipped on STM32G0 (no MPU)
 
 - **Special Registers**
   - PRIMASK (interrupt masking)
   - CONTROL register
   - MSP/PSP (stack pointers)
   - APSR/IPSR/xPSR (status registers)
+
+## Platform Support
+
+The test framework includes:
+
+1. **Generic Cortex-M0+ Platform** (`cortex_m0plus_test_platform.repl`)
+   - 256KB Flash at 0x00000000
+   - 64KB RAM at 0x20000000
+   - Generic configuration
+
+2. **STM32G0 Platform** (`stm32g0_test_platform.repl`)
+   - Based on STM32G071 configuration
+   - 128KB Flash at 0x08000000
+   - 36KB RAM at 0x20000000
+   - 64 MHz CPU frequency
+   - No MPU support
+   - 2-bit interrupt priority (4 levels)
 
 ## Prerequisites
 
@@ -60,28 +78,41 @@ cd tests/m0plus
 
 ## Running Tests
 
-### Option 1: Standard Test Runner
+### Generic Cortex-M0+ Platform
+
+#### Option 1: Standard Test Runner
 ```bash
 cd tests/m0plus/renode
 renode test_runner.resc
 ```
-This runner captures output to `test_output.txt` and provides detailed results.
 
-### Option 2: Monitor Mode (Live Output)
+#### Option 2: Monitor Mode (Live Output)
 ```bash
 cd tests/m0plus/renode
 renode test_runner_monitor.resc
 ```
-This runner shows test output in real-time on the console.
 
-### Option 3: Simple Mode (Debugging)
+#### Option 3: Simple Mode (Debugging)
 ```bash
 cd tests/m0plus/renode
 renode test_runner_simple.resc
 ```
-Minimal setup for debugging specific issues.
 
-### Option 4: Automated Testing with Robot Framework
+### STM32G0-Specific Platform
+
+```bash
+cd tests/m0plus/renode
+renode test_runner_stm32g0.resc
+```
+
+This runs the same tests but on an STM32G0-specific platform configuration, which:
+- Has no MPU (tests will detect and skip MPU tests)
+- Uses 2-bit interrupt priority
+- Runs at 64 MHz
+- Has STM32G0 memory layout
+
+### Automated Testing with Robot Framework
+
 ```bash
 cd tests/m0plus
 robot robot/cortex_m0plus_tests.robot
@@ -104,20 +135,19 @@ Final summary shows:
 - Number of passed tests  
 - Number of failed tests
 
-## Platform Description
+## Platform Differences
 
-The `cortex_m0plus_test_platform.repl` file defines:
-- 256KB Flash at `0x00000000`
-- 64KB RAM at `0x20000000`
-- Test output region at `0x40000000`
-- Completion flag at `0x40001000`
-- Cortex-M0+ CPU with NVIC
+### Generic Platform
+- May include MPU (depends on configuration)
+- Generic memory layout
+- 1 MHz SysTick for simple timing
 
-The CPU model includes:
-- System Control Block (SCB) at `0xE000ED00`
-- SysTick timer (part of NVIC) at `0xE000E010`
-- MPU at `0xE000ED90` (if present)
-- Special registers (PRIMASK, CONTROL, etc.)
+### STM32G0 Platform  
+- No MPU (typical for STM32G0)
+- STM32-specific memory map
+- 64 MHz CPU/SysTick frequency
+- 2-bit interrupt priority (4 levels)
+- Flash at 0x08000000 (aliased to 0x00000000)
 
 ## Extending the Tests
 
@@ -159,12 +189,17 @@ Renode provides excellent debugging capabilities:
 ### Tests don't run
 - Ensure the ELF file exists: `build/m0plus_tests`
 - Check that addresses in linker script match platform description
-- Verify Renode version compatibility
+- For STM32G0: verify Flash is at 0x08000000
 
 ### No output visible
 - Use `logLevel 3` commands in Renode
 - Check test_output.txt file after run
 - Try the monitor mode runner for live output
+
+### MPU tests fail on STM32G0
+- This is expected! STM32G0 has no MPU
+- Tests should detect this and skip MPU tests
+- Look for "[INFO] MPU not present" message
 
 ### Tests timeout
 - Increase timeout in test runner scripts
@@ -175,6 +210,7 @@ Renode provides excellent debugging capabilities:
 
 - Some Cortex-M0+ implementations may not include all features (e.g., MPU, VTOR)
 - The test platform uses a generic M0+ configuration
+- STM32G0 platform accurately reflects no MPU limitation
 - Timing-dependent tests may behave differently in simulation vs hardware
 
 ## Contributing
@@ -182,5 +218,6 @@ Renode provides excellent debugging capabilities:
 When adding new tests, please:
 1. Follow the existing code style
 2. Add comprehensive test cases
-3. Update this README if adding new components
-4. Ensure all tests pass before submitting
+3. Test on both generic and STM32G0 platforms
+4. Update this README if adding new components
+5. Ensure all tests pass before submitting

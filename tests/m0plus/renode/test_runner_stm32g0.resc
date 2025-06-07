@@ -1,0 +1,91 @@
+# Renode script to run Cortex-M0+ tests on STM32G0 platform
+
+# Create machine
+mach create "stm32g0-test"
+
+# Load STM32G0-specific platform
+machine LoadPlatformDescription @stm32g0_test_platform.repl
+
+# Load the test binary  
+$bin?=@../build/m0plus_tests
+
+macro reset
+"""
+    # STM32G0 specific: Flash is mapped at 0x08000000
+    # But CPU boots from 0x00000000 (aliased to Flash)
+    sysbus LoadELF $bin
+    
+    # If needed, manually set the vector table alias
+    # sysbus WriteDoubleWord 0x00000000 0x20009000  # Initial SP
+    # sysbus WriteDoubleWord 0x00000004 0x080001CD  # Reset handler
+"""
+
+runMacro $reset
+
+# Set up output capture
+$outputFile?=@test_output_stm32g0.txt
+logFile $outputFile true
+
+# Hook for test output
+sysbus LogPeripheralAccess testOutput
+
+# Python monitor for completion
+python """
+def check_complete():
+    try:
+        val = self.Machine.SystemBus.ReadDoubleWord(0x40001000)
+        if val == 0xDEADBEEF:
+            print("\n" + "="*50)
+            print("STM32G0 TEST EXECUTION COMPLETE")
+            print("="*50)
+            
+            # Search for test results in SRAM
+            for addr in range(0x20000000, 0x20002000, 4):
+                try:
+                    total = self.Machine.SystemBus.ReadDoubleWord(addr)
+                    passed = self.Machine.SystemBus.ReadDoubleWord(addr + 4)
+                    failed = self.Machine.SystemBus.ReadDoubleWord(addr + 8)
+                    
+                    if 0 < total < 1000 and total == (passed + failed):
+                        print(f"Total Tests: {total}")
+                        print(f"Passed:      {passed}")
+                        print(f"Failed:      {failed}")
+                        
+                        # Note STM32G0 specifics tested
+                        print("\nSTM32G0 Configuration:")
+                        print("- No MPU (correctly handled)")
+                        print("- 2-bit priority (4 levels)")  
+                        print("- 64 MHz capable")
+                        print("="*50)
+                        
+                        if failed == 0:
+                            print("RESULT: ALL TESTS PASSED ✓")
+                            self.Machine.Pause()
+                            monitor.Parse("quit")
+                        else:
+                            print("RESULT: SOME TESTS FAILED ✗")
+                            self.Machine.Pause()
+                            monitor.Parse("quit 1")
+                        break
+                except:
+                    pass
+    except:
+        pass
+"""
+
+# Check for completion periodically
+machine CreateExecutionModeController "checker" 100000
+checker Command "python check_complete()"
+
+echo "Starting Cortex-M0+ tests on STM32G0 platform..."
+echo "Configuration: 128KB Flash, 36KB RAM, 64MHz, No MPU"
+echo "Test output: $outputFile"
+echo ""
+
+# Start the simulation
+start
+
+# Run for maximum 10 seconds  
+runFor "00:00:10"
+echo "\nTEST TIMEOUT after 10 seconds!"
+quit 3

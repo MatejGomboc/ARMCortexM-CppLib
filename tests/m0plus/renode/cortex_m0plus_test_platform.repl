@@ -1,4 +1,5 @@
 // Generic Cortex-M0+ test platform for Renode
+// This is a generic platform - see stm32g0_test_platform.repl for STM32G0-specific config
 
 // System bus
 sysbus:
@@ -13,15 +14,16 @@ flash: Memory.MappedMemory @ sysbus 0x00000000
 ram: Memory.MappedMemory @ sysbus 0x20000000
     size: 0x10000  // 64KB
 
-// CPU - Cortex-M0+
+// CPU - Generic Cortex-M0+
 cpu: CPU.CortexM @ sysbus
     cpuType: "cortex-m0plus"
     nvic: nvic
 
 // NVIC - Nested Vectored Interrupt Controller (includes SysTick)
 nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    -> cpu@0
     systickFrequency: 1000000  // 1MHz
-    IRQ -> cpu@0
+    IRQ: 32                    // 32 external interrupts
 
 // Test output peripheral - simple memory for character output
 // Using tagged memory region for simplicity
