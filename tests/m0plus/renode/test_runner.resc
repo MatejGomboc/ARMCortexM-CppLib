@@ -1,0 +1,92 @@
+# Renode script to run Cortex-M0+ tests
+
+# Create machine
+mach create "cortex-m0plus-test"
+
+# Load platform
+machine LoadPlatformDescription @cortex_m0plus_test_platform.repl
+
+# Load the test binary
+$bin?=@../build/m0plus_tests
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+runMacro $reset
+
+# Set up output capture
+$outputFile?=@test_output.txt
+logFile $outputFile true
+
+# Hook for test output - capture writes to testOutput peripheral
+sysbus LogPeripheralAccess testOutput
+
+# Python script to capture output and monitor completion
+python """
+import struct
+
+output_buffer = ""
+test_complete = False
+
+def handle_output_write(cpu, pc, address, value):
+    global output_buffer
+    if address == 0x40000000:  # Data register of our test output
+        char = chr(value & 0xFF)
+        output_buffer += char
+        if char == '\n':
+            self.Log(LogLevel.Info, output_buffer.rstrip())
+            output_buffer = ""
+
+def handle_complete_write(cpu, pc, address, value):
+    global test_complete
+    if address == 0x40001000 and value == 0xDEADBEEF:
+        test_complete = True
+        print("\n" + "="*50)
+        print("TEST EXECUTION COMPLETE")
+        print("="*50)
+        
+        # Try to find and print test results
+        for addr in range(0x20000000, 0x20002000, 4):
+            try:
+                total = self.Machine.SystemBus.ReadDoubleWord(addr)
+                passed = self.Machine.SystemBus.ReadDoubleWord(addr + 4)
+                failed = self.Machine.SystemBus.ReadDoubleWord(addr + 8)
+                
+                if 0 < total < 1000 and total == (passed + failed):
+                    print(f"Total Tests: {total}")
+                    print(f"Passed:      {passed}")
+                    print(f"Failed:      {failed}")
+                    
+                    if failed == 0:
+                        print("\nRESULT: ALL TESTS PASSED ✓")
+                        self.Machine.Pause()
+                        monitor.Parse("quit")
+                    else:
+                        print("\nRESULT: SOME TESTS FAILED ✗")
+                        self.Machine.Pause()
+                        monitor.Parse("quit 1")
+                    break
+            except:
+                pass
+
+# Install hooks
+cpu.AddHook(0x40000000, 4, handle_output_write)
+cpu.AddHook(0x40001000, 4, handle_complete_write)
+"""
+
+# Alternative: Simple logging approach
+logLevel 3 sysbus.testOutput
+
+echo "Starting Cortex-M0+ library tests..."
+echo "Test output is being logged to: $outputFile"
+echo ""
+
+# Start the simulation
+start
+
+# Run for maximum 10 seconds
+runFor "00:00:10"
+echo "\nTEST TIMEOUT after 10 seconds!"
+quit 3
