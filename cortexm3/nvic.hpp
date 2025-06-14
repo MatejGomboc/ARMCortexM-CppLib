@@ -101,16 +101,6 @@ namespace CortexM3::Nvic {
         return Utils::isBitSet(registers()->iabr[reg_idx], bit_idx);
     }
 
-    static inline void setIrqPriority(uint8_t irq_number, uint8_t irq_priority)
-    {
-        registers()->ipr[irq_number] = irq_priority;
-    }
-
-    static inline uint8_t getIrqPriority(uint8_t irq_number)
-    {
-        return registers()->ipr[irq_number];
-    }
-
     static inline void triggerIrq(uint8_t irq_number)
     {
         registers()->stir = irq_number & 0xFF;
