@@ -84,3 +84,4 @@ objdump
 readelf
 -ggdb3
 DDEBUG
+revsh
