@@ -47,13 +47,6 @@ namespace CortexM0 {
         asm volatile("nop");
     }
 
-    //! Yield hint instruction
-    //! Indicates that the current thread is performing a task that can be swapped out
-    static inline void Yield()
-    {
-        asm volatile("yield" : : : "memory");
-    }
-
     //! Breakpoint instruction
     //! Causes the processor to enter Debug state if halting debug is enabled
     //! @param value Immediate value (0-255) that can be used by debugger
