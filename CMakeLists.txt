@@ -9,7 +9,7 @@
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the Licence is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the Licence for the specific language governing permissions and
+# See the License for the specific language governing permissions and
 # limitations under the Licence.
 
 cmake_minimum_required(VERSION 3.12)
@@ -33,7 +33,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
     # Cortex-M0 headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/misc.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/nvic.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/scb.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
