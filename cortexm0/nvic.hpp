@@ -17,6 +17,7 @@
 #pragma once
 
 #include "utils.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace CortexM0::Nvic {
@@ -49,15 +50,15 @@ namespace CortexM0::Nvic {
     static inline void enableIrq(uint8_t irq_number)
     {
         Utils::setBit(registers()->iser, irq_number);
-        asm volatile("DSB" : : : "memory");
-        asm volatile("ISB" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
         Utils::setBit(registers()->icer, irq_number);
-        asm volatile("DSB" : : : "memory");
-        asm volatile("ISB" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
@@ -68,14 +69,14 @@ namespace CortexM0::Nvic {
     static inline void setPendingIrq(uint8_t irq_number)
     {
         Utils::setBit(registers()->ispr, irq_number);
-        asm volatile("DSB" : : : "memory");
-        asm volatile("ISB" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
         Utils::setBit(registers()->icpr, irq_number);
-        asm volatile("DSB" : : : "memory");
-        asm volatile("ISB" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 }

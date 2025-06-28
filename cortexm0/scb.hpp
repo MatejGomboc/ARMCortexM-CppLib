@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace CortexM0::Scb {
@@ -192,7 +193,7 @@ namespace CortexM0::Scb {
 
     [[noreturn]] static inline void systemReset()
     {
-        asm volatile("DSB" : : : "memory");
+        DataSyncBarrier();
 
         Aircr aircr { registers()->aircr };
 
@@ -201,7 +202,7 @@ namespace CortexM0::Scb {
 
         registers()->aircr = aircr.value;
 
-        asm volatile("DSB" : : : "memory");
+        DataSyncBarrier();
 
         while(true);
     }
