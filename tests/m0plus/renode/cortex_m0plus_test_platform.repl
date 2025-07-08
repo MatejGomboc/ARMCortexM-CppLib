@@ -1,0 +1,41 @@
+// Generic Cortex-M0+ test platform for Renode
+// This is a generic platform - see stm32g0_test_platform.repl for STM32G0-specific config
+
+// System bus
+sysbus:
+    init:
+        Tag <0x40000000 0x1000> "TEST_OUTPUT"
+        Tag <0x40001000 0x4> "TEST_COMPLETE"
+
+// Memory regions
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000  // 256KB
+
+ram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x10000  // 64KB
+
+// CPU - Generic Cortex-M0+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0plus"
+    nvic: nvic
+
+// NVIC - Nested Vectored Interrupt Controller (includes SysTick)
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    -> cpu@0
+    systickFrequency: 1000000  // 1MHz
+    IRQ: 32                    // 32 external interrupts
+
+// Test output peripheral - simple memory for character output
+// Using tagged memory region for simplicity
+testOutput: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x1000
+
+// Test completion register
+testComplete: Memory.MappedMemory @ sysbus 0x40001000  
+    size: 0x4
+
+// Note: The Cortex-M0+ CPU model in Renode includes:
+// - System Control Block (SCB) at 0xE000ED00
+// - SysTick (part of NVIC) at 0xE000E010
+// - MPU at 0xE000ED90 (if configured with MPU support)
+// - Special registers (PRIMASK, CONTROL, etc.) as part of CPU

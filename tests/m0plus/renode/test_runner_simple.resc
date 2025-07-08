@@ -1,0 +1,37 @@
+# Simple Renode test runner - minimal setup for debugging
+
+# Create and configure machine
+mach create
+machine LoadPlatformDescription @cortex_m0plus_test_platform.repl
+
+# Load test binary
+sysbus LoadELF @../build/m0plus_tests
+
+# Log peripheral access to see output
+logLevel 3 sysbus.testOutput
+logLevel 3 sysbus.testComplete  
+
+# Simple Python completion check
+python """
+def check_complete():
+    try:
+        val = self.Machine.SystemBus.ReadDoubleWord(0x40001000)
+        if val == 0xDEADBEEF:
+            print("\n*** TEST COMPLETED - Check logs for output ***\n")
+            self.Machine.Pause()
+            monitor.Parse("quit")
+    except:
+        pass
+"""
+
+# Check for completion every 100ms
+machine CreateExecutionModeController "checker" 100000
+checker Command "python check_complete()"
+
+echo "Running tests (simple mode)..."
+start
+
+# Timeout after 5 seconds
+runFor "00:00:05"
+echo "Test timeout!"
+quit 3
