@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace CortexM0Plus {
@@ -36,20 +37,35 @@ namespace CortexM0Plus {
     static inline void enableExceptions()
     {
         asm volatile("cpsie i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 
     static inline void disableExceptions()
     {
         asm volatile("cpsid i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        DataSyncBarrier();
+        InstrSyncBarrier();
     }
 
     static inline bool isIrqNumber(ExceptionNumber exception)
     {
         return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
             static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+    }
+
+    static inline void sendEvent()
+    {
+        asm volatile("sev" : : : "memory");
+    }
+
+    static inline void waitForEvent()
+    {
+        asm volatile("wfe" : : : "memory");
+    }
+
+    static inline void waitForIrq()
+    {
+        asm volatile("wfi" : : : "memory");
     }
 }

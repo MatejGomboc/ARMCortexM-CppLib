@@ -41,7 +41,9 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
     # Cortex-M0+ headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/misc.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"

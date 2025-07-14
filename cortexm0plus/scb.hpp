@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace CortexM0Plus::Scb {
@@ -24,10 +25,10 @@ namespace CortexM0Plus::Scb {
     //! is a read-only register and contains the processor part number, version, and implementation information
     union Cpuid {
         struct Bits {
-            uint32_t revision: 4; //!< the p value in the Rnpn product revision identifier, indicates patch release (0x1: patch 1)
+            uint32_t revision: 4; //!< the p value in the Rnpn product revision identifier, indicates patch release
             uint32_t part_no: 12; //!< part number of the processor (0xC60: Cortex-M0+)
             uint32_t constant: 4; //!< constant that defines the architecture of the processor (0xC: ARMv6-M architecture)
-            uint32_t variant: 4; //!< variant number: the r value in the Rnpn product revision identifier (0x0: revision 0)
+            uint32_t variant: 4; //!< variant number: the r value in the Rnpn product revision identifier
             uint32_t implementer: 8; //!< implementer code (0x41: ARM)
         } bits;
 
@@ -192,7 +193,7 @@ namespace CortexM0Plus::Scb {
 
     [[noreturn]] static inline void systemReset()
     {
-        asm volatile("DSB" : : : "memory");
+        DataSyncBarrier();
 
         Aircr aircr { registers()->aircr };
 
@@ -201,7 +202,7 @@ namespace CortexM0Plus::Scb {
 
         registers()->aircr = aircr.value;
 
-        asm volatile("DSB" : : : "memory");
+        DataSyncBarrier();
 
         while(true);
     }

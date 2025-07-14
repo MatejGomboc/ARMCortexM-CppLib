@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace CortexM0Plus {
@@ -162,7 +163,7 @@ namespace CortexM0Plus {
     static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
-        asm volatile("ISB" : : : "memory");
+        InstrSyncBarrier();
     }
 
     static inline uint32_t getPspReg()
@@ -175,7 +176,7 @@ namespace CortexM0Plus {
     static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
-        asm volatile("ISB" : : : "memory");
+        InstrSyncBarrier();
     }
 
     static inline Primask getPrimaskReg()
@@ -188,7 +189,7 @@ namespace CortexM0Plus {
     static inline void setPrimaskReg(Primask primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
-        asm volatile("ISB" : : : "memory");
+        InstrSyncBarrier();
     }
 
     static inline Control getControlReg()
@@ -201,6 +202,6 @@ namespace CortexM0Plus {
     static inline void setControlReg(Control control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        asm volatile("ISB" : : : "memory");
+        InstrSyncBarrier();
     }
 }
