@@ -11,112 +11,101 @@ DEVICES = {
     'CM0': {
         'arch': 'thumbv6m',
         'triple': 'thumbv6m-none-eabi',
-        'abi': 'eabi',
         'mcpu': 'cortex-m0',
         'mfpu': 'none',
-        'mpu': False,
         'features': ['thumbv6m', 'cortex-m0'],
-        'header': 'cortexm0',
         'defines': {
             '__CM0_REV': '0x0000U',
-            '__NVIC_PRIO_BITS': '2U',
-            '__Vendor_SysTickConfig': '0U'
+            '__NVIC_PRIO_BITS': '2U'
         }
     },
     'CM0plus': {
-        'arch': 'thumbv6m',
+        'arch': 'thumbv6m', 
         'triple': 'thumbv6m-none-eabi',
-        'abi': 'eabi',
         'mcpu': 'cortex-m0plus',
         'mfpu': 'none',
-        'mpu': True,
-        'features': ['thumbv6m', 'cortex-m0plus'],
-        'header': 'cortexm0plus',
+        'features': ['thumbv6m', 'cortex-m0plus', 'mpu'],
         'defines': {
             '__CM0PLUS_REV': '0x0000U',
             '__MPU_PRESENT': '1U',
-            '__VTOR_PRESENT': '1U',
-            '__NVIC_PRIO_BITS': '2U',
-            '__Vendor_SysTickConfig': '0U'
+            '__NVIC_PRIO_BITS': '2U'
         }
     },
     'CM1': {
         'arch': 'thumbv6m',
-        'triple': 'thumbv6m-none-eabi',
-        'abi': 'eabi',
+        'triple': 'thumbv6m-none-eabi', 
         'mcpu': 'cortex-m1',
         'mfpu': 'none',
-        'mpu': False,
         'features': ['thumbv6m', 'cortex-m1'],
-        'header': 'cortexm1',
         'defines': {
             '__CM1_REV': '0x0000U',
-            '__NVIC_PRIO_BITS': '2U',
-            '__Vendor_SysTickConfig': '0U'
+            '__NVIC_PRIO_BITS': '2U'
         }
     },
     'CM3': {
         'arch': 'thumbv7m',
         'triple': 'thumbv7m-none-eabi',
-        'abi': 'eabi',
         'mcpu': 'cortex-m3',
-        'mfpu': 'none',
-        'mpu': True,
-        'features': ['thumbv6m', 'thumbv7m', 'thumb-2', 'sat', 'ldrex', 'clz', 'cortex-m3'],
-        'header': 'cortexm3',
+        'mfpu': 'none', 
+        'features': ['thumbv7m', 'cortex-m3', 'mpu'],
         'defines': {
             '__CM3_REV': '0x0000U',
             '__MPU_PRESENT': '1U',
-            '__VTOR_PRESENT': '1U',
-            '__NVIC_PRIO_BITS': '3U',
-            '__Vendor_SysTickConfig': '0U'
+            '__NVIC_PRIO_BITS': '3U'
         }
     }
 }
 
-# Configuration file for the 'lit' test runner.
-
-# name: The name of this test suite.
+# Basic configuration
 config.name = "ARMCortexM-CppLib"
-
-# testFormat: The test format to use to interpret tests.
 config.test_format = lit.formats.ShTest()
-
-# suffixes: A list of file extensions to treat as test files.
-config.suffixes = [
-    ".cpp", ".c"
-]
-
-# test_source_root: The root path where tests are located.
+config.suffixes = [".cpp", ".c"]
 config.test_source_root = os.path.dirname(__file__)
 
-# Get configuration parameters
+# Get test parameters
 toolchain = lit_config.params.get("toolchain", "GCC")
 device = lit_config.params.get("device", "CM0")
 optimize = lit_config.params.get("optimize", "none")
 
-class Toolchain:
-    def __init__(self, toolchain, device, optimize):
-        self._toolchain = toolchain
-        self.device = device
-        self.optimize = optimize
+# Simple compiler setup
+if toolchain == "GCC":
+    cc = "arm-none-eabi-g++"
+elif toolchain == "Clang":
+    cc = "clang++"
+else:
+    cc = "gcc"
 
-    def get_root_from_env(self):
-        keys = sorted((k for k in os.environ.keys() if k.startswith(f'{self._toolchain}_TOOLCHAIN_')), reverse=True)
-        if not keys:
-            # Try common environment variable names
-            common_vars = {
-                'GCC': ['ARM_NONE_EABI_GCC_PATH', 'GCC_ARM_PATH', 'ARM_GCC_PATH'],
-                'CLANG': ['LLVM_PATH', 'CLANG_PATH'],
-                'AC6': ['ARMCLANG_PATH', 'AC6_PATH']
-            }
-            for var in common_vars.get(self._toolchain, []):
-                if var in os.environ:
-                    return os.environ[var]
-            
-            print(f"Warning: Toolchain '{self._toolchain}' not found in environment!")
-            return None
-        return os.environ.get(keys[0])
+# Optimization flags
+opt_flags = {
+    'none': '-O0',
+    'balanced': '-O2', 
+    'speed': '-O3',
+    'size': '-Os'
+}
 
-    def get_root(self):
-        return self.get_root_from_env()
+# Build compiler flags
+device_config = DEVICES.get(device, DEVICES['CM0'])
+ccflags = [
+    f'-mcpu={device_config["mcpu"]}',
+    '-mthumb',
+    opt_flags[optimize],
+    '-I', os.path.abspath('../'),
+    '-std=c++17',
+    '-c'
+]
+
+# Add device defines
+for define, value in device_config['defines'].items():
+    ccflags.extend(['-D', f'{define}={value}'])
+
+# Set available features
+for feature in device_config['features']:
+    config.available_features.add(feature)
+
+# Set up substitutions
+config.substitutions.append(("%cc%", cc))
+config.substitutions.append(("%ccflags%", ' '.join(ccflags)))
+config.substitutions.append(("%ccout%", "-o"))
+config.substitutions.append(("%mcpu%", device_config['mcpu']))
+config.substitutions.append(("%prefixes%", "CHECK,CHECK-THUMB"))
+config.substitutions.append(("objdump", "arm-none-eabi-objdump"))
