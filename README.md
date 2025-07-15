@@ -6,8 +6,9 @@ CMSIS-like C++ library for ARM Cortex-M microcontrollers
 
 - ARM Cortex-M0
 - ARM Cortex-M0+
-- ARM Cortex-M1
-- ARM Cortex-M3
+- ARM Cortex-M1 (WIP)
+- ARM Cortex-M3 (WIP)
+- TODO...
 
 ## License
 
