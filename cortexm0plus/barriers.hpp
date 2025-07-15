@@ -34,6 +34,6 @@ namespace CortexM0Plus {
 
     static inline void CompilerBarrier()
     {
-        asm volatile( : : : "memory");
+        asm volatile("" : : : "memory");
     }
 }
