@@ -107,7 +107,7 @@ namespace CortexM0Plus::Mpu {
         registers()->region_idx = idx;
 
         RegionBaseAddress base_addr_reg;
-        base_addr_reg.bits.region_base_addr = base_addr;
+        base_addr_reg.bits.region_base_addr = base_addr & 0x7FFFFFF;
         registers()->region_base_address = base_addr_reg.value;
 
         registers()->region_attributes = attributes.value;
