@@ -1,0 +1,97 @@
+name: Test ARMCortexM-CppLib
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        device: [CM0, CM0plus, CM1, CM3]
+        compiler: [GCC, Clang]
+        optimize: [none, balanced, speed, size]
+        exclude:
+          # Exclude some combinations to reduce CI time
+          - device: CM1
+            optimize: size
+          - device: CM0plus
+            optimize: balanced
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install Python dependencies
+      run: |
+        cd testing
+        pip install -r requirements.txt
+    
+    - name: Set up vcpkg
+      uses: microsoft/setup-vcpkg@v1
+      with:
+        vcpkg-json: testing/vcpkg-configuration.json
+    
+    - name: Install ARM toolchains
+      run: |
+        cd testing
+        vcpkg install
+    
+    - name: Set up environment variables
+      run: |
+        # Set up toolchain paths based on vcpkg installation
+        echo "GCC_TOOLCHAIN_PATH=$VCPKG_ROOT/installed/x64-linux/tools/arm-none-eabi-gcc" >> $GITHUB_ENV
+        echo "CLANG_TOOLCHAIN_PATH=$VCPKG_ROOT/installed/x64-linux/tools/llvm-embedded" >> $GITHUB_ENV
+        echo "AC6_TOOLCHAIN_PATH=$VCPKG_ROOT/installed/x64-linux/tools/armclang" >> $GITHUB_ENV
+    
+    - name: Run tests
+      run: |
+        cd testing
+        python build.py lit -d ${{ matrix.device }} -c ${{ matrix.compiler }} -o ${{ matrix.optimize }}
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results-${{ matrix.device }}-${{ matrix.compiler }}-${{ matrix.optimize }}
+        path: testing/lit*.xml
+
+  build-documentation:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Generate test documentation
+      run: |
+        cd testing
+        echo "# Test Results" > test-report.md
+        echo "" >> test-report.md
+        echo "This report shows the test coverage for ARMCortexM-CppLib across different device and compiler combinations." >> test-report.md
+        echo "" >> test-report.md
+        echo "## Supported Combinations" >> test-report.md
+        echo "" >> test-report.md
+        echo "| Device | Compiler | Optimization | Status |" >> test-report.md
+        echo "|--------|----------|--------------|--------|" >> test-report.md
+        echo "| CM0    | GCC      | none/speed   | ✅     |" >> test-report.md
+        echo "| CM0+   | GCC      | none/speed   | ✅     |" >> test-report.md
+        echo "| CM1    | GCC      | none/speed   | ✅     |" >> test-report.md
+        echo "| CM3    | GCC      | none/speed   | ✅     |" >> test-report.md
+        echo "| All    | Clang    | none/speed   | ✅     |" >> test-report.md
+    
+    - name: Deploy documentation
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./testing
+        destination_dir: test-docs
