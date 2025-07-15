@@ -48,7 +48,7 @@ namespace CortexM0 {
         InstrSyncBarrier();
     }
 
-    static inline bool isIrqNumber(ExceptionNumber exception)
+    static constexpr bool isIrqNumber(ExceptionNumber exception)
     {
         return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
             static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));

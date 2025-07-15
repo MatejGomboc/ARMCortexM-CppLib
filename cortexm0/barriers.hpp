@@ -34,6 +34,6 @@ namespace CortexM0 {
 
     static inline void CompilerBarrier()
     {
-        asm volatile( : : : "memory");
+        asm volatile("" : : : "memory");
     }
 }
