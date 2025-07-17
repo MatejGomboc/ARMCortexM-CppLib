@@ -1,7 +1,7 @@
-// RUN: arm-none-eabi-g++ -S %s -o %t.asm
+// RUN: arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -std=c++17 -S %s -o %t.asm
 // RUN: FileCheck %s < %t.asm
 
-void example() {
+[[naked]] void example() {
     // CHECK: nop
     asm volatile("nop");
 }
