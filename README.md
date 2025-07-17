@@ -14,4 +14,4 @@ CMSIS-like C++ library for ARM Cortex-M microcontrollers
 
 This library is licensed under Apache License Version 2.0.  
 Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>.  
-See the attached [LICENCE](./LICENCE) file for more info.
+See the attached [LICENCE](./LICENCE) file for more info.  
