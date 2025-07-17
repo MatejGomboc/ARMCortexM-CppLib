@@ -51,7 +51,22 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
-    $<$<ARM_CORTEX_M_ARCH:"0">:
+)
+
+target_compile_options(${PROJECT_NAME} INTERFACE
+    -mthumb
+    -mfloat-abi=soft
+    -masm-syntax-unified
+    $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>
+)
+
+target_link_options(${PROJECT_NAME} INTERFACE
+    -mfloat-abi=soft
+    -mthumb
+)
+
+if(ARM_CORTEX_M_ARCH STREQUAL "0")
+    target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/misc.hpp"
@@ -59,8 +74,13 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/scb.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
-    >
-    $<$<ARM_CORTEX_M_ARCH:"0+">:
+    )
+    target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0)
+    target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
+    target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
+
+elseif(ARM_CORTEX_M_ARCH STREQUAL "0+")
+    target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/misc.hpp"
@@ -69,50 +89,36 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
-    >
-    $<$<ARM_CORTEX_M_ARCH:"1">:
+    )
+    target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0PLUS)
+    target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0plus)
+    target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0plus)
+
+elseif(ARM_CORTEX_M_ARCH STREQUAL "1")
+    target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/nvic.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/scb.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/systick.hpp"
-    >
-    $<$<ARM_CORTEX_M_ARCH:"3">:
+    )
+    target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M1)
+    target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
+    target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
+
+elseif(ARM_CORTEX_M_ARCH STREQUAL "3")
+    target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/nvic.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/scb.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
-    >
-)
-
-target_compile_definitions(${PROJECT_NAME} INTERFACE
-    $<$<ARM_CORTEX_M_ARCH:"0">:ARM_CORTEX_M0>
-    $<$<ARM_CORTEX_M_ARCH:"0+">:ARM_CORTEX_M0PLUS>
-    $<$<ARM_CORTEX_M_ARCH:"1">:ARM_CORTEX_M1>
-    $<$<ARM_CORTEX_M_ARCH:"3">:ARM_CORTEX_M3>
-)
-
-target_compile_options(${PROJECT_NAME} INTERFACE
-    $<$<ARM_CORTEX_M_ARCH:"0">:"-mcpu=cortex-m0">
-    $<$<ARM_CORTEX_M_ARCH:"0+">:"-mcpu=cortex-m0plus">
-    $<$<ARM_CORTEX_M_ARCH:"1">:"-mcpu=cortex-m1">
-    $<$<ARM_CORTEX_M_ARCH:"3">:"-mcpu=cortex-m3">
-    -mthumb
-    -mfloat-abi=soft
-    -masm-syntax-unified
-    $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>
-)
-
-target_link_options(${PROJECT_NAME} INTERFACE
-    $<$<ARM_CORTEX_M_ARCH:"0">:"-mcpu=cortex-m0">
-    $<$<ARM_CORTEX_M_ARCH:"0+">:"-mcpu=cortex-m0plus">
-    $<$<ARM_CORTEX_M_ARCH:"1">:"-mcpu=cortex-m1">
-    $<$<ARM_CORTEX_M_ARCH:"3">:"-mcpu=cortex-m3">
-    -mfloat-abi=soft
-    -mthumb
-)
+    )
+    target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M3)
+    target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m3)
+    target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m3)
+endif()
 
 if(BUILD_ARM_CORTEX_M_TESTS)
     enable_testing()
