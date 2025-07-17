@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the Licence.
 
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.13)
 
 project(ARMCortexM
     LANGUAGES CXX
@@ -21,8 +21,31 @@ project(ARMCortexM
     HOMEPAGE_URL "https://github.com/MatejGomboc/ARMCortexM-CppLib"
 )
 
+set(AVAILABLE_ARM_CORTEX_M_ARCHS
+    "0"
+    "0+"
+    "1"
+    "3"
+)
+
+set(ARM_CORTEX_M_ARCH "" CACHE STRING "The target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
+
+set_property(
+  CACHE ARM_CORTEX_M_ARCH
+  PROPERTY STRINGS ${AVAILABLE_ARM_CORTEX_M_ARCHS}
+)
+
+if(NOT ARM_CORTEX_M_ARCH)
+    message(FATAL_ERROR "Missing target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
+endif()
+
+if(NOT ARM_CORTEX_M_ARCH IN_LIST AVAILABLE_ARM_CORTEX_M_ARCHS)
+    message(FATAL_ERROR "Unsupported ARM Cortex-M architecture: ${ARM_CORTEX_M_ARCH}")
+endif()
+
+option(BUILD_ARM_CORTEX_M_TESTS "Build tests for ${PROJECT_NAME} library" OFF)
+
 add_library(${PROJECT_NAME} INTERFACE)
-add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 
@@ -32,39 +55,45 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
-    # Cortex-M0 headers
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/misc.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/nvic.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/scb.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
-    # Cortex-M0+ headers
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/misc.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
-    # Cortex-M1 headers
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/nvic.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/scb.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/special_regs.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/systick.hpp"
-    # Cortex-M3 headers
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/nvic.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/scb.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
-)
 
-option(BUILD_ARM_CORTEX_M_TESTS "Build tests" ON)
+    $<$<ARM_CORTEX_M_ARCH:"0">:
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/misc.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
+    >
+
+    $<$<ARM_CORTEX_M_ARCH:"0+">:
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/misc.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
+    >
+
+    $<$<ARM_CORTEX_M_ARCH:"1">:
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/systick.hpp"
+    >
+
+    $<$<ARM_CORTEX_M_ARCH:"3">:
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
+    >
+)
 
 if(BUILD_ARM_CORTEX_M_TESTS)
     enable_testing()
