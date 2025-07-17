@@ -15,7 +15,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(ARMCortexM
-    LANGUAGES CXX
+    LANGUAGES ASM CXX
     VERSION 1.0.0
     DESCRIPTION "CMSIS-like C++ library for ARM Cortex-M microcontrollers"
     HOMEPAGE_URL "https://github.com/MatejGomboc/ARMCortexM-CppLib"
@@ -29,11 +29,7 @@ set(AVAILABLE_ARM_CORTEX_M_ARCHS
 )
 
 set(ARM_CORTEX_M_ARCH "" CACHE STRING "The target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
-
-set_property(
-  CACHE ARM_CORTEX_M_ARCH
-  PROPERTY STRINGS ${AVAILABLE_ARM_CORTEX_M_ARCHS}
-)
+set_property(CACHE ARM_CORTEX_M_ARCH PROPERTY STRINGS ${AVAILABLE_ARM_CORTEX_M_ARCHS})
 
 if(NOT ARM_CORTEX_M_ARCH)
     message(FATAL_ERROR "Missing target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
@@ -55,7 +51,6 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
-
     $<$<ARM_CORTEX_M_ARCH:"0">:
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
@@ -65,7 +60,6 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
     >
-
     $<$<ARM_CORTEX_M_ARCH:"0+">:
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
@@ -76,7 +70,6 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
     >
-
     $<$<ARM_CORTEX_M_ARCH:"1">:
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/nvic.hpp"
@@ -84,7 +77,6 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/systick.hpp"
     >
-
     $<$<ARM_CORTEX_M_ARCH:"3">:
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
@@ -93,6 +85,33 @@ target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
     >
+)
+
+target_compile_definitions(${PROJECT_NAME} INTERFACE
+    $<$<ARM_CORTEX_M_ARCH:"0">:ARM_CORTEX_M0>
+    $<$<ARM_CORTEX_M_ARCH:"0+">:ARM_CORTEX_M0PLUS>
+    $<$<ARM_CORTEX_M_ARCH:"1">:ARM_CORTEX_M1>
+    $<$<ARM_CORTEX_M_ARCH:"3">:ARM_CORTEX_M3>
+)
+
+target_compile_options(${PROJECT_NAME} INTERFACE
+    $<$<ARM_CORTEX_M_ARCH:"0">:"-mcpu=cortex-m0">
+    $<$<ARM_CORTEX_M_ARCH:"0+">:"-mcpu=cortex-m0plus">
+    $<$<ARM_CORTEX_M_ARCH:"1">:"-mcpu=cortex-m1">
+    $<$<ARM_CORTEX_M_ARCH:"3">:"-mcpu=cortex-m3">
+    -mthumb
+    -mfloat-abi=soft
+    -masm-syntax-unified
+    $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>
+)
+
+target_link_options(${PROJECT_NAME} INTERFACE
+    $<$<ARM_CORTEX_M_ARCH:"0">:"-mcpu=cortex-m0">
+    $<$<ARM_CORTEX_M_ARCH:"0+">:"-mcpu=cortex-m0plus">
+    $<$<ARM_CORTEX_M_ARCH:"1">:"-mcpu=cortex-m1">
+    $<$<ARM_CORTEX_M_ARCH:"3">:"-mcpu=cortex-m3">
+    -mfloat-abi=soft
+    -mthumb
 )
 
 if(BUILD_ARM_CORTEX_M_TESTS)
