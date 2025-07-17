@@ -63,3 +63,10 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
 )
+
+option(BUILD_ARM_CORTEX_M_TESTS "Build tests" ON)
+
+if(BUILD_ARM_CORTEX_M_TESTS)
+    enable_testing()
+    add_subdirectory(asm_tests)
+endif()
