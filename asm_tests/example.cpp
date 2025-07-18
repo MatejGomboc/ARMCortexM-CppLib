@@ -1,7 +1,7 @@
-// RUN: arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -std=c++17 -S %s -o %t.asm
+// RUN: arm-none-eabi-g++ %arch_flag% -mthumb -mfloat-abi=soft -masm-syntax-unified -std=gnu++17 %default_flags% -S %s -o %t.asm
 // RUN: FileCheck %s < %t.asm
 
-__attribute__((naked)) void example() {
+void example() {
     // CHECK: nop
     asm volatile("nop");
 }
