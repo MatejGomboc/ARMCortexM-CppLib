@@ -9,7 +9,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": false
+                "BUILD_ARM_CORTEX_M_TESTS": true
             }
         },
         {
@@ -20,7 +20,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel",
                 "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": false
+                "BUILD_ARM_CORTEX_M_TESTS": true
             }
         },
         {
@@ -31,7 +31,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": false
+                "BUILD_ARM_CORTEX_M_TESTS": true
             }
         },
         {
@@ -42,7 +42,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
                 "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": false
+                "BUILD_ARM_CORTEX_M_TESTS": true
             }
         }
     ],
