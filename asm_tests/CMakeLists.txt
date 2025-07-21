@@ -24,8 +24,9 @@ function(add_asm_test TEST_NAME)
         ARMCortexM
     )
 
-    add_custom_target(example_asm
+    add_custom_target(${TEST_NAME}_asm
         ALL
+        COMMAND "${CMAKE_COMMAND}" -E rm -f ${TEST_NAME}.asm
         COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn lib${TEST_NAME}.a > ${TEST_NAME}.asm
         BYPRODUCTS ${TEST_NAME}.asm
         VERBATIM
