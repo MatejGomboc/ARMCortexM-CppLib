@@ -15,23 +15,28 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library(example STATIC
-    example.cpp
-)
+function(add_asm_test TEST_NAME)
+    add_library(${TEST_NAME} STATIC
+        ${TEST_NAME}.cpp
+    )
 
-target_link_libraries(example PRIVATE
-    ARMCortexM
-)
+    target_link_libraries(${TEST_NAME} PRIVATE
+        ARMCortexM
+    )
 
-add_custom_target(example_asm
-    ALL
-    COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn libexample.a > example.asm
-    BYPRODUCTS example.asm
-    VERBATIM
-    DEPENDS example
-)
+    add_custom_target(${TEST_NAME}_asm
+        ALL
+        COMMAND "${CMAKE_COMMAND}" -E rm -f ${TEST_NAME}.asm
+        COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn lib${TEST_NAME}.a > ${TEST_NAME}.asm
+        BYPRODUCTS ${TEST_NAME}.asm
+        VERBATIM
+        DEPENDS ${TEST_NAME}
+    )
 
-add_test(
-    NAME example
-    COMMAND FileCheck "${CMAKE_CURRENT_SOURCE_DIR}/example.cpp" --input-file example.asm
-)
+    add_test(
+        NAME ${TEST_NAME}
+        COMMAND FileCheck "${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.cpp" --input-file ${TEST_NAME}.asm
+    )
+endfunction()
+
+add_subdirectory(utils_tests)

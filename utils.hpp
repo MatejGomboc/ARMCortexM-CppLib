@@ -21,31 +21,31 @@
 namespace Utils {
 
 //! Divides two integers and rounds the result up to the nearest multiple of divisor.
-template<typename Tin, typename Tout>
-static inline Tout intCeilDiv(Tin dividend, Tin divisor)
+template<typename T>
+static inline constexpr T intCeilDiv(T dividend, T divisor)
 {
     return (dividend + divisor - 1) / divisor;
 }
 
 //! Check if the n-th bit is set in the value.
 template<typename T>
-static inline bool isBitSet(T value, uint8_t n)
+static inline constexpr bool isBitSet(T value, uint8_t n)
 {
     return (value >> n) & 1;
 }
 
 //! Sets the n-th bit in the value.
 template<typename T>
-static inline void setBit(T& value, uint8_t n)
+static inline constexpr void setBit(T& value, uint8_t n)
 {
-    value |= 1 << n;
+    value |= T{1} << n;
 }
 
 //! Clears the n-th bit in the value.
 template<typename T>
-static inline void clearBit(T& value, uint8_t n)
+static inline constexpr void clearBit(T& value, uint8_t n)
 {
-    value &= ~(1 << n);
+    value &= ~(T{1} << n);
 }
 
 }
