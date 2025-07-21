@@ -38,4 +38,4 @@ function(add_asm_test TEST_NAME)
     )
 endfunction()
 
-add_asm_test(example)
+add_subdirectory(utils_tests)

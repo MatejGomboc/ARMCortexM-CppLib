@@ -1,0 +1,1 @@
+add_asm_test(test_const_int_ceil_div)
