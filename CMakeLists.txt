@@ -15,7 +15,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(ARMCortexM
-    LANGUAGES ASM CXX
+    LANGUAGES CXX
     VERSION 1.0.0
     DESCRIPTION "CMSIS-like C++ library for ARM Cortex-M microcontrollers"
     HOMEPAGE_URL "https://github.com/MatejGomboc/ARMCortexM-CppLib"
@@ -57,7 +57,7 @@ target_compile_options(${PROJECT_NAME} INTERFACE
     -mthumb
     -mfloat-abi=soft
     -masm-syntax-unified
-    $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>
+    -std=gnu++17
 )
 
 target_link_options(${PROJECT_NAME} INTERFACE
