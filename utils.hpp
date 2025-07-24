@@ -17,6 +17,8 @@
 #pragma once
 
 #include <cstdint>
+#include <type_traits>
+#include <limits>
 
 namespace Utils {
 
@@ -24,7 +26,23 @@ namespace Utils {
 template<typename T>
 static inline constexpr T intCeilDiv(T dividend, T divisor)
 {
-    return (dividend + divisor - 1) / divisor;
+    static_assert(std::is_integral_v<T>, "intCeilDiv only works with integral types");
+
+    if constexpr (std::is_unsigned_v<T>) {
+        return (dividend / divisor) + (((dividend % divisor) != 0) ? 1 : 0);
+    } else {
+        // Handle potential overflow case: INT_MIN / -1
+        if ((dividend == std::numeric_limits<T>::min()) && (divisor == -1)) {
+            // Saturate to max value to avoid undefined behaviour.
+            return std::numeric_limits<T>::max();
+        }
+
+        if ((dividend < 0) != (divisor < 0)) {
+            return dividend / divisor;
+        } else {
+            return (dividend / divisor) + (((dividend % divisor) != 0) ? 1 : 0);
+        }
+    }
 }
 
 //! Check if the n-th bit is set in the value.
