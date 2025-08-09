@@ -1,2 +1,2 @@
-build
-asm_tests/lit.cfg.py
+build-multi
+build-single

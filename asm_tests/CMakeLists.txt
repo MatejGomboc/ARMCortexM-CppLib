@@ -1,6 +1,4 @@
-if(NOT CMAKE_BUILD_TYPE)
-    message(FATAL_ERROR "CMake build type not set")
-endif()
+get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 set(SUPPORTED_BUILD_TYPES
     Debug
@@ -9,8 +7,18 @@ set(SUPPORTED_BUILD_TYPES
     MinSizeRel
 )
 
-if(NOT CMAKE_BUILD_TYPE IN_LIST SUPPORTED_BUILD_TYPES)
-    message(FATAL_ERROR "Unsupported CMake build type: ${CMAKE_BUILD_TYPE}")
+if(IS_MULTI_CONFIG)
+    set(CMAKE_CONFIGURATION_TYPES "${SUPPORTED_BUILD_TYPES}" CACHE STRING "" FORCE)
+    set(CMAKE_DEFAULT_BUILD_TYPE "MinSizeRel" CACHE STRING "" FORCE)
+
+else()
+    if(NOT CMAKE_BUILD_TYPE)
+        message(FATAL_ERROR "CMake build type not set")
+    endif()
+
+    if(NOT CMAKE_BUILD_TYPE IN_LIST SUPPORTED_BUILD_TYPES)
+        message(FATAL_ERROR "Unsupported CMake build type: ${CMAKE_BUILD_TYPE}")
+    endif()
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -26,6 +34,7 @@ function(add_asm_test TEST_NAME)
 
     add_custom_target(${TEST_NAME}_asm
         ALL
+        WORKING_DIRECTORY "$<TARGET_FILE_DIR:${TEST_NAME}>"
         COMMAND "${CMAKE_COMMAND}" -E rm -f ${TEST_NAME}.asm
         COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn lib${TEST_NAME}.a > ${TEST_NAME}.asm
         BYPRODUCTS ${TEST_NAME}.asm
@@ -35,7 +44,7 @@ function(add_asm_test TEST_NAME)
 
     add_test(
         NAME ${TEST_NAME}
-        COMMAND FileCheck "${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.cpp" --input-file ${TEST_NAME}.asm
+        COMMAND FileCheck "${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.cpp" --input-file "$<TARGET_FILE_DIR:${TEST_NAME}>/${TEST_NAME}.asm"
     )
 endfunction()
 

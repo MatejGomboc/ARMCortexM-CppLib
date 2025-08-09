@@ -2,9 +2,19 @@
     "version": 3,
     "configurePresets": [
         {
-            "name": "Debug",
+            "name": "multi",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build-multi",
+            "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
+            "cacheVariables": {
+                "ARM_CORTEX_M_ARCH": "0+",
+                "BUILD_ARM_CORTEX_M_TESTS": true
+            }
+        },
+        {
+            "name": "single-debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/debug",
+            "binaryDir": "${sourceDir}/build-single/debug",
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
@@ -13,9 +23,9 @@
             }
         },
         {
-            "name": "MinSizeRel",
+            "name": "single-minsizerel",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/minsizerel",
+            "binaryDir": "${sourceDir}/build-single/minsizerel",
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel",
@@ -24,9 +34,9 @@
             }
         },
         {
-            "name": "Release",
+            "name": "single-release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/release",
+            "binaryDir": "${sourceDir}/build-single/release",
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
@@ -35,9 +45,9 @@
             }
         },
         {
-            "name": "RelWithDebInfo",
+            "name": "single-relwithdebinfo",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/relwithdebinfo",
+            "binaryDir": "${sourceDir}/build-single/relwithdebinfo",
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
@@ -48,20 +58,40 @@
     ],
     "buildPresets": [
         {
-            "name": "Debug",
-            "configurePreset": "Debug"
+            "name": "multi-debug",
+            "configurePreset": "multi",
+            "configuration": "Debug"
         },
         {
-            "name": "MinSizeRel",
-            "configurePreset": "MinSizeRel"
+            "name": "multi-release",
+            "configurePreset": "multi",
+            "configuration": "Release"
         },
         {
-            "name": "Release",
-            "configurePreset": "Release"
+            "name": "multi-minsizerel",
+            "configurePreset": "multi",
+            "configuration": "MinSizeRel"
         },
         {
-            "name": "RelWithDebInfo",
-            "configurePreset": "RelWithDebInfo"
+            "name": "multi-relwithdebinfo",
+            "configurePreset": "multi",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "single-debug",
+            "configurePreset": "single-debug"
+        },
+        {
+            "name": "single-minsizerel",
+            "configurePreset": "single-minsizerel"
+        },
+        {
+            "name": "single-release",
+            "configurePreset": "single-release"
+        },
+        {
+            "name": "single-relwithdebinfo",
+            "configurePreset": "single-relwithdebinfo"
         }
     ]
 }

@@ -57,7 +57,7 @@ target_compile_options(${PROJECT_NAME} INTERFACE
     -mthumb
     -mfloat-abi=soft
     -masm-syntax-unified
-    -std=gnu++17
+    -std=c++17
 )
 
 target_link_options(${PROJECT_NAME} INTERFACE

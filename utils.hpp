@@ -17,14 +17,18 @@
 #pragma once
 
 #include <cstdint>
+#include <type_traits>
+#include <limits>
 
 namespace Utils {
 
-//! Divides two integers and rounds the result up to the nearest multiple of divisor.
-template<typename T>
+//! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
+template<typename T, std::enable_if_t<std::is_unsigned_v<T>, int> = 0>
 static inline constexpr T intCeilDiv(T dividend, T divisor)
 {
-    return (dividend + divisor - 1) / divisor;
+    T q = dividend / divisor;
+    T r = dividend % divisor;
+    return q + (r != 0);
 }
 
 //! Check if the n-th bit is set in the value.
