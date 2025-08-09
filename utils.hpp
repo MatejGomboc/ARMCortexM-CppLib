@@ -22,27 +22,13 @@
 
 namespace Utils {
 
-//! Divides two integers and rounds the result up to the nearest multiple of divisor.
-template<typename T>
+//! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
+template<typename T, std::enable_if_t<std::is_unsigned_v<T>, int> = 0>
 static inline constexpr T intCeilDiv(T dividend, T divisor)
 {
-    static_assert(std::is_integral_v<T>, "intCeilDiv only works with integral types");
-
-    if constexpr (std::is_unsigned_v<T>) {
-        return (dividend / divisor) + (((dividend % divisor) != 0) ? 1 : 0);
-    } else {
-        // Handle potential overflow case: INT_MIN / -1
-        if ((dividend == std::numeric_limits<T>::min()) && (divisor == -1)) {
-            // Saturate to max value to avoid undefined behaviour.
-            return std::numeric_limits<T>::max();
-        }
-
-        if ((dividend < 0) != (divisor < 0)) {
-            return dividend / divisor;
-        } else {
-            return (dividend / divisor) + (((dividend % divisor) != 0) ? 1 : 0);
-        }
-    }
+    T q = dividend / divisor;
+    T r = dividend % divisor;
+    return q + (r != 0);
 }
 
 //! Check if the n-th bit is set in the value.
