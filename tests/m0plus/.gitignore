@@ -1,0 +1,18 @@
+# Build directory
+build/
+
+# Renode output
+renode/test_output.txt
+renode/renode.log
+renode/*.log
+
+# Robot Framework output  
+robot/output.xml
+robot/log.html
+robot/report.html
+
+# Binary files
+*.bin
+*.hex
+*.elf
+*.map
