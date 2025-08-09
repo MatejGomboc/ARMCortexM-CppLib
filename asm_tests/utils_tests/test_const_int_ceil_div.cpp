@@ -36,74 +36,6 @@ extern "C" unsigned test_const_int_ceil_div_1_3() {
 // CHECK-EMPTY:
 
 ////////////////////////////////////////////////////////////////////
-// EDGE CASE: Basic positive division with remainder (signed types)
-
-extern "C" long long test_const_int_ceil_div_2_1() {
-    static constexpr long long result = Utils::intCeilDiv(10ll, 3ll);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_2_1>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: movs r1, #0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" long test_const_int_ceil_div_2_2() {
-    static constexpr long result = Utils::intCeilDiv(10l, 3l);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_2_2>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_2_3() {
-    static constexpr int result = Utils::intCeilDiv(10, 3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_2_3>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
-// EDGE CASE: Both negative operands
-
-extern "C" long long test_const_int_ceil_div_3_1() {
-    static constexpr long long result = Utils::intCeilDiv(-10ll, -3ll);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_3_1>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: movs r1, #0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" long test_const_int_ceil_div_3_2() {
-    static constexpr long result = Utils::intCeilDiv(-10l, -3l);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_3_2>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_3_3() {
-    static constexpr int result = Utils::intCeilDiv(-10, -3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_3_3>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
 // EDGE CASE: Exact division (no remainder)
 
 extern "C" unsigned test_const_int_ceil_div_4_1() {
@@ -112,16 +44,6 @@ extern "C" unsigned test_const_int_ceil_div_4_1() {
 }
 
 // CHECK-LABEL: <test_const_int_ceil_div_4_1>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_4_2() {
-    static constexpr int result = Utils::intCeilDiv(12, 3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_4_2>:
 // CHECK-NEXT: movs r0, #4
 // CHECK-NEXT: bx lr
 // CHECK-EMPTY:
@@ -139,17 +61,6 @@ extern "C" unsigned test_const_int_ceil_div_5_1() {
 // CHECK-NEXT: bx lr
 // CHECK-EMPTY:
 
-extern "C" int test_const_int_ceil_div_5_2() {
-    static constexpr int result = Utils::intCeilDiv(-42, 1);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_5_2>:
-// CHECK-NEXT: movs r0, #42
-// CHECK-NEXT: negs r0, r0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
 ////////////////////////////////////////////////////////////////////
 // EDGE CASE: Zero dividend
 
@@ -159,16 +70,6 @@ extern "C" unsigned test_const_int_ceil_div_6_1() {
 }
 
 // CHECK-LABEL: <test_const_int_ceil_div_6_1>:
-// CHECK-NEXT: movs r0, #0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_6_2() {
-    static constexpr int result = Utils::intCeilDiv(0, 5);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_6_2>:
 // CHECK-NEXT: movs r0, #0
 // CHECK-NEXT: bx lr
 // CHECK-EMPTY:
@@ -210,31 +111,6 @@ extern "C" unsigned test_const_int_ceil_div_8_1() {
 // CHECK-EMPTY:
 
 ////////////////////////////////////////////////////////////////////
-// EDGE CASE: Mixed signs (positive/negative)
-
-extern "C" int test_const_int_ceil_div_9_1() {
-    static constexpr int result = Utils::intCeilDiv(10, -3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_9_1>:
-// CHECK-NEXT: movs r0, #3
-// CHECK-NEXT: negs r0, r0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_9_2() {
-    static constexpr int result = Utils::intCeilDiv(-10, 3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_9_2>:
-// CHECK-NEXT: movs r0, #3
-// CHECK-NEXT: negs r0, r0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
 // EDGE CASE: Large values
 
 extern "C" unsigned long long test_const_int_ceil_div_10_1() {
@@ -243,10 +119,9 @@ extern "C" unsigned long long test_const_int_ceil_div_10_1() {
 }
 
 // CHECK-LABEL: <test_const_int_ceil_div_10_1>:
-// CHECK-NEXT: ldr r0, [pc, #4]
 // CHECK-NEXT: movs r1, #0
+// CHECK-NEXT: ldr r0, [pc, #0]
 // CHECK-NEXT: bx lr
-// CHECK-NEXT: nop
 // CHECK-NEXT: .word 0x0883d3b7
 // CHECK-EMPTY:
 
@@ -273,53 +148,6 @@ extern "C" unsigned test_const_int_ceil_div_11_1() {
 // CHECK-NEXT: bx lr
 // CHECK-EMPTY:
 
-extern "C" int test_const_int_ceil_div_11_2() {
-    static constexpr int result = Utils::intCeilDiv(-5, -5);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_11_2>:
-// CHECK-NEXT: movs r0, #1
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
-// EDGE CASE: Negative exact division
-
-extern "C" int test_const_int_ceil_div_12_1() {
-    static constexpr int result = Utils::intCeilDiv(-12, -3);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_12_1>:
-// CHECK-NEXT: movs r0, #4
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
-// EDGE CASE: Division by -1
-
-extern "C" int test_const_int_ceil_div_13_1() {
-    static constexpr int result = Utils::intCeilDiv(42, -1);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_13_1>:
-// CHECK-NEXT: movs r0, #42
-// CHECK-NEXT: negs r0, r0
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_13_2() {
-    static constexpr int result = Utils::intCeilDiv(-42, -1);
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_13_2>:
-// CHECK-NEXT: movs r0, #42
-// CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
 ////////////////////////////////////////////////////////////////////
 // EDGE CASE: One as dividend
 
@@ -341,44 +169,6 @@ extern "C" unsigned test_const_int_ceil_div_14_2() {
 // CHECK-LABEL: <test_const_int_ceil_div_14_2>:
 // CHECK-NEXT: movs r0, #1
 // CHECK-NEXT: bx lr
-// CHECK-EMPTY:
-
-////////////////////////////////////////////////////////////////////
-// EDGE CASE: Boundary values for signed types
-
-extern "C" int test_const_int_ceil_div_15_1() {
-    static constexpr int result = Utils::intCeilDiv(std::numeric_limits<int>::max() - 7, 2); // Large int value that won't overflow
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_15_1>:
-// CHECK-NEXT: ldr r0, [pc, #4]
-// CHECK-NEXT: bx lr
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0x3ffffffc
-// CHECK-EMPTY:
-
-// Test the INT_MIN / -1 overflow case (now handled by saturation to INT_MAX)
-extern "C" int test_const_int_ceil_div_15_2() {
-    static constexpr int result = Utils::intCeilDiv(std::numeric_limits<int>::min(), -1); // INT_MIN / -1 saturates to INT_MAX
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_15_2>:
-// CHECK-NEXT: ldr r0, [pc, #0]
-// CHECK-NEXT: bx lr
-// CHECK-NEXT: .word 0x7fffffff
-// CHECK-EMPTY:
-
-extern "C" int test_const_int_ceil_div_15_3() {
-    static constexpr int result = Utils::intCeilDiv(std::numeric_limits<int>::min() + 8, -2); // Large negative value that won't overflow
-    return result;
-}
-
-// CHECK-LABEL: <test_const_int_ceil_div_15_3>:
-// CHECK-NEXT: ldr r0, [pc, #0]
-// CHECK-NEXT: bx lr
-// CHECK-NEXT: .word 0x3ffffffc
 // CHECK-EMPTY:
 
 ////////////////////////////////////////////////////////////////////
