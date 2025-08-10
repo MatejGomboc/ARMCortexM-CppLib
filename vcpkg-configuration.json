@@ -8,7 +8,7 @@
     ],
     "requires": {
         "arm:compilers/arm/arm-none-eabi-gcc": "^14.2.1",
-        "arm:tools/kitware/cmake": "^3.31.6",
+        "arm:tools/kitware/cmake": "^3.31.5",
         "arm:ninja": "^1.12.1"
     }
 }
