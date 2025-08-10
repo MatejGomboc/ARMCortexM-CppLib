@@ -1,2 +1,4 @@
 build-multi
 build-single
+vcpkg_installed/
+.tools/
