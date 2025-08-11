@@ -36,7 +36,7 @@ function(add_asm_test TEST_NAME)
         ALL
         WORKING_DIRECTORY "$<TARGET_FILE_DIR:${TEST_NAME}>"
         COMMAND "${CMAKE_COMMAND}" -E rm -f ${TEST_NAME}.asm
-        COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn lib${TEST_NAME}.a > ${TEST_NAME}.asm
+        COMMAND "${CMAKE_OBJDUMP}" -d --no-show-raw-insn ${CMAKE_STATIC_LIBRARY_PREFIX}${TEST_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX} > ${TEST_NAME}.asm
         BYPRODUCTS ${TEST_NAME}.asm
         VERBATIM
         DEPENDS ${TEST_NAME}
