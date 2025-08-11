@@ -11,6 +11,8 @@ jobs:
   test:
     name: Test (ARM Cortex-M${{ matrix.arch }}, ${{ matrix.build_type }})
     runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
     
     strategy:
       fail-fast: false
@@ -24,22 +26,31 @@ jobs:
       
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          apt-get update
+          apt-get install -y \
             cmake \
             ninja-build \
             gcc-arm-none-eabi \
             binutils-arm-none-eabi \
-            libnewlib-arm-none-eabi
+            libnewlib-arm-none-eabi \
+            python3 \
+            python3-pip \
+            git
       
-      - name: Install FileCheck
+      - name: Install FileCheck (Python version)
         run: |
-          # Install LLVM tools including FileCheck
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main"
-          sudo apt-get update
-          sudo apt-get install -y llvm-17
-          sudo ln -sf /usr/bin/FileCheck-17 /usr/local/bin/FileCheck
+          pip3 install --break-system-packages filecheck
+          # Verify installation
+          python3 -m filecheck --version
+      
+      - name: Create FileCheck wrapper
+        run: |
+          # Create a wrapper script to call Python FileCheck
+          cat > /usr/local/bin/FileCheck << 'EOF'
+          #!/bin/bash
+          python3 -m filecheck "$@"
+          EOF
+          chmod +x /usr/local/bin/FileCheck
       
       - name: Verify toolchain installation
         run: |
@@ -47,7 +58,7 @@ jobs:
           arm-none-eabi-objdump --version
           cmake --version
           ninja --version
-          FileCheck --version || echo "FileCheck version not available"
+          FileCheck --version
       
       - name: Configure CMake
         run: |
