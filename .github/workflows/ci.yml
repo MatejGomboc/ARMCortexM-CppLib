@@ -57,7 +57,19 @@ jobs:
       
       - name: Build
         run: |
-          cmake --build --preset=multi-${{ contains(matrix.build_type, 'Rel') && 'release' || contains(matrix.build_type, 'Min') && 'minsizerel' || contains(matrix.build_type, 'Deb') && 'relwithdebinfo' || 'debug' }}
+          # Map build_type to the correct preset name
+          if [ "${{ matrix.build_type }}" = "Debug" ]; then
+            BUILD_PRESET="multi-debug"
+          elif [ "${{ matrix.build_type }}" = "Release" ]; then
+            BUILD_PRESET="multi-release"
+          elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
+            BUILD_PRESET="multi-minsizerel"
+          elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
+            BUILD_PRESET="multi-relwithdebinfo"
+          fi
+          
+          echo "Building with preset: $BUILD_PRESET"
+          cmake --build --preset=$BUILD_PRESET
       
       - name: Run tests
         working-directory: build-multi
