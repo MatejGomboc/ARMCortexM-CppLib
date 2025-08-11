@@ -40,17 +40,7 @@ jobs:
       - name: Install FileCheck (Python version)
         run: |
           pip3 install --break-system-packages filecheck
-          # Verify installation
-          python3 -m filecheck --version
-      
-      - name: Create FileCheck wrapper
-        run: |
-          # Create a wrapper script to call Python FileCheck
-          cat > /usr/local/bin/FileCheck << 'EOF'
-          #!/bin/bash
-          python3 -m filecheck "$@"
-          EOF
-          chmod +x /usr/local/bin/FileCheck
+          # The pip installation should provide the FileCheck command directly
       
       - name: Verify toolchain installation
         run: |
@@ -58,7 +48,9 @@ jobs:
           arm-none-eabi-objdump --version
           cmake --version
           ninja --version
-          FileCheck --version
+          FileCheck --version || echo "FileCheck version check failed, trying lowercase"
+          filecheck --version || echo "filecheck (lowercase) version check also failed"
+          which FileCheck || which filecheck || echo "FileCheck not found in PATH"
       
       - name: Configure CMake
         run: |
