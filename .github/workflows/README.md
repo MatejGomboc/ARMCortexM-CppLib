@@ -43,8 +43,7 @@ This results in **16 total test configurations** (4 architectures × 4 build typ
 ### Tools Installed
 
 - `gcc-arm-none-eabi`: ARM cross-compiler
-- `binutils-arm-none-eabi`: ARM binary utilities (objdump, etc.)
-- `libnewlib-arm-none-eabi`: C library for embedded ARM
+- `binutils-arm-none-eabi`: ARM binary utilities (objdump needed for tests)
 - `cmake`: Build system generator
 - `ninja-build`: Fast build system
 - `python3` & `pip3`: Python runtime and package manager
@@ -68,7 +67,7 @@ To replicate the CI environment locally:
 # Install dependencies
 sudo apt-get update
 sudo apt-get install -y cmake ninja-build gcc-arm-none-eabi \
-    binutils-arm-none-eabi libnewlib-arm-none-eabi python3 python3-pip
+    binutils-arm-none-eabi python3 python3-pip
 pip3 install filecheck
 
 # Configure for a specific architecture (e.g., Cortex-M3)
