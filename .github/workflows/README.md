@@ -12,7 +12,9 @@ The CI workflow automatically runs tests for the ARMCortexM-CppLib project whene
 ### Test Environment
 
 - **Base OS**: Debian Bookworm (latest stable Debian release)
-- **Container**: Runs in a Debian container for consistent environment
+- **Container Approach**: Uses `runs-on: ubuntu-latest` with `debian:bookworm` container
+  - GitHub Actions doesn't provide Debian runners directly (only Ubuntu, Windows, macOS)
+  - Container ensures consistent Debian environment across all CI runs
 - **FileCheck**: Python-based FileCheck implementation installed via pip
 
 ### Test Matrix
@@ -49,7 +51,7 @@ This results in **16 total test configurations** (4 architectures × 4 build typ
 - `cmake`: Build system generator
 - `ninja-build`: Fast build system
 - `python3` & `pip3`: Python runtime and package manager
-- `filecheck` (Python): Test verification tool installed via pip
+- `filecheck` (Python): Test verification tool installed via pip (provides `FileCheck` command)
 - `git`: Version control (required for actions/checkout in container)
 
 ### Workflow Steps
@@ -107,4 +109,4 @@ If tests fail in CI:
 2. Download the uploaded artifacts for detailed assembly output
 3. Review the `LastTest.log` file for CTest details
 4. Ensure all required tools are properly installed
-5. Verify that FileCheck is accessible (Python version)
+5. Verify that FileCheck command is available after pip installation
