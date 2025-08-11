@@ -11,8 +11,6 @@ jobs:
   test:
     name: Test (ARM Cortex-M${{ matrix.arch }}, ${{ matrix.build_type }})
     runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
     
     strategy:
       fail-fast: false
@@ -26,31 +24,19 @@ jobs:
       
       - name: Install dependencies
         run: |
-          apt-get update
-          apt-get install -y \
+          sudo apt-get update
+          sudo apt-get install -y \
             cmake \
             ninja-build \
             gcc-arm-none-eabi \
             binutils-arm-none-eabi \
             libnewlib-arm-none-eabi \
             python3 \
-            python3-pip \
-            git
+            python3-pip
       
-      - name: Install FileCheck (Python version)
+      - name: Install FileCheck
         run: |
-          pip3 install --break-system-packages filecheck
-          # The pip installation should provide the FileCheck command directly
-      
-      - name: Verify toolchain installation
-        run: |
-          arm-none-eabi-gcc --version
-          arm-none-eabi-objdump --version
-          cmake --version
-          ninja --version
-          FileCheck --version || echo "FileCheck version check failed, trying lowercase"
-          filecheck --version || echo "filecheck (lowercase) version check also failed"
-          which FileCheck || which filecheck || echo "FileCheck not found in PATH"
+          pip3 install filecheck
       
       - name: Configure CMake
         run: |
