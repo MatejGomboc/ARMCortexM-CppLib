@@ -10,7 +10,7 @@ CMSIS-like C++ library for ARM Cortex-M microcontrollers
 - ARM Cortex-M3 (WIP)
 - TODO...
 
-## License
+## Licence
 
 This library is licensed under the Apache Licence Version 2.0.  
 Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>.  
