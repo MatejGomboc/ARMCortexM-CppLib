@@ -7,7 +7,7 @@
         "ghcr.io/devcontainers/features/github-cli:1": {
         }
     },
-    "postCreateCommand": "${localWorkspaceFolder}/.devcontainer/post_create_command.sh",
+    "postCreateCommand": ".devcontainer/post_create_command.sh",
 	"runArgs": [
         "--name=arm-cortexm-cpplib-vscode"
     ]
