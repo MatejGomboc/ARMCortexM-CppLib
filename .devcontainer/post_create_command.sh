@@ -5,7 +5,7 @@ set -e
 vcpkg x-update-registry --all
 
 # Install dependencies from vcpkg-configuration.json
-vcpkg install --triplet arm-none-eabi
+vcpkg install
 
 # Activate the environment
 vcpkg activate
