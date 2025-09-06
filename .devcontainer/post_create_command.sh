@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 export Z_VCPKG_POSTSCRIPT="$(mktemp).sh"
 
 vcpkg x-update-registry --all
