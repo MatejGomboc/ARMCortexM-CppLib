@@ -1,0 +1,11 @@
+{
+    "name": "ARM Cortex-M C++ Lib Development Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {
+        }
+    },
+    "postCreateCommand": "sh .devcontainer/post_create_command.sh"
+}
