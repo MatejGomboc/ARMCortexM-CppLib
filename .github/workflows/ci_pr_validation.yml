@@ -60,3 +60,17 @@ jobs:
                 fi
 
                 ctest --preset=$TEST_PRESET
+
+    summary:
+        name: Summary
+        needs: verify_pr
+        runs-on: ubuntu-latest
+        if: always() # Run even if some matrix jobs failed.
+        steps:
+            - name: Check if all jobs succeeded
+              run: |
+                if [[ "${{ needs.verify_pr.result }}" != "success" ]]; then
+                  echo "One or more jobs failed"
+                  exit 1
+                fi
+                echo "All jobs completed successfully"
