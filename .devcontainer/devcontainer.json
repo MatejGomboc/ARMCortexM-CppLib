@@ -1,8 +1,4 @@
 {
     "name": "ARM Cortex-M C++ Lib Development Environment",
-    "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
-    "features": {
-        "ghcr.io/devcontainers/features/github-cli:1": {
-        }
-    }
+    "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest"
 }
