@@ -93,5 +93,99 @@
             "name": "single-relwithdebinfo",
             "configurePreset": "single-relwithdebinfo"
         }
+    ],
+    "testPresets": [
+        {
+            "name": "multi-debug",
+            "configurePreset": "multi",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "multi-minsizerel",
+            "configurePreset": "multi",
+            "configuration": "MinSizeRel",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "multi-release",
+            "configurePreset": "multi",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "multi-relwithdebinfo",
+            "configurePreset": "multi",
+            "configuration": "RelWithDebInfo",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "single-debug",
+            "configurePreset": "single-debug",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "single-minsizerel",
+            "configurePreset": "single-minsizerel",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "single-release",
+            "configurePreset": "single-release",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        },
+        {
+            "name": "single-relwithdebinfo",
+            "configurePreset": "single-relwithdebinfo",
+            "output": {
+                "outputOnFailure": true,
+                "verbosity": "verbose"
+            },
+            "execution": {
+                "jobs": 0
+            }
+        }
     ]
 }
