@@ -1,17 +1,13 @@
 ﻿version: 2
 updates:
-    - package-ecosystem: "github-actions"
-
-      directory: "/"
-
-      schedule:
-        interval: "daily"
-        time: "00:00"
-
-      labels:
-        - "dependencies"
-        - "github-actions"
-
-      commit-message:
-        prefix: "ci"
-        include: "scope"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "00:00"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
