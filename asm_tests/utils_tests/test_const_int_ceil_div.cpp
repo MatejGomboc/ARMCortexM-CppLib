@@ -244,7 +244,6 @@ extern "C" unsigned long long test_const_int_ceil_div_18_2() {
 
 extern "C" unsigned test_const_int_ceil_div_19_1() {
     static constexpr unsigned result = Utils::intCeilDiv(std::numeric_limits<unsigned>::max(), 2u); // UINT_MAX / 2
-    // The implementation correctly avoids overflow by not using (dividend + divisor - 1) / divisor
     return result;
 }
 
@@ -256,7 +255,6 @@ extern "C" unsigned test_const_int_ceil_div_19_1() {
 
 extern "C" unsigned test_const_int_ceil_div_19_2() {
     static constexpr unsigned result = Utils::intCeilDiv(std::numeric_limits<unsigned>::max() - 5u, 10u); // Near UINT_MAX
-    // The implementation correctly handles this without overflow
     return result;
 }
 
