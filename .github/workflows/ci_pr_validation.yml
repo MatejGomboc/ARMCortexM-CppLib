@@ -1,0 +1,62 @@
+name: CI - PR Validation
+
+on:
+    pull_request:
+        branches: ["**"] # Run PR validation on any branch.
+
+    workflow_dispatch: # Manual trigger option.
+
+jobs:
+    verify_pr:
+        name: ARM Cortex-M${{ matrix.arch }}, ${{ matrix.build_type }}
+
+        strategy:
+            fail-fast: false # Don't cancel other jobs if one fails.
+
+            matrix:
+                # arch: ["0", "0+", "1", "3"]
+                arch: ["0+"]
+                # build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
+                build_type: [MinSizeRel]
+
+            max-parallel: 20 # Use maximum possible parallelisation.
+
+        runs-on: ubuntu-latest
+
+        container:
+            image: ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v5
+
+            - name: Configure
+              run: cmake --preset=multi -DARM_CORTEX_M_ARCH="${{ matrix.arch }}" -DBUILD_ARM_CORTEX_M_TESTS=ON
+
+            - name: Build
+              run: |
+                if [ "${{ matrix.build_type }}" = "Debug" ]; then
+                    BUILD_PRESET="multi-debug"
+                elif [ "${{ matrix.build_type }}" = "Release" ]; then
+                    BUILD_PRESET="multi-release"
+                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
+                    BUILD_PRESET="multi-minsizerel"
+                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
+                    BUILD_PRESET="multi-relwithdebinfo"
+                fi
+
+                cmake --build --preset=$BUILD_PRESET --parallel $(nproc)
+
+            - name: Run tests
+              run: |
+                if [ "${{ matrix.build_type }}" = "Debug" ]; then
+                    TEST_PRESET="multi-debug"
+                elif [ "${{ matrix.build_type }}" = "Release" ]; then
+                    TEST_PRESET="multi-release"
+                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
+                    TEST_PRESET="multi-minsizerel"
+                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
+                    TEST_PRESET="multi-relwithdebinfo"
+                fi
+
+                ctest --preset=$TEST_PRESET
