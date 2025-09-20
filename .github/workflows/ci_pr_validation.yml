@@ -8,7 +8,7 @@ on:
 
 jobs:
     verify_pr:
-        name: ARM Cortex-M${{ matrix.arch }}, ${{ matrix.build_type }}
+        name: CI - PR Validation - ARM Cortex-M${{ matrix.arch }}, ${{ matrix.build_type }}
 
         strategy:
             fail-fast: false # Don't cancel other jobs if one fails.
@@ -62,7 +62,7 @@ jobs:
                 ctest --preset=$TEST_PRESET
 
     summary:
-        name: Summary
+        name: CI - PR Validation - Summary
         needs: verify_pr
         runs-on: ubuntu-latest
         if: always() # Run even if some matrix jobs failed.
