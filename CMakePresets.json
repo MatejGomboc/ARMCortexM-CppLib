@@ -2,9 +2,8 @@
     "version": 3,
     "configurePresets": [
         {
-            "name": "multi",
-            "generator": "Ninja Multi-Config",
-            "binaryDir": "${sourceDir}/build-multi",
+            "name": "base-common",
+            "hidden": true,
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
                 "ARM_CORTEX_M_ARCH": "0+",
@@ -12,47 +11,47 @@
             }
         },
         {
+            "name": "multi",
+            "inherits": "base-common",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build-multi"
+        },
+        {
+            "name": "base-single",
+            "hidden": true,
+            "inherits": "base-common",
+            "generator": "Ninja"
+        },
+        {
             "name": "single-debug",
-            "generator": "Ninja",
+            "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/debug",
-            "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": true
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
             "name": "single-minsizerel",
-            "generator": "Ninja",
+            "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/minsizerel",
-            "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "MinSizeRel",
-                "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": true
+                "CMAKE_BUILD_TYPE": "MinSizeRel"
             }
         },
         {
             "name": "single-release",
-            "generator": "Ninja",
+            "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/release",
-            "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": true
+                "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
             "name": "single-relwithdebinfo",
-            "generator": "Ninja",
+            "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/relwithdebinfo",
-            "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-                "ARM_CORTEX_M_ARCH": "0+",
-                "BUILD_ARM_CORTEX_M_TESTS": true
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
             }
         }
     ],
@@ -96,9 +95,8 @@
     ],
     "testPresets": [
         {
-            "name": "multi-debug",
-            "configurePreset": "multi",
-            "configuration": "Debug",
+            "name": "base-test",
+            "hidden": true,
             "output": {
                 "outputOnFailure": true,
                 "verbosity": "verbose"
@@ -106,86 +104,50 @@
             "execution": {
                 "jobs": 0
             }
+        },
+        {
+            "name": "multi-debug",
+            "inherits": "base-test",
+            "configurePreset": "multi",
+            "configuration": "Debug"
         },
         {
             "name": "multi-minsizerel",
+            "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "MinSizeRel",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "configuration": "MinSizeRel"
         },
         {
             "name": "multi-release",
+            "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "Release",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "configuration": "Release"
         },
         {
             "name": "multi-relwithdebinfo",
+            "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "RelWithDebInfo",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "configuration": "RelWithDebInfo"
         },
         {
             "name": "single-debug",
-            "configurePreset": "single-debug",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "inherits": "base-test",
+            "configurePreset": "single-debug"
         },
         {
             "name": "single-minsizerel",
-            "configurePreset": "single-minsizerel",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "inherits": "base-test",
+            "configurePreset": "single-minsizerel"
         },
         {
             "name": "single-release",
-            "configurePreset": "single-release",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "inherits": "base-test",
+            "configurePreset": "single-release"
         },
         {
             "name": "single-relwithdebinfo",
-            "configurePreset": "single-relwithdebinfo",
-            "output": {
-                "outputOnFailure": true,
-                "verbosity": "verbose"
-            },
-            "execution": {
-                "jobs": 0
-            }
+            "inherits": "base-test",
+            "configurePreset": "single-relwithdebinfo"
         }
     ]
 }
