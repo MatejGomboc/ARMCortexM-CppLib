@@ -32,10 +32,6 @@ function(add_asm_test TEST_NAME)
         ARMCortexM
     )
 
-    target_compile_definitions(${TEST_NAME} PRIVATE
-        CMAKE_BUILD_TYPE="$<CONFIG>"
-    )
-
     add_custom_target(${TEST_NAME}_asm
         ALL
         WORKING_DIRECTORY "$<TARGET_FILE_DIR:${TEST_NAME}>"
