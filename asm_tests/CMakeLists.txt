@@ -45,6 +45,7 @@ function(add_asm_test TEST_NAME)
     add_test(
         NAME ${TEST_NAME}
         COMMAND filecheck "${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.cpp" --input-file "$<TARGET_FILE_DIR:${TEST_NAME}>/${TEST_NAME}.asm"
+            --check-prefixes=CHECK,$<UPPER_CASE:$<CONFIG>-CHECK>
     )
 endfunction()
 
