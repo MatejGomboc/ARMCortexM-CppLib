@@ -14,8 +14,7 @@ jobs:
             matrix:
                 # arch: ["0", "0+", "1", "3"]
                 arch: ["0+"]
-                # build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
-                build_type: [MinSizeRel]
+                build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
 
             max-parallel: 20 # Use maximum possible parallelisation.
 
