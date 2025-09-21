@@ -13,6 +13,10 @@ extern "C" unsigned long long test_const_int_ceil_div_1_1() {
 // CHECK-NEXT: movs r0, #4
 // CHECK-NEXT: movs r1, #0
 // CHECK-NEXT: bx lr
+
+// RELEASE-CHECK-NEXT: nop
+// RELWITHDEBINFO-CHECK-NEXT: nop
+
 // CHECK-EMPTY:
 
 extern "C" unsigned long test_const_int_ceil_div_1_2() {
@@ -119,9 +123,24 @@ extern "C" unsigned long long test_const_int_ceil_div_10_1() {
 }
 
 // CHECK-LABEL: <test_const_int_ceil_div_10_1>:
-// CHECK-NEXT: movs r1, #0
-// CHECK-NEXT: ldr r0, [pc, #0]
+
+// DEBUG-CHECK-NEXT: ldr r0, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r1, #0
+
+// MINSIZEREL-CHECK-NEXT: movs r1, #0
+// MINSIZEREL-CHECK-NEXT: ldr r0, [pc, #0]
+
+// RELEASE-CHECK-NEXT: movs r1, #0
+// RELEASE-CHECK-NEXT: ldr r0, [pc, #4]
+
+// RELWITHDEBINFO-CHECK-NEXT: movs r1, #0
+// RELWITHDEBINFO-CHECK-NEXT: ldr r0, [pc, #4]
+
 // CHECK-NEXT: bx lr
+
+// RELEASE-CHECK-NEXT: nop
+// RELWITHDEBINFO-CHECK-NEXT: nop
+
 // CHECK-NEXT: .word 0x0883d3b7
 // CHECK-EMPTY:
 
@@ -251,6 +270,10 @@ extern "C" unsigned test_const_int_ceil_div_19_1() {
 // CHECK-NEXT: movs r0, #128
 // CHECK-NEXT: lsls r0, r0, #24
 // CHECK-NEXT: bx lr
+
+// RELEASE-CHECK-NEXT: nop
+// RELWITHDEBINFO-CHECK-NEXT: nop
+
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_19_2() {
@@ -259,8 +282,17 @@ extern "C" unsigned test_const_int_ceil_div_19_2() {
 }
 
 // CHECK-LABEL: <test_const_int_ceil_div_19_2>:
-// CHECK-NEXT: ldr r0, [pc, #4]
+
+// MINSIZEREL-CHECK-NEXT: ldr r0, [pc, #4]
+// DEBUG-CHECK-NEXT: ldr r0, [pc, #4]
+
+// RELEASE-CHECK-NEXT: ldr r0, [pc, #0]
+// RELWITHDEBINFO-CHECK-NEXT: ldr r0, [pc, #0]
+
 // CHECK-NEXT: bx lr
-// CHECK-NEXT: nop
+
+// MINSIZEREL-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: nop
+
 // CHECK-NEXT: .word 0x19999999
 // CHECK-EMPTY:
