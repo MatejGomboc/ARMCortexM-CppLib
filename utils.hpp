@@ -17,15 +17,13 @@
 #pragma once
 
 #include <cstdint>
-#include <type_traits>
-#include <limits>
+#include <concepts>
 
 namespace Utils {
 
 //! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
-template<typename T, std::enable_if_t<std::is_unsigned_v<T>, int> = 0>
-static inline constexpr T intCeilDiv(T dividend, T divisor)
-{
+template <std::unsigned_integral T>
+constexpr T intCeilDiv(T dividend, T divisor) {
     T q = dividend / divisor;
     T r = dividend % divisor;
     return q + (r != 0);
@@ -33,21 +31,21 @@ static inline constexpr T intCeilDiv(T dividend, T divisor)
 
 //! Check if the n-th bit is set in the value.
 template<typename T>
-static inline constexpr bool isBitSet(T value, uint8_t n)
+constexpr bool isBitSet(T value, uint8_t n)
 {
-    return (value >> n) & 1;
+    return (value >> n) & T{1};
 }
 
 //! Sets the n-th bit in the value.
 template<typename T>
-static inline constexpr void setBit(T& value, uint8_t n)
+constexpr void setBit(T& value, uint8_t n)
 {
     value |= T{1} << n;
 }
 
 //! Clears the n-th bit in the value.
 template<typename T>
-static inline constexpr void clearBit(T& value, uint8_t n)
+constexpr void clearBit(T& value, uint8_t n)
 {
     value &= ~(T{1} << n);
 }
