@@ -24,9 +24,7 @@ namespace Utils {
 //! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
 template <std::unsigned_integral T>
 constexpr T intCeilDiv(T dividend, T divisor) {
-    T q = dividend / divisor;
-    T r = dividend % divisor;
-    return q + (r != 0);
+    return (dividend == 0) ? 0 : (1 + (dividend - 1) / divisor);
 }
 
 //! Check if the n-th bit is set in the value.
