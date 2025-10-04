@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>
 
-    Licensed under the Apache License, Version 2.0 (the "Licence");
+    Licensed under the Apache Licence, Version 2.0 (the "Licence");
     you may not use this file except in compliance with the Licence.
     You may obtain a copy of the Licence at
 
@@ -16,10 +16,11 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM3 {
-    static constexpr uint8_t NUM_OF_IRQS = 240;
+namespace Cortex::M3 {
+    inline constexpr uint8_t NUM_OF_IRQS = 240;
 
     enum class ExceptionNumber : uint8_t {
         THREAD_MODE = 0,
@@ -37,23 +38,43 @@ namespace CortexM3 {
         LAST_IRQ = FIRST_IRQ + NUM_OF_IRQS - 1
     };
 
-    static inline void enableExceptions()
+    static inline void enableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsie i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        instrSyncBarrier();
     }
 
-    static inline void disableExceptions()
+    static inline void disableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsid i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        instrSyncBarrier();
     }
 
     static constexpr bool isIrqNumber(ExceptionNumber exception)
     {
         return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
             static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+    }
+
+    static inline void sendEvent()
+    {
+        asm volatile("sev" : : : "memory");
+        dataSyncBarrier();
+    }
+
+    static inline void waitForEvent()
+    {
+        dataSyncBarrier();
+        asm volatile("wfe" : : : "memory");
+        instrSyncBarrier();
+    }
+
+    static inline void waitForIrq()
+    {
+        dataSyncBarrier();
+        asm volatile("wfi" : : : "memory");
+        instrSyncBarrier();
     }
 }

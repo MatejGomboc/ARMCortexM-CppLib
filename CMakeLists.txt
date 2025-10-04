@@ -22,10 +22,10 @@ project(ARMCortexM
 )
 
 set(AVAILABLE_ARM_CORTEX_M_ARCHS
-    "0"
-    "0+"
-    "1"
-    "3"
+    "M0"
+    "M0+"
+    "M1"
+    "M3"
 )
 
 set(ARM_CORTEX_M_ARCH "" CACHE STRING "The target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
@@ -50,6 +50,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 )
 
 target_sources(${PROJECT_NAME} INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}/barriers.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/misc.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
 )
 
@@ -65,55 +67,51 @@ target_link_options(${PROJECT_NAME} INTERFACE
     -mthumb
 )
 
-if(ARM_CORTEX_M_ARCH STREQUAL "0")
+if(ARM_CORTEX_M_ARCH STREQUAL "M0")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/barriers.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/misc.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
 
-elseif(ARM_CORTEX_M_ARCH STREQUAL "0+")
+elseif(ARM_CORTEX_M_ARCH STREQUAL "M0+")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/barriers.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/misc.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/mpu.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm0plus/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0PLUS)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0plus)
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0plus)
 
-elseif(ARM_CORTEX_M_ARCH STREQUAL "1")
+elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm1/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M1)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
-elseif(ARM_CORTEX_M_ARCH STREQUAL "3")
+elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/mpu.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cortexm3/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m3/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M3)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m3)

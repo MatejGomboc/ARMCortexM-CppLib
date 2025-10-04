@@ -16,23 +16,23 @@
 
 #pragma once
 
-namespace CortexM0 {
-    static inline void DataSyncBarrier()
+namespace Cortex {
+    static inline void dataSyncBarrier()
     {
         asm volatile("dsb" : : : "memory");
     }
 
-    static inline void InstrSyncBarrier()
+    static inline void instrSyncBarrier()
     {
         asm volatile("isb" : : : "memory");
     }
 
-    static inline void DataMemBarrier()
+    static inline void dataMemBarrier()
     {
         asm volatile("dmb" : : : "memory");
     }
 
-    static inline void CompilerBarrier()
+    static inline void compilerBarrier()
     {
         asm volatile("" : : : "memory");
     }

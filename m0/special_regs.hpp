@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM0 {
+namespace Cortex::M0 {
     //! the following values are saved into LR on exception entry
     enum class LrExceptionReturn : uint32_t {
         HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
@@ -28,47 +28,47 @@ namespace CortexM0 {
     };
 
     //! program status register
-    union Psr {
+    union PSR {
         struct Bits {
-            uint32_t current_exception: 6; //!< number of the currently executing exception
-            uint32_t reserved0: 18;
-            uint32_t thumb_mode: 1; //!< CPU running in Thumb mode
-            uint32_t reserved1: 3;
-            uint32_t v: 1; //!< overflow flag
-            uint32_t c: 1; //!< carry or borrow flag
-            uint32_t z: 1; //!< zero flag
-            uint32_t n: 1; //!< negative or less than flag
+            uint32_t ISR: 6; //!< number of the currently executing exception
+            uint32_t RESERVED0: 18;
+            uint32_t T: 1; //!< CPU running in Thumb mode
+            uint32_t RESERVED1: 3;
+            uint32_t V: 1; //!< overflow flag
+            uint32_t C: 1; //!< carry or borrow flag
+            uint32_t Z: 1; //!< zero flag
+            uint32_t N: 1; //!< negative or less than flag
         } bits;
 
         uint32_t value = 0;
 
-        Psr() = default;
+        PSR() = default;
 
-        Psr(uint32_t new_value)
+        PSR(uint32_t new_value)
         {
             value = new_value;
         }
     };
 
     //! priority mask register
-    union Primask {
+    union PRIMASK {
         struct Bits {
-            uint32_t exceptions_disabled: 1; //!< all exceptions except NMI and hard fault are disabled
-            uint32_t reserved: 31;
+            uint32_t PM: 1; //!< all exceptions except NMI and hard fault are disabled
+            uint32_t RESERVED: 31;
         } bits;
 
         uint32_t value = 0;
 
-        Primask() = default;
+        PRIMASK() = default;
 
-        Primask(uint32_t new_value)
+        PRIMASK(uint32_t new_value)
         {
             value = new_value;
         }
     };
 
     //! control register
-    union Control {
+    union CONTROL {
         //! thread mode privilege level
         enum class ThreadModePrivilegeLevel : bool {
             PRIVILEGED = false, //!< privileged thread mode
@@ -82,16 +82,16 @@ namespace CortexM0 {
         };
 
         struct Bits {
-            uint32_t thread_mode_privilege_level: 1; //!< thread mode privilege level
-            uint32_t active_stack_pointer: 1; //!< currently used stack pointer
-            uint32_t reserved1: 30;
+            uint32_t nPRIV: 1; //!< thread mode privilege level (0=privileged, 1=unprivileged)
+            uint32_t SPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
+            uint32_t RESERVED1: 30;
         } bits;
 
         uint32_t value = 0;
 
-        Control() = default;
+        CONTROL() = default;
 
-        Control(uint32_t new_value)
+        CONTROL(uint32_t new_value)
         {
             value = new_value;
         }
@@ -104,51 +104,51 @@ namespace CortexM0 {
         return value;
     }
 
-    static inline Psr getApsrReg()
+    static inline PSR getApsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, APSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getIpsrReg()
+    static inline PSR getIpsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, IPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getEpsrReg()
+    static inline PSR getEpsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, EPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getIepsrReg()
+    static inline PSR getIepsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, IEPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getIapsrReg()
+    static inline PSR getIapsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, IAPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getEapsrReg()
+    static inline PSR getEapsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, EAPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline Psr getPsrReg()
+    static inline PSR getPsrReg()
     {
-        Psr psr;
+        PSR psr;
         asm volatile("MRS %0, PSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
@@ -163,7 +163,7 @@ namespace CortexM0 {
     static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 
     static inline uint32_t getPspReg()
@@ -176,32 +176,32 @@ namespace CortexM0 {
     static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 
-    static inline Primask getPrimaskReg()
+    static inline PRIMASK getPrimaskReg()
     {
-        Primask primask;
+        PRIMASK primask;
         asm volatile("MRS %0, PRIMASK" : "=r" (primask.value) : : "cc");
         return primask;
     }
 
-    static inline void setPrimaskReg(Primask primask)
+    static inline void setPrimaskReg(PRIMASK primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 
-    static inline Control getControlReg()
+    static inline CONTROL getControlReg()
     {
-        Control control;
+        CONTROL control;
         asm volatile("MRS %0, CONTROL" : "=r" (control.value) : : "cc");
         return control;
     }
 
-    static inline void setControlReg(Control control)
+    static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 }

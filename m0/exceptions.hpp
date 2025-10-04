@@ -16,10 +16,11 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM1 {
-    static constexpr uint8_t NUM_OF_IRQS = 32;
+namespace Cortex::M0 {
+    inline constexpr uint8_t NUM_OF_IRQS = 32;
 
     enum class ExceptionNumber : uint8_t {
         THREAD_MODE = 0,
@@ -33,23 +34,43 @@ namespace CortexM1 {
         LAST_IRQ = FIRST_IRQ + NUM_OF_IRQS - 1
     };
 
-    static inline void enableExceptions()
+    static inline void enableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsie i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        instrSyncBarrier();
     }
 
-    static inline void disableExceptions()
+    static inline void disableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsid i" : : : "memory");
-        asm volatile("dsb" : : : "memory");
-        asm volatile("isb" : : : "memory");
+        instrSyncBarrier();
     }
 
     static constexpr bool isIrqNumber(ExceptionNumber exception)
     {
         return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
             static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+    }
+
+    static inline void sendEvent()
+    {
+        asm volatile("sev" : : : "memory");
+        dataSyncBarrier();
+    }
+
+    static inline void waitForEvent()
+    {
+        dataSyncBarrier();
+        asm volatile("wfe" : : : "memory");
+        instrSyncBarrier();
+    }
+
+    static inline void waitForIrq()
+    {
+        dataSyncBarrier();
+        asm volatile("wfi" : : : "memory");
+        instrSyncBarrier();
     }
 }
