@@ -204,6 +204,7 @@ namespace CortexM0::Scb {
         SCB->AIRCR = aircr.value;
 
         dataSyncBarrier();
+        instrSyncBarrier();
 
         while(true);
     }
