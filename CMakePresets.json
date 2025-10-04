@@ -6,7 +6,7 @@
             "hidden": true,
             "toolchainFile": "${sourceDir}/arm_none_eabi_gcc.cmake",
             "cacheVariables": {
-                "ARM_CORTEX_M_ARCH": "0+",
+                "ARM_CORTEX_M_ARCH": "M0+",
                 "BUILD_ARM_CORTEX_M_TESTS": true
             }
         },

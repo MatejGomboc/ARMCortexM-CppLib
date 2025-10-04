@@ -20,7 +20,7 @@
 #include <cstdint>
 
 namespace CortexM0 {
-    static constexpr uint8_t NUM_OF_IRQS = 32;
+    inline constexpr uint8_t NUM_OF_IRQS = 32;
 
     enum class ExceptionNumber : uint8_t {
         THREAD_MODE = 0,
@@ -34,18 +34,18 @@ namespace CortexM0 {
         LAST_IRQ = FIRST_IRQ + NUM_OF_IRQS - 1
     };
 
-    static inline void enableExceptions()
+    static inline void enableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsie i" : : : "memory");
-        DataSyncBarrier();
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 
-    static inline void disableExceptions()
+    static inline void disableInterrupts()
     {
+        dataSyncBarrier();
         asm volatile("cpsid i" : : : "memory");
-        DataSyncBarrier();
-        InstrSyncBarrier();
+        instrSyncBarrier();
     }
 
     static constexpr bool isIrqNumber(ExceptionNumber exception)
@@ -57,15 +57,20 @@ namespace CortexM0 {
     static inline void sendEvent()
     {
         asm volatile("sev" : : : "memory");
+        dataSyncBarrier();
     }
 
     static inline void waitForEvent()
     {
+        dataSyncBarrier();
         asm volatile("wfe" : : : "memory");
+        instrSyncBarrier();
     }
 
     static inline void waitForIrq()
     {
+        dataSyncBarrier();
         asm volatile("wfi" : : : "memory");
+        instrSyncBarrier();
     }
 }

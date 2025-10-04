@@ -19,9 +19,9 @@
 #include <cstdint>
 
 namespace CortexM0Plus::SysTick {
-    static uint32_t* const BASE_ADDR = reinterpret_cast<uint32_t*>(0xE000E010);
+    inline constexpr uintptr_t BASE_ADDRESS = 0xE000E010u;
 
-    union CtrlStatus {
+    union CTRL {
         //! timer clock source
         enum class ClkSource : bool {
             EXTERNAL = false, //!< external reference clock
@@ -29,41 +29,41 @@ namespace CortexM0Plus::SysTick {
         };
 
         struct Bits {
-            uint32_t timer_enabled: 1; //!< enables counting
-            uint32_t exception_enabled: 1; //!< enables SysTick exception
-            uint32_t clk_source: 1; //!< selects the timer clock source
-            uint32_t reserved0: 13;
-            uint32_t reached_zero: 1; //!< '1' if counter reached 0 since last time this bit was read
-            uint32_t reserved1: 15;
+            uint32_t ENABLE: 1; //!< enables counting
+            uint32_t TICKINT: 1; //!< enables SysTick exception
+            uint32_t CLKSOURCE: 1; //!< selects the timer clock source
+            uint32_t RESERVED0: 13;
+            uint32_t COUNTFLAG: 1; //!< '1' if counter reached 0 since last time this bit was read
+            uint32_t RESERVED1: 15;
         } bits;
 
         uint32_t value = 0;
 
-        CtrlStatus() = default;
+        CTRL() = default;
 
-        CtrlStatus(uint32_t new_value)
+        CTRL(uint32_t new_value)
         {
             value = new_value;
         }
     };
 
-    union Calibration {
+    union CALIB {
         struct Bits {
             /*!
                 Indicates the calibration value when the SysTick counter runs on HCLK max/8 as external clock.
                 When HCLK is programmed at the maximum frequency, the SysTick period is 1ms.
             */
-            uint32_t calib_val: 24;
-            uint32_t reserved: 6;
-            uint32_t skew: 1; //!< always '1'
-            uint32_t noref: 1; //!< always '0', indicates that a separate reference clock is provided (HCLK/8)
+            uint32_t TENMS: 24;
+            uint32_t RESERVED: 6;
+            uint32_t SKEW: 1; //!< always '1'
+            uint32_t NOREF: 1; //!< always '0', indicates that a separate reference clock is provided (HCLK/8)
         } bits;
 
         uint32_t value = 0;
 
-        Calibration() = default;
+        CALIB() = default;
 
-        Calibration(uint32_t new_value)
+        CALIB(uint32_t new_value)
         {
             value = new_value;
         }
@@ -71,14 +71,13 @@ namespace CortexM0Plus::SysTick {
 
     struct Registers
     {
-        volatile uint32_t ctrl_status; //!< control and status register
-        volatile uint32_t reload_val; //!< reload value at the restart of counting
-        volatile uint32_t current_val; //!< current counter value
-        volatile uint32_t calibration; //!< controls timer calibration
+        volatile uint32_t CTRL; //!< control and status register
+        volatile uint32_t LOAD; //!< reload value at the restart of counting
+        volatile uint32_t VAL; //!< current counter value
+        volatile uint32_t CALIB; //!< controls timer calibration
     };
+}
 
-    static inline volatile Registers* registers()
-    {
-        return reinterpret_cast<volatile Registers*>(BASE_ADDR);
-    }
+namespace CortexM0Plus {
+    inline volatile SysTick::Registers* const SYS_TICK = reinterpret_cast<volatile SysTick::Registers*>(SysTick::BASE_ADDRESS);
 }

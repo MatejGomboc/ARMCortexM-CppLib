@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace CortexM0Plus {
+namespace Cortex {
     static inline void noOperation()
     {
         asm volatile("nop");
