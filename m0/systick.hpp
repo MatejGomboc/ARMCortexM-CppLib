@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace CortexM0::SysTick {
+namespace Cortex::M0::SysTick {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E010u;
 
     struct Registers
@@ -78,6 +78,6 @@ namespace CortexM0::SysTick {
     };
 }
 
-namespace CortexM0 {
+namespace Cortex::M0 {
     inline volatile SysTick::Registers* const SYS_TICK = reinterpret_cast<volatile SysTick::Registers*>(SysTick::BASE_ADDRESS);
 }

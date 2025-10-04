@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace CortexM3::Mpu {
+namespace Cortex::M3::Mpu {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED90u;
 
     struct Registers {
@@ -105,11 +105,11 @@ namespace CortexM3::Mpu {
     };
 }
 
-namespace CortexM3 {
+namespace Cortex::M3 {
     inline volatile Mpu::Registers* const MPU = reinterpret_cast<volatile Mpu::Registers*>(Mpu::BASE_ADDRESS);
 }
 
-namespace CortexM3::Mpu {
+namespace Cortex::M3::Mpu {
     static inline void configureRegion(uint32_t idx, uint32_t base_addr, const RASR& attributes)
     {
         MPU->RNR = idx;

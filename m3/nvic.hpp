@@ -20,7 +20,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM3::Nvic {
+namespace Cortex::M3::Nvic {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E100u;
 
     struct Registers
@@ -41,11 +41,11 @@ namespace CortexM3::Nvic {
     };
 }
 
-namespace CortexM3 {
+namespace Cortex::M3 {
     inline volatile Nvic::Registers* const NVIC = reinterpret_cast<volatile Nvic::Registers*>(Nvic::BASE_ADDRESS);
 }
 
-namespace CortexM3::Nvic {
+namespace Cortex::M3::Nvic {
     static inline bool isIrqEnabled(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;

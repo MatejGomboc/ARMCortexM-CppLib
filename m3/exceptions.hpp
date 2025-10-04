@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM3 {
+namespace Cortex::M3 {
     inline constexpr uint8_t NUM_OF_IRQS = 240;
 
     enum class ExceptionNumber : uint8_t {

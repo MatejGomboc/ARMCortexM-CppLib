@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace CortexM0::Scb {
+namespace Cortex::M0::Scb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED00u;
 
     struct Registers
@@ -187,11 +187,11 @@ namespace CortexM0::Scb {
     };
 }
 
-namespace CortexM0 {
+namespace Cortex::M0 {
     inline volatile Scb::Registers* const SCB = reinterpret_cast<volatile Scb::Registers*>(Scb::BASE_ADDRESS);
 }
 
-namespace CortexM0::Scb {
+namespace Cortex::M0::Scb {
     [[noreturn]] static inline void systemReset()
     {
         dataSyncBarrier();
