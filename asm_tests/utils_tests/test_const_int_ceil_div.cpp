@@ -5,7 +5,7 @@
 // EDGE CASE: Basic positive division with remainder (unsigned types)
 
 extern "C" unsigned long long test_const_int_ceil_div_1_1() {
-    static constexpr unsigned long long result = Utils::intCeilDiv(10ull, 3ull);
+    static constexpr unsigned long long result = Cortex::intCeilDiv(10ull, 3ull);
     return result;
 }
 
@@ -20,7 +20,7 @@ extern "C" unsigned long long test_const_int_ceil_div_1_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned long test_const_int_ceil_div_1_2() {
-    static constexpr unsigned long result = Utils::intCeilDiv(10ul, 3ul);
+    static constexpr unsigned long result = Cortex::intCeilDiv(10ul, 3ul);
     return result;
 }
 
@@ -30,7 +30,7 @@ extern "C" unsigned long test_const_int_ceil_div_1_2() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_1_3() {
-    static constexpr unsigned result = Utils::intCeilDiv(10u, 3u);
+    static constexpr unsigned result = Cortex::intCeilDiv(10u, 3u);
     return result;
 }
 
@@ -43,7 +43,7 @@ extern "C" unsigned test_const_int_ceil_div_1_3() {
 // EDGE CASE: Exact division (no remainder)
 
 extern "C" unsigned test_const_int_ceil_div_4_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(12u, 3u);
+    static constexpr unsigned result = Cortex::intCeilDiv(12u, 3u);
     return result;
 }
 
@@ -56,7 +56,7 @@ extern "C" unsigned test_const_int_ceil_div_4_1() {
 // EDGE CASE: Division by 1
 
 extern "C" unsigned test_const_int_ceil_div_5_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(42u, 1u);
+    static constexpr unsigned result = Cortex::intCeilDiv(42u, 1u);
     return result;
 }
 
@@ -69,7 +69,7 @@ extern "C" unsigned test_const_int_ceil_div_5_1() {
 // EDGE CASE: Zero dividend
 
 extern "C" unsigned test_const_int_ceil_div_6_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(0u, 5u);
+    static constexpr unsigned result = Cortex::intCeilDiv(0u, 5u);
     return result;
 }
 
@@ -82,7 +82,7 @@ extern "C" unsigned test_const_int_ceil_div_6_1() {
 // EDGE CASE: Dividend less than divisor
 
 extern "C" unsigned test_const_int_ceil_div_7_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(2u, 3u);
+    static constexpr unsigned result = Cortex::intCeilDiv(2u, 3u);
     return result;
 }
 
@@ -92,7 +92,7 @@ extern "C" unsigned test_const_int_ceil_div_7_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_7_2() {
-    static constexpr unsigned result = Utils::intCeilDiv(1u, 3u);
+    static constexpr unsigned result = Cortex::intCeilDiv(1u, 3u);
     return result;
 }
 
@@ -105,7 +105,7 @@ extern "C" unsigned test_const_int_ceil_div_7_2() {
 // EDGE CASE: Testing with exact std::numeric_limits<T>::min() values
 
 extern "C" unsigned test_const_int_ceil_div_8_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(std::numeric_limits<unsigned>::min(), 1u); // 0 / 1
+    static constexpr unsigned result = Cortex::intCeilDiv(std::numeric_limits<unsigned>::min(), 1u); // 0 / 1
     return result;
 }
 
@@ -118,7 +118,7 @@ extern "C" unsigned test_const_int_ceil_div_8_1() {
 // EDGE CASE: Large values
 
 extern "C" unsigned long long test_const_int_ceil_div_10_1() {
-    static constexpr unsigned long long result = Utils::intCeilDiv(1000000000ull, 7ull);
+    static constexpr unsigned long long result = Cortex::intCeilDiv(1000000000ull, 7ull);
     return result;
 }
 
@@ -145,7 +145,7 @@ extern "C" unsigned long long test_const_int_ceil_div_10_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_10_2() {
-    static constexpr unsigned result = Utils::intCeilDiv(1000u, 33u);
+    static constexpr unsigned result = Cortex::intCeilDiv(1000u, 33u);
     return result;
 }
 
@@ -158,7 +158,7 @@ extern "C" unsigned test_const_int_ceil_div_10_2() {
 // EDGE CASE: Division where dividend equals divisor (n/n = 1)
 
 extern "C" unsigned test_const_int_ceil_div_11_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(5u, 5u);
+    static constexpr unsigned result = Cortex::intCeilDiv(5u, 5u);
     return result;
 }
 
@@ -171,7 +171,7 @@ extern "C" unsigned test_const_int_ceil_div_11_1() {
 // EDGE CASE: One as dividend
 
 extern "C" unsigned test_const_int_ceil_div_14_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(1u, 2u);
+    static constexpr unsigned result = Cortex::intCeilDiv(1u, 2u);
     return result;
 }
 
@@ -181,7 +181,7 @@ extern "C" unsigned test_const_int_ceil_div_14_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_14_2() {
-    static constexpr unsigned result = Utils::intCeilDiv(1u, 10u);
+    static constexpr unsigned result = Cortex::intCeilDiv(1u, 10u);
     return result;
 }
 
@@ -194,7 +194,7 @@ extern "C" unsigned test_const_int_ceil_div_14_2() {
 // EDGE CASE: Large divisor with small dividend
 
 extern "C" unsigned test_const_int_ceil_div_16_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(5u, 1000u);
+    static constexpr unsigned result = Cortex::intCeilDiv(5u, 1000u);
     return result;
 }
 
@@ -207,7 +207,7 @@ extern "C" unsigned test_const_int_ceil_div_16_1() {
 // EDGE CASE: Consecutive values (tests off-by-one scenarios)
 
 extern "C" unsigned test_const_int_ceil_div_17_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(11u, 3u); // Should be 4
+    static constexpr unsigned result = Cortex::intCeilDiv(11u, 3u); // Should be 4
     return result;
 }
 
@@ -217,7 +217,7 @@ extern "C" unsigned test_const_int_ceil_div_17_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_17_2() {
-    static constexpr unsigned result = Utils::intCeilDiv(13u, 3u); // Should be 5
+    static constexpr unsigned result = Cortex::intCeilDiv(13u, 3u); // Should be 5
     return result;
 }
 
@@ -232,7 +232,7 @@ extern "C" unsigned test_const_int_ceil_div_17_2() {
 extern "C" unsigned test_const_int_ceil_div_18_1() {
     // Test with largest safe unsigned value that won't overflow
     static constexpr unsigned dividend = std::numeric_limits<unsigned>::max() - 15u;
-    static constexpr unsigned result = Utils::intCeilDiv(dividend, 2u);
+    static constexpr unsigned result = Cortex::intCeilDiv(dividend, 2u);
     return result;
 }
 
@@ -245,7 +245,7 @@ extern "C" unsigned test_const_int_ceil_div_18_1() {
 extern "C" unsigned long long test_const_int_ceil_div_18_2() {
     // Test with 64-bit boundary values
     static constexpr unsigned long long dividend = std::numeric_limits<unsigned long long>::max() / 2ull;
-    static constexpr unsigned long long result = Utils::intCeilDiv(dividend, 3ull);
+    static constexpr unsigned long long result = Cortex::intCeilDiv(dividend, 3ull);
     return result;
 }
 
@@ -262,7 +262,7 @@ extern "C" unsigned long long test_const_int_ceil_div_18_2() {
 // EDGE CASE: Near-overflow scenarios with unsigned types
 
 extern "C" unsigned test_const_int_ceil_div_19_1() {
-    static constexpr unsigned result = Utils::intCeilDiv(std::numeric_limits<unsigned>::max(), 2u); // UINT_MAX / 2
+    static constexpr unsigned result = Cortex::intCeilDiv(std::numeric_limits<unsigned>::max(), 2u); // UINT_MAX / 2
     return result;
 }
 
@@ -277,7 +277,7 @@ extern "C" unsigned test_const_int_ceil_div_19_1() {
 // CHECK-EMPTY:
 
 extern "C" unsigned test_const_int_ceil_div_19_2() {
-    static constexpr unsigned result = Utils::intCeilDiv(std::numeric_limits<unsigned>::max() - 5u, 10u); // Near UINT_MAX
+    static constexpr unsigned result = Cortex::intCeilDiv(std::numeric_limits<unsigned>::max() - 5u, 10u); // Near UINT_MAX
     return result;
 }
 

@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
 extern "C" uint8_t test_runtime_int_ceil_div_1(uint8_t a, uint8_t b) {
-    return Utils::intCeilDiv(a, b);
+    return Cortex::intCeilDiv(a, b);
 }
 
 // CHECK-LABEL: <test_runtime_int_ceil_div_1>:
@@ -28,7 +28,7 @@ extern "C" uint8_t test_runtime_int_ceil_div_1(uint8_t a, uint8_t b) {
 // CHECK-EMPTY:
 
 extern "C" uint16_t test_runtime_int_ceil_div_2(uint16_t a, uint16_t b) {
-    return Utils::intCeilDiv(a, b);
+    return Cortex::intCeilDiv(a, b);
 }
 
 // CHECK-LABEL: <test_runtime_int_ceil_div_2>:
@@ -55,7 +55,7 @@ extern "C" uint16_t test_runtime_int_ceil_div_2(uint16_t a, uint16_t b) {
 // CHECK-EMPTY:
 
 extern "C" uint32_t test_runtime_int_ceil_div_3(uint32_t a, uint32_t b) {
-    return Utils::intCeilDiv(a, b);
+    return Cortex::intCeilDiv(a, b);
 }
 
 // CHECK-LABEL: <test_runtime_int_ceil_div_3>:
@@ -74,7 +74,7 @@ extern "C" uint32_t test_runtime_int_ceil_div_3(uint32_t a, uint32_t b) {
 // CHECK-EMPTY:
 
 extern "C" uint64_t test_runtime_int_ceil_div_4(uint64_t a, uint64_t b) {
-    return Utils::intCeilDiv(a, b);
+    return Cortex::intCeilDiv(a, b);
 }
 
 // CHECK-LABEL: <test_runtime_int_ceil_div_4>:

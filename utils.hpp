@@ -19,44 +19,42 @@
 #include <cstdint>
 #include <concepts>
 
-namespace Utils {
-
-//! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
-template <std::unsigned_integral T>
-constexpr T intCeilDiv(T dividend, T divisor) {
-    if (dividend == T{0}) {
-        return T{0};
-    } else {
-        if constexpr (sizeof(T) < sizeof(uint32_t)) {
-            // force promotion to uint32_t to avoid automatic promotion to int
-            uint32_t wide_dividend = dividend;
-            uint32_t wide_divisor = divisor;
-            return static_cast<T>(uint32_t{1} + (wide_dividend - uint32_t{1}) / wide_divisor);
+namespace Cortex {
+    //! Divides two unsigned integers and rounds the result up to the nearest multiple of divisor.
+    template <std::unsigned_integral T>
+    constexpr T intCeilDiv(T dividend, T divisor) {
+        if (dividend == T{0}) {
+            return T{0};
         } else {
-            return T{1} + (dividend - T{1}) / divisor;
+            if constexpr (sizeof(T) < sizeof(uint32_t)) {
+                // force promotion to uint32_t to avoid automatic promotion to int
+                uint32_t wide_dividend = dividend;
+                uint32_t wide_divisor = divisor;
+                return static_cast<T>(uint32_t{1} + (wide_dividend - uint32_t{1}) / wide_divisor);
+            } else {
+                return T{1} + (dividend - T{1}) / divisor;
+            }
         }
     }
-}
 
-//! Check if the n-th bit is set in the value.
-template<typename T>
-constexpr bool isBitSet(T value, uint8_t n)
-{
-    return (value >> n) & T{1};
-}
+    //! Check if the n-th bit is set in the value.
+    template<typename T>
+    constexpr bool isBitSet(T value, uint8_t n)
+    {
+        return (value >> n) & T{1};
+    }
 
-//! Sets the n-th bit in the value.
-template<typename T>
-constexpr void setBit(T& value, uint8_t n)
-{
-    value |= T{1} << n;
-}
+    //! Sets the n-th bit in the value.
+    template<typename T>
+    constexpr void setBit(T& value, uint8_t n)
+    {
+        value |= T{1} << n;
+    }
 
-//! Clears the n-th bit in the value.
-template<typename T>
-constexpr void clearBit(T& value, uint8_t n)
-{
-    value &= ~(T{1} << n);
-}
-
+    //! Clears the n-th bit in the value.
+    template<typename T>
+    constexpr void clearBit(T& value, uint8_t n)
+    {
+        value &= ~(T{1} << n);
+    }
 }
