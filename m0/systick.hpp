@@ -23,15 +23,15 @@ namespace Cortex::M0::SysTick {
 
     struct Registers
     {
-        volatile uint32_t CTRL; //!< control and status register
-        volatile uint32_t LOAD; //!< reload value at the restart of counting
-        volatile uint32_t VAL; //!< current counter value
+        volatile uint32_t CSR; //!< control and status register
+        volatile uint32_t RVR; //!< reload value at the restart of counting
+        volatile uint32_t CVR; //!< current counter value
         volatile uint32_t CALIB; //!< controls timer calibration
     };
 
-    union CTRL {
+    union CSR {
         //! timer clock source
-        enum class ClkSource : bool {
+        enum class CLKSOURCE : bool {
             EXTERNAL = false, //!< external reference clock
             CPU = true //!< processor clock
         };
@@ -47,9 +47,9 @@ namespace Cortex::M0::SysTick {
 
         uint32_t value = 0;
 
-        CTRL() = default;
+        CSR() = default;
 
-        CTRL(uint32_t new_value)
+        CSR(uint32_t new_value)
         {
             value = new_value;
         }
@@ -57,10 +57,8 @@ namespace Cortex::M0::SysTick {
 
     union CALIB {
         struct Bits {
-            /*!
-                Indicates the calibration value when the SysTick counter runs on HCLK max/8 as external clock.
-                When HCLK is programmed at the maximum frequency, the SysTick period is 1ms.
-            */
+            //! Indicates the calibration value when the SysTick counter runs on HCLK max/8 as external clock.
+            //! When HCLK is programmed at the maximum frequency, the SysTick period is 1ms.
             uint32_t TENMS: 24;
             uint32_t RESERVED: 6;
             uint32_t SKEW: 1; //!< always '1'

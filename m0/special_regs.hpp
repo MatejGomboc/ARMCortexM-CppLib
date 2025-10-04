@@ -21,7 +21,7 @@
 
 namespace Cortex::M0 {
     //! the following values are saved into LR on exception entry
-    enum class LrExceptionReturn : uint32_t {
+    enum class LrExceptionReturnValue : uint32_t {
         HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
         THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
         THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
@@ -53,7 +53,7 @@ namespace Cortex::M0 {
     //! priority mask register
     union PRIMASK {
         struct Bits {
-            uint32_t PM: 1; //!< all exceptions except NMI and hard fault are disabled
+            uint32_t PRIMASK: 1; //!< all exceptions except NMI and hard fault are disabled
             uint32_t RESERVED: 31;
         } bits;
 
@@ -69,21 +69,15 @@ namespace Cortex::M0 {
 
     //! control register
     union CONTROL {
-        //! thread mode privilege level
-        enum class ThreadModePrivilegeLevel : bool {
-            PRIVILEGED = false, //!< privileged thread mode
-            UNPRIVILEGED = true //!< unprivileged thread mode
-        };
-
         //! currently used stack pointer
-        enum class StackPointer : bool {
+        enum class ASPSEL : bool {
             MSP = false, //!< main stack pointer
             PSP = true //!< process stack pointer
         };
 
         struct Bits {
-            uint32_t nPRIV: 1; //!< thread mode privilege level (0=privileged, 1=unprivileged)
-            uint32_t SPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
+            uint32_t RESERVED0: 1;
+            uint32_t ASPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
             uint32_t RESERVED1: 30;
         } bits;
 
