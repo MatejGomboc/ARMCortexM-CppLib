@@ -45,38 +45,38 @@ namespace CortexM0 {
 namespace CortexM0::Nvic {
     static inline bool isIrqEnabled(uint8_t irq_number)
     {
-        return Utils::isBitSet(NVIC->ISER, irq_number);
+        return Cortex::isBitSet(NVIC->ISER, irq_number);
     }
 
     static inline void enableIrq(uint8_t irq_number)
     {
-        Utils::setBit(NVIC->ISER, irq_number);
+        Cortex::setBit(NVIC->ISER, irq_number);
         dataSyncBarrier();
         instrSyncBarrier();
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
-        Utils::setBit(NVIC->ICER, irq_number);
+        Cortex::setBit(NVIC->ICER, irq_number);
         dataSyncBarrier();
         instrSyncBarrier();
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
     {
-        return Utils::isBitSet(NVIC->ISPR, irq_number);
+        return Cortex::isBitSet(NVIC->ISPR, irq_number);
     }
 
     static inline void setPendingIrq(uint8_t irq_number)
     {
-        Utils::setBit(NVIC->ISPR, irq_number);
+        Cortex::setBit(NVIC->ISPR, irq_number);
         dataSyncBarrier();
         instrSyncBarrier();
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
-        Utils::setBit(NVIC->ICPR, irq_number);
+        Cortex::setBit(NVIC->ICPR, irq_number);
         dataSyncBarrier();
         instrSyncBarrier();
     }

@@ -50,14 +50,14 @@ namespace CortexM3::Nvic {
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Utils::isBitSet(NVIC->ISER[reg_idx], bit_idx);
+        return Cortex::isBitSet(NVIC->ISER[reg_idx], bit_idx);
     }
 
     static inline void enableIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Utils::setBit(NVIC->ISER[reg_idx], bit_idx);
+        Cortex::setBit(NVIC->ISER[reg_idx], bit_idx);
         dataSyncBarrier();
         instrSyncBarrier();
     }
@@ -66,7 +66,7 @@ namespace CortexM3::Nvic {
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Utils::setBit(NVIC->ICER[reg_idx], bit_idx);
+        Cortex::setBit(NVIC->ICER[reg_idx], bit_idx);
         dataSyncBarrier();
         instrSyncBarrier();
     }
@@ -75,14 +75,14 @@ namespace CortexM3::Nvic {
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Utils::isBitSet(NVIC->ISPR[reg_idx], bit_idx);
+        return Cortex::isBitSet(NVIC->ISPR[reg_idx], bit_idx);
     }
 
     static inline void setPendingIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Utils::setBit(NVIC->ISPR[reg_idx], bit_idx);
+        Cortex::setBit(NVIC->ISPR[reg_idx], bit_idx);
         dataSyncBarrier();
         instrSyncBarrier();
     }
@@ -91,7 +91,7 @@ namespace CortexM3::Nvic {
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Utils::setBit(NVIC->ICPR[reg_idx], bit_idx);
+        Cortex::setBit(NVIC->ICPR[reg_idx], bit_idx);
         dataSyncBarrier();
         instrSyncBarrier();
     }
@@ -100,7 +100,7 @@ namespace CortexM3::Nvic {
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Utils::isBitSet(NVIC->IABR[reg_idx], bit_idx);
+        return Cortex::isBitSet(NVIC->IABR[reg_idx], bit_idx);
     }
 
     static inline void triggerIrq(uint8_t irq_number)
