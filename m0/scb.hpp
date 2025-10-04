@@ -22,6 +22,19 @@
 namespace CortexM0::Scb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED00u;
 
+    struct Registers
+    {
+        volatile uint32_t CPUID; //!< contains the processor part number, version, and implementation information
+        volatile uint32_t ICSR; //!< interrupt control and state register
+        volatile uint32_t VTOR; //!< vector table offset register
+        volatile uint32_t AIRCR; //!< enables system reset
+        volatile uint32_t SCR; //!< controls features of entry to and exit from low power state
+        volatile uint32_t CCR; //!< is a read-only register and indicates some aspects of the behaviour of the processor
+        volatile uint32_t RESERVED1;
+        volatile uint32_t SHPR2; //!< sets the priority level of the exception handlers that have configurable priority (SVCall)
+        volatile uint32_t SHPR3; //!< sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
+    };
+
     //! is a read-only register and contains the processor part number, version, and implementation information
     union CPUID {
         struct Bits {
@@ -171,19 +184,6 @@ namespace CortexM0::Scb {
         {
             value = new_value;
         }
-    };
-
-    struct Registers
-    {
-        volatile uint32_t CPUID; //!< contains the processor part number, version, and implementation information
-        volatile uint32_t ICSR; //!< interrupt control and state register
-        volatile uint32_t VTOR; //!< vector table offset register
-        volatile uint32_t AIRCR; //!< enables system reset
-        volatile uint32_t SCR; //!< controls features of entry to and exit from low power state
-        volatile uint32_t CCR; //!< is a read-only register and indicates some aspects of the behaviour of the processor
-        volatile uint32_t RESERVED1;
-        volatile uint32_t SHPR2; //!< sets the priority level of the exception handlers that have configurable priority (SVCall)
-        volatile uint32_t SHPR3; //!< sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
     };
 }
 

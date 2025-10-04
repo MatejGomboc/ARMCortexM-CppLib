@@ -21,6 +21,14 @@
 namespace CortexM0Plus::SysTick {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E010u;
 
+    struct Registers
+    {
+        volatile uint32_t CTRL; //!< control and status register
+        volatile uint32_t LOAD; //!< reload value at the restart of counting
+        volatile uint32_t VAL; //!< current counter value
+        volatile uint32_t CALIB; //!< controls timer calibration
+    };
+
     union CTRL {
         //! timer clock source
         enum class ClkSource : bool {
@@ -67,14 +75,6 @@ namespace CortexM0Plus::SysTick {
         {
             value = new_value;
         }
-    };
-
-    struct Registers
-    {
-        volatile uint32_t CTRL; //!< control and status register
-        volatile uint32_t LOAD; //!< reload value at the restart of counting
-        volatile uint32_t VAL; //!< current counter value
-        volatile uint32_t CALIB; //!< controls timer calibration
     };
 }
 

@@ -22,6 +22,26 @@
 namespace CortexM3::Scb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED00u;
 
+    struct Registers
+    {
+        volatile uint32_t CPUID; //!< contains the processor part number, version, and implementation information
+        volatile uint32_t ICSR; //!< interrupt control and state register
+        volatile uint32_t VTOR; //!< vector table offset register
+        volatile uint32_t AIRCR; //!< application interrupt and reset control register
+        volatile uint32_t SCR; //!< controls features of entry to and exit from low power state
+        volatile uint32_t CCR; //!< configuration and control register
+        volatile uint32_t SHPR1; //!< system handlers priority register 1
+        volatile uint32_t SHPR2; //!< system handlers priority register 2
+        volatile uint32_t SHPR3; //!< system handlers priority register 3
+        volatile uint32_t SHCSR; //!< system handler control and state register
+        volatile uint32_t CFSR; //!< configurable fault status register
+        volatile uint32_t HFSR; //!< hard fault status register
+        volatile uint32_t DFSR; //!< debug fault status register
+        volatile uint32_t MMFAR; //!< memory management fault address register
+        volatile uint32_t BFAR; //!< bus fault address register
+        volatile uint32_t AFSR; //!< auxiliary fault status register
+    };
+
     //! is a read-only register and contains the processor part number, version, and implementation information
     union CPUID {
         struct Bits {
@@ -290,26 +310,6 @@ namespace CortexM3::Scb {
         {
             value = new_value;
         }
-    };
-
-    struct Registers
-    {
-        volatile uint32_t CPUID; //!< contains the processor part number, version, and implementation information
-        volatile uint32_t ICSR; //!< interrupt control and state register
-        volatile uint32_t VTOR; //!< vector table offset register
-        volatile uint32_t AIRCR; //!< application interrupt and reset control register
-        volatile uint32_t SCR; //!< controls features of entry to and exit from low power state
-        volatile uint32_t CCR; //!< configuration and control register
-        volatile uint32_t SHPR1; //!< system handlers priority register 1
-        volatile uint32_t SHPR2; //!< system handlers priority register 2
-        volatile uint32_t SHPR3; //!< system handlers priority register 3
-        volatile uint32_t SHCSR; //!< system handler control and state register
-        volatile uint32_t CFSR; //!< configurable fault status register
-        volatile uint32_t HFSR; //!< hard fault status register
-        volatile uint32_t DFSR; //!< debug fault status register
-        volatile uint32_t MMFAR; //!< memory management fault address register
-        volatile uint32_t BFAR; //!< bus fault address register
-        volatile uint32_t AFSR; //!< auxiliary fault status register
     };
 }
 
