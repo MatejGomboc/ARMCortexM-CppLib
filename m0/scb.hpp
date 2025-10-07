@@ -278,6 +278,7 @@ namespace Cortex::M0::Scb {
 
         AIRCR aircr { SCB->AIRCR };
 
+        aircr.bits.VECTCLRACTIVE = 0;
         aircr.bits.SYSRESETREQ = true;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
 
