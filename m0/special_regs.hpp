@@ -157,7 +157,6 @@ namespace Cortex::M0 {
     static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline uint32_t getPspReg()
@@ -170,7 +169,6 @@ namespace Cortex::M0 {
     static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline PRIMASK getPrimaskReg()
@@ -183,7 +181,6 @@ namespace Cortex::M0 {
     static inline void setPrimaskReg(PRIMASK primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline CONTROL getControlReg()
@@ -196,6 +193,5 @@ namespace Cortex::M0 {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 }

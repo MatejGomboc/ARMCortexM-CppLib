@@ -17,7 +17,6 @@
 #pragma once
 
 #include "utils.hpp"
-#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0::Nvic {
@@ -51,15 +50,11 @@ namespace Cortex::M0::Nvic {
     static inline void enableIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ISER, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ICER, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
@@ -70,14 +65,10 @@ namespace Cortex::M0::Nvic {
     static inline void setPendingIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ISPR, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ICPR, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 }
