@@ -29,8 +29,8 @@ namespace Cortex::M0 {
 
     union PSR {
         struct Bits {
-            uint32_t ISR: 6; //!< number of the currently executing exception
-            uint32_t RESERVED0: 18;
+            uint32_t ISR: 9; //!< number of the currently executing exception
+            uint32_t RESERVED0: 15;
             uint32_t T: 1; //!< CPU running in Thumb mode
             uint32_t RESERVED1: 3;
             uint32_t V: 1; //!< overflow flag
