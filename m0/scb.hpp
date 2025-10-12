@@ -33,6 +33,7 @@ namespace Cortex::M0::Scb {
         volatile uint32_t RESERVED1;
         volatile uint32_t SHPR2; //!< Sets the priority level of the exception handlers that have configurable priority (SVCall).
         volatile uint32_t SHPR3; //!< Sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick).
+        volatile uint32_t SHCSR; //!< System handler control and state register.
     };
 
     //! Contains the processor part number, version, and implementation information.
@@ -70,23 +71,28 @@ namespace Cortex::M0::Scb {
     union ICSR {
         struct Bits {
             //! Active vector. Contains the active exception number.
-            uint32_t VECTACTIVE: 6;
+            uint32_t VECTACTIVE: 9;
 
-            uint32_t RESERVED0: 6;
+            uint32_t RESERVED0: 3;
 
             //! Pending vector. Indicates the exception number of the highest priority pending enabled exception.
             //! 0: No pending exceptions.
             //! Other values: The exception number of the highest priority pending enabled exception.
-            uint32_t VECTPENDING: 6;
+            uint32_t VECTPENDING: 9;
 
-            uint32_t RESERVED1: 4;
+            uint32_t RESERVED1: 1;
 
             //! Interrupt pending flag, excluding NMI and Faults.
             //! 0: Interrupt not pending.
             //! 1: Interrupt pending.
             uint32_t ISRPENDING: 1;
 
-            uint32_t RESERVED2: 2;
+            //! Preempted active exception indicator.
+            //! 0: No preempted active exceptions.
+            //! 1: A preempted exception is active.
+            uint32_t ISRPREEMPT: 1;
+
+            uint32_t RESERVED2: 1;
 
             //! SysTick exception clear-pending bit.
             //! Write-only. On a read, the value is unknown.
@@ -261,6 +267,29 @@ namespace Cortex::M0::Scb {
         SHPR3() = default;
 
         SHPR3(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    //! System handler control and state register.
+    union SHCSR {
+        struct Bits {
+            uint32_t RESERVED0: 15;
+
+            //! SVCall pending bit.
+            //! 0: SVCall is not pending.
+            //! 1: SVCall is pending.
+            uint32_t SVCALLPENDED: 1;
+
+            uint32_t RESERVED1: 16;
+        } bits;
+
+        uint32_t value = 0;
+
+        SHCSR() = default;
+
+        SHCSR(uint32_t new_value)
         {
             value = new_value;
         }
