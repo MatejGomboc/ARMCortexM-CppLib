@@ -16,18 +16,16 @@
 
 #pragma once
 
-#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M1 {
-    //! the following values are saved into LR on exception entry
+    //! The following values are saved into LR on exception entry.
     enum class LrExceptionReturn : uint32_t {
         HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
         THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
         THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
     };
 
-    //! program status register
     union PSR {
         struct Bits {
             uint32_t ISR: 6; //!< number of the currently executing exception
@@ -50,7 +48,6 @@ namespace Cortex::M1 {
         }
     };
 
-    //! priority mask register
     union PRIMASK {
         struct Bits {
             uint32_t PM: 1; //!< all exceptions except NMI and hard fault are disabled
@@ -67,16 +64,15 @@ namespace Cortex::M1 {
         }
     };
 
-    //! control register
     union CONTROL {
         //! thread mode privilege level
-        enum class ThreadModePrivilegeLevel : bool {
+        enum class nPRIV : bool {
             PRIVILEGED = false, //!< privileged thread mode
             UNPRIVILEGED = true //!< unprivileged thread mode
         };
 
         //! currently used stack pointer
-        enum class StackPointer : bool {
+        enum class SPSEL : bool {
             MSP = false, //!< main stack pointer
             PSP = true //!< process stack pointer
         };
@@ -163,7 +159,6 @@ namespace Cortex::M1 {
     static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline uint32_t getPspReg()
@@ -176,7 +171,6 @@ namespace Cortex::M1 {
     static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline PRIMASK getPrimaskReg()
@@ -189,7 +183,6 @@ namespace Cortex::M1 {
     static inline void setPrimaskReg(PRIMASK primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline CONTROL getControlReg()
@@ -202,6 +195,5 @@ namespace Cortex::M1 {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 }
