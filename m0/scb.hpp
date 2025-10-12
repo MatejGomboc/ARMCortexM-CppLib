@@ -40,7 +40,7 @@ namespace Cortex::M0::Scb {
         struct Bits {
             uint32_t REVISION: 4; //!< The p value in the Rnpn product revision identifier. Indicates the patch release.
             uint32_t PARTNO: 12; //!< Part number of the processor (0xC60: Cortex-M0).
-            uint32_t CONSTANT: 4; //!< Constant that defines the architecture of the processor (0xC: ARMv6-M architecture).
+            uint32_t ARCHITECTURE: 4; //!< Constant that defines the architecture of the processor (0xC: ARMv6-M architecture).
             uint32_t VARIANT: 4; //!< Variant number. The r value in the Rnpn product revision identifier.
             uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
         } bits;
