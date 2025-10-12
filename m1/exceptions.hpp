@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M1 {
@@ -36,16 +35,12 @@ namespace Cortex::M1 {
 
     static inline void enableInterrupts()
     {
-        dataSyncBarrier();
         asm volatile("cpsie i" : : : "memory");
-        instrSyncBarrier();
     }
 
     static inline void disableInterrupts()
     {
-        dataSyncBarrier();
         asm volatile("cpsid i" : : : "memory");
-        instrSyncBarrier();
     }
 
     static constexpr bool isIrqNumber(ExceptionNumber exception)
@@ -57,20 +52,15 @@ namespace Cortex::M1 {
     static inline void sendEvent()
     {
         asm volatile("sev" : : : "memory");
-        dataSyncBarrier();
     }
 
     static inline void waitForEvent()
     {
-        dataSyncBarrier();
         asm volatile("wfe" : : : "memory");
-        instrSyncBarrier();
     }
 
     static inline void waitForIrq()
     {
-        dataSyncBarrier();
         asm volatile("wfi" : : : "memory");
-        instrSyncBarrier();
     }
 }
