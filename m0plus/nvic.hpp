@@ -17,7 +17,6 @@
 #pragma once
 
 #include "utils.hpp"
-#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Nvic {
@@ -25,16 +24,16 @@ namespace Cortex::M0Plus::Nvic {
 
     struct Registers
     {
-        volatile uint32_t ISER; //!< Interrupt Set-Enable Register
+        volatile uint32_t ISER; //!< Enables interrupts and shows which interrupts are enabled.
         volatile uint32_t RESERVED0[31];
-        volatile uint32_t ICER; //!< Interrupt Clear-Enable Register
+        volatile uint32_t ICER; //!< Disables interrupts and shows which interrupts are disabled.
         volatile uint32_t RESERVED1[31];
-        volatile uint32_t ISPR; //!< Interrupt Set-Pending Register
+        volatile uint32_t ISPR; //!< Forces interrupts into pending state and shows which interrupts are pending.
         volatile uint32_t RESERVED2[31];
-        volatile uint32_t ICPR; //!< Interrupt Clear-Pending Register
+        volatile uint32_t ICPR; //!< Removes pending state from interrupts and shows which interrupts are pending.
         volatile uint32_t RESERVED3[31];
         volatile uint32_t RESERVED4[64];
-        volatile uint8_t IP[32]; //!< Interrupt Priority Registers (byte accessible)
+        volatile uint8_t IPR[32]; //!< Sets priority of interrupts (byte accessible).
     };
 }
 
@@ -51,15 +50,11 @@ namespace Cortex::M0Plus::Nvic {
     static inline void enableIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ISER, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ICER, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
@@ -70,14 +65,10 @@ namespace Cortex::M0Plus::Nvic {
     static inline void setPendingIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ISPR, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
         Cortex::setBit(NVIC->ICPR, irq_number);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 }

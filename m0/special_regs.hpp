@@ -20,14 +20,13 @@
 #include <cstdint>
 
 namespace Cortex::M0 {
-    //! the following values are saved into LR on exception entry
+    //! The following values are saved into LR on exception entry.
     enum class LrExceptionReturnValue : uint32_t {
         HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
         THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
         THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
     };
 
-    //! program status register
     union PSR {
         struct Bits {
             uint32_t ISR: 6; //!< number of the currently executing exception
@@ -50,7 +49,6 @@ namespace Cortex::M0 {
         }
     };
 
-    //! priority mask register
     union PRIMASK {
         struct Bits {
             uint32_t PRIMASK: 1; //!< all exceptions except NMI and hard fault are disabled
@@ -67,7 +65,6 @@ namespace Cortex::M0 {
         }
     };
 
-    //! control register
     union CONTROL {
         //! currently used stack pointer
         enum class ASPSEL : bool {
