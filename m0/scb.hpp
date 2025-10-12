@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2025 Matej Gomboc <https://github.com/MatejGomboc/ARMCortexM-CppLib>
 
-    Licensed under the Apache License, Version 2.0 (the "Licence");
+    Licensed under the Apache Licence, Version 2.0 (the "Licence");
     you may not use this file except in compliance with the Licence.
     You may obtain a copy of the Licence at
 
