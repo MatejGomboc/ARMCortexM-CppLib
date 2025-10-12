@@ -40,18 +40,18 @@ namespace Cortex::M0::SysTick {
             //! Enables the counter. When ENABLE is set to 1, the counter starts counting down. On reaching 0, it sets the COUNTFLAG to
             //! 1 and optionally asserts the SysTick depending on the value of TICKINT. It then loads the RELOAD value again, and begins
             //! counting.
-            //! 0: Counter disabled
-            //! 1: Counter enabled
+            //! 0: Counter disabled.
+            //! 1: Counter enabled.
             uint32_t ENABLE: 1;
 
-            //! SysTick exception request enable
-            //! 0: Counting down to zero does not assert the SysTick exception request
+            //! SysTick exception request enable.
+            //! 0: Counting down to zero does not assert the SysTick exception request.
             //! 1: Counting down to zero to assert the SysTick exception request.
             uint32_t TICKINT: 1;
 
             //! Selects the timer clock source.
-            //! 0: External reference clock
-            //! 1: Processor clock
+            //! 0: External reference clock.
+            //! 1: Processor clock.
             uint32_t CLKSOURCE: 1;
 
             uint32_t RESERVED0: 13;

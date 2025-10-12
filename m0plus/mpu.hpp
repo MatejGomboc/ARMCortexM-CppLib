@@ -22,48 +22,101 @@ namespace Cortex::M0Plus::Mpu {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED90u;
 
     struct Registers {
-        volatile uint32_t TYPE; //!< indicates whether the MPU is present, and if so, how many regions it supports
-        volatile uint32_t CTRL; //!< MPU control register
-        volatile uint32_t RNR; //!< region number register (selects a region to edit its attributes)
-        volatile uint32_t RBAR; //!< region base address register
-        volatile uint32_t RASR; //!< region attribute and size register
+        volatile uint32_t TYPE; //!< Indicates whether the MPU is present, and if so, how many regions it supports.
+        volatile uint32_t CTRL; //!< MPU control register.
+        volatile uint32_t RNR; //!< Region number register (selects a region to edit its attributes).
+        volatile uint32_t RBAR; //!< Region base address register.
+        volatile uint32_t RASR; //!< Region attribute and size register.
     };
 
+    //! Indicates whether the MPU is present, and if so, how many regions it supports.
     union TYPE {
         struct Bits {
-            uint32_t SEPARATE: 1; //!< support for unified/separate instruction and data regions
+            //! Indicates support for unified or separate instruction and date memory maps: 0 = Unified.
+            uint32_t SEPARATE: 1;
+
             uint32_t RESERVED0: 7;
-            uint32_t DREGION: 8; //!< number of supported data regions
-            uint32_t IREGION: 8; //!< number of supported instruction regions
+
+            //! Indicates the number of supported MPU data regions:
+            //! 0x00 = Zero regions if the device does not include the MPU.
+            //! 0x08 = Eight regions if the device includes the MPU.
+            uint32_t DREGION: 8;
+
+            //! Indicates the number of supported MPU instruction regions.
+            //! Always contains 0x00. The MPU memory map is unified and is described by the DREGION field.
+            uint32_t IREGION: 8;
+
             uint32_t RESERVED1: 8;
         } bits;
 
         uint32_t value = 0;
     };
 
+    //! MPU control register.
+    //! Enables the MPU.
+    //! Enables the default memory map background region.
+    //! Enables use of the MPU when in the HardFault or Non-Maskable Interrupt (NMI) handler.
     union CTRL {
         struct Bits {
-            uint32_t ENABLE: 1; //!< enables the MPU
-            uint32_t HFNMIENA: 1; //!< enables MPU during hard fault and NMI exception handlers
-            uint32_t PRIVDEFENA: 1; //!< enables use of the default memory map as a background region for privileged software accesses
+            //! Enables the MPU.
+            //! 0: MPU disabled.
+            //! 1: MPU enabled.
+            uint32_t ENABLE: 1;
+
+            //! Enables the operation of MPU during HardFault and NMI handlers.
+            //! When the MPU is enabled:
+            //! 0 = MPU is disabled during HardFault and NMI handlers, regardless of the value of the ENABLE bit.
+            //! 1 = the MPU is enabled during HardFault and NMI handlers.
+            //! When the MPU is disabled, if this bit is set to 1 the behavior is Unpredictable.
+            uint32_t HFNMIENA: 1;
+
+            //! Enable privileged software access to default memory map.
+            //! 0: If the MPU is enabled, disables use of the default memory map. Any memory access to a location not covered by any
+            //! enabled region causes a fault.
+            //! 1: If the MPU is enabled, enables use of the default memory map as a background region for privileged software accesses.
+            //! When enabled, the background region acts as if it is region number -1. Any region that is defined and enabled has priority over
+            //! this default map.
+            //! If the MPU is disabled, the processor ignores this bit.
+            uint32_t PRIVDEFENA: 1;
+
             uint32_t RESERVED: 29;
         } bits;
 
         uint32_t value = 0;
     };
 
+    //! Region base address register.
     union RBAR {
         struct Bits {
-            uint32_t REGION: 4; //!< index of the selected region
-            uint32_t VALID: 1; //!< use the value of REGION field to select the region and also update value of region number register
-            uint32_t ADDR: 27; //!< base address of the selected region
+            //! MPU region field.
+            //! For the behavior on writes, see the description of the VALID field.
+            //! On reads, returns the current region number, as specified by the MPU_RNR register.
+            uint32_t REGION: 4;
+
+            //! MPU region number valid.
+            //! Write:
+            //! 0: MPU_RNR register not changed, and the processor:
+            //! Updates the base address for the region specified in the MPU_RNR.
+            //! Ignores the value of the REGION field.
+            //! 1: the processor:
+            //! Updates the value of the MPU_RNR to the value of the REGION field.
+            //! Updates the base address for the region specified in the REGION field.
+            //! Read:
+            //! Always read as zero.
+            uint32_t VALID: 1;
+
+            //! Region base address field.
+            //! The value of N depends on the region size.
+            uint32_t ADDR: 27;
         } bits;
 
         uint32_t value = 0;
     };
 
+    //! Region attribute and size register.
     union RASR {
-        enum class AccessPermission : uint8_t {
+        //! Access permission field values.
+        enum class AP : uint8_t {
             NO_ACCESS = 0b000, //!< no access for any privilege level
             PRIV_RW = 0b001, //!< privileged access only, read-write
             PRIV_RW_UNPRIV_RO = 0b010, //!< privileged read-write, unprivileged read-only
@@ -74,6 +127,7 @@ namespace Cortex::M0Plus::Mpu {
             RO2 = 0b111 //!< read-only for all privilege levels
         };
 
+        //! Memory region type field values.
         enum class MemoryType : uint8_t {
             PERIPHERAL = 0b011, //!< device peripherals
             FLASH = 0b100, //!< flash memory
@@ -82,15 +136,38 @@ namespace Cortex::M0Plus::Mpu {
         };
 
         struct Bits {
-            uint32_t ENABLE: 1; //!< region enabled
-            uint32_t SIZE: 5; //!< region size exponent (size = 2^(SIZE + 1) bytes)
+            //! Enables the MPU protection region.
+            //! 0 = Region disabled.
+            //! 1 = Region enabled.
+            uint32_t ENABLE: 1;
+
+            //! Size of the MPU protection region.
+            //! Specifies the size of the MPU region. The minimum permitted value is 7 (b00111).
+            uint32_t SIZE: 5;
+
             uint32_t RESERVED0: 2;
-            uint32_t SRD: 8; //!< sub-region disable bitmap
-            uint32_t TEX: 3; //!< type extension field (memory type of the region)
+
+            //! Subregion disable bits.
+            //! For each bit in this field:
+            //! 0 = Corresponding sub-region is enabled.
+            //! 1 = Corresponding sub-region is disabled.
+            uint32_t SRD: 8;
+
+            //! Memory region type field.
+            uint32_t TYPE: 3;
+
             uint32_t RESERVED1: 5;
-            uint32_t AP: 3; //!< access permission
+
+            //! Access permission field.
+            uint32_t AP: 3;
+
             uint32_t RESERVED2: 1;
-            uint32_t XN: 1; //!< eXecute Never (instruction fetches disabled)
+
+            //! Instruction access disable bit:
+            //! 0 = Instruction fetches enabled.
+            //! 1 = Instruction fetches disabled.
+            uint32_t XN: 1;
+
             uint32_t RESERVED3: 3;
         } bits;
 
