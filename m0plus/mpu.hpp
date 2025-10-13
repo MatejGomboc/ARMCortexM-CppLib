@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Mpu {
@@ -50,6 +51,13 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
 
         uint32_t value = 0;
+
+        TYPE() = default;
+
+        TYPE(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! MPU control register.
@@ -83,6 +91,13 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
 
         uint32_t value = 0;
+
+        CTRL() = default;
+
+        CTRL(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Region base address register.
@@ -111,28 +126,35 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
 
         uint32_t value = 0;
+
+        RBAR() = default;
+
+        RBAR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Region attribute and size register.
     union RASR {
         //! Access permission field values.
         enum class AP : uint8_t {
-            NO_ACCESS = 0b000, //!< no access for any privilege level
-            PRIV_RW = 0b001, //!< privileged access only, read-write
-            PRIV_RW_UNPRIV_RO = 0b010, //!< privileged read-write, unprivileged read-only
-            RW = 0b011, //!< full read-write access
-            RESERVED = 0b100, //!< reserved
-            PRIV_RO = 0b101, //!< privileged read-only
-            RO1 = 0b110, //!< read-only for all privilege levels
-            RO2 = 0b111 //!< read-only for all privilege levels
+            NO_ACCESS = 0b000, //!< No access for any privilege level.
+            PRIV_RW = 0b001, //!< Privileged access only, read-write.
+            PRIV_RW_UNPRIV_RO = 0b010, //!< Privileged read-write, unprivileged read-only.
+            RW = 0b011, //!< Full read-write access.
+            RESERVED = 0b100, //!< Reserved.
+            PRIV_RO = 0b101, //!< Privileged read-only.
+            RO1 = 0b110, //!< Read-only for all privilege levels.
+            RO2 = 0b111 //!< Read-only for all privilege levels.
         };
 
         //! Memory region type field values.
         enum class MemoryType : uint8_t {
-            PERIPHERAL = 0b011, //!< device peripherals
-            FLASH = 0b100, //!< flash memory
-            INTERN_SRAM = 0b101, //!< internal SRAM
-            EXTERN_SRAM = 0b111 //!< external SRAM
+            PERIPHERAL = 0b011, //!< Device peripherals.
+            FLASH = 0b100, //!< Flash memory.
+            INTERN_SRAM = 0b101, //!< Internal SRAM.
+            EXTERN_SRAM = 0b111 //!< External SRAM.
         };
 
         struct Bits {
@@ -172,6 +194,13 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
 
         uint32_t value = 0;
+
+        RASR() = default;
+
+        RASR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 }
 
