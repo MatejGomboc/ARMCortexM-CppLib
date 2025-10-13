@@ -22,8 +22,7 @@
 namespace Cortex::M0Plus::Mpu {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED90u;
 
-    struct Registers
-    {
+    struct Registers {
         volatile uint32_t TYPE; //!< Indicates whether the MPU is present, and if so, how many regions it supports.
         volatile uint32_t CTRL; //!< MPU control register.
         volatile uint32_t RNR; //!< Region number register (selects a region to edit its attributes).
@@ -31,10 +30,10 @@ namespace Cortex::M0Plus::Mpu {
         volatile uint32_t RASR; //!< Region attribute and size register.
     };
 
-    //! MPU type register.
+    //! Indicates whether the MPU is present, and if so, how many regions it supports.
     union TYPE {
         struct Bits {
-            uint32_t SEPARATE: 1; //!< Indicates support for unified or separate instruction and data memory maps.
+            uint32_t SEPARATE: 1; //!< Indicates support for unified or separate instruction and data memory (always 0).
             uint32_t RESERVED0: 7;
             uint32_t DREGION: 8; //!< Number of supported data regions.
             uint32_t IREGION: 8; //!< Number of supported instruction regions (always 0).
