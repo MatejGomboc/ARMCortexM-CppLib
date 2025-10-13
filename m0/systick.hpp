@@ -56,7 +56,7 @@ namespace Cortex::M0::SysTick {
     };
 
     //! Calibration value register.
-    //! @note TENMS reads as zero (calibration value unknown).
+    //! \note TENMS reads as zero (calibration value unknown).
     union CALIB {
         struct Bits {
             uint32_t TENMS: 24; //!< Calibration value for 10ms (reads as 0: unknown).
