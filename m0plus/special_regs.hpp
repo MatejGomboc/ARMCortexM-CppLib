@@ -81,7 +81,7 @@ namespace Cortex::M0Plus {
         struct Bits {
             uint32_t nPRIV: 1; //!< Thread mode privilege level (0: privileged, 1: unprivileged).
             uint32_t SPSEL: 1; //!< Active stack pointer (0: MSP, 1: PSP).
-            uint32_t RESERVED1: 30;
+            uint32_t RESERVED: 30;
         } bits;
 
         uint32_t value = 0;
