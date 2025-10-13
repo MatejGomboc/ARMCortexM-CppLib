@@ -67,14 +67,14 @@ namespace Cortex::M0 {
 
     union CONTROL {
         //! currently used stack pointer
-        enum class ASPSEL : bool {
+        enum class SPSEL : bool {
             MSP = false, //!< main stack pointer
             PSP = true //!< process stack pointer
         };
 
         struct Bits {
             uint32_t RESERVED0: 1;
-            uint32_t ASPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
+            uint32_t SPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
             uint32_t RESERVED1: 30;
         } bits;
 
