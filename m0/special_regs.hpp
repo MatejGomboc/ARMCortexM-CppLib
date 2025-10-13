@@ -190,5 +190,6 @@ namespace Cortex::M0 {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
+        instrSyncBarrier();
     }
 }
