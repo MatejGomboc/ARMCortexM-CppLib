@@ -59,7 +59,7 @@ namespace Cortex::M0::Scb {
     //! Interrupt control and state register.
     //! Provides set/clear-pending bits for NMI, PendSV, and SysTick exceptions.
     //! Indicates active and pending exception numbers.
-    //! @note Do not simultaneously set both set and clear bits for the same exception.
+    //! \note Do not simultaneously set both set and clear bits for the same exception.
     union ICSR {
         struct Bits {
             uint32_t VECTACTIVE: 9; //!< Active exception number.
