@@ -68,8 +68,8 @@ namespace Cortex::M0Plus {
     union CONTROL {
         //! Thread mode privilege level.
         enum class nPRIV : bool {
-            PRIVILEGED = false, //!< Privileged thread mode.
-            UNPRIVILEGED = true //!< Unprivileged thread mode.
+            PRIVILEGED = false, //!< Privileged mode.
+            UNPRIVILEGED = true //!< Unprivileged mode.
         };
 
         //! Active stack pointer selection.
@@ -81,7 +81,7 @@ namespace Cortex::M0Plus {
         struct Bits {
             uint32_t nPRIV: 1; //!< Thread mode privilege level (0: privileged, 1: unprivileged).
             uint32_t SPSEL: 1; //!< Active stack pointer (0: MSP, 1: PSP).
-            uint32_t RESERVED1: 30;
+            uint32_t RESERVED: 30;
         } bits;
 
         uint32_t value = 0;
@@ -196,5 +196,6 @@ namespace Cortex::M0Plus {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
+        instrSyncBarrier();
     }
 }
