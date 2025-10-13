@@ -24,16 +24,16 @@ namespace Cortex::M0::Nvic {
 
     struct Registers
     {
-        volatile uint32_t ISER; //!< Enables interrupts and shows which interrupts are enabled.
+        volatile uint32_t ISER; //!< Interrupt set-enable register.
         volatile uint32_t RESERVED0[31];
-        volatile uint32_t ICER; //!< Disables interrupts and shows which interrupts are enabled.
+        volatile uint32_t ICER; //!< Interrupt clear-enable register.
         volatile uint32_t RESERVED1[31];
-        volatile uint32_t ISPR; //!< Forces interrupts into pending state and shows which interrupts are pending.
+        volatile uint32_t ISPR; //!< Interrupt set-pending register.
         volatile uint32_t RESERVED2[31];
-        volatile uint32_t ICPR; //!< Removes pending state from interrupts and shows which interrupts are pending.
+        volatile uint32_t ICPR; //!< Interrupt clear-pending register.
         volatile uint32_t RESERVED3[31];
         volatile uint32_t RESERVED4[64];
-        volatile uint8_t IPR[32]; //!< Sets priority of interrupts (byte accessible).
+        volatile uint8_t IPR[32]; //!< Interrupt priority registers (byte-accessible).
     };
 }
 
