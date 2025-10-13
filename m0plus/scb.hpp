@@ -87,23 +87,6 @@ namespace Cortex::M0Plus::Scb {
         }
     };
 
-    //! Vector table offset register.
-    union VTOR {
-        struct Bits {
-            uint32_t RESERVED0: 8;
-            uint32_t TBLOFF: 24; //!< Vector table base offset (bits [31:8] of vector table address).
-        } bits;
-
-        uint32_t value = 0;
-
-        VTOR() = default;
-
-        VTOR(uint32_t new_value)
-        {
-            value = new_value;
-        }
-    };
-
     //! Application interrupt and reset control register.
     union AIRCR {
         static constexpr uint16_t VECTKEY_VALUE = 0x05FA; //!< Write key to enable AIRCR writes.
