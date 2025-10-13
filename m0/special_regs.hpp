@@ -20,23 +20,23 @@
 #include <cstdint>
 
 namespace Cortex::M0 {
-    //! The following values are saved into LR on exception entry.
+    //! Exception return values saved to LR on exception entry.
     enum class LrExceptionReturnValue : uint32_t {
-        HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
-        THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
-        THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
+        HANDLER = 0xFFFFFFF1, //!< Return to Handler mode, use MSP.
+        THREAD_MSP = 0xFFFFFFF9, //!< Return to Thread mode, use MSP.
+        THREAD_PSP = 0xFFFFFFFD //!< Return to Thread mode, use PSP.
     };
 
     union PSR {
         struct Bits {
-            uint32_t ISR: 9; //!< number of the currently executing exception
+            uint32_t ISR: 9; //!< Current exception number.
             uint32_t RESERVED0: 15;
-            uint32_t T: 1; //!< CPU running in Thumb mode
+            uint32_t T: 1; //!< Thumb mode flag.
             uint32_t RESERVED1: 3;
-            uint32_t V: 1; //!< overflow flag
-            uint32_t C: 1; //!< carry or borrow flag
-            uint32_t Z: 1; //!< zero flag
-            uint32_t N: 1; //!< negative or less than flag
+            uint32_t V: 1; //!< Overflow flag.
+            uint32_t C: 1; //!< Carry/borrow flag.
+            uint32_t Z: 1; //!< Zero flag.
+            uint32_t N: 1; //!< Negative flag.
         } bits;
 
         uint32_t value = 0;
@@ -51,7 +51,7 @@ namespace Cortex::M0 {
 
     union PRIMASK {
         struct Bits {
-            uint32_t PRIMASK: 1; //!< all exceptions except NMI and hard fault are disabled
+            uint32_t PRIMASK: 1; //!< Disable all exceptions except NMI and HardFault.
             uint32_t RESERVED: 31;
         } bits;
 
@@ -66,15 +66,15 @@ namespace Cortex::M0 {
     };
 
     union CONTROL {
-        //! currently used stack pointer
+        //! Active stack pointer selection.
         enum class SPSEL : bool {
-            MSP = false, //!< main stack pointer
-            PSP = true //!< process stack pointer
+            MSP = false, //!< Main stack pointer.
+            PSP = true //!< Process stack pointer.
         };
 
         struct Bits {
             uint32_t RESERVED0: 1;
-            uint32_t SPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
+            uint32_t SPSEL: 1; //!< Active stack pointer (0: MSP, 1: PSP).
             uint32_t RESERVED1: 30;
         } bits;
 
