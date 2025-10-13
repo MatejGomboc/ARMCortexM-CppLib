@@ -23,13 +23,13 @@ namespace Cortex::M0::SysTick {
 
     struct Registers
     {
-        volatile uint32_t CSR; //!< control and status register
-        volatile uint32_t RVR; //!< reload value at the restart of counting
-        volatile uint32_t CVR; //!< current counter value
+        volatile uint32_t CTRL; //!< control and status register
+        volatile uint32_t LOAD; //!< reload value at the restart of counting
+        volatile uint32_t VAL; //!< current counter value
         volatile uint32_t CALIB; //!< controls timer calibration
     };
 
-    union CSR {
+    union CTRL {
         //! timer clock source
         enum class CLKSOURCE : bool {
             EXTERNAL = false, //!< external reference clock
@@ -64,9 +64,9 @@ namespace Cortex::M0::SysTick {
 
         uint32_t value = 0;
 
-        CSR() = default;
+        CTRL() = default;
 
-        CSR(uint32_t new_value)
+        CTRL(uint32_t new_value)
         {
             value = new_value;
         }

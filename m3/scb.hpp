@@ -118,7 +118,7 @@ namespace Cortex::M3::Scb {
             uint32_t RESERVED0: 5;
             uint32_t PRIGROUP: 3; //!< interrupt priority grouping field
             uint32_t RESERVED1: 4;
-            uint32_t ENDIANESS: 1; //!< reads as 0 - little endian
+            uint32_t ENDIANNESS: 1; //!< reads as 0 - little endian
             uint32_t VECTKEY: 16; //!< on writes, VECTKEY_VALUE to this field, otherwise the write is ignored
         } bits;
 

@@ -158,7 +158,7 @@ namespace Cortex::M0Plus::Scb {
             uint32_t VECTCLRACTIVE: 1; //!< Reserved. Write '0' to this bit.
             uint32_t SYSRESETREQ: 1; //!< Asserts a signal to the outer system that requests a reset.
             uint32_t RESERVED1: 12;
-            uint32_t ENDIANESS: 1; //!< Reads as 0 (little endian).
+            uint32_t ENDIANNESS: 1; //!< Reads as 0 (little endian).
             uint32_t VECTKEY: 16; //!< On writes to AIRCR, write VECTKEY_VALUE to this field, otherwise the write to AIRCR is ignored.
         } bits;
 
