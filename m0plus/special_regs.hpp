@@ -68,8 +68,8 @@ namespace Cortex::M0Plus {
     union CONTROL {
         //! Thread mode privilege level.
         enum class nPRIV : bool {
-            PRIVILEGED = false, //!< Privileged mode.
-            UNPRIVILEGED = true //!< Unprivileged mode.
+            PRIVILEGED = false, //!< Privileged thread mode.
+            UNPRIVILEGED = true //!< Unprivileged thread mode.
         };
 
         //! Active stack pointer selection.
@@ -196,6 +196,5 @@ namespace Cortex::M0Plus {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 }
