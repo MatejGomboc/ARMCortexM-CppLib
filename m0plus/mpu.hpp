@@ -127,6 +127,9 @@ namespace Cortex::M0Plus::Mpu {
 
         uint32_t value = 0;
 
+        //! Bit position of B flag (start of BCS field) in the register.
+        static constexpr uint8_t BCS_BIT_POS = 16;
+
         RASR() = default;
 
         RASR(uint32_t new_value)
@@ -137,7 +140,7 @@ namespace Cortex::M0Plus::Mpu {
         //! Helper method to set B, C, S flags from BCS enum value.
         void setBcsFlags(BCS bcs)
         {
-            value = (value & ~(0x7u << 16)) | (static_cast<uint32_t>(bcs) << 16);
+            value = (value & ~(0x7u << BCS_BIT_POS)) | (static_cast<uint32_t>(bcs) << BCS_BIT_POS);
         }
     };
 }
