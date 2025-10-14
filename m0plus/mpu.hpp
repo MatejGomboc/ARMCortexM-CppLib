@@ -137,8 +137,7 @@ namespace Cortex::M0Plus::Mpu {
         //! Helper method to set B, C, S flags from BCS enum value.
         void setBcsFlags(BCS bcs)
         {
-            value &= ~(0x7u << 16);  // Clear B, C, S bits (bits 16-18)
-            value |= static_cast<uint32_t>(bcs) << 16;  // Set new B, C, S values
+            value = (value & ~(0x7u << 16)) | (static_cast<uint32_t>(bcs) << 16);
         }
     };
 }
