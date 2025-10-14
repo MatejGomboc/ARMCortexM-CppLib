@@ -118,7 +118,7 @@ namespace Cortex::M0Plus::Mpu {
             uint32_t B: 1; //!< Bufferable attribute.
             uint32_t C: 1; //!< Cacheable attribute.
             uint32_t S: 1; //!< Shareable attribute.
-            uint32_t TEX: 3; //!< Type extension field (must be 0 for ARMv6-M).
+            uint32_t TEX: 3; //!< Type extension field (must always be 0 on M0+).
             uint32_t RESERVED1: 2;
             uint32_t AP: 3; //!< Access permission.
             uint32_t RESERVED2: 1;
@@ -161,7 +161,7 @@ namespace Cortex::M0Plus::Mpu {
                 Cortex::clearBit(value, 18);
             }
 
-            // TEX must always be 0 for ARMv6-M
+            // TEX must always be 0 on M0+
             bits.TEX = 0;
         }
     };
