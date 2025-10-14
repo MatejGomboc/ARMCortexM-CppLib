@@ -95,7 +95,6 @@ namespace Cortex::M0Plus::Mpu {
             PRIV_RW = 0b001, //!< Privileged read-write.
             PRIV_RW_UNPRIV_RO = 0b010, //!< Privileged read-write, unprivileged read-only.
             RW = 0b011, //!< Read-write.
-            RESERVED = 0b100, //!< Reserved.
             PRIV_RO = 0b101, //!< Privileged read-only.
             RO = 0b110, //!< Read-only.
             RO_ALT = 0b111 //!< Read-only (alternative encoding).
