@@ -17,7 +17,6 @@
 #pragma once
 
 #include "barriers.hpp"
-#include "utils.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Mpu {
@@ -138,31 +137,9 @@ namespace Cortex::M0Plus::Mpu {
         //! Helper method to set B, C, S flags from BCS enum value.
         void setBcsFlags(BCS bcs)
         {
-            uint8_t bcs_value = static_cast<uint8_t>(bcs);
-
-            // B flag is bit 0 of BCS enum, bit 16 of RASR register
-            if (Cortex::isBitSet(bcs_value, 0)) {
-                Cortex::setBit(value, 16);
-            } else {
-                Cortex::clearBit(value, 16);
-            }
-
-            // C flag is bit 1 of BCS enum, bit 17 of RASR register
-            if (Cortex::isBitSet(bcs_value, 1)) {
-                Cortex::setBit(value, 17);
-            } else {
-                Cortex::clearBit(value, 17);
-            }
-
-            // S flag is bit 2 of BCS enum, bit 18 of RASR register
-            if (Cortex::isBitSet(bcs_value, 2)) {
-                Cortex::setBit(value, 18);
-            } else {
-                Cortex::clearBit(value, 18);
-            }
-
-            // TEX must always be 0 on M0+
-            bits.TEX = 0;
+            value &= ~(0x7u << 16);  // Clear B, C, S bits (bits 16-18)
+            value |= static_cast<uint32_t>(bcs) << 16;  // Set new B, C, S values
+            bits.TEX = 0;  // TEX must always be 0 on M0+
         }
     };
 }
