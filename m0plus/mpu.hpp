@@ -101,7 +101,7 @@ namespace Cortex::M0Plus::Mpu {
             RO_ALT = 0b111 //!< Read-only (alternative encoding).
         };
 
-        //! Memory attributes flags values. TODO: Add a helper function which converts these enum values to B, C, S fields. TEX is really always 0?
+        //! Memory attributes flags values. TODO: Add a helper function which converts these enum values to B, C, S fields.
         enum class BCS : uint8_t {
             PERIPHERAL = 0b011, //!< Device peripherals.
             FLASH = 0b100, //!< Flash memory.
@@ -117,7 +117,7 @@ namespace Cortex::M0Plus::Mpu {
             uint32_t B: 1; //!< Bufferable attribute.
             uint32_t C: 1; //!< Cacheable attribute.
             uint32_t S: 1; //!< Shareable attribute.
-            uint32_t TEX: 3; //!< Type extension field (always 0).
+            uint32_t TEX: 3; //!< Type extension field (must be 0 for ARMv6-M).
             uint32_t RESERVED1: 2;
             uint32_t AP: 3; //!< Access permission.
             uint32_t RESERVED2: 1;
