@@ -138,8 +138,7 @@ namespace Cortex::M0Plus::Mpu {
         void setBcsFlags(BCS bcs)
         {
             constexpr uint8_t BCS_BIT_POS = 16;
-            uint32_t shifted_bcs = static_cast<uint32_t>(bcs) << BCS_BIT_POS;
-            value = (value & ~(0x7u << BCS_BIT_POS)) | shifted_bcs;
+            value = (value & ~(0x7u << BCS_BIT_POS)) | (static_cast<uint32_t>(bcs) << BCS_BIT_POS);
         }
     };
 }
