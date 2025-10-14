@@ -17,6 +17,7 @@
 #pragma once
 
 #include "barriers.hpp"
+#include "utils.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Mpu {
@@ -101,7 +102,7 @@ namespace Cortex::M0Plus::Mpu {
             RO_ALT = 0b111 //!< Read-only (alternative encoding).
         };
 
-        //! Memory attributes flags values. TODO: Add a helper function which converts these enum values to B, C, S fields.
+        //! Memory attributes flags values.
         enum class BCS : uint8_t {
             PERIPHERAL = 0b011, //!< Device peripherals.
             FLASH = 0b100, //!< Flash memory.
@@ -132,6 +133,36 @@ namespace Cortex::M0Plus::Mpu {
         RASR(uint32_t new_value)
         {
             value = new_value;
+        }
+
+        //! Helper method to set B, C, S flags from BCS enum value.
+        void setBcsFlags(BCS bcs)
+        {
+            uint8_t bcs_value = static_cast<uint8_t>(bcs);
+
+            // B flag is bit 0 of BCS enum, bit 16 of RASR register
+            if (Cortex::isBitSet(bcs_value, 0)) {
+                Cortex::setBit(value, 16);
+            } else {
+                Cortex::clearBit(value, 16);
+            }
+
+            // C flag is bit 1 of BCS enum, bit 17 of RASR register
+            if (Cortex::isBitSet(bcs_value, 1)) {
+                Cortex::setBit(value, 17);
+            } else {
+                Cortex::clearBit(value, 17);
+            }
+
+            // S flag is bit 2 of BCS enum, bit 18 of RASR register
+            if (Cortex::isBitSet(bcs_value, 2)) {
+                Cortex::setBit(value, 18);
+            } else {
+                Cortex::clearBit(value, 18);
+            }
+
+            // TEX must always be 0 for ARMv6-M
+            bits.TEX = 0;
         }
     };
 }
