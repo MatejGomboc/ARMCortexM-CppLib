@@ -139,7 +139,6 @@ namespace Cortex::M0Plus::Mpu {
         {
             value &= ~(0x7u << 16);  // Clear B, C, S bits (bits 16-18)
             value |= static_cast<uint32_t>(bcs) << 16;  // Set new B, C, S values
-            bits.TEX = 0;  // TEX must always be 0 on M0+
         }
     };
 }
