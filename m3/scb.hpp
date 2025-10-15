@@ -54,7 +54,7 @@ namespace Cortex::M3::Scb {
         struct Bits {
             uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
             uint32_t PARTNO: 12; //!< Part number (0xC23: Cortex-M3).
-            uint32_t CONSTANT: 4; //!< Constant (0xF: ARMv7-M).
+            uint32_t ARCHITECTURE: 4; //!< Architecture (0xF: ARMv7-M).
             uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
             uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
         } bits;
