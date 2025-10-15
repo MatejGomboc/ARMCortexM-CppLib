@@ -101,7 +101,7 @@ namespace Cortex::M0Plus::Mpu {
         };
 
         //! Memory attributes flags values.
-        enum class BCS : uint8_t {
+        enum class SCB : uint8_t {
             PERIPHERAL = 0b011, //!< Device peripherals.
             FLASH = 0b100, //!< Flash memory.
             INTERN_SRAM = 0b101, //!< Internal SRAM.
@@ -133,11 +133,11 @@ namespace Cortex::M0Plus::Mpu {
             value = new_value;
         }
 
-        //! Helper method for setting B, C, S flags from BCS enum value.
-        void setBcsFlags(BCS bcs)
+        //! Helper method for setting S, C, B flags from SCB enum value.
+        void setScbFlags(SCB scb)
         {
-            constexpr uint8_t BCS_BIT_POS = 16;
-            value = (value & ~(0x7u << BCS_BIT_POS)) | (static_cast<uint32_t>(bcs) << BCS_BIT_POS);
+            constexpr uint8_t SCB_BIT_POS = 16;
+            value = (value & ~(0x7u << SCB_BIT_POS)) | (static_cast<uint32_t>(scb) << SCB_BIT_POS);
         }
     };
 }
