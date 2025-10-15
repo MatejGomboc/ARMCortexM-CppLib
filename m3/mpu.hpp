@@ -108,17 +108,10 @@ namespace Cortex::M3::Mpu {
 
         //! Memory attributes flags values (TEX[2:0], S, C, B).
         enum class TEXSCB : uint8_t {
-            STRONGLY_ORDERED = 0b000000, //!< Strongly-ordered (always shareable).
-            DEVICE_SHAREABLE = 0b000001, //!< Device, shareable.
-            DEVICE_NON_SHAREABLE = 0b010000, //!< Device, non-shareable.
-            NORMAL_WT_NO_WA = 0b000010, //!< Normal, write-through, no write allocate, non-shareable.
-            NORMAL_WT_NO_WA_S = 0b000110, //!< Normal, write-through, no write allocate, shareable.
-            NORMAL_WB_NO_WA = 0b000011, //!< Normal, write-back, no write allocate, non-shareable.
-            NORMAL_WB_NO_WA_S = 0b000111, //!< Normal, write-back, no write allocate, shareable.
-            NORMAL_NON_CACHEABLE = 0b001000, //!< Normal, non-cacheable, non-shareable.
-            NORMAL_NON_CACHEABLE_S = 0b001100, //!< Normal, non-cacheable, shareable.
-            NORMAL_WB_WA = 0b001010, //!< Normal, write-back, write allocate, non-shareable.
-            NORMAL_WB_WA_S = 0b001110 //!< Normal, write-back, write allocate, shareable.
+            PERIPHERAL = 0b000101, //!< Device peripherals.
+            FLASH = 0b000010, //!< Flash memory.
+            INTERN_SRAM = 0b000110, //!< Internal SRAM.
+            EXTERN_SRAM = 0b000111 //!< External SRAM.
         };
 
         struct Bits {
@@ -146,8 +139,8 @@ namespace Cortex::M3::Mpu {
             value = new_value;
         }
 
-        //! Helper method for setting TEX, S, C, B flags from TEXSCB enum value.
-        void setTexscbFlags(TEXSCB texscb)
+        //! Helper method for setting TEX[2:0], S, C, B flags from TEXSCB enum value.
+        void setTexScbFlags(TEXSCB texscb)
         {
             constexpr uint8_t TEXSCB_BIT_POS = 16;
             value = (value & ~(0x3Fu << TEXSCB_BIT_POS)) | (static_cast<uint32_t>(texscb) << TEXSCB_BIT_POS);
