@@ -38,6 +38,15 @@ namespace Cortex::M3::Scb {
         volatile uint32_t MMFAR; //!< MemManage fault address register.
         volatile uint32_t BFAR; //!< BusFault address register.
         volatile uint32_t AFSR; //!< Auxiliary fault status register.
+        const volatile uint32_t ID_PFR[2]; //!< Processor feature register.
+        const volatile uint32_t ID_DFR; //!< Debug feature register.
+        const volatile uint32_t ID_AFR; //!< Auxiliary feature register.
+        const volatile uint32_t ID_MMFR[4]; //!< Memory model feature register.
+        const volatile uint32_t ID_ISAR[5]; //!< Instruction set attributes register.
+        uint32_t RESERVED0[5];
+        volatile uint32_t CPACR; //!< Coprocessor access control register.
+        uint32_t RESERVED3[93];
+        volatile uint32_t STIR; //!< Software triggered interrupt register.
     };
 
     //! Processor part number, version, and implementation information.
@@ -68,7 +77,8 @@ namespace Cortex::M3::Scb {
     union ICSR {
         struct Bits {
             uint32_t VECTACTIVE: 9; //!< Active exception number.
-            uint32_t RESERVED0: 3;
+            uint32_t RESERVED0: 2;
+            uint32_t RETTOBASE: 1; //!< Return to base level.
             uint32_t VECTPENDING: 9; //!< Highest priority pending exception number (0: none).
             uint32_t RESERVED1: 1;
             uint32_t ISRPENDING: 1; //!< Interrupt pending (excluding NMI and faults).
@@ -92,22 +102,6 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! Vector table offset register.
-    union VTOR {
-        struct Bits {
-            uint32_t RESERVED: 9;
-            uint32_t TBLOFF: 23; //!< Vector table base offset.
-        } bits;
-
-        uint32_t value = 0;
-
-        VTOR() = default;
-
-        VTOR(uint32_t new_value)
-        {
-            value = new_value;
-        }
-    };
 
     //! Application interrupt and reset control register.
     union AIRCR {
@@ -222,8 +216,8 @@ namespace Cortex::M3::Scb {
             uint32_t RESERVED0: 1;
             uint32_t MUNSTKERR: 1; //!< MemManage fault on unstacking.
             uint32_t MSTKERR: 1; //!< MemManage fault on stacking.
-            uint32_t MLSPERR: 1; //!< MemManage fault during lazy FP state preservation.
             uint32_t RESERVED1: 1;
+            uint32_t RESERVED2: 1;
             uint32_t MMARVALID: 1; //!< MemManage fault address register valid.
 
             // BusFault Status Register (BFSR) - bits 8:15
@@ -232,8 +226,8 @@ namespace Cortex::M3::Scb {
             uint32_t IMPRECISERR: 1; //!< Imprecise data bus error.
             uint32_t UNSTKERR: 1; //!< BusFault on unstacking.
             uint32_t STKERR: 1; //!< BusFault on stacking.
-            uint32_t LSPERR: 1; //!< BusFault during lazy FP state preservation.
-            uint32_t RESERVED2: 1;
+            uint32_t RESERVED3: 1;
+            uint32_t RESERVED4: 1;
             uint32_t BFARVALID: 1; //!< BusFault address register valid.
 
             // UsageFault Status Register (UFSR) - bits 16:31
@@ -241,10 +235,10 @@ namespace Cortex::M3::Scb {
             uint32_t INVSTATE: 1; //!< Invalid state.
             uint32_t INVPC: 1; //!< Invalid PC load.
             uint32_t NOCP: 1; //!< No coprocessor.
-            uint32_t RESERVED3: 4;
+            uint32_t RESERVED5: 4;
             uint32_t UNALIGNED: 1; //!< Unaligned access.
             uint32_t DIVBYZERO: 1; //!< Divide by zero.
-            uint32_t RESERVED4: 6;
+            uint32_t RESERVED6: 6;
         } bits;
 
         uint32_t value = 0;
