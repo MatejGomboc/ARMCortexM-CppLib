@@ -20,28 +20,27 @@
 #include <cstdint>
 
 namespace Cortex::M3 {
-    //! the following values are saved into LR on exception entry
-    enum class LrExceptionReturn : uint32_t {
-        HANDLER = 0xFFFFFFF1, //!< return to handler mode, uses MSP after return
-        THREAD_MSP = 0xFFFFFFF9, //!< return to thread mode, uses MSP after return
-        THREAD_PSP = 0xFFFFFFFD //!< return to thread mode, uses PSP after return
+    //! Exception return values saved to LR on exception entry.
+    enum class LrExceptionReturnValue : uint32_t {
+        HANDLER = 0xFFFFFFF1, //!< Return to Handler mode, use MSP.
+        THREAD_MSP = 0xFFFFFFF9, //!< Return to Thread mode, use MSP.
+        THREAD_PSP = 0xFFFFFFFD //!< Return to Thread mode, use PSP.
     };
 
-    //! program status register
+    //! Program status register.
     union PSR {
         struct Bits {
-            uint32_t ISR: 9; //!< the exception type of the current executing exception (IPSR)
-            uint32_t ICI_IT_1: 6; //!< interruptible-continuable instruction and if-then state (bits 15:10, 26:25)
+            uint32_t ISR: 9; //!< Current exception number.
             uint32_t RESERVED0: 1;
-            uint32_t T: 1; //!< always 1, indicates the processor is executing Thumb instructions
-            uint32_t RESERVED1: 3;
-            uint32_t GE: 4; //!< greater than or equal flags on the results of instruction comparisons
-            uint32_t ICI_IT_2: 2; //!< interruptible-continuable instruction and if-then state (bits 15:10, 26:25)
-            uint32_t Q: 1; //!< saturation occurred during a DSP operation
-            uint32_t V: 1; //!< overflow flag
-            uint32_t C: 1; //!< carry or borrow flag
-            uint32_t Z: 1; //!< zero flag
-            uint32_t N: 1; //!< negative or less than flag
+            uint32_t ICI_IT_1: 6; //!< ICI/IT part 1.
+            uint32_t RESERVED1: 8;
+            uint32_t T: 1; //!< Thumb mode flag.
+            uint32_t ICI_IT_2: 2; //!< ICI/IT part 2.
+            uint32_t Q: 1; //!< Saturation flag.
+            uint32_t V: 1; //!< Overflow flag.
+            uint32_t C: 1; //!< Carry/borrow flag.
+            uint32_t Z: 1; //!< Zero flag.
+            uint32_t N: 1; //!< Negative flag.
         } bits;
 
         uint32_t value = 0;
@@ -54,10 +53,10 @@ namespace Cortex::M3 {
         }
     };
 
-    //! priority mask register
+    //! Priority mask register.
     union PRIMASK {
         struct Bits {
-            uint32_t PM: 1; //!< all exceptions except NMI and hard fault are disabled
+            uint32_t PRIMASK: 1; //!< Disable all exceptions except NMI and HardFault.
             uint32_t RESERVED: 31;
         } bits;
 
@@ -71,10 +70,10 @@ namespace Cortex::M3 {
         }
     };
 
-    //! fault mask register
+    //! Fault mask register.
     union FAULTMASK {
         struct Bits {
-            uint32_t FM: 1; //!< 1 = all exceptions except NMI are masked
+            uint32_t FAULTMASK: 1; //!< Disable all exceptions except NMI.
             uint32_t RESERVED: 31;
         } bits;
 
@@ -88,10 +87,10 @@ namespace Cortex::M3 {
         }
     };
 
-    //! base priority register
+    //! Base priority register.
     union BASEPRI {
         struct Bits {
-            uint32_t BASEPRI: 8; //!< base priority for exception processing
+            uint32_t BASEPRI: 8; //!< Base priority for exception processing.
             uint32_t RESERVED: 24;
         } bits;
 
@@ -105,24 +104,24 @@ namespace Cortex::M3 {
         }
     };
 
-    //! control register
+    //! Control register.
     union CONTROL {
-        //! thread mode privilege level
-        enum class ThreadModePrivilegeLevel : bool {
-            PRIVILEGED = false, //!< privileged thread mode
-            UNPRIVILEGED = true //!< unprivileged thread mode
+        //! Thread mode privilege level.
+        enum class nPRIV : bool {
+            PRIVILEGED = false, //!< Privileged thread mode.
+            UNPRIVILEGED = true //!< Unprivileged thread mode.
         };
 
-        //! currently used stack pointer
-        enum class StackPointer : bool {
-            MSP = false, //!< main stack pointer
-            PSP = true //!< process stack pointer
+        //! Active stack pointer selection.
+        enum class SPSEL : bool {
+            MSP = false, //!< Main stack pointer.
+            PSP = true //!< Process stack pointer.
         };
 
         struct Bits {
-            uint32_t nPRIV: 1; //!< thread mode privilege level (0=privileged, 1=unprivileged)
-            uint32_t SPSEL: 1; //!< currently used stack pointer (0=MSP, 1=PSP)
-            uint32_t RESERVED1: 30;
+            uint32_t nPRIV: 1; //!< Thread mode privilege level (0: privileged, 1: unprivileged).
+            uint32_t SPSEL: 1; //!< Active stack pointer (0: MSP, 1: PSP).
+            uint32_t RESERVED: 30;
         } bits;
 
         uint32_t value = 0;
@@ -191,12 +190,6 @@ namespace Cortex::M3 {
         return psr;
     }
 
-    static inline void setApsrReg(PSR psr)
-    {
-        asm volatile("MSR APSR, %0" : : "r" (psr.value) : "cc", "memory");
-        instrSyncBarrier();
-    }
-
     static inline uint32_t getMspReg()
     {
         uint32_t value;
@@ -207,7 +200,6 @@ namespace Cortex::M3 {
     static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline uint32_t getPspReg()
@@ -220,7 +212,6 @@ namespace Cortex::M3 {
     static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline PRIMASK getPrimaskReg()
@@ -233,7 +224,6 @@ namespace Cortex::M3 {
     static inline void setPrimaskReg(PRIMASK primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline FAULTMASK getFaultmaskReg()
@@ -246,7 +236,6 @@ namespace Cortex::M3 {
     static inline void setFaultmaskReg(FAULTMASK faultmask)
     {
         asm volatile("MSR FAULTMASK, %0" : : "r" (faultmask.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline BASEPRI getBasepriReg()
@@ -259,13 +248,11 @@ namespace Cortex::M3 {
     static inline void setBasepriReg(BASEPRI basepri)
     {
         asm volatile("MSR BASEPRI, %0" : : "r" (basepri.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline void setBasepriMaxReg(BASEPRI basepri)
     {
         asm volatile("MSR BASEPRI_MAX, %0" : : "r" (basepri.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 
     static inline CONTROL getControlReg()
@@ -278,6 +265,5 @@ namespace Cortex::M3 {
     static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
-        instrSyncBarrier();
     }
 }

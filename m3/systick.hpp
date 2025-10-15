@@ -23,25 +23,26 @@ namespace Cortex::M3::SysTick {
 
     struct Registers
     {
-        volatile uint32_t CTRL; //!< control and status register
-        volatile uint32_t LOAD; //!< reload value at the restart of counting
-        volatile uint32_t VAL; //!< current counter value
-        volatile uint32_t CALIB; //!< controls timer calibration
+        volatile uint32_t CTRL; //!< Control and status register.
+        volatile uint32_t LOAD; //!< Reload value.
+        volatile uint32_t VAL; //!< Current counter value.
+        volatile uint32_t CALIB; //!< Calibration value register.
     };
 
+    //! Control and status register.
     union CTRL {
-        //! timer clock source
-        enum class ClkSource : bool {
-            EXTERNAL = false, //!< external reference clock
-            CPU = true //!< processor clock
+        //! Timer clock source selection.
+        enum class CLKSOURCE : bool {
+            EXTERNAL = false, //!< External reference clock.
+            CPU = true //!< Processor clock.
         };
 
         struct Bits {
-            uint32_t ENABLE: 1; //!< enables counting
-            uint32_t TICKINT: 1; //!< enables SysTick exception
-            uint32_t CLKSOURCE: 1; //!< selects the timer clock source
+            uint32_t ENABLE: 1; //!< Counter enable (counts down, reloads on zero, sets COUNTFLAG).
+            uint32_t TICKINT: 1; //!< SysTick exception request on count to zero.
+            uint32_t CLKSOURCE: 1; //!< Clock source (0: external, 1: processor).
             uint32_t RESERVED0: 13;
-            uint32_t COUNTFLAG: 1; //!< '1' if counter reached 0 since last time this bit was read
+            uint32_t COUNTFLAG: 1; //!< Timer counted to zero since last read (read clears).
             uint32_t RESERVED1: 15;
         } bits;
 
@@ -55,16 +56,13 @@ namespace Cortex::M3::SysTick {
         }
     };
 
+    //! Calibration value register.
     union CALIB {
         struct Bits {
-            /*!
-                Indicates the calibration value when the SysTick counter runs on HCLK max/8 as external clock.
-                When HCLK is programmed at the maximum frequency, the SysTick period is 1ms.
-            */
-            uint32_t TENMS: 24;
+            uint32_t TENMS: 24; //!< Calibration value for 10ms.
             uint32_t RESERVED: 6;
-            uint32_t SKEW: 1; //!< always '1'
-            uint32_t NOREF: 1; //!< always '0', indicates that a separate reference clock is provided (HCLK/8)
+            uint32_t SKEW: 1; //!< Reads as 1: 10ms calibration value is inexact.
+            uint32_t NOREF: 1; //!< Reads as 0: separate reference clock provided.
         } bits;
 
         uint32_t value = 0;
