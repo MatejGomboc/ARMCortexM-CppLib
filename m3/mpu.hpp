@@ -101,25 +101,24 @@ namespace Cortex::M3::Mpu {
             PRIV_RW = 0b001, //!< Privileged read-write.
             PRIV_RW_UNPRIV_RO = 0b010, //!< Privileged read-write, unprivileged read-only.
             RW = 0b011, //!< Read-write.
-            RESERVED = 0b100, //!< Reserved.
             PRIV_RO = 0b101, //!< Privileged read-only.
             RO = 0b110, //!< Read-only.
             RO_ALT = 0b111 //!< Read-only (alternative encoding).
         };
 
-        //! Type extension, cache and shareable attributes.
-        enum class TEX_C_B : uint8_t {
-            STRONGLY_ORDERED = 0b00000, //!< Strongly-ordered, always shareable.
-            DEVICE_SHAREABLE = 0b00001, //!< Device, shareable.
-            NORMAL_WT_NO_WA_S = 0b00010, //!< Normal, write-through, no write allocate, shareable.
-            NORMAL_WB_NO_WA_S = 0b00011, //!< Normal, write-back, no write allocate, shareable.
-            NORMAL_NON_CACHEABLE_S = 0b00100, //!< Normal, non-cacheable, shareable.
-            NORMAL_WB_WA_S = 0b00110, //!< Normal, write-back, write allocate, shareable.
-            DEVICE_NON_SHAREABLE = 0b00111, //!< Device, non-shareable.
-            NORMAL_WT_NO_WA = 0b01010, //!< Normal, write-through, no write allocate, non-shareable.
-            NORMAL_WB_NO_WA = 0b01011, //!< Normal, write-back, no write allocate, non-shareable.
-            NORMAL_NON_CACHEABLE = 0b01100, //!< Normal, non-cacheable, non-shareable.
-            NORMAL_WB_WA = 0b01110 //!< Normal, write-back, write allocate, non-shareable.
+        //! Memory attributes flags values (TEX[2:0], S, C, B).
+        enum class TEXSCB : uint8_t {
+            STRONGLY_ORDERED = 0b000000, //!< Strongly-ordered (always shareable).
+            DEVICE_SHAREABLE = 0b000001, //!< Device, shareable.
+            DEVICE_NON_SHAREABLE = 0b010000, //!< Device, non-shareable.
+            NORMAL_WT_NO_WA = 0b000010, //!< Normal, write-through, no write allocate, non-shareable.
+            NORMAL_WT_NO_WA_S = 0b000110, //!< Normal, write-through, no write allocate, shareable.
+            NORMAL_WB_NO_WA = 0b000011, //!< Normal, write-back, no write allocate, non-shareable.
+            NORMAL_WB_NO_WA_S = 0b000111, //!< Normal, write-back, no write allocate, shareable.
+            NORMAL_NON_CACHEABLE = 0b001000, //!< Normal, non-cacheable, non-shareable.
+            NORMAL_NON_CACHEABLE_S = 0b001100, //!< Normal, non-cacheable, shareable.
+            NORMAL_WB_WA = 0b001010, //!< Normal, write-back, write allocate, non-shareable.
+            NORMAL_WB_WA_S = 0b001110 //!< Normal, write-back, write allocate, shareable.
         };
 
         struct Bits {
@@ -147,12 +146,11 @@ namespace Cortex::M3::Mpu {
             value = new_value;
         }
 
-        //! Helper method to set TEX, C, B, S flags from TEX_C_B enum value.
-        void setTexCbFlags(TEX_C_B tex_c_b)
+        //! Helper method for setting TEX, S, C, B flags from TEXSCB enum value.
+        void setTexscbFlags(TEXSCB texscb)
         {
-            constexpr uint8_t B_BIT_POS = 16;
-            uint8_t flags = static_cast<uint8_t>(tex_c_b);
-            value = (value & ~(0x1Fu << B_BIT_POS)) | (static_cast<uint32_t>(flags) << B_BIT_POS);
+            constexpr uint8_t TEXSCB_BIT_POS = 16;
+            value = (value & ~(0x3Fu << TEXSCB_BIT_POS)) | (static_cast<uint32_t>(texscb) << TEXSCB_BIT_POS);
         }
     };
 }
