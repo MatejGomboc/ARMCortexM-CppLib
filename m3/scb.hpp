@@ -24,32 +24,30 @@ namespace Cortex::M3::Scb {
 
     struct Registers
     {
-        volatile uint32_t CPUID; //!< contains the processor part number, version, and implementation information
-        volatile uint32_t ICSR; //!< interrupt control and state register
-        volatile uint32_t VTOR; //!< vector table offset register
-        volatile uint32_t AIRCR; //!< application interrupt and reset control register
-        volatile uint32_t SCR; //!< controls features of entry to and exit from low power state
-        volatile uint32_t CCR; //!< configuration and control register
-        volatile uint32_t SHPR1; //!< system handlers priority register 1
-        volatile uint32_t SHPR2; //!< system handlers priority register 2
-        volatile uint32_t SHPR3; //!< system handlers priority register 3
-        volatile uint32_t SHCSR; //!< system handler control and state register
-        volatile uint32_t CFSR; //!< configurable fault status register
-        volatile uint32_t HFSR; //!< hard fault status register
-        volatile uint32_t DFSR; //!< debug fault status register
-        volatile uint32_t MMFAR; //!< memory management fault address register
-        volatile uint32_t BFAR; //!< bus fault address register
-        volatile uint32_t AFSR; //!< auxiliary fault status register
+        volatile uint32_t CPUID; //!< Processor part number, version, and implementation information.
+        volatile uint32_t ICSR; //!< Interrupt control and state register.
+        volatile uint32_t VTOR; //!< Vector table offset register.
+        volatile uint32_t AIRCR; //!< Application interrupt and reset control register.
+        volatile uint32_t SCR; //!< Low power state control.
+        volatile uint32_t CCR; //!< Configuration and control register.
+        volatile uint8_t SHPR[12]; //!< System handlers priority registers (4-7, 8-11, 12-15).
+        volatile uint32_t SHCSR; //!< System handler control and state register.
+        volatile uint32_t CFSR; //!< Configurable fault status register.
+        volatile uint32_t HFSR; //!< HardFault status register.
+        volatile uint32_t DFSR; //!< Debug fault status register.
+        volatile uint32_t MMFAR; //!< MemManage fault address register.
+        volatile uint32_t BFAR; //!< BusFault address register.
+        volatile uint32_t AFSR; //!< Auxiliary fault status register.
     };
 
-    //! is a read-only register and contains the processor part number, version, and implementation information
+    //! Processor part number, version, and implementation information.
     union CPUID {
         struct Bits {
-            uint32_t REVISION: 4; //!< the p value in the Rnpn product revision identifier, indicates patch release
-            uint32_t PARTNO: 12; //!< part number of the processor (0xC23: Cortex-M3)
-            uint32_t CONSTANT: 4; //!< constant that defines the architecture of the processor (0xF: ARMv7-M architecture)
-            uint32_t VARIANT: 4; //!< variant number: the r value in the Rnpn product revision identifier
-            uint32_t IMPLEMENTER: 8; //!< implementer code (0x41: ARM)
+            uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
+            uint32_t PARTNO: 12; //!< Part number (0xC23: Cortex-M3).
+            uint32_t CONSTANT: 4; //!< Constant (0xF: ARMv7-M).
+            uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
+            uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
         } bits;
 
         uint32_t value = 0;
@@ -62,22 +60,26 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! interrupt control and state register
+    //! Interrupt control and state register.
+    //! Provides set/clear-pending bits for PendSV and SysTick exceptions.
+    //! Provides set-pending bit for NMI exception.
+    //! Indicates active and pending exception numbers.
+    //! \note Do not simultaneously set both set and clear bits for the same exception.
     union ICSR {
         struct Bits {
-            uint32_t VECTACTIVE: 9; //!< exception number of the currently active exception
+            uint32_t VECTACTIVE: 9; //!< Active exception number.
             uint32_t RESERVED0: 3;
-            uint32_t VECTPENDING: 9; //!< exception number of the highest priority pending enabled exception
-            uint32_t ISRPENDING: 1; //!< true if an external configurable, NVIC generated, interrupt is pending
-            uint32_t ISRPREEMPT: 1; //!< true if a pending exception is serviced on exit from debug halt state
+            uint32_t VECTPENDING: 9; //!< Highest priority pending exception number (0: none).
             uint32_t RESERVED1: 1;
-            uint32_t PENDSTCLR: 1; //!< removes the pending state from the SysTick exception
-            uint32_t PENDSTSET: 1; //!< changes SysTick exception state to pending
-            uint32_t PENDSVCLR: 1; //!< removes the pending state from the PendSV exception
-            uint32_t PENDSVSET: 1; //!< change PendSV exception state to pending
-            uint32_t RESERVED2: 2;
-            uint32_t NMIPENDSET: 1; //!< changes NMI exception state to pending
-            uint32_t RETTOBASE: 1; //!< indicates whether there are preempted active exceptions
+            uint32_t ISRPENDING: 1; //!< Interrupt pending (excluding NMI and faults).
+            uint32_t ISRPREEMPT: 1; //!< Preempted exception is active.
+            uint32_t RESERVED2: 1;
+            uint32_t PENDSTCLR: 1; //!< Write 1 to clear SysTick pending state (write-only).
+            uint32_t PENDSTSET: 1; //!< SysTick pending (read), write 1 to set pending.
+            uint32_t PENDSVCLR: 1; //!< Write 1 to clear PendSV pending state (write-only).
+            uint32_t PENDSVSET: 1; //!< PendSV pending (read), write 1 to set pending.
+            uint32_t RESERVED3: 2;
+            uint32_t NMIPENDSET: 1; //!< NMI pending (read), write 1 to set pending.
         } bits;
 
         uint32_t value = 0;
@@ -90,11 +92,11 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! vector table offset register
+    //! Vector table offset register.
     union VTOR {
         struct Bits {
             uint32_t RESERVED: 9;
-            uint32_t TBLOFF: 23; //!< vector table base offset field
+            uint32_t TBLOFF: 23; //!< Vector table base offset.
         } bits;
 
         uint32_t value = 0;
@@ -107,19 +109,19 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! enables system reset
+    //! Application interrupt and reset control register.
     union AIRCR {
-        static constexpr uint16_t VECTKEY_VALUE = 0x05FA; //!< magic number used for enabling writing to AIRCR
+        static constexpr uint16_t VECTKEY_VALUE = 0x05FA; //!< Write key to enable AIRCR writes.
 
         struct Bits {
-            uint32_t VECTRESET: 1; //!< system reset bit
-            uint32_t VECTCLRACTIVE: 1; //!< clears all active state information for exceptions
-            uint32_t SYSRESETREQ: 1; //!< requests a system reset
+            uint32_t VECTRESET: 1; //!< System reset bit (deprecated, write 0).
+            uint32_t VECTCLRACTIVE: 1; //!< Clear all active state information for exceptions (write 0).
+            uint32_t SYSRESETREQ: 1; //!< System reset request.
             uint32_t RESERVED0: 5;
-            uint32_t PRIGROUP: 3; //!< interrupt priority grouping field
+            uint32_t PRIGROUP: 3; //!< Priority grouping field.
             uint32_t RESERVED1: 4;
-            uint32_t ENDIANNESS: 1; //!< reads as 0 - little endian
-            uint32_t VECTKEY: 16; //!< on writes, VECTKEY_VALUE to this field, otherwise the write is ignored
+            uint32_t ENDIANNESS: 1; //!< Data endianness (0: little endian).
+            uint32_t VECTKEY: 16; //!< Write VECTKEY_VALUE to enable writes, otherwise ignored.
         } bits;
 
         uint32_t value = 0;
@@ -132,18 +134,14 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! controls features of entry to and exit from low power state
+    //! System control register - low power state configuration.
     union SCR {
         struct Bits {
             uint32_t RESERVED0: 1;
-            uint32_t SLEEPONEXIT: 1; //!< enter sleep or deep sleep on return from ISR
-            uint32_t SLEEPDEEP: 1; //!< use deep sleep as low power mode
+            uint32_t SLEEPONEXIT: 1; //!< Enter sleep/deep sleep on ISR return to Thread mode.
+            uint32_t SLEEPDEEP: 1; //!< Use deep sleep instead of sleep.
             uint32_t RESERVED1: 1;
-
-            //! 0: only enabled exceptions or events can wakeup the processor, disabled exceptions are excluded
-            //! 1: enabled events and all exceptions, including disabled exceptions, can wakeup the processor
-            uint32_t SEVONPEND: 1;
-
+            uint32_t SEVONPEND: 1; //!< Wake from WFE on any interrupt (including disabled).
             uint32_t RESERVED2: 27;
         } bits;
 
@@ -157,17 +155,17 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! is a read-only register and indicates some aspects of the behaviour of the processor
+    //! Configuration and control register.
     union CCR {
         struct Bits {
-            uint32_t NONBASETHRDENA: 1; //!< configures how the processor enters Thread mode
-            uint32_t USERSETMPEND: 1; //!< enables unprivileged software access to STIR
+            uint32_t NONBASETHRDENA: 1; //!< How processor enters Thread mode.
+            uint32_t USERSETMPEND: 1; //!< Enables unprivileged software access to STIR.
             uint32_t RESERVED0: 1;
-            uint32_t UNALIGN_TRP: 1; //!< enables unaligned access traps
-            uint32_t DIV_0_TRP: 1; //!< enables divide by zero trap
+            uint32_t UNALIGN_TRP: 1; //!< Unaligned access traps enabled.
+            uint32_t DIV_0_TRP: 1; //!< Divide by zero trap enabled.
             uint32_t RESERVED1: 3;
-            uint32_t BFHFNMIGN: 1; //!< enables handlers with priority -1 or -2 to ignore data bus faults
-            uint32_t STKALIGN: 1; //!< configures stack alignment on exception entry
+            uint32_t BFHFNMIGN: 1; //!< Handlers with priority -1 or -2 ignore data bus faults.
+            uint32_t STKALIGN: 1; //!< 8-byte stack alignment on exception entry.
             uint32_t RESERVED2: 22;
         } bits;
 
@@ -181,80 +179,26 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! sets the priority level of the exception handlers that have configurable priority (memory management, bus fault, usage fault)
-    union SHPR1 {
-        struct Bits {
-            uint32_t PRI_4: 8; //!< priority of memory management fault exception (exception 4)
-            uint32_t PRI_5: 8; //!< priority of bus fault exception (exception 5)
-            uint32_t PRI_6: 8; //!< priority of usage fault exception (exception 6)
-            uint32_t RESERVED: 8;
-        } bits;
-
-        uint32_t value = 0;
-
-        SHPR1() = default;
-
-        SHPR1(uint32_t new_value)
-        {
-            value = new_value;
-        }
-    };
-
-    //! sets the priority level of the exception handlers that have configurable priority (SVCall)
-    union SHPR2 {
-        struct Bits {
-            uint32_t RESERVED0: 24;
-            uint32_t PRI_11: 8; //!< priority of SVCall exception (exception 11)
-        } bits;
-
-        uint32_t value = 0;
-
-        SHPR2() = default;
-
-        SHPR2(uint32_t new_value)
-        {
-            value = new_value;
-        }
-    };
-
-    //! sets the priority level of the exception handlers that have configurable priority (PendSV, SysTick)
-    union SHPR3 {
-        struct Bits {
-            uint32_t RESERVED0: 16;
-            uint32_t PRI_14: 8; //!< priority of PendSV exception (exception 14)
-            uint32_t PRI_15: 8; //!< priority of SysTick exception (exception 15)
-        } bits;
-
-        uint32_t value = 0;
-
-        SHPR3() = default;
-
-        SHPR3(uint32_t new_value)
-        {
-            value = new_value;
-        }
-    };
-
-    //! system handler control and state register
+    //! System handler control and state register.
     union SHCSR {
         struct Bits {
-            uint32_t MEMFAULTACT: 1; //!< memory management fault exception active
-            uint32_t BUSFAULTACT: 1; //!< bus fault exception active
+            uint32_t MEMFAULTACT: 1; //!< MemManage fault exception active.
+            uint32_t BUSFAULTACT: 1; //!< BusFault exception active.
             uint32_t RESERVED0: 1;
-            uint32_t USGFAULTACT: 1; //!< usage fault exception active
+            uint32_t USGFAULTACT: 1; //!< UsageFault exception active.
             uint32_t RESERVED1: 3;
-            uint32_t SVCALLACT: 1; //!< SVCall active
-            uint32_t MONITORACT: 1; //!< debug monitor active
+            uint32_t SVCALLACT: 1; //!< SVCall active.
+            uint32_t MONITORACT: 1; //!< Debug monitor active.
             uint32_t RESERVED2: 1;
-            uint32_t PENDSVACT: 1; //!< PendSV exception active
-            uint32_t SYSTICKACT: 1; //!< SysTick exception active
-            uint32_t USGFAULTPENDED: 1; //!< usage fault exception pending
-            uint32_t MEMFAULTPENDED: 1; //!< memory management fault exception pending
-            uint32_t BUSFAULTPENDED: 1; //!< bus fault exception pending
-            uint32_t SVCALLPENDED: 1; //!< SVCall pending
-            uint32_t MEMFAULTENA: 1; //!< memory management fault enable
-            uint32_t BUSFAULTENA: 1; //!< bus fault enable
-            uint32_t USGFAULTENA: 1; //!< usage fault enable
+            uint32_t PENDSVACT: 1; //!< PendSV exception active.
+            uint32_t SYSTICKACT: 1; //!< SysTick exception active.
+            uint32_t USGFAULTPENDED: 1; //!< UsageFault exception pending.
+            uint32_t MEMFAULTPENDED: 1; //!< MemManage fault exception pending.
+            uint32_t BUSFAULTPENDED: 1; //!< BusFault exception pending.
+            uint32_t SVCALLPENDED: 1; //!< SVCall pending.
+            uint32_t MEMFAULTENA: 1; //!< MemManage fault enable.
+            uint32_t BUSFAULTENA: 1; //!< BusFault enable.
+            uint32_t USGFAULTENA: 1; //!< UsageFault enable.
             uint32_t RESERVED3: 13;
         } bits;
 
@@ -268,37 +212,38 @@ namespace Cortex::M3::Scb {
         }
     };
 
-    //! configurable fault status register
+    //! Configurable fault status register.
+    //! Combines MemManage, BusFault, and UsageFault status registers.
     union CFSR {
         struct Bits {
-            // Memory Management Fault Status Register (MMFSR)
-            uint32_t IACCVIOL: 1; //!< instruction access violation
-            uint32_t DACCVIOL: 1; //!< data access violation
+            // MemManage Fault Status Register (MMFSR) - bits 0:7
+            uint32_t IACCVIOL: 1; //!< Instruction access violation.
+            uint32_t DACCVIOL: 1; //!< Data access violation.
             uint32_t RESERVED0: 1;
-            uint32_t MUNSTKERR: 1; //!< memory management fault on unstacking
-            uint32_t MSTKERR: 1; //!< memory management fault on stacking
-            uint32_t MLSPERR: 1; //!< memory management fault during lazy FP state preservation
+            uint32_t MUNSTKERR: 1; //!< MemManage fault on unstacking.
+            uint32_t MSTKERR: 1; //!< MemManage fault on stacking.
+            uint32_t MLSPERR: 1; //!< MemManage fault during lazy FP state preservation.
             uint32_t RESERVED1: 1;
-            uint32_t MMARVALID: 1; //!< memory management fault address register valid
+            uint32_t MMARVALID: 1; //!< MemManage fault address register valid.
 
-            // Bus Fault Status Register (BFSR)
-            uint32_t IBUSERR: 1; //!< instruction bus error
-            uint32_t PRECISERR: 1; //!< precise data bus error
-            uint32_t IMPRECISERR: 1; //!< imprecise data bus error
-            uint32_t UNSTKERR: 1; //!< bus fault on unstacking
-            uint32_t STKERR: 1; //!< bus fault on stacking
-            uint32_t LSPERR: 1; //!< bus fault during lazy FP state preservation
+            // BusFault Status Register (BFSR) - bits 8:15
+            uint32_t IBUSERR: 1; //!< Instruction bus error.
+            uint32_t PRECISERR: 1; //!< Precise data bus error.
+            uint32_t IMPRECISERR: 1; //!< Imprecise data bus error.
+            uint32_t UNSTKERR: 1; //!< BusFault on unstacking.
+            uint32_t STKERR: 1; //!< BusFault on stacking.
+            uint32_t LSPERR: 1; //!< BusFault during lazy FP state preservation.
             uint32_t RESERVED2: 1;
-            uint32_t BFARVALID: 1; //!< bus fault address register valid
+            uint32_t BFARVALID: 1; //!< BusFault address register valid.
 
-            // Usage Fault Status Register (UFSR)
-            uint32_t UNDEFINSTR: 1; //!< undefined instruction
-            uint32_t INVSTATE: 1; //!< invalid state
-            uint32_t INVPC: 1; //!< invalid PC load
-            uint32_t NOCP: 1; //!< no coprocessor
+            // UsageFault Status Register (UFSR) - bits 16:31
+            uint32_t UNDEFINSTR: 1; //!< Undefined instruction.
+            uint32_t INVSTATE: 1; //!< Invalid state.
+            uint32_t INVPC: 1; //!< Invalid PC load.
+            uint32_t NOCP: 1; //!< No coprocessor.
             uint32_t RESERVED3: 4;
-            uint32_t UNALIGNED: 1; //!< unaligned access
-            uint32_t DIVBYZERO: 1; //!< divide by zero
+            uint32_t UNALIGNED: 1; //!< Unaligned access.
+            uint32_t DIVBYZERO: 1; //!< Divide by zero.
             uint32_t RESERVED4: 6;
         } bits;
 
@@ -307,6 +252,47 @@ namespace Cortex::M3::Scb {
         CFSR() = default;
 
         CFSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    //! HardFault status register.
+    union HFSR {
+        struct Bits {
+            uint32_t RESERVED0: 1;
+            uint32_t VECTTBL: 1; //!< Vector table read fault.
+            uint32_t RESERVED1: 28;
+            uint32_t FORCED: 1; //!< Forced HardFault (escalated fault).
+            uint32_t DEBUGEVT: 1; //!< Debug event HardFault.
+        } bits;
+
+        uint32_t value = 0;
+
+        HFSR() = default;
+
+        HFSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    //! Debug fault status register.
+    union DFSR {
+        struct Bits {
+            uint32_t HALTED: 1; //!< Halt request debug event.
+            uint32_t BKPT: 1; //!< Breakpoint debug event.
+            uint32_t DWTTRAP: 1; //!< Data Watchpoint and Trace (DWT) debug event.
+            uint32_t VCATCH: 1; //!< Vector catch debug event.
+            uint32_t EXTERNAL: 1; //!< External debug request.
+            uint32_t RESERVED: 27;
+        } bits;
+
+        uint32_t value = 0;
+
+        DFSR() = default;
+
+        DFSR(uint32_t new_value)
         {
             value = new_value;
         }
@@ -324,6 +310,8 @@ namespace Cortex::M3::Scb {
 
         AIRCR aircr { SCB->AIRCR };
 
+        aircr.bits.VECTRESET = 0;
+        aircr.bits.VECTCLRACTIVE = 0;
         aircr.bits.SYSRESETREQ = true;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
 
@@ -335,11 +323,13 @@ namespace Cortex::M3::Scb {
         while(true);
     }
 
-    static inline void setPriorityGrouping(uint32_t pri_group)
+    static inline void setPriorityGrouping(uint32_t priority_group)
     {
+        dataSyncBarrier();
+
         AIRCR aircr { SCB->AIRCR };
 
-        aircr.bits.PRIGROUP = pri_group & 0x7;
+        aircr.bits.PRIGROUP = priority_group & 0x7;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
 
         SCB->AIRCR = aircr.value;

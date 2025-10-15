@@ -17,7 +17,6 @@
 #pragma once
 
 #include "utils.hpp"
-#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Nvic {
@@ -25,19 +24,19 @@ namespace Cortex::M3::Nvic {
 
     struct Registers
     {
-        volatile uint32_t ISER[8]; //!< Interrupt Set-Enable Registers
+        volatile uint32_t ISER[8]; //!< Interrupt set-enable registers.
         volatile uint32_t RESERVED0[24];
-        volatile uint32_t ICER[8]; //!< Interrupt Clear-Enable Registers
+        volatile uint32_t ICER[8]; //!< Interrupt clear-enable registers.
         volatile uint32_t RESERVED1[24];
-        volatile uint32_t ISPR[8]; //!< Interrupt Set-Pending Registers
+        volatile uint32_t ISPR[8]; //!< Interrupt set-pending registers.
         volatile uint32_t RESERVED2[24];
-        volatile uint32_t ICPR[8]; //!< Interrupt Clear-Pending Registers
+        volatile uint32_t ICPR[8]; //!< Interrupt clear-pending registers.
         volatile uint32_t RESERVED3[24];
-        volatile uint32_t IABR[8]; //!< Interrupt Active Bit Registers
+        volatile uint32_t IABR[8]; //!< Interrupt active bit registers.
         volatile uint32_t RESERVED4[56];
-        volatile uint8_t IP[240]; //!< Interrupt Priority Registers (byte accessible)
+        volatile uint8_t IPR[240]; //!< Interrupt priority registers (byte-accessible).
         volatile uint32_t RESERVED5[644];
-        volatile uint32_t STIR; //!< Software Trigger Interrupt Register
+        volatile uint32_t STIR; //!< Software trigger interrupt register.
     };
 }
 
@@ -58,8 +57,6 @@ namespace Cortex::M3::Nvic {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
         Cortex::setBit(NVIC->ISER[reg_idx], bit_idx);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void disableIrq(uint8_t irq_number)
@@ -67,8 +64,6 @@ namespace Cortex::M3::Nvic {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
         Cortex::setBit(NVIC->ICER[reg_idx], bit_idx);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
@@ -83,8 +78,6 @@ namespace Cortex::M3::Nvic {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
         Cortex::setBit(NVIC->ISPR[reg_idx], bit_idx);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
@@ -92,8 +85,6 @@ namespace Cortex::M3::Nvic {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
         Cortex::setBit(NVIC->ICPR[reg_idx], bit_idx);
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 
     static inline bool isIrqActive(uint8_t irq_number)
@@ -101,12 +92,5 @@ namespace Cortex::M3::Nvic {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
         return Cortex::isBitSet(NVIC->IABR[reg_idx], bit_idx);
-    }
-
-    static inline void triggerIrq(uint8_t irq_number)
-    {
-        NVIC->STIR = irq_number & 0xFF;
-        dataSyncBarrier();
-        instrSyncBarrier();
     }
 }
