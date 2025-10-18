@@ -42,9 +42,9 @@ set(CMAKE_OBJDUMP arm-none-eabi-objdump)
 set(CMAKE_SIZE arm-none-eabi-size)
 set(CMAKE_READELF arm-none-eabi-readelf)
 
-set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE STRING "Default ASM flags")
-set(CMAKE_C_FLAGS "" CACHE STRING "Default C flags")
-set(CMAKE_CXX_FLAGS "" CACHE STRING "Default CXX flags")
+set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE STRING "Essential ASM flags")
+set(CMAKE_C_FLAGS "" CACHE STRING "Essential C flags")
+set(CMAKE_CXX_FLAGS "" CACHE STRING "Essential CXX flags")
 
 set(CMAKE_ASM_FLAGS_DEBUG_INIT "-DDEBUG")
 set(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG_INIT}" CACHE STRING "Overridable ASM Debug flags")
