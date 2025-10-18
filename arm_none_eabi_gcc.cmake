@@ -12,88 +12,82 @@
 # See the Licence for the specific language governing permissions and
 # limitations under the Licence.
 
-cmake_minimum_required(VERSION 3.19)
-
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ARM)
-set(CMAKE_SYSTEM_ARCHITECTURE ARM)
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-find_program(CMAKE_C_COMPILER arm-none-eabi-gcc REQUIRED NO_CMAKE_FIND_ROOT_PATH)
-get_filename_component(CMAKE_FIND_ROOT_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
+if(NOT DEFINED CMAKE_C_COMPILER)
+    set(CMAKE_C_COMPILER arm-none-eabi-gcc)
+endif()
 
-execute_process(COMMAND ${CMAKE_C_COMPILER} -print-sysroot
-    OUTPUT_VARIABLE CMAKE_SYSROOT
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    COMMAND_ERROR_IS_FATAL ANY
-)
+if(NOT DEFINED CMAKE_CXX_COMPILER)
+    set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+endif()
 
-set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
-set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
-set(CMAKE_AR arm-none-eabi-gcc-ar)
-set(CMAKE_RANLIB arm-none-eabi-gcc-ranlib)
-set(CMAKE_ADDR2LINE arm-none-eabi-addr2line)
-set(CMAKE_LINKER arm-none-eabi-ld)
-set(CMAKE_STRIP arm-none-eabi-strip)
-set(CMAKE_NM arm-none-eabi-nm)
-set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
-set(CMAKE_OBJDUMP arm-none-eabi-objdump)
-set(CMAKE_SIZE arm-none-eabi-size)
-set(CMAKE_READELF arm-none-eabi-readelf)
+if(NOT DEFINED CMAKE_ASM_COMPILER)
+    set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER} -x assembler-with-cpp)
+endif()
 
-set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE STRING "Essential ASM flags")
-set(CMAKE_C_FLAGS "" CACHE STRING "Essential C flags")
-set(CMAKE_CXX_FLAGS "" CACHE STRING "Essential CXX flags")
+if(NOT DEFINED CMAKE_AR)
+    set(CMAKE_AR arm-none-eabi-gcc-ar)
+endif()
+
+if(NOT DEFINED CMAKE_RANLIB)
+    set(CMAKE_RANLIB arm-none-eabi-gcc-ranlib)
+endif()
+
+if(NOT DEFINED CMAKE_ADDR2LINE)
+    set(CMAKE_ADDR2LINE arm-none-eabi-addr2line)
+endif()
+
+if(NOT DEFINED CMAKE_LINKER)
+    set(CMAKE_LINKER arm-none-eabi-ld)
+endif()
+
+if(NOT DEFINED CMAKE_STRIP)
+    set(CMAKE_STRIP arm-none-eabi-strip)
+endif()
+
+if(NOT DEFINED CMAKE_NM)
+    set(CMAKE_NM arm-none-eabi-nm)
+endif()
+
+if(NOT DEFINED CMAKE_OBJCOPY)
+    set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
+endif()
+
+if(NOT DEFINED CMAKE_OBJDUMP)
+    set(CMAKE_OBJDUMP arm-none-eabi-objdump)
+endif()
+
+if(NOT DEFINED CMAKE_SIZE)
+    set(CMAKE_SIZE arm-none-eabi-size)
+endif()
+
+if(NOT DEFINED CMAKE_READELF)
+    set(CMAKE_READELF arm-none-eabi-readelf)
+endif()
 
 set(CMAKE_ASM_FLAGS_DEBUG_INIT "-DDEBUG")
-set(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG_INIT}" CACHE STRING "Overridable ASM Debug flags")
 set(CMAKE_ASM_FLAGS_RELEASE_INIT "")
-set(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE_INIT}" CACHE STRING "Overridable ASM Release flags")
 set(CMAKE_ASM_FLAGS_MINSIZEREL_INIT "")
-set(CMAKE_ASM_FLAGS_MINSIZEREL "${CMAKE_ASM_FLAGS_MINSIZEREL_INIT}" CACHE STRING "Overridable ASM MinSizeRel flags")
 set(CMAKE_ASM_FLAGS_RELWITHDEBINFO_INIT "")
-set(CMAKE_ASM_FLAGS_RELWITHDEBINFO "${CMAKE_ASM_FLAGS_RELWITHDEBINFO_INIT}" CACHE STRING "Overridable ASM RelWithDebInfo flags")
 
 set(CMAKE_C_FLAGS_DEBUG_INIT "-Og -ggdb3 -DDEBUG")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG_INIT}" CACHE STRING "Overridable C Debug flags")
 set(CMAKE_C_FLAGS_RELEASE_INIT "-O2")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE_INIT}" CACHE STRING "Overridable C Release flags")
 set(CMAKE_C_FLAGS_MINSIZEREL_INIT "-Os")
-set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL_INIT}" CACHE STRING "Overridable C MinSizeRel flags")
 set(CMAKE_C_FLAGS_RELWITHDEBINFO_INIT "-O2 -ggdb3")
-set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO_INIT}" CACHE STRING "Overridable C RelWithDebInfo flags")
 
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Og -ggdb3 -DDEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG_INIT}" CACHE STRING "Overridable CXX Debug flags")
 set(CMAKE_CXX_FLAGS_RELEASE_INIT "-O2")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE_INIT}" CACHE STRING "Overridable CXX Release flags")
 set(CMAKE_CXX_FLAGS_MINSIZEREL_INIT "-Os")
-set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL_INIT}" CACHE STRING "Overridable CXX MinSizeRel flags")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "-O2 -ggdb3")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT}" CACHE STRING "Overridable CXX RelWithDebInfo flags")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-
-set(CMAKE_C_OUTPUT_EXTENSION ".o")
-set(CMAKE_CXX_OUTPUT_EXTENSION ".o")
-set(CMAKE_ASM_OUTPUT_EXTENSION ".o")
-
-set(CMAKE_STATIC_LIBRARY_FORMAT ELF)
-set(CMAKE_EXECUTABLE_FORMAT ELF)
-
-set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
-set(CMAKE_STATIC_LIBRARY_PREFIX_C "lib")
-set(CMAKE_STATIC_LIBRARY_PREFIX_CXX "lib")
-set(CMAKE_STATIC_LIBRARY_PREFIX_ASM "lib")
-
-set(CMAKE_STATIC_LIBRARY_SUFFIX ".a")
-set(CMAKE_STATIC_LIBRARY_SUFFIX_C ".a")
-set(CMAKE_STATIC_LIBRARY_SUFFIX_CXX ".a")
-set(CMAKE_STATIC_LIBRARY_SUFFIX_ASM ".a")
 
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 set(CMAKE_EXECUTABLE_SUFFIX_ASM ".elf")
