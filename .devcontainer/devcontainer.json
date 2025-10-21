@@ -1,4 +1,7 @@
 {
     "name": "ARM Cortex-M C++ Lib Development Environment",
-    "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest"
+    "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
+
+    "workspaceFolder": "/root/ARMCortexM-CppLib",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind"
 }
