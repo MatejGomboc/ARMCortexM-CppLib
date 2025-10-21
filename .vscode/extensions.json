@@ -6,11 +6,14 @@
         "editorconfig.editorconfig",
         "felipecaputo.git-project-manager",
         "github.vscode-github-actions",
+        "Gruntfuggly.todo-tree",
+        "ms-vscode.cmake-tools",
         "ms-vscode.cpptools-extension-pack",
         "ms-vscode.cpptools-themes",
+        "ms-vscode.hexeditor",
         "ms-vscode.notepadplusplus-keybindings",
-        "ms-vscode.cmake-tools",
         "redhat.vscode-yaml",
+        "trond-snekvik.gnu-mapfiles",
         "xaver.clang-format"
     ]
 }
