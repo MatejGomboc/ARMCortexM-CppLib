@@ -10,5 +10,6 @@
     },
     "[shellscript]": {
         "files.eol": "\n"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
