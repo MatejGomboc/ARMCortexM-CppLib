@@ -1,13 +1,14 @@
 {
     "name": "ARM Cortex-M C++ Lib Development Environment",
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
-	"features": {
-        "ghcr.io/devcontainers/features/git:1": {}
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        }
     },
-
+    "postCreateCommand": "apt-get update && apt-get install -y ca-certificates && update-ca-certificates",
     "workspaceFolder": "/root/ARMCortexM-CppLib",
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
-
     "customizations": {
         "vscode": {
             "extensions": [
