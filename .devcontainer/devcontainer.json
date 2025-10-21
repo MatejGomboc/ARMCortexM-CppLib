@@ -1,7 +1,33 @@
 {
     "name": "ARM Cortex-M C++ Lib Development Environment",
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
-
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        }
+    },
+    "postCreateCommand": "apt-get update && apt-get install -y ca-certificates && update-ca-certificates",
     "workspaceFolder": "/root/ARMCortexM-CppLib",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind"
+    "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dan-c-underwood.arm",
+                "davidanson.vscode-markdownlint",
+                "donjayamanne.githistory",
+                "editorconfig.editorconfig",
+                "felipecaputo.git-project-manager",
+                "github.vscode-github-actions",
+                "Gruntfuggly.todo-tree",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cpptools-themes",
+                "ms-vscode.hexeditor",
+                "ms-vscode.notepadplusplus-keybindings",
+                "redhat.vscode-yaml",
+                "trond-snekvik.gnu-mapfiles",
+                "xaver.clang-format"
+            ]
+        }
+    }
 }
