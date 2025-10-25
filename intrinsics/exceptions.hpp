@@ -19,17 +19,17 @@
 #include <cstdint>
 
 namespace Cortex {
-    inline void asmCpsie()
+    [[gnu::always_inline]] static inline void asmCpsie()
     {
         asm volatile("cpsie i" : : : "memory");
     }
 
-    inline void asmCpsid()
+    [[gnu::always_inline]] static inline void asmCpsid()
     {
         asm volatile("cpsid i" : : : "memory");
     }
 
-    inline void asmSvc(uint8_t immediate)
+    [[gnu::always_inline]] static inline void asmSvc(uint8_t immediate)
     {
         asm volatile("svc %0" : : "i" (immediate));
     }

@@ -19,7 +19,7 @@
 #include <cstdint>
 
 namespace Cortex {
-    inline void asmBkpt(uint8_t value)
+    [[gnu::always_inline]] static inline void asmBkpt(uint8_t value)
     {
         asm volatile("bkpt %0" : : "i" (value));
     }
