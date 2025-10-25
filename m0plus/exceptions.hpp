@@ -49,6 +49,11 @@ namespace Cortex::M0Plus {
             static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
     }
 
+    static inline void supervisorCall(uint8_t immediate)
+    {
+        asm volatile("svc %0" : : "i" (immediate));
+    }
+
     static inline void sendEvent()
     {
         asm volatile("sev" : : : "memory");
