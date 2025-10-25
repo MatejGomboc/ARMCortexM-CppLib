@@ -105,6 +105,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
 endif()
 
 if(BUILD_ARM_CORTEX_M_TESTS)
-    enable_testing()
+    include(CTest)
     add_subdirectory(tests)
 endif()
