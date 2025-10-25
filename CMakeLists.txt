@@ -43,8 +43,6 @@ option(BUILD_ARM_CORTEX_M_TESTS "Build tests for ${PROJECT_NAME} library" OFF)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-
 target_include_directories(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
@@ -53,18 +51,6 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/barriers.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/misc.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
-)
-
-target_compile_options(${PROJECT_NAME} INTERFACE
-    -mthumb
-    -mfloat-abi=soft
-    -masm-syntax-unified
-    -std=c++20
-)
-
-target_link_options(${PROJECT_NAME} INTERFACE
-    -mfloat-abi=soft
-    -mthumb
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
