@@ -120,5 +120,5 @@ endif()
 
 if(BUILD_ARM_CORTEX_M_TESTS)
     enable_testing()
-    add_subdirectory(asm_tests)
+    add_subdirectory(tests)
 endif()
