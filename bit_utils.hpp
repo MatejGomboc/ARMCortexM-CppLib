@@ -16,24 +16,28 @@
 
 #pragma once
 
+#include <cstdint>
+#include <concepts>
+
 namespace Cortex {
-    static inline void dataSyncBarrier()
+    //! Check if the n-th bit is set in the value.
+    template<typename T>
+    constexpr bool isBitSet(T value, uint8_t n)
     {
-        asm volatile("dsb" : : : "memory");
+        return (value >> n) & T{1};
     }
 
-    static inline void instrSyncBarrier()
+    //! Sets the n-th bit in the value.
+    template<typename T>
+    constexpr void setBit(T& value, uint8_t n)
     {
-        asm volatile("isb" : : : "memory");
+        value |= T{1} << n;
     }
 
-    static inline void dataMemBarrier()
+    //! Clears the n-th bit in the value.
+    template<typename T>
+    constexpr void clearBit(T& value, uint8_t n)
     {
-        asm volatile("dmb" : : : "memory");
-    }
-
-    static inline void compilerBarrier()
-    {
-        asm volatile("" : : : "memory");
+        value &= ~(T{1} << n);
     }
 }

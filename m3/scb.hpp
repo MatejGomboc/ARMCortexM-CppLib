@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Scb {
@@ -300,7 +300,7 @@ namespace Cortex::M3 {
 namespace Cortex::M3::Scb {
     [[noreturn]] static inline void systemReset()
     {
-        dataSyncBarrier();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -311,15 +311,15 @@ namespace Cortex::M3::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        dataSyncBarrier();
-        instrSyncBarrier();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }
 
     static inline void setPriorityGrouping(uint32_t priority_group)
     {
-        dataSyncBarrier();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -328,8 +328,8 @@ namespace Cortex::M3::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        dataSyncBarrier();
-        instrSyncBarrier();
+        asmDsb();
+        asmIsb();
     }
 
     static inline uint32_t getPriorityGrouping()
