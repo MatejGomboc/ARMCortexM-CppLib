@@ -19,21 +19,21 @@
 #include <cstdint>
 
 namespace Cortex {
-    [[gnu::always_inline]] inline uint32_t asmRev(uint32_t value)
+    [[gnu::always_inline]] static inline uint32_t asmRev(uint32_t value)
     {
         uint32_t result;
         asm volatile("rev %0, %1" : "=r" (result) : "r" (value));
         return result;
     }
 
-    [[gnu::always_inline]]inline uint32_t asmRev16(uint32_t value)
+    [[gnu::always_inline]] static inline uint32_t asmRev16(uint32_t value)
     {
         uint32_t result;
         asm volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
         return result;
     }
 
-    [[gnu::always_inline]] inline int32_t asmRevsh(int32_t value)
+    [[gnu::always_inline]] static inline int32_t asmRevsh(int32_t value)
     {
         int32_t result;
         asm volatile("revsh %0, %1" : "=r" (result) : "r" (value));

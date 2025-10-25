@@ -17,7 +17,7 @@
 #pragma once
 
 namespace Cortex {
-    [[gnu::always_inline]] inline void asmNop()
+    [[gnu::always_inline]] static inline void asmNop()
     {
         asm volatile("nop");
     }

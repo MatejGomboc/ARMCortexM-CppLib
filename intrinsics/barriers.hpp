@@ -17,22 +17,22 @@
 #pragma once
 
 namespace Cortex {
-    [[gnu::always_inline]] inline void asmDsb()
+    [[gnu::always_inline]] static inline void asmDsb()
     {
         asm volatile("dsb" : : : "memory");
     }
 
-    [[gnu::always_inline]] inline void asmIsb()
+    [[gnu::always_inline]] static inline void asmIsb()
     {
         asm volatile("isb" : : : "memory");
     }
 
-    [[gnu::always_inline]] inline void asmDmb()
+    [[gnu::always_inline]] static inline void asmDmb()
     {
         asm volatile("dmb" : : : "memory");
     }
 
-    [[gnu::always_inline]] inline void compilerBarrier()
+    [[gnu::always_inline]] static inline void compilerBarrier()
     {
         asm volatile("" : : : "memory");
     }

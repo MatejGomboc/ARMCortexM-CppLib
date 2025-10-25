@@ -17,17 +17,17 @@
 #pragma once
 
 namespace Cortex {
-    [[gnu::always_inline]] inline void asmSev()
+    [[gnu::always_inline]] static inline void asmSev()
     {
         asm volatile("sev" : : : "memory");
     }
 
-    [[gnu::always_inline]] inline void asmWfe()
+    [[gnu::always_inline]] static inline void asmWfe()
     {
         asm volatile("wfe" : : : "memory");
     }
 
-    [[gnu::always_inline]] inline void asmWfi()
+    [[gnu::always_inline]] static inline void asmWfi()
     {
         asm volatile("wfi" : : : "memory");
     }
