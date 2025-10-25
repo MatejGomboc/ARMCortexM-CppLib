@@ -49,4 +49,4 @@ function(add_asm_test TEST_NAME)
     )
 endfunction()
 
-add_subdirectory(utils_tests)
+add_subdirectory(utils)
