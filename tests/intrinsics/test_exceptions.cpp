@@ -5,7 +5,9 @@ extern "C" [[gnu::naked]] void test_cpsie() {
 }
 
 // CHECK-LABEL: <test_cpsie>:
-// CHECK-NEXT: cpsie
+// CHECK-NEXT: cpsie i
+// RELEASE-CHECK-NEXT: nop
+// RELWITHDEBINFO-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:
@@ -15,7 +17,9 @@ extern "C" [[gnu::naked]] void test_cpsid() {
 }
 
 // CHECK-LABEL: <test_cpsid>:
-// CHECK-NEXT: cpsid
+// CHECK-NEXT: cpsid i
+// RELEASE-CHECK-NEXT: nop
+// RELWITHDEBINFO-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:
