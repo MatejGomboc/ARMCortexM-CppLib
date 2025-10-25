@@ -19,34 +19,8 @@
 #include <cstdint>
 
 namespace Cortex {
-    static inline void noOperation()
-    {
-        asm volatile("nop");
-    }
-
-    static inline void breakpoint(uint8_t value)
+    inline void asmBkpt(uint8_t value)
     {
         asm volatile("bkpt %0" : : "i" (value));
-    }
-
-    static inline uint32_t reverseBytes(uint32_t value)
-    {
-        uint32_t result;
-        asm volatile("rev %0, %1" : "=r" (result) : "r" (value));
-        return result;
-    }
-
-    static inline uint32_t reverseBytes16(uint32_t value)
-    {
-        uint32_t result;
-        asm volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
-        return result;
-    }
-
-    static inline int32_t reverseBytesSignedHalfword(int32_t value)
-    {
-        int32_t result;
-        asm volatile("revsh %0, %1" : "=r" (result) : "r" (value));
-        return result;
     }
 }

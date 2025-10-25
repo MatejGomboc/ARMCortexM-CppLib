@@ -17,23 +17,18 @@
 #pragma once
 
 namespace Cortex {
-    static inline void dataSyncBarrier()
+    inline void asmSev()
     {
-        asm volatile("dsb" : : : "memory");
+        asm volatile("sev" : : : "memory");
     }
 
-    static inline void instrSyncBarrier()
+    inline void asmWfe()
     {
-        asm volatile("isb" : : : "memory");
+        asm volatile("wfe" : : : "memory");
     }
 
-    static inline void dataMemBarrier()
+    inline void asmWfi()
     {
-        asm volatile("dmb" : : : "memory");
-    }
-
-    static inline void compilerBarrier()
-    {
-        asm volatile("" : : : "memory");
+        asm volatile("wfi" : : : "memory");
     }
 }

@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Mpu {
@@ -163,7 +163,7 @@ namespace Cortex::M3::Mpu {
 
         MPU->RASR = region_attributes.value;
 
-        dataSyncBarrier();
-        instrSyncBarrier();
+        asmDsb();
+        asmIsb();
     }
 }

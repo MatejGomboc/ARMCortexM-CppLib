@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0::Scb {
@@ -212,7 +212,7 @@ namespace Cortex::M0 {
 namespace Cortex::M0::Scb {
     [[noreturn]] static inline void systemReset()
     {
-        dataSyncBarrier();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -222,8 +222,8 @@ namespace Cortex::M0::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        dataSyncBarrier();
-        instrSyncBarrier();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }

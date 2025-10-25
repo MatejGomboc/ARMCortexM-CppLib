@@ -12,7 +12,6 @@ jobs:
             fail-fast: false # Don't cancel other jobs if one fails.
 
             matrix:
-                # arch: ["M0", "M0PLUS", "M1", "M3"]
                 arch: ["M0", "M0PLUS", "M1"]
                 build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
 

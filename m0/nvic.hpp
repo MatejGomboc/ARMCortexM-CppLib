@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "utils.hpp"
+#include "bit_utils.hpp"
 #include <cstdint>
 
 namespace Cortex::M0::Nvic {

@@ -48,9 +48,13 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 )
 
 target_sources(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/misc.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/bit_utils.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/barriers.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/byte_reversing.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/debugging.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/events.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/hints.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
