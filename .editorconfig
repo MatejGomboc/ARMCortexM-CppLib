@@ -19,3 +19,7 @@ trim_trailing_whitespace = false
 # all Shell scripts must use Linux line endings
 [*.sh]
 end_of_line = lf
+
+# all YAML files must use Linux line endings
+[*.yml]
+end_of_line = lf
