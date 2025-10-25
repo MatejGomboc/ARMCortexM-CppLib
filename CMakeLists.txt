@@ -23,7 +23,7 @@ project(ARMCortexM
 
 set(AVAILABLE_ARM_CORTEX_M_ARCHS
     "M0"
-    "M0+"
+    "M0PLUS"
     "M1"
     "M3"
 )
@@ -79,7 +79,7 @@ if(ARM_CORTEX_M_ARCH STREQUAL "M0")
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
 
-elseif(ARM_CORTEX_M_ARCH STREQUAL "M0+")
+elseif(ARM_CORTEX_M_ARCH STREQUAL "M0PLUS")
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/mpu.hpp"
