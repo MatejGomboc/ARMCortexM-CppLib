@@ -38,14 +38,14 @@ namespace Cortex::M3::Scb {
         volatile uint32_t MMFAR; //!< MemManage fault address register.
         volatile uint32_t BFAR; //!< BusFault address register.
         volatile uint32_t AFSR; //!< Auxiliary fault status register.
-        const volatile uint32_t ID_PFR[2]; //!< Processor feature register.
-        const volatile uint32_t ID_DFR; //!< Debug feature register.
-        const volatile uint32_t ID_AFR; //!< Auxiliary feature register.
-        const volatile uint32_t ID_MMFR[4]; //!< Memory model feature register.
-        const volatile uint32_t ID_ISAR[5]; //!< Instruction set attributes register.
-        uint32_t RESERVED0[5];
+        volatile uint32_t ID_PFR[2]; //!< Processor feature register.
+        volatile uint32_t ID_DFR; //!< Debug feature register.
+        volatile uint32_t ID_AFR; //!< Auxiliary feature register.
+        volatile uint32_t ID_MMFR[4]; //!< Memory model feature register.
+        volatile uint32_t ID_ISAR[5]; //!< Instruction set attributes register.
+        volatile uint32_t RESERVED0[5];
         volatile uint32_t CPACR; //!< Coprocessor access control register.
-        uint32_t RESERVED3[93];
+        volatile uint32_t RESERVED3[93];
         volatile uint32_t STIR; //!< Software triggered interrupt register.
     };
 
@@ -298,7 +298,7 @@ namespace Cortex::M3 {
 }
 
 namespace Cortex::M3::Scb {
-    [[noreturn]] static inline void systemReset()
+    [[gnu::noreturn]] static inline void systemReset()
     {
         asmDsb();
 
