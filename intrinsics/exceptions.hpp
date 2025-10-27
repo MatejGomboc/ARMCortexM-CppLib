@@ -29,8 +29,9 @@ namespace Cortex {
         asm volatile("cpsid i" : : : "memory");
     }
 
-    [[gnu::always_inline]] static inline void asmSvc(uint8_t immediate)
+    template<uint8_t value>
+    [[gnu::always_inline]] static inline void asmSvc()
     {
-        asm volatile("svc %0" : : "i" (immediate));
+        asm volatile("svc %0" : : "i" (static_cast<uint16_t>(value)));
     }
 }

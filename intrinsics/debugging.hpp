@@ -19,8 +19,9 @@
 #include <cstdint>
 
 namespace Cortex {
-    [[gnu::always_inline]] static inline void asmBkpt(uint8_t value)
+    template<uint8_t value>
+    [[gnu::always_inline]] static inline void asmBkpt()
     {
-        asm volatile("bkpt %0" : : "i" (value));
+        asm volatile("bkpt %0" : : "i" (static_cast<uint16_t>(value)));
     }
 }
