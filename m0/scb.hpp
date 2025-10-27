@@ -210,7 +210,7 @@ namespace Cortex::M0 {
 }
 
 namespace Cortex::M0::Scb {
-    [[noreturn]] static inline void systemReset()
+    [[gnu::noreturn]] static inline void systemReset()
     {
         asmDsb();
 
