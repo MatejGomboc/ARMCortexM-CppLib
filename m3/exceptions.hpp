@@ -39,7 +39,7 @@ namespace Cortex::M3 {
 
     static constexpr bool isIrqNumber(ExceptionNumber exception)
     {
-        return (static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ) &&
-            static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ));
+        return ((static_cast<uint8_t>(exception) >= static_cast<uint8_t>(ExceptionNumber::FIRST_IRQ)) &&
+            (static_cast<uint8_t>(exception) <= static_cast<uint8_t>(ExceptionNumber::LAST_IRQ)));
     }
 }
