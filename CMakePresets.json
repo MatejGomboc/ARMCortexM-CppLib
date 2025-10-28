@@ -27,7 +27,7 @@
             "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/debug",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "debug"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
@@ -35,7 +35,7 @@
             "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/minsize",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "minsize"
+                "CMAKE_BUILD_TYPE": "MinSize"
             }
         },
         {
@@ -43,7 +43,7 @@
             "inherits": "base-single",
             "binaryDir": "${sourceDir}/build-single/maxspeed",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "maxspeed"
+                "CMAKE_BUILD_TYPE": "MaxSpeed"
             }
         }
     ],
@@ -51,17 +51,17 @@
         {
             "name": "multi-debug",
             "configurePreset": "multi",
-            "configuration": "debug"
+            "configuration": "Debug"
         },
         {
             "name": "multi-maxspeed",
             "configurePreset": "multi",
-            "configuration": "maxspeed"
+            "configuration": "MaxSpeed"
         },
         {
             "name": "multi-minsize",
             "configurePreset": "multi",
-            "configuration": "minsize"
+            "configuration": "MinSize"
         },
         {
             "name": "single-debug",
@@ -92,19 +92,19 @@
             "name": "multi-debug",
             "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "debug"
+            "configuration": "Debug"
         },
         {
             "name": "multi-minsize",
             "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "minsize"
+            "configuration": "MinSize"
         },
         {
             "name": "multi-maxspeed",
             "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "maxspeed"
+            "configuration": "MaxSpeed"
         },
         {
             "name": "single-debug",
