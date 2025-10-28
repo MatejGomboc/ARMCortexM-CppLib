@@ -31,27 +31,19 @@
             }
         },
         {
-            "name": "single-minsizerel",
+            "name": "single-minsize",
             "inherits": "base-single",
-            "binaryDir": "${sourceDir}/build-single/minsizerel",
+            "binaryDir": "${sourceDir}/build-single/minsize",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "MinSizeRel"
+                "CMAKE_BUILD_TYPE": "MinSize"
             }
         },
         {
-            "name": "single-release",
+            "name": "single-maxspeed",
             "inherits": "base-single",
-            "binaryDir": "${sourceDir}/build-single/release",
+            "binaryDir": "${sourceDir}/build-single/maxspeed",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        },
-        {
-            "name": "single-relwithdebinfo",
-            "inherits": "base-single",
-            "binaryDir": "${sourceDir}/build-single/relwithdebinfo",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+                "CMAKE_BUILD_TYPE": "MaxSpeed"
             }
         }
     ],
@@ -62,35 +54,26 @@
             "configuration": "Debug"
         },
         {
-            "name": "multi-release",
+            "name": "multi-maxspeed",
             "configurePreset": "multi",
-            "configuration": "Release"
+            "configuration": "MaxSpeed"
         },
         {
-            "name": "multi-minsizerel",
+            "name": "multi-minsize",
             "configurePreset": "multi",
-            "configuration": "MinSizeRel"
-        },
-        {
-            "name": "multi-relwithdebinfo",
-            "configurePreset": "multi",
-            "configuration": "RelWithDebInfo"
+            "configuration": "MinSize"
         },
         {
             "name": "single-debug",
             "configurePreset": "single-debug"
         },
         {
-            "name": "single-minsizerel",
-            "configurePreset": "single-minsizerel"
+            "name": "single-minsize",
+            "configurePreset": "single-minsize"
         },
         {
-            "name": "single-release",
-            "configurePreset": "single-release"
-        },
-        {
-            "name": "single-relwithdebinfo",
-            "configurePreset": "single-relwithdebinfo"
+            "name": "single-maxspeed",
+            "configurePreset": "single-maxspeed"
         }
     ],
     "testPresets": [
@@ -112,22 +95,16 @@
             "configuration": "Debug"
         },
         {
-            "name": "multi-minsizerel",
+            "name": "multi-minsize",
             "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "MinSizeRel"
+            "configuration": "MinSize"
         },
         {
-            "name": "multi-release",
+            "name": "multi-maxspeed",
             "inherits": "base-test",
             "configurePreset": "multi",
-            "configuration": "Release"
-        },
-        {
-            "name": "multi-relwithdebinfo",
-            "inherits": "base-test",
-            "configurePreset": "multi",
-            "configuration": "RelWithDebInfo"
+            "configuration": "MaxSpeed"
         },
         {
             "name": "single-debug",
@@ -135,19 +112,14 @@
             "configurePreset": "single-debug"
         },
         {
-            "name": "single-minsizerel",
+            "name": "single-minsize",
             "inherits": "base-test",
-            "configurePreset": "single-minsizerel"
+            "configurePreset": "single-minsize"
         },
         {
-            "name": "single-release",
+            "name": "single-maxspeed",
             "inherits": "base-test",
-            "configurePreset": "single-release"
-        },
-        {
-            "name": "single-relwithdebinfo",
-            "inherits": "base-test",
-            "configurePreset": "single-relwithdebinfo"
+            "configurePreset": "single-maxspeed"
         }
     ]
 }

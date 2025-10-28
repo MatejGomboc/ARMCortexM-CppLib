@@ -6,10 +6,7 @@ extern "C" [[gnu::naked]] void test_cpsie() {
 
 // CHECK-LABEL: <test_cpsie>:
 // CHECK-NEXT: cpsie i
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_cpsid() {
@@ -18,10 +15,7 @@ extern "C" [[gnu::naked]] void test_cpsid() {
 
 // CHECK-LABEL: <test_cpsid>:
 // CHECK-NEXT: cpsid i
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_0() {
@@ -29,15 +23,8 @@ extern "C" [[gnu::naked]] void test_svc_0() {
 }
 
 // CHECK-LABEL: <test_svc_0>:
-
 // CHECK-NEXT: svc 0
-
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_1() {
@@ -45,15 +32,8 @@ extern "C" [[gnu::naked]] void test_svc_1() {
 }
 
 // CHECK-LABEL: <test_svc_1>:
-
 // CHECK-NEXT: svc 1
-
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_8() {
@@ -61,15 +41,8 @@ extern "C" [[gnu::naked]] void test_svc_8() {
 }
 
 // CHECK-LABEL: <test_svc_8>:
-
 // CHECK-NEXT: svc 8
-
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_128() {
@@ -77,15 +50,8 @@ extern "C" [[gnu::naked]] void test_svc_128() {
 }
 
 // CHECK-LABEL: <test_svc_128>:
-
 // CHECK-NEXT: svc 128
-
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_255() {
@@ -93,13 +59,6 @@ extern "C" [[gnu::naked]] void test_svc_255() {
 }
 
 // CHECK-LABEL: <test_svc_255>:
-
 // CHECK-NEXT: svc 255
-
-// RELEASE-CHECK-NEXT: nop
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
