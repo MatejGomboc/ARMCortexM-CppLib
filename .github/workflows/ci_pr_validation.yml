@@ -13,7 +13,7 @@ jobs:
 
             matrix:
                 arch: ["M0", "M0PLUS", "M1"]
-                build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
+                build_type: [debug, minsize, maxspeed]
 
             max-parallel: 20 # Use maximum possible parallelisation.
 
@@ -31,28 +31,24 @@ jobs:
 
             - name: Build
               run: |
-                if [ "${{ matrix.build_type }}" = "Debug" ]; then
+                if [ "${{ matrix.build_type }}" = "debug" ]; then
                     BUILD_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "Release" ]; then
-                    BUILD_PRESET="multi-release"
-                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
-                    BUILD_PRESET="multi-minsizerel"
-                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
-                    BUILD_PRESET="multi-relwithdebinfo"
+                elif [ "${{ matrix.build_type }}" = "maxspeed" ]; then
+                    BUILD_PRESET="multi-maxspeed"
+                elif [ "${{ matrix.build_type }}" = "minsize" ]; then
+                    BUILD_PRESET="multi-minsize"
                 fi
 
                 cmake --build --preset=$BUILD_PRESET --parallel $(nproc)
 
             - name: Run tests
               run: |
-                if [ "${{ matrix.build_type }}" = "Debug" ]; then
+                if [ "${{ matrix.build_type }}" = "debug" ]; then
                     TEST_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "Release" ]; then
-                    TEST_PRESET="multi-release"
-                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
-                    TEST_PRESET="multi-minsizerel"
-                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
-                    TEST_PRESET="multi-relwithdebinfo"
+                elif [ "${{ matrix.build_type }}" = "maxspeed" ]; then
+                    TEST_PRESET="multi-maxspeed"
+                elif [ "${{ matrix.build_type }}" = "minsize" ]; then
+                    TEST_PRESET="multi-minsize"
                 fi
 
                 ctest --preset=$TEST_PRESET
