@@ -13,7 +13,7 @@ jobs:
 
             matrix:
                 arch: ["M0", "M0PLUS", "M1"]
-                build_type: [Debug, Release, MinSizeRel, RelWithDebInfo]
+                build_type: [Debug, MinSize, MaxSpeed]
 
             max-parallel: 20 # Use maximum possible parallelisation.
 
@@ -33,12 +33,10 @@ jobs:
               run: |
                 if [ "${{ matrix.build_type }}" = "Debug" ]; then
                     BUILD_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "Release" ]; then
-                    BUILD_PRESET="multi-release"
-                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
-                    BUILD_PRESET="multi-minsizerel"
-                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
-                    BUILD_PRESET="multi-relwithdebinfo"
+                elif [ "${{ matrix.build_type }}" = "MaxSpeed" ]; then
+                    BUILD_PRESET="multi-maxspeed"
+                elif [ "${{ matrix.build_type }}" = "MinSize" ]; then
+                    BUILD_PRESET="multi-minsize"
                 fi
 
                 cmake --build --preset=$BUILD_PRESET --parallel $(nproc)
@@ -47,12 +45,10 @@ jobs:
               run: |
                 if [ "${{ matrix.build_type }}" = "Debug" ]; then
                     TEST_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "Release" ]; then
-                    TEST_PRESET="multi-release"
-                elif [ "${{ matrix.build_type }}" = "MinSizeRel" ]; then
-                    TEST_PRESET="multi-minsizerel"
-                elif [ "${{ matrix.build_type }}" = "RelWithDebInfo" ]; then
-                    TEST_PRESET="multi-relwithdebinfo"
+                elif [ "${{ matrix.build_type }}" = "MaxSpeed" ]; then
+                    TEST_PRESET="multi-maxspeed"
+                elif [ "${{ matrix.build_type }}" = "MinSize" ]; then
+                    TEST_PRESET="multi-minsize"
                 fi
 
                 ctest --preset=$TEST_PRESET

@@ -2,14 +2,17 @@ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 set(SUPPORTED_BUILD_TYPES
     Debug
-    Release
-    RelWithDebInfo
-    MinSizeRel
+    MinSize
+    MaxSpeed
 )
+
+set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
+set(CMAKE_CXX_FLAGS_MINSIZE "-Os")
+set(CMAKE_CXX_FLAGS_MAXSPEED "-O3")
 
 if(IS_MULTI_CONFIG)
     set(CMAKE_CONFIGURATION_TYPES "${SUPPORTED_BUILD_TYPES}" CACHE STRING "" FORCE)
-    set(CMAKE_DEFAULT_BUILD_TYPE "MinSizeRel" CACHE STRING "" FORCE)
+    set(CMAKE_DEFAULT_BUILD_TYPE "MinSize" CACHE STRING "" FORCE)
 
 else()
     if(NOT CMAKE_BUILD_TYPE)
@@ -45,7 +48,7 @@ function(add_asm_test TEST_NAME)
     add_test(
         NAME ${TEST_NAME}
         COMMAND filecheck "${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.cpp" --input-file "$<TARGET_FILE_DIR:${TEST_NAME}>/${TEST_NAME}.asm"
-            --check-prefixes=CHECK,$<UPPER_CASE:$<CONFIG>-CHECK> --allow-unused-prefixes
+            --check-prefixes=CHECK,$<UPPER_CASE:$<CONFIG>>-CHECK --allow-unused-prefixes
     )
 endfunction()
 
