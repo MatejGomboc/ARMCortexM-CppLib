@@ -5,7 +5,7 @@ extern "C" [[gnu::naked]] void test_dsb() {
 }
 
 // CHECK-LABEL: <test_dsb>:
-// CHECK-NEXT: dsb sys
+// CHECK-NEXT: dsb sy
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_isb() {
@@ -13,7 +13,7 @@ extern "C" [[gnu::naked]] void test_isb() {
 }
 
 // CHECK-LABEL: <test_isb>:
-// CHECK-NEXT: isb sys
+// CHECK-NEXT: isb sy
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_dmb() {
@@ -21,5 +21,5 @@ extern "C" [[gnu::naked]] void test_dmb() {
 }
 
 // CHECK-LABEL: <test_dmb>:
-// CHECK-NEXT: dmb sys
+// CHECK-NEXT: dmb sy
 // CHECK-EMPTY:
