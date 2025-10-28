@@ -13,13 +13,10 @@ extern "C" [[gnu::naked]] uint32_t test_rev(uint32_t value) {
 // DEBUG-CHECK-NEXT: movs r3, r4
 // DEBUG-CHECK-NEXT: movs r0, r3
 
-// RELEASE-CHECK-NEXT: rev r0, r0
-// RELEASE-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: rev r0, r0
+// MAXSPEED-CHECK-NEXT: nop
 
-// RELWITHDEBINFO-CHECK-NEXT: rev r0, r0
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// MINSIZEREL-CHECK-NEXT: rev r0, r0
+// MINSIZE-CHECK-NEXT: rev r0, r0
 
 // CHECK-EMPTY:
 
@@ -36,13 +33,10 @@ extern "C" [[gnu::naked]] uint32_t test_rev16(uint32_t value) {
 // DEBUG-CHECK-NEXT: movs r3, r4
 // DEBUG-CHECK-NEXT: movs r0, r3
 
-// RELEASE-CHECK-NEXT: rev16 r0, r0
-// RELEASE-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: rev16 r0, r0
+// MAXSPEED-CHECK-NEXT: nop
 
-// RELWITHDEBINFO-CHECK-NEXT: rev16 r0, r0
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// MINSIZEREL-CHECK-NEXT: rev16 r0, r0
+// MINSIZE-CHECK-NEXT: rev16 r0, r0
 
 // CHECK-EMPTY:
 
@@ -59,12 +53,9 @@ extern "C" [[gnu::naked]] uint32_t test_revsh(uint32_t value) {
 // DEBUG-CHECK-NEXT: movs r3, r4
 // DEBUG-CHECK-NEXT: movs r0, r3
 
-// RELEASE-CHECK-NEXT: revsh r0, r0
-// RELEASE-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: revsh r0, r0
+// MAXSPEED-CHECK-NEXT: nop
 
-// RELWITHDEBINFO-CHECK-NEXT: revsh r0, r0
-// RELWITHDEBINFO-CHECK-NEXT: nop
-
-// MINSIZEREL-CHECK-NEXT: revsh r0, r0
+// MINSIZE-CHECK-NEXT: revsh r0, r0
 
 // CHECK-EMPTY:
