@@ -1,9 +1,9 @@
 get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 set(SUPPORTED_BUILD_TYPES
-    debug       # -Og: Optimize for debugging
-    minsize     # -Os: Optimize for size
-    maxspeed    # -O3: Optimize for speed
+    Debug       # -Og: Optimize for debugging
+    MinSize     # -Os: Optimize for size
+    MaxSpeed    # -O3: Optimize for speed
 )
 
 set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS_MAXSPEED "-O3")
 
 if(IS_MULTI_CONFIG)
     set(CMAKE_CONFIGURATION_TYPES "${SUPPORTED_BUILD_TYPES}" CACHE STRING "" FORCE)
-    set(CMAKE_DEFAULT_BUILD_TYPE "minsize" CACHE STRING "" FORCE)
+    set(CMAKE_DEFAULT_BUILD_TYPE "MinSize" CACHE STRING "" FORCE)
 
 else()
     if(NOT CMAKE_BUILD_TYPE)
