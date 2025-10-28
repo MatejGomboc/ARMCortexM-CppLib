@@ -18,20 +18,38 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_0_true() {
 // MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
-extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_4_false() {
+extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_3_false() {
     return Cortex::isBitSet(uint8_t{0x00}, uint8_t{3});
 }
 
-// CHECK-LABEL: <test_is_bit_set_static_8_4_false>:
+// CHECK-LABEL: <test_is_bit_set_static_8_3_false>:
 // CHECK-NEXT: movs r0, #0
 // MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
-extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_4_true() {
+extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_3_true() {
     return Cortex::isBitSet(uint8_t{0x08}, uint8_t{3});
 }
 
-// CHECK-LABEL: <test_is_bit_set_static_8_4_true>:
+// CHECK-LABEL: <test_is_bit_set_static_8_3_true>:
+// CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
+// CHECK-EMPTY:
+
+extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_7_false() {
+    return Cortex::isBitSet(uint8_t{0x00}, uint8_t{7});
+}
+
+// CHECK-LABEL: <test_is_bit_set_static_8_7_false>:
+// CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
+// CHECK-EMPTY:
+
+extern "C" [[gnu::naked]] bool test_is_bit_set_static_8_7_true() {
+    return Cortex::isBitSet(uint8_t{0x80}, uint8_t{7});
+}
+
+// CHECK-LABEL: <test_is_bit_set_static_8_7_true>:
 // CHECK-NEXT: movs r0, #1
 // MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:

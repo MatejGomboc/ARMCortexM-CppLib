@@ -1,1 +1,1 @@
-add_asm_test(test_is_bit_set)
+add_asm_test(test_is_bit_set_static)
