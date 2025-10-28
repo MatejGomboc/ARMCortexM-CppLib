@@ -1,9 +1,9 @@
 get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 set(SUPPORTED_BUILD_TYPES
-    Debug       # -Og: Optimize for debugging
-    MinSize     # -Os: Optimize for size
-    MaxSpeed    # -O3: Optimize for speed
+    Debug
+    MinSize
+    MaxSpeed
 )
 
 set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
