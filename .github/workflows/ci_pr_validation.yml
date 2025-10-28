@@ -13,7 +13,7 @@ jobs:
 
             matrix:
                 arch: ["M0", "M0PLUS", "M1"]
-                build_type: [debug, minsize, maxspeed]
+                build_type: [Debug, MinSize, MaxSpeed]
 
             max-parallel: 20 # Use maximum possible parallelisation.
 
@@ -31,11 +31,11 @@ jobs:
 
             - name: Build
               run: |
-                if [ "${{ matrix.build_type }}" = "debug" ]; then
+                if [ "${{ matrix.build_type }}" = "Debug" ]; then
                     BUILD_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "maxspeed" ]; then
+                elif [ "${{ matrix.build_type }}" = "MaxSpeed" ]; then
                     BUILD_PRESET="multi-maxspeed"
-                elif [ "${{ matrix.build_type }}" = "minsize" ]; then
+                elif [ "${{ matrix.build_type }}" = "MinSize" ]; then
                     BUILD_PRESET="multi-minsize"
                 fi
 
@@ -43,11 +43,11 @@ jobs:
 
             - name: Run tests
               run: |
-                if [ "${{ matrix.build_type }}" = "debug" ]; then
+                if [ "${{ matrix.build_type }}" = "Debug" ]; then
                     TEST_PRESET="multi-debug"
-                elif [ "${{ matrix.build_type }}" = "maxspeed" ]; then
+                elif [ "${{ matrix.build_type }}" = "MaxSpeed" ]; then
                     TEST_PRESET="multi-maxspeed"
-                elif [ "${{ matrix.build_type }}" = "minsize" ]; then
+                elif [ "${{ matrix.build_type }}" = "MinSize" ]; then
                     TEST_PRESET="multi-minsize"
                 fi
 
