@@ -31,8 +31,6 @@ function(add_asm_test TEST_NAME)
         ${TEST_NAME}.cpp
     )
 
-    # target_compile_features(${TEST_NAME} PRIVATE TODO)
-
     target_link_libraries(${TEST_NAME} PRIVATE
         ARMCortexM
     )
@@ -54,4 +52,5 @@ function(add_asm_test TEST_NAME)
     )
 endfunction()
 
+add_subdirectory(bit_utils)
 add_subdirectory(intrinsics)
