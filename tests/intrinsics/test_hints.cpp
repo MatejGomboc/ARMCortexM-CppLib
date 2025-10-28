@@ -7,6 +7,4 @@ extern "C" [[gnu::naked]] void test_nop() {
 // CHECK-LABEL: <test_nop>:
 // CHECK-NEXT: nop
 // MAXSPEED-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:

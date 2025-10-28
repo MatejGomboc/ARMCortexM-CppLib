@@ -7,8 +7,6 @@ extern "C" [[gnu::naked]] void test_sev() {
 // CHECK-LABEL: <test_sev>:
 // CHECK-NEXT: sev
 // MAXSPEED-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_wfe() {
@@ -18,8 +16,6 @@ extern "C" [[gnu::naked]] void test_wfe() {
 // CHECK-LABEL: <test_wfe>:
 // CHECK-NEXT: wfe
 // MAXSPEED-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_wfi() {
@@ -29,6 +25,4 @@ extern "C" [[gnu::naked]] void test_wfi() {
 // CHECK-LABEL: <test_wfi>:
 // CHECK-NEXT: wfi
 // MAXSPEED-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
-// DEBUG-CHECK-NEXT: nop
 // CHECK-EMPTY:
