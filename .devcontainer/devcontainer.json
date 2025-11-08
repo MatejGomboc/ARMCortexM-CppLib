@@ -20,7 +20,8 @@
                 "ms-vscode.notepadplusplus-keybindings",
                 "redhat.vscode-yaml",
                 "trond-snekvik.gnu-mapfiles",
-                "xaver.clang-format"
+                "xaver.clang-format",
+                "usernamehw.errorlens"
             ]
         }
     }
