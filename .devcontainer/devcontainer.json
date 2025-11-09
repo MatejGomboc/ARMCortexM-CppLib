@@ -3,10 +3,27 @@
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
     "workspaceFolder": "/root/ARMCortexM-CppLib",
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
-
+    
     // Verify image authenticity on container creation
     "onCreateCommand": "/root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
-
+    
+    // Persistent volumes and host mounts
+    "mounts": [
+        // Persistent volumes (survive container rebuilds)
+        "source=armcortexm-vscode-extensions,target=/root/.vscode-server/extensions,type=volume",
+        "source=armcortexm-bash-history,target=/root/.bash_history_mount,type=volume",
+        "source=armcortexm-gitconfig,target=/root/.gitconfig_mount,type=volume",
+        
+        // SSH keys from host (read-only for security, cached for performance)
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,consistency=cached,readonly"
+    ],
+    
+    // Link persistent data and set SSH permissions
+    "postCreateCommand": [
+        "bash", "-c",
+        "ln -sf /root/.bash_history_mount/.bash_history /root/.bash_history 2>/dev/null || true && ([ -f /root/.gitconfig_mount/.gitconfig ] && ln -sf /root/.gitconfig_mount/.gitconfig /root/.gitconfig || true) && chmod 700 /root/.ssh 2>/dev/null || true && chmod 600 /root/.ssh/* 2>/dev/null || true"
+    ],
+    
     "customizations": {
         "vscode": {
             "extensions": [
