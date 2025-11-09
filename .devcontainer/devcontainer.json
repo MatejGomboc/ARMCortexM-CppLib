@@ -1,10 +1,16 @@
 {
     "name": "ARM Cortex-M C++ Lib Development Environment",
+
+    // ⚠️ IMPORTANT: If you change the image below, also update the initializeCommand.
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
+
+    // Always pull latest image before container creation (must match image above).
+    "initializeCommand": "docker pull ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
+
     "workspaceFolder": "/root/ARMCortexM-CppLib",
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
 
-    // Verify image authenticity on container creation
+    // Verify image authenticity on container creation.
     "onCreateCommand": "bash /root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
 
     "customizations": {
