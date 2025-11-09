@@ -31,6 +31,8 @@ function(add_asm_test TEST_NAME)
         ${TEST_NAME}.cpp
     )
 
+    target_compile_features(${TEST_NAME} PRIVATE cxx_std_20)
+
     target_link_libraries(${TEST_NAME} PRIVATE
         ARMCortexM
     )
