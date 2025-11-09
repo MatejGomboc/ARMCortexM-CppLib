@@ -3,10 +3,10 @@
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
     "workspaceFolder": "/root/ARMCortexM-CppLib",
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
-    
+
     // Verify image authenticity on container creation
     "onCreateCommand": "/root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
-    
+
     "customizations": {
         "vscode": {
             "extensions": [
