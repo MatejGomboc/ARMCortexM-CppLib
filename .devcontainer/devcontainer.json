@@ -3,6 +3,19 @@
     "image": "ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest",
     "workspaceFolder": "/root/ARMCortexM-CppLib",
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
+    
+    // Verify image authenticity on container creation
+    "onCreateCommand": "/root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
+    
+    // Persist volumes for caches and tools across container rebuilds
+    "mounts": [
+        "source=armcortexm-vscode-extensions,target=/root/.vscode-server/extensions,type=volume",
+        "source=armcortexm-bash-history,target=/root/.bash_history_mount,type=volume"
+    ],
+    
+    // Link bash history from persistent volume
+    "postCreateCommand": "ln -sf /root/.bash_history_mount/.bash_history /root/.bash_history 2>/dev/null || true",
+    
     "customizations": {
         "vscode": {
             "extensions": [
