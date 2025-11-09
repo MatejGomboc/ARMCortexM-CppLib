@@ -16,11 +16,6 @@ if ! command -v cosign >/dev/null 2>&1; then
     exit 1
 fi
 
-if ! command -v curl >/dev/null 2>&1; then
-    echo "❌ ERROR: curl not found in image!"
-    exit 1
-fi
-
 # Verify signature (critical security check)
 echo "🔍 Step 1/2: Verifying image signature..."
 COSIGN_OUTPUT=$(mktemp)
@@ -47,18 +42,17 @@ if [ -z "$DIGEST" ]; then
     echo "⚠️  Could not extract image digest"
     echo "   Image signature verification passed - container is trusted"
 else
-    # Query GitHub API for attestations
-    # Format: https://api.github.com/repos/OWNER/REPO/attestations/sha256:DIGEST
-    ATTESTATION_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/attestations/${DIGEST}"
+    # Verify attestation using the digest (attestations are OCI artifacts attached to the image)
+    IMAGE_WITH_DIGEST="${IMAGE%%:*}@${DIGEST}"
     
-    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$ATTESTATION_URL")
-    
-    if [ "$HTTP_CODE" = "200" ]; then
-        echo "✅ Build provenance attestation found in GitHub"
-        echo "   View at: https://github.com/${REPO_OWNER}/${REPO_NAME}/attestations"
+    # Try to verify attestation - it should be attached to the image in the registry
+    if cosign verify-attestation \
+        --certificate-identity-regexp="^https://github.com/${REPO_OWNER}/${REPO_NAME}.*" \
+        --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+        "$IMAGE_WITH_DIGEST" > /dev/null 2>&1; then
+        echo "✅ Build provenance attestation verified"
     else
-        echo "ℹ️  Attestation not accessible via GitHub API (HTTP $HTTP_CODE)"
-        echo "   This may be an older image or attestation hasn't propagated yet"
+        echo "ℹ️  Build provenance attestation not found or not verifiable"
         echo "   Image signature verification passed - container is trusted"
     fi
 fi
