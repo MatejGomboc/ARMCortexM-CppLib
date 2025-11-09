@@ -5,7 +5,7 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/root/ARMCortexM-CppLib,type=bind",
 
     // Verify image authenticity on container creation
-    "onCreateCommand": "/root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
+    "onCreateCommand": "bash /root/ARMCortexM-CppLib/.devcontainer/verify-image.sh",
 
     "customizations": {
         "vscode": {
