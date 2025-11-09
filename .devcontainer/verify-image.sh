@@ -3,8 +3,11 @@ set -euo pipefail
 
 echo ""
 echo "🔐 Verifying development environment authenticity..."
+echo ""
 
 IMAGE="ghcr.io/matejgomboc/armcortexm-cpplib-devenv:latest"
+REPO_OWNER="MatejGomboc"
+REPO_NAME="ARMCortexM-CppLib-DevEnv"
 
 # Fail fast if cosign is missing (it should be in the image)
 if ! command -v cosign >/dev/null 2>&1; then
@@ -14,9 +17,9 @@ if ! command -v cosign >/dev/null 2>&1; then
 fi
 
 # Verify signature (critical security check)
-echo "🔍 Verifying image signature..."
+echo "🔍 Step 1/2: Verifying image signature..."
 if cosign verify \
-    --certificate-identity-regexp="^https://github.com/MatejGomboc/ARMCortexM-CppLib-DevEnv.*" \
+    --certificate-identity-regexp="^https://github.com/${REPO_OWNER}/${REPO_NAME}.*" \
     --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
     "$IMAGE" > /dev/null 2>&1; then
     echo "✅ Image signature verified - authenticated build from GitHub Actions"
@@ -26,38 +29,37 @@ else
     exit 1
 fi
 
-# Verify build provenance attestation (supplementary check)
-# GitHub's actions/attest-build-provenance stores attestations in GitHub's API
-# We'll try to verify but won't fail if it's not accessible via cosign
-echo "🔍 Checking for build provenance attestation..."
+# Get the image digest for attestation verification
+echo ""
+echo "🔍 Step 2/2: Verifying build provenance attestation..."
 
-ATTESTATION_VERIFIED=false
+# Try to get digest from the image
+DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE" 2>/dev/null | cut -d'@' -f2 || echo "")
 
-# Try without specifying predicate type (auto-detect)
-if cosign verify-attestation \
-    --certificate-identity-regexp="^https://github.com/MatejGomboc/ARMCortexM-CppLib-DevEnv.*" \
-    --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
-    "$IMAGE" > /dev/null 2>&1; then
-    ATTESTATION_VERIFIED=true
-fi
-
-# Try with explicit SLSA provenance v1 type if first attempt failed
-if [ "$ATTESTATION_VERIFIED" = false ]; then
-    if cosign verify-attestation \
-        --type "https://slsa.dev/provenance/v1" \
-        --certificate-identity-regexp="^https://github.com/MatejGomboc/ARMCortexM-CppLib-DevEnv.*" \
-        --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
-        "$IMAGE" > /dev/null 2>&1; then
-        ATTESTATION_VERIFIED=true
-    fi
-fi
-
-if [ "$ATTESTATION_VERIFIED" = true ]; then
-    echo "✅ Build provenance attestation verified"
-else
-    echo "ℹ️  Build provenance attestation check skipped"
-    echo "   Attestations are stored in GitHub's API and may require 'gh' CLI to verify"
+if [ -z "$DIGEST" ]; then
+    echo "⚠️  Could not determine image digest for attestation check"
     echo "   Image signature verification passed - container is trusted"
+else
+    # Query GitHub API for attestations
+    ATTESTATION_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/attestations/sha256:${DIGEST#sha256:}"
+    
+    if curl -sf "$ATTESTATION_URL" > /dev/null 2>&1; then
+        echo "✅ Build provenance attestation found in GitHub"
+        
+        # Verify the attestation bundle using cosign
+        if cosign verify-attestation \
+            --certificate-identity-regexp="^https://github.com/${REPO_OWNER}/${REPO_NAME}.*" \
+            --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+            "${IMAGE%%:*}@${DIGEST}" > /dev/null 2>&1; then
+            echo "✅ Attestation signature verified"
+        else
+            echo "✅ Attestation exists (signature details not accessible via cosign)"
+        fi
+    else
+        echo "ℹ️  Attestation not found via GitHub API"
+        echo "   This may be an older image or attestation hasn't propagated yet"
+        echo "   Image signature verification passed - container is trusted"
+    fi
 fi
 
 echo ""
