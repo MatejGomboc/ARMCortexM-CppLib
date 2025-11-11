@@ -1,4 +1,6 @@
 add_asm_test(test_is_bit_set_compiletime)
 add_asm_test(test_is_bit_set_runtime)
+add_asm_test(test_set_bit_compiletime)
 add_asm_test(test_set_bit_runtime)
+add_asm_test(test_clear_bit_compiletime)
 add_asm_test(test_clear_bit_runtime)
