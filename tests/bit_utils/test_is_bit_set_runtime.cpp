@@ -175,8 +175,6 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_7(int8_t value) {
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_8_7>:
-// CORRECTED: For signed types, the MSB check shifts to bit 31 (sign bit)
-// This is correct because int8_t is sign-extended to 32-bit in the register
 // CHECK-NEXT: lsrs r0, r0, #31
 // MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
@@ -216,8 +214,6 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_15(int16_t value) {
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_16_15>:
-// CORRECTED: For signed types, the MSB check shifts to bit 31 (sign bit)
-// This is correct because int16_t is sign-extended to 32-bit in the register
 // CHECK-NEXT: lsrs r0, r0, #31
 // MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
