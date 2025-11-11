@@ -14,8 +14,7 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_apsr_reg() {
 }
 
 // CHECK-LABEL: <test_get_apsr_reg>:
-// CHECK-NEXT: mrs r0, APSR
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: mrs r0, CPSR
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_ipsr_reg() {
@@ -24,7 +23,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_ipsr_reg() {
 
 // CHECK-LABEL: <test_get_ipsr_reg>:
 // CHECK-NEXT: mrs r0, IPSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_epsr_reg() {
@@ -33,7 +31,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_epsr_reg() {
 
 // CHECK-LABEL: <test_get_epsr_reg>:
 // CHECK-NEXT: mrs r0, EPSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_iepsr_reg() {
@@ -42,7 +39,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_iepsr_reg() {
 
 // CHECK-LABEL: <test_get_iepsr_reg>:
 // CHECK-NEXT: mrs r0, IEPSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_iapsr_reg() {
@@ -51,7 +47,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_iapsr_reg() {
 
 // CHECK-LABEL: <test_get_iapsr_reg>:
 // CHECK-NEXT: mrs r0, IAPSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_eapsr_reg() {
@@ -60,7 +55,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_eapsr_reg() {
 
 // CHECK-LABEL: <test_get_eapsr_reg>:
 // CHECK-NEXT: mrs r0, EAPSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_psr_reg() {
@@ -69,7 +63,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PSR test_get_psr_reg() {
 
 // CHECK-LABEL: <test_get_psr_reg>:
 // CHECK-NEXT: mrs r0, PSR
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_get_msp_reg() {
@@ -78,7 +71,6 @@ extern "C" [[gnu::naked]] uint32_t test_get_msp_reg() {
 
 // CHECK-LABEL: <test_get_msp_reg>:
 // CHECK-NEXT: mrs r0, MSP
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_set_msp_reg(uint32_t value) {
@@ -87,7 +79,6 @@ extern "C" [[gnu::naked]] void test_set_msp_reg(uint32_t value) {
 
 // CHECK-LABEL: <test_set_msp_reg>:
 // CHECK-NEXT: msr MSP, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_get_psp_reg() {
@@ -96,7 +87,6 @@ extern "C" [[gnu::naked]] uint32_t test_get_psp_reg() {
 
 // CHECK-LABEL: <test_get_psp_reg>:
 // CHECK-NEXT: mrs r0, PSP
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_set_psp_reg(uint32_t value) {
@@ -105,7 +95,6 @@ extern "C" [[gnu::naked]] void test_set_psp_reg(uint32_t value) {
 
 // CHECK-LABEL: <test_set_psp_reg>:
 // CHECK-NEXT: msr PSP, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::PRIMASK test_get_primask_reg() {
@@ -114,7 +103,6 @@ extern "C" [[gnu::naked]] Cortex::M0::PRIMASK test_get_primask_reg() {
 
 // CHECK-LABEL: <test_get_primask_reg>:
 // CHECK-NEXT: mrs r0, PRIMASK
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_set_primask_reg(Cortex::M0::PRIMASK primask) {
@@ -123,7 +111,6 @@ extern "C" [[gnu::naked]] void test_set_primask_reg(Cortex::M0::PRIMASK primask)
 
 // CHECK-LABEL: <test_set_primask_reg>:
 // CHECK-NEXT: msr PRIMASK, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] Cortex::M0::CONTROL test_get_control_reg() {
@@ -132,7 +119,6 @@ extern "C" [[gnu::naked]] Cortex::M0::CONTROL test_get_control_reg() {
 
 // CHECK-LABEL: <test_get_control_reg>:
 // CHECK-NEXT: mrs r0, CONTROL
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_set_control_reg(Cortex::M0::CONTROL control) {
@@ -141,5 +127,4 @@ extern "C" [[gnu::naked]] void test_set_control_reg(Cortex::M0::CONTROL control)
 
 // CHECK-LABEL: <test_set_control_reg>:
 // CHECK-NEXT: msr CONTROL, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
