@@ -242,6 +242,7 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
 // CHECK-LABEL: <test_set_bit_runtime_s_16_15>:
 // CHECK-NEXT: ldr r3, [pc
 // CHECK-NEXT: orrs r0, r3
+// CHECK-NEXT: .word
 // CHECK-EMPTY:
 
 // ============================================================================
