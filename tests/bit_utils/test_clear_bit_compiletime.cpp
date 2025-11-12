@@ -12,6 +12,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_0() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_8_0>:
 // CHECK-NEXT: movs r0, #254
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_3() {
@@ -22,6 +23,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_3() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_8_3>:
 // CHECK-NEXT: movs r0, #247
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_7() {
@@ -32,6 +34,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_7() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_8_7>:
 // CHECK-NEXT: movs r0, #127
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_multiple() {
@@ -44,6 +47,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_multiple() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_8_multiple>:
 // CHECK-NEXT: movs r0, #118
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -58,6 +62,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_0() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_16_0>:
 // CHECK-NEXT: ldr r0, [pc
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_7() {
@@ -68,6 +73,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_7() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_16_7>:
 // CHECK-NEXT: ldr r0, [pc
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_15() {
@@ -78,6 +84,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_15() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_16_15>:
 // CHECK-NEXT: ldr r0, [pc
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -111,6 +118,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_15() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_32_15>:
 // CHECK-NEXT: ldr r0, [pc
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_31() {
@@ -121,6 +129,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_31() {
 
 // CHECK-LABEL: <test_clear_bit_compiletime_32_31>:
 // CHECK-NEXT: ldr r0, [pc
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -146,6 +155,7 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_0() {
 // MAXSPEED-CHECK-NEXT: movs r0, #2
 // MAXSPEED-CHECK-NEXT: negs r0, r0
 // MAXSPEED-CHECK-NEXT: asrs r1, r0, #31
+// MAXSPEED-CHECK-NEXT: nop
 
 // CHECK-EMPTY:
 
@@ -168,6 +178,7 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_31() {
 // MAXSPEED-CHECK-NEXT: movs r1, #1
 // MAXSPEED-CHECK-NEXT: ldr r0, [pc
 // MAXSPEED-CHECK-NEXT: negs r1, r1
+// MAXSPEED-CHECK-NEXT: nop
 
 // CHECK-EMPTY:
 
@@ -186,9 +197,11 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_63() {
 // MINSIZE-CHECK-NEXT: movs r0, #1
 // MINSIZE-CHECK-NEXT: ldr r1, [pc
 // MINSIZE-CHECK-NEXT: negs r0, r0
+// MINSIZE-CHECK-NEXT: nop
 
 // MAXSPEED-CHECK-NEXT: movs r0, #1
 // MAXSPEED-CHECK-NEXT: ldr r1, [pc
 // MAXSPEED-CHECK-NEXT: negs r0, r0
+// MAXSPEED-CHECK-NEXT: nop
 
 // CHECK-EMPTY:
