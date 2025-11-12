@@ -12,6 +12,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_0() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_0>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_3() {
@@ -22,6 +23,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_3() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_3>:
 // CHECK-NEXT: movs r0, #8
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_7() {
@@ -32,6 +34,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_7() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_7>:
 // CHECK-NEXT: movs r0, #128
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_multiple() {
@@ -44,6 +47,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_multiple() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_multiple>:
 // CHECK-NEXT: movs r0, #137
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -58,6 +62,7 @@ extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_0() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_16_0>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_7() {
@@ -68,6 +73,7 @@ extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_7() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_16_7>:
 // CHECK-NEXT: movs r0, #128
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_15() {
@@ -93,6 +99,7 @@ extern "C" [[gnu::naked]] uint32_t test_set_bit_compiletime_32_0() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_32_0>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_set_bit_compiletime_32_15() {
@@ -151,6 +158,7 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_31() {
 // MAXSPEED-CHECK-NEXT: movs r0, #128
 // MAXSPEED-CHECK-NEXT: movs r1, #0
 // MAXSPEED-CHECK-NEXT: lsls r0, r0, #24
+// MAXSPEED-CHECK-NEXT: nop
 
 // CHECK-EMPTY:
 
@@ -173,5 +181,6 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_63() {
 // MAXSPEED-CHECK-NEXT: movs r1, #128
 // MAXSPEED-CHECK-NEXT: movs r0, #0
 // MAXSPEED-CHECK-NEXT: lsls r1, r1, #24
+// MAXSPEED-CHECK-NEXT: nop
 
 // CHECK-EMPTY:
