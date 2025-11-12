@@ -82,6 +82,8 @@ extern "C" [[gnu::naked]] uint16_t test_set_bit_runtime_u_16_15(uint16_t value) 
 // DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
 // DEBUG-CHECK-NEXT: orrs r0, r3
 // DEBUG-CHECK-NEXT: uxth r0, r0
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xffff8000
 
 // MINSIZE-CHECK-NEXT: movs r3, #128
 // MINSIZE-CHECK-NEXT: lsls r3, r3, #8
@@ -240,9 +242,12 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_16_15>:
-// CHECK-NEXT: ldr r3, [pc
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
 // CHECK-NEXT: orrs r0, r3
-// CHECK-NEXT: .word
+// DEBUG-CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xffff8000
 // CHECK-EMPTY:
 
 // ============================================================================
