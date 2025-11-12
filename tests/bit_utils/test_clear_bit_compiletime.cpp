@@ -98,7 +98,8 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_0() {
 // MINSIZE-CHECK-NEXT: movs r0, #2
 // MINSIZE-CHECK-NEXT: negs r0, r0
 
-// MAXSPEED-CHECK-NEXT: ldr r0, [pc
+// MAXSPEED-CHECK-NEXT: movs r0, #2
+// MAXSPEED-CHECK-NEXT: negs r0, r0
 
 // CHECK-EMPTY:
 
@@ -142,8 +143,9 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_0() {
 // MINSIZE-CHECK-NEXT: negs r0, r0
 // MINSIZE-CHECK-NEXT: asrs r1, r0, #31
 
-// MAXSPEED-CHECK-NEXT: ldr r0, [pc
-// MAXSPEED-CHECK-NEXT: ldr r1, [pc
+// MAXSPEED-CHECK-NEXT: movs r0, #2
+// MAXSPEED-CHECK-NEXT: negs r0, r0
+// MAXSPEED-CHECK-NEXT: asrs r1, r0, #31
 
 // CHECK-EMPTY:
 
@@ -159,12 +161,13 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_31() {
 // DEBUG-CHECK-NEXT: movs r1, #1
 // DEBUG-CHECK-NEXT: negs r1, r1
 
-// MINSIZE-CHECK-NEXT: ldr r0, [pc
 // MINSIZE-CHECK-NEXT: movs r1, #1
+// MINSIZE-CHECK-NEXT: ldr r0, [pc
 // MINSIZE-CHECK-NEXT: negs r1, r1
 
+// MAXSPEED-CHECK-NEXT: movs r1, #1
 // MAXSPEED-CHECK-NEXT: ldr r0, [pc
-// MAXSPEED-CHECK-NEXT: ldr r1, [pc
+// MAXSPEED-CHECK-NEXT: negs r1, r1
 
 // CHECK-EMPTY:
 
@@ -181,10 +184,11 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_63() {
 // DEBUG-CHECK-NEXT: ldr r1, [pc
 
 // MINSIZE-CHECK-NEXT: movs r0, #1
-// MINSIZE-CHECK-NEXT: negs r0, r0
 // MINSIZE-CHECK-NEXT: ldr r1, [pc
+// MINSIZE-CHECK-NEXT: negs r0, r0
 
-// MAXSPEED-CHECK-NEXT: ldr r0, [pc
+// MAXSPEED-CHECK-NEXT: movs r0, #1
 // MAXSPEED-CHECK-NEXT: ldr r1, [pc
+// MAXSPEED-CHECK-NEXT: negs r0, r0
 
 // CHECK-EMPTY:
