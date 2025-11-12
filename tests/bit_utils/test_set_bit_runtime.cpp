@@ -32,10 +32,18 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_runtime_u_8_7(uint8_t value) {
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_u_8_7>:
-// CHECK-NEXT: movs r3, #128
+
+// DEBUG-CHECK-NEXT: movs r3, #128
 // DEBUG-CHECK-NEXT: negs r3, r3
-// CHECK-NEXT: orrs r0, r3
+// DEBUG-CHECK-NEXT: orrs r0, r3
 // DEBUG-CHECK-NEXT: uxtb r0, r0
+
+// MINSIZE-CHECK-NEXT: movs r3, #128
+// MINSIZE-CHECK-NEXT: orrs r0, r3
+
+// MAXSPEED-CHECK-NEXT: movs r3, #128
+// MAXSPEED-CHECK-NEXT: orrs r0, r3
+
 // CHECK-EMPTY:
 
 // ============================================================================
