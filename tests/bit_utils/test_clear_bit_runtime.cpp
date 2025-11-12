@@ -88,7 +88,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_runtime_u_32_15(uint32_t value
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_u_32_15>:
-// CHECK-NEXT: ldr r3, [pc
+// CHECK-NEXT: ldr r3, [pc, #0]
 // CHECK-NEXT: ands r0, r3
 // CHECK-NEXT: .word
 // CHECK-EMPTY:
@@ -225,7 +225,7 @@ extern "C" [[gnu::naked]] int32_t test_clear_bit_runtime_s_32_15(int32_t value) 
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_32_15>:
-// CHECK-NEXT: ldr r3, [pc
+// CHECK-NEXT: ldr r3, [pc, #0]
 // CHECK-NEXT: ands r0, r3
 // CHECK-NEXT: .word
 // CHECK-EMPTY:
