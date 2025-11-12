@@ -139,9 +139,19 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_31() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_64_31>:
-// CHECK-NEXT: movs r0, #128
-// CHECK-NEXT: lsls r0, r0, #24
-// CHECK-NEXT: movs r1, #0
+
+// DEBUG-CHECK-NEXT: movs r0, #128
+// DEBUG-CHECK-NEXT: lsls r0, r0, #24
+// DEBUG-CHECK-NEXT: movs r1, #0
+
+// MINSIZE-CHECK-NEXT: movs r0, #128
+// MINSIZE-CHECK-NEXT: movs r1, #0
+// MINSIZE-CHECK-NEXT: lsls r0, r0, #24
+
+// MAXSPEED-CHECK-NEXT: movs r0, #128
+// MAXSPEED-CHECK-NEXT: movs r1, #0
+// MAXSPEED-CHECK-NEXT: lsls r0, r0, #24
+
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_63() {
@@ -151,7 +161,17 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_63() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_64_63>:
-// CHECK-NEXT: movs r0, #0
-// CHECK-NEXT: movs r1, #128
-// CHECK-NEXT: lsls r1, r1, #24
+
+// DEBUG-CHECK-NEXT: movs r0, #0
+// DEBUG-CHECK-NEXT: movs r1, #128
+// DEBUG-CHECK-NEXT: lsls r1, r1, #24
+
+// MINSIZE-CHECK-NEXT: movs r1, #128
+// MINSIZE-CHECK-NEXT: movs r0, #0
+// MINSIZE-CHECK-NEXT: lsls r1, r1, #24
+
+// MAXSPEED-CHECK-NEXT: movs r1, #128
+// MAXSPEED-CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: lsls r1, r1, #24
+
 // CHECK-EMPTY:
