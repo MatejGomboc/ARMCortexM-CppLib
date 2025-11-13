@@ -55,11 +55,10 @@ endfunction()
 add_subdirectory(bit_utils)
 add_subdirectory(intrinsics)
 
-# TODO!!!
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
     # add_subdirectory(m0)
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M0PLUS")
-    # add_subdirectory(m0plus)
+    add_subdirectory(m0plus)
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     # add_subdirectory(m1)
 endif()
