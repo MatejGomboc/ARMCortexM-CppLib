@@ -7,9 +7,8 @@ extern "C" [[gnu::naked]] void test_read_type() {
 }
 
 // CHECK-LABEL: <test_read_type>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
@@ -18,9 +17,8 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test writing CTRL register
 extern "C" [[gnu::naked]] void test_write_ctrl() {
@@ -31,10 +29,9 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #5
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #5
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test reading RNR register
 extern "C" [[gnu::naked]] void test_read_rnr() {
@@ -43,9 +40,8 @@ extern "C" [[gnu::naked]] void test_read_rnr() {
 }
 
 // CHECK-LABEL: <test_read_rnr>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #8]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test writing RNR register
 extern "C" [[gnu::naked]] void test_write_rnr() {
@@ -53,10 +49,9 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 }
 
 // CHECK-LABEL: <test_write_rnr>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #3
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #8]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #3
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test reading RBAR register
 extern "C" [[gnu::naked]] void test_read_rbar() {
@@ -65,9 +60,8 @@ extern "C" [[gnu::naked]] void test_read_rbar() {
 }
 
 // CHECK-LABEL: <test_read_rbar>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #12]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #12]
 
 // Test writing RBAR register
 extern "C" [[gnu::naked]] void test_write_rbar() {
@@ -79,10 +73,9 @@ extern "C" [[gnu::naked]] void test_write_rbar() {
 }
 
 // CHECK-LABEL: <test_write_rbar>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #12]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #12]
 
 // Test reading RASR register
 extern "C" [[gnu::naked]] void test_read_rasr() {
@@ -91,9 +84,8 @@ extern "C" [[gnu::naked]] void test_read_rasr() {
 }
 
 // CHECK-LABEL: <test_read_rasr>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #16]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #16]
 
 // Test writing RASR register
 extern "C" [[gnu::naked]] void test_write_rasr() {
@@ -106,10 +98,9 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
 }
 
 // CHECK-LABEL: <test_write_rasr>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #16]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #16]
 
 // Test configureRegion function
 extern "C" [[gnu::naked]] void test_configure_region() {
@@ -122,15 +113,16 @@ extern "C" [[gnu::naked]] void test_configure_region() {
 }
 
 // CHECK-LABEL: <test_configure_region>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #0
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #8]
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #12]
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #16]
+// CHECK: movs r{{[0-9]+}}, #0
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
+// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
+// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #20
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #12]
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #16]
 // CHECK: dsb sy
 // CHECK: isb sy
-// CHECK: bx lr
 
 // Test enabling MPU
 extern "C" [[gnu::naked]] void test_enable_mpu() {
@@ -141,10 +133,9 @@ extern "C" [[gnu::naked]] void test_enable_mpu() {
 }
 
 // CHECK-LABEL: <test_enable_mpu>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #5
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #5
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test disabling MPU
 extern "C" [[gnu::naked]] void test_disable_mpu() {
@@ -154,7 +145,6 @@ extern "C" [[gnu::naked]] void test_disable_mpu() {
 }
 
 // CHECK-LABEL: <test_disable_mpu>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #0
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #0
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
