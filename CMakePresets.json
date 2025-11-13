@@ -160,20 +160,20 @@
                     "name": "m0-debug"
                 },
                 {
-                    "type": "test",
-                    "name": "m0-debug"
-                },
-                {
                     "type": "build",
-                    "name": "m0-maxspeed"
-                },
-                {
-                    "type": "test",
                     "name": "m0-maxspeed"
                 },
                 {
                     "type": "build",
                     "name": "m0-minsize"
+                },
+                {
+                    "type": "test",
+                    "name": "m0-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "m0-maxspeed"
                 },
                 {
                     "type": "test",
@@ -193,20 +193,20 @@
                     "name": "m0plus-debug"
                 },
                 {
-                    "type": "test",
-                    "name": "m0plus-debug"
-                },
-                {
                     "type": "build",
-                    "name": "m0plus-maxspeed"
-                },
-                {
-                    "type": "test",
                     "name": "m0plus-maxspeed"
                 },
                 {
                     "type": "build",
                     "name": "m0plus-minsize"
+                },
+                {
+                    "type": "test",
+                    "name": "m0plus-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "m0plus-maxspeed"
                 },
                 {
                     "type": "test",
@@ -226,20 +226,20 @@
                     "name": "m1-debug"
                 },
                 {
-                    "type": "test",
-                    "name": "m1-debug"
-                },
-                {
                     "type": "build",
-                    "name": "m1-maxspeed"
-                },
-                {
-                    "type": "test",
                     "name": "m1-maxspeed"
                 },
                 {
                     "type": "build",
                     "name": "m1-minsize"
+                },
+                {
+                    "type": "test",
+                    "name": "m1-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "m1-maxspeed"
                 },
                 {
                     "type": "test",
