@@ -7,9 +7,8 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test writing CTRL register
 extern "C" [[gnu::naked]] void test_write_ctrl() {
@@ -21,10 +20,9 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #7
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #7
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test reading LOAD register
 extern "C" [[gnu::naked]] void test_read_load() {
@@ -33,9 +31,8 @@ extern "C" [[gnu::naked]] void test_read_load() {
 }
 
 // CHECK-LABEL: <test_read_load>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test writing LOAD register
 extern "C" [[gnu::naked]] void test_write_load() {
@@ -43,10 +40,9 @@ extern "C" [[gnu::naked]] void test_write_load() {
 }
 
 // CHECK-LABEL: <test_write_load>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #4]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test reading VAL register
 extern "C" [[gnu::naked]] void test_read_val() {
@@ -55,9 +51,8 @@ extern "C" [[gnu::naked]] void test_read_val() {
 }
 
 // CHECK-LABEL: <test_read_val>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #8]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test writing VAL register (clears counter)
 extern "C" [[gnu::naked]] void test_write_val() {
@@ -65,10 +60,9 @@ extern "C" [[gnu::naked]] void test_write_val() {
 }
 
 // CHECK-LABEL: <test_write_val>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #0
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}, #8]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #0
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test reading CALIB register
 extern "C" [[gnu::naked]] void test_read_calib() {
@@ -77,9 +71,8 @@ extern "C" [[gnu::naked]] void test_read_calib() {
 }
 
 // CHECK-LABEL: <test_read_calib>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: ldr{{.*}} r0, [r{{[0-9]+}}, #12]
-// CHECK: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #12]
 
 // Test enabling SysTick with CPU clock
 extern "C" [[gnu::naked]] void test_enable_systick() {
@@ -90,10 +83,9 @@ extern "C" [[gnu::naked]] void test_enable_systick() {
 }
 
 // CHECK-LABEL: <test_enable_systick>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #5
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #5
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test disabling SysTick
 extern "C" [[gnu::naked]] void test_disable_systick() {
@@ -103,7 +95,6 @@ extern "C" [[gnu::naked]] void test_disable_systick() {
 }
 
 // CHECK-LABEL: <test_disable_systick>:
-// CHECK: ldr{{.*}} r{{[0-9]+}}, {{.*}}
-// CHECK: mov{{.*}} r{{[0-9]+}}, #0
-// CHECK: str{{.*}} r{{[0-9]+}}, [r{{[0-9]+}}]
-// CHECK: bx lr
+// CHECK: movs r{{[0-9]+}}, #0
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
