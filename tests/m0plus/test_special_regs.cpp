@@ -7,8 +7,7 @@ extern "C" [[gnu::naked]] void test_get_lr() {
 }
 
 // CHECK-LABEL: <test_get_lr>:
-// CHECK-NEXT: mov{{.*}} r0, lr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mov{{.*}} r{{[0-9]+}}, lr
 
 // Test getApsrReg()
 extern "C" [[gnu::naked]] void test_get_apsr() {
@@ -17,8 +16,7 @@ extern "C" [[gnu::naked]] void test_get_apsr() {
 }
 
 // CHECK-LABEL: <test_get_apsr>:
-// CHECK-NEXT: mrs r0, apsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, {{CPSR|APSR}}
 
 // Test getIpsrReg()
 extern "C" [[gnu::naked]] void test_get_ipsr() {
@@ -27,8 +25,7 @@ extern "C" [[gnu::naked]] void test_get_ipsr() {
 }
 
 // CHECK-LABEL: <test_get_ipsr>:
-// CHECK-NEXT: mrs r0, ipsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, IPSR
 
 // Test getEpsrReg()
 extern "C" [[gnu::naked]] void test_get_epsr() {
@@ -37,8 +34,7 @@ extern "C" [[gnu::naked]] void test_get_epsr() {
 }
 
 // CHECK-LABEL: <test_get_epsr>:
-// CHECK-NEXT: mrs r0, epsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, EPSR
 
 // Test getIepsrReg()
 extern "C" [[gnu::naked]] void test_get_iepsr() {
@@ -47,8 +43,7 @@ extern "C" [[gnu::naked]] void test_get_iepsr() {
 }
 
 // CHECK-LABEL: <test_get_iepsr>:
-// CHECK-NEXT: mrs r0, iepsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, IEPSR
 
 // Test getIapsrReg()
 extern "C" [[gnu::naked]] void test_get_iapsr() {
@@ -57,8 +52,7 @@ extern "C" [[gnu::naked]] void test_get_iapsr() {
 }
 
 // CHECK-LABEL: <test_get_iapsr>:
-// CHECK-NEXT: mrs r0, iapsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, IAPSR
 
 // Test getEapsrReg()
 extern "C" [[gnu::naked]] void test_get_eapsr() {
@@ -67,8 +61,7 @@ extern "C" [[gnu::naked]] void test_get_eapsr() {
 }
 
 // CHECK-LABEL: <test_get_eapsr>:
-// CHECK-NEXT: mrs r0, eapsr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, EAPSR
 
 // Test getPsrReg()
 extern "C" [[gnu::naked]] void test_get_psr() {
@@ -77,8 +70,7 @@ extern "C" [[gnu::naked]] void test_get_psr() {
 }
 
 // CHECK-LABEL: <test_get_psr>:
-// CHECK-NEXT: mrs r0, psr
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, PSR
 
 // Test getMspReg()
 extern "C" [[gnu::naked]] void test_get_msp() {
@@ -87,8 +79,7 @@ extern "C" [[gnu::naked]] void test_get_msp() {
 }
 
 // CHECK-LABEL: <test_get_msp>:
-// CHECK-NEXT: mrs r0, msp
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, MSP
 
 // Test setMspReg()
 extern "C" [[gnu::naked]] void test_set_msp() {
@@ -96,8 +87,8 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 }
 
 // CHECK-LABEL: <test_set_msp>:
-// CHECK: msr msp, {{r[0-9]+}}
-// CHECK-NEXT: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: msr MSP, r{{[0-9]+}}
 
 // Test getPspReg()
 extern "C" [[gnu::naked]] void test_get_psp() {
@@ -106,8 +97,7 @@ extern "C" [[gnu::naked]] void test_get_psp() {
 }
 
 // CHECK-LABEL: <test_get_psp>:
-// CHECK-NEXT: mrs r0, psp
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, PSP
 
 // Test setPspReg()
 extern "C" [[gnu::naked]] void test_set_psp() {
@@ -115,8 +105,8 @@ extern "C" [[gnu::naked]] void test_set_psp() {
 }
 
 // CHECK-LABEL: <test_set_psp>:
-// CHECK: msr psp, {{r[0-9]+}}
-// CHECK-NEXT: bx lr
+// CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: msr PSP, r{{[0-9]+}}
 
 // Test getPrimaskReg()
 extern "C" [[gnu::naked]] void test_get_primask() {
@@ -125,8 +115,7 @@ extern "C" [[gnu::naked]] void test_get_primask() {
 }
 
 // CHECK-LABEL: <test_get_primask>:
-// CHECK-NEXT: mrs r0, primask
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, PRIMASK
 
 // Test setPrimaskReg()
 extern "C" [[gnu::naked]] void test_set_primask() {
@@ -136,8 +125,8 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 }
 
 // CHECK-LABEL: <test_set_primask>:
-// CHECK: msr primask, {{r[0-9]+}}
-// CHECK-NEXT: bx lr
+// CHECK: movs r{{[0-9]+}}, #1
+// CHECK: msr PRIMASK, r{{[0-9]+}}
 
 // Test getControlReg()
 extern "C" [[gnu::naked]] void test_get_control() {
@@ -146,8 +135,7 @@ extern "C" [[gnu::naked]] void test_get_control() {
 }
 
 // CHECK-LABEL: <test_get_control>:
-// CHECK-NEXT: mrs r0, control
-// CHECK-NEXT: bx lr
+// CHECK-NEXT: mrs r{{[0-9]+}}, CONTROL
 
 // Test setControlReg()
 extern "C" [[gnu::naked]] void test_set_control() {
@@ -157,5 +145,5 @@ extern "C" [[gnu::naked]] void test_set_control() {
 }
 
 // CHECK-LABEL: <test_set_control>:
-// CHECK: msr control, {{r[0-9]+}}
-// CHECK-NEXT: bx lr
+// CHECK: movs r{{[0-9]+}}, #2
+// CHECK: msr CONTROL, r{{[0-9]+}}
