@@ -28,8 +28,10 @@ set(AVAILABLE_ARM_CORTEX_M_ARCHS
     "M3"
 )
 
-set(ARM_CORTEX_M_ARCH "" CACHE STRING "The target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
-set_property(CACHE ARM_CORTEX_M_ARCH PROPERTY STRINGS ${AVAILABLE_ARM_CORTEX_M_ARCHS})
+if(NOT DEFINED ARM_CORTEX_M_ARCH)
+    set(ARM_CORTEX_M_ARCH "" CACHE STRING "The target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
+    set_property(CACHE ARM_CORTEX_M_ARCH PROPERTY STRINGS ${AVAILABLE_ARM_CORTEX_M_ARCHS})
+endif()
 
 if(NOT ARM_CORTEX_M_ARCH)
     message(FATAL_ERROR "Missing target ARM Cortex-M architecture for which to build the ${PROJECT_NAME} library")
