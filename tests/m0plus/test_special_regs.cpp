@@ -2,7 +2,7 @@
 
 // Test getLr()
 extern "C" [[gnu::naked]] void test_get_lr() {
-    auto lr = Cortex::M0Plus::getLr();
+    uint32_t lr = Cortex::M0Plus::getLr();
     (void)lr;
 }
 
@@ -13,7 +13,7 @@ extern "C" [[gnu::naked]] void test_get_lr() {
 
 // Test getApsrReg()
 extern "C" [[gnu::naked]] void test_get_apsr() {
-    auto apsr = Cortex::M0Plus::getApsrReg();
+    Cortex::M0Plus::PSR apsr = Cortex::M0Plus::getApsrReg();
     (void)apsr;
 }
 
@@ -23,7 +23,7 @@ extern "C" [[gnu::naked]] void test_get_apsr() {
 
 // Test getIpsrReg()
 extern "C" [[gnu::naked]] void test_get_ipsr() {
-    auto ipsr = Cortex::M0Plus::getIpsrReg();
+    Cortex::M0Plus::PSR ipsr = Cortex::M0Plus::getIpsrReg();
     (void)ipsr;
 }
 
@@ -33,7 +33,7 @@ extern "C" [[gnu::naked]] void test_get_ipsr() {
 
 // Test getEpsrReg()
 extern "C" [[gnu::naked]] void test_get_epsr() {
-    auto epsr = Cortex::M0Plus::getEpsrReg();
+    Cortex::M0Plus::PSR epsr = Cortex::M0Plus::getEpsrReg();
     (void)epsr;
 }
 
@@ -43,7 +43,7 @@ extern "C" [[gnu::naked]] void test_get_epsr() {
 
 // Test getIepsrReg()
 extern "C" [[gnu::naked]] void test_get_iepsr() {
-    auto iepsr = Cortex::M0Plus::getIepsrReg();
+    Cortex::M0Plus::PSR iepsr = Cortex::M0Plus::getIepsrReg();
     (void)iepsr;
 }
 
@@ -53,7 +53,7 @@ extern "C" [[gnu::naked]] void test_get_iepsr() {
 
 // Test getIapsrReg()
 extern "C" [[gnu::naked]] void test_get_iapsr() {
-    auto iapsr = Cortex::M0Plus::getIapsrReg();
+    Cortex::M0Plus::PSR iapsr = Cortex::M0Plus::getIapsrReg();
     (void)iapsr;
 }
 
@@ -63,7 +63,7 @@ extern "C" [[gnu::naked]] void test_get_iapsr() {
 
 // Test getEapsrReg()
 extern "C" [[gnu::naked]] void test_get_eapsr() {
-    auto eapsr = Cortex::M0Plus::getEapsrReg();
+    Cortex::M0Plus::PSR eapsr = Cortex::M0Plus::getEapsrReg();
     (void)eapsr;
 }
 
@@ -73,7 +73,7 @@ extern "C" [[gnu::naked]] void test_get_eapsr() {
 
 // Test getPsrReg()
 extern "C" [[gnu::naked]] void test_get_psr() {
-    auto psr = Cortex::M0Plus::getPsrReg();
+    Cortex::M0Plus::PSR psr = Cortex::M0Plus::getPsrReg();
     (void)psr;
 }
 
@@ -83,7 +83,7 @@ extern "C" [[gnu::naked]] void test_get_psr() {
 
 // Test getMspReg()
 extern "C" [[gnu::naked]] void test_get_msp() {
-    auto msp = Cortex::M0Plus::getMspReg();
+    uint32_t msp = Cortex::M0Plus::getMspReg();
     (void)msp;
 }
 
@@ -105,7 +105,7 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 
 // Test getPspReg()
 extern "C" [[gnu::naked]] void test_get_psp() {
-    auto psp = Cortex::M0Plus::getPspReg();
+    uint32_t psp = Cortex::M0Plus::getPspReg();
     (void)psp;
 }
 
@@ -127,7 +127,7 @@ extern "C" [[gnu::naked]] void test_set_psp() {
 
 // Test getPrimaskReg()
 extern "C" [[gnu::naked]] void test_get_primask() {
-    auto primask = Cortex::M0Plus::getPrimaskReg();
+    Cortex::M0Plus::PRIMASK primask = Cortex::M0Plus::getPrimaskReg();
     (void)primask;
 }
 
@@ -150,7 +150,7 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 
 // Test getControlReg()
 extern "C" [[gnu::naked]] void test_get_control() {
-    auto control = Cortex::M0Plus::getControlReg();
+    Cortex::M0Plus::CONTROL control = Cortex::M0Plus::getControlReg();
     (void)control;
 }
 

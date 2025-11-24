@@ -55,7 +55,7 @@ extern "C" [[gnu::naked]] void test_write_icsr() {
 
 // Test reading VTOR register
 extern "C" [[gnu::naked]] void test_read_vtor() {
-    auto vtor = Cortex::M0Plus::SCB->VTOR;
+    uint32_t vtor = Cortex::M0Plus::SCB->VTOR;
     (void)vtor;
 }
 
