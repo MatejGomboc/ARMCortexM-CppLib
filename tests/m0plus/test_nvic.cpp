@@ -7,8 +7,10 @@ extern "C" [[gnu::naked]] void test_is_irq_enabled() {
 }
 
 // CHECK-LABEL: <test_is_irq_enabled>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: .word 0xe000e100
+// CHECK-EMPTY:
 
 // Test enableIrq()
 extern "C" [[gnu::naked]] void test_enable_irq() {
@@ -16,12 +18,14 @@ extern "C" [[gnu::naked]] void test_enable_irq() {
 }
 
 // CHECK-LABEL: <test_enable_irq>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #3
-// CHECK: orrs r{{[0-9]+}}, r{{[0-9]+}}
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: movs r3, #128
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: lsls r3, r3, #3
+// CHECK-NEXT: ldr r1, [r2, #0]
+// CHECK-NEXT: orrs r3, r1
+// CHECK-NEXT: str r3, [r2, #0]
+// CHECK-NEXT: .word 0xe000e100
+// CHECK-EMPTY:
 
 // Test disableIrq()
 extern "C" [[gnu::naked]] void test_disable_irq() {
@@ -29,11 +33,14 @@ extern "C" [[gnu::naked]] void test_disable_irq() {
 }
 
 // CHECK-LABEL: <test_disable_irq>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: orrs r{{[0-9]+}}, r{{[0-9]+}}
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: movs r3, #128
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: ldr r1, [r2, #0]
+// CHECK-NEXT: orrs r3, r1
+// CHECK-NEXT: str r3, [r2, #0]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000e180
+// CHECK-EMPTY:
 
 // Test isIrqPending()
 extern "C" [[gnu::naked]] void test_is_irq_pending() {
@@ -42,10 +49,10 @@ extern "C" [[gnu::naked]] void test_is_irq_pending() {
 }
 
 // CHECK-LABEL: <test_is_irq_pending>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #1
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, r{{[0-9]+}}]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #4]
+// CHECK-NEXT: .word 0xe000e1fc
+// CHECK-EMPTY:
 
 // Test setPendingIrq()
 extern "C" [[gnu::naked]] void test_set_pending_irq() {
@@ -53,12 +60,14 @@ extern "C" [[gnu::naked]] void test_set_pending_irq() {
 }
 
 // CHECK-LABEL: <test_set_pending_irq>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #5
-// CHECK: orrs r{{[0-9]+}}, r{{[0-9]+}}
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: movs r3, #128
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: lsls r3, r3, #5
+// CHECK-NEXT: ldr r1, [r2, #0]
+// CHECK-NEXT: orrs r3, r1
+// CHECK-NEXT: str r3, [r2, #0]
+// CHECK-NEXT: .word 0xe000e200
+// CHECK-EMPTY:
 
 // Test clearPendingIrq()
 extern "C" [[gnu::naked]] void test_clear_pending_irq() {
@@ -66,9 +75,11 @@ extern "C" [[gnu::naked]] void test_clear_pending_irq() {
 }
 
 // CHECK-LABEL: <test_clear_pending_irq>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #8
-// CHECK: orrs r{{[0-9]+}}, r{{[0-9]+}}
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: movs r3, #128
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: lsls r3, r3, #8
+// CHECK-NEXT: ldr r1, [r2, #0]
+// CHECK-NEXT: orrs r3, r1
+// CHECK-NEXT: str r3, [r2, #0]
+// CHECK-NEXT: .word 0xe000e280
+// CHECK-EMPTY:

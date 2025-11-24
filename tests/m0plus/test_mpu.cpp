@@ -7,8 +7,10 @@ extern "C" [[gnu::naked]] void test_read_type() {
 }
 
 // CHECK-LABEL: <test_read_type>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #0]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
@@ -17,8 +19,10 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #4]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #4]
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test writing CTRL register
 extern "C" [[gnu::naked]] void test_write_ctrl() {
@@ -29,9 +33,12 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #5
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
+// CHECK-NEXT: movs r2, #5
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: str r2, [r3, #4]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test reading RNR register
 extern "C" [[gnu::naked]] void test_read_rnr() {
@@ -40,8 +47,10 @@ extern "C" [[gnu::naked]] void test_read_rnr() {
 }
 
 // CHECK-LABEL: <test_read_rnr>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #8]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #8]
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test writing RNR register
 extern "C" [[gnu::naked]] void test_write_rnr() {
@@ -49,9 +58,12 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 }
 
 // CHECK-LABEL: <test_write_rnr>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #3
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
+// CHECK-NEXT: movs r2, #3
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: str r2, [r3, #8]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test reading RBAR register
 extern "C" [[gnu::naked]] void test_read_rbar() {
@@ -60,8 +72,10 @@ extern "C" [[gnu::naked]] void test_read_rbar() {
 }
 
 // CHECK-LABEL: <test_read_rbar>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #12]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #12]
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test writing RBAR register
 extern "C" [[gnu::naked]] void test_write_rbar() {
@@ -73,9 +87,13 @@ extern "C" [[gnu::naked]] void test_write_rbar() {
 }
 
 // CHECK-LABEL: <test_write_rbar>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #12]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #12]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-NEXT: .word 0x20000012
+// CHECK-EMPTY:
 
 // Test reading RASR register
 extern "C" [[gnu::naked]] void test_read_rasr() {
@@ -84,8 +102,10 @@ extern "C" [[gnu::naked]] void test_read_rasr() {
 }
 
 // CHECK-LABEL: <test_read_rasr>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #16]
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r3, [r3, #16]
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test writing RASR register
 extern "C" [[gnu::naked]] void test_write_rasr() {
@@ -98,9 +118,13 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
 }
 
 // CHECK-LABEL: <test_write_rasr>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #16]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #16]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-NEXT: .word 0x03050015
+// CHECK-EMPTY:
 
 // Test configureRegion function
 extern "C" [[gnu::naked]] void test_configure_region() {
@@ -113,16 +137,19 @@ extern "C" [[gnu::naked]] void test_configure_region() {
 }
 
 // CHECK-LABEL: <test_configure_region>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #0
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
-// CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #20
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #12]
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #16]
-// CHECK: dsb sy
-// CHECK: isb sy
+// CHECK-NEXT: movs r2, #0
+// CHECK-NEXT: ldr r3, [pc, #20]
+// CHECK-NEXT: str r2, [r3, #8]
+// CHECK-NEXT: movs r2, #128
+// CHECK-NEXT: lsls r2, r2, #20
+// CHECK-NEXT: str r2, [r3, #12]
+// CHECK-NEXT: ldr r2, [pc, #12]
+// CHECK-NEXT: str r2, [r3, #16]
+// CHECK-NEXT: dsb sy
+// CHECK-NEXT: isb sy
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-NEXT: .word 0x01040019
+// CHECK-EMPTY:
 
 // Test enabling MPU
 extern "C" [[gnu::naked]] void test_enable_mpu() {
@@ -133,9 +160,12 @@ extern "C" [[gnu::naked]] void test_enable_mpu() {
 }
 
 // CHECK-LABEL: <test_enable_mpu>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #5
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
+// CHECK-NEXT: movs r2, #5
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: str r2, [r3, #4]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
 
 // Test disabling MPU
 extern "C" [[gnu::naked]] void test_disable_mpu() {
@@ -145,6 +175,9 @@ extern "C" [[gnu::naked]] void test_disable_mpu() {
 }
 
 // CHECK-LABEL: <test_disable_mpu>:
-// CHECK: ldr r{{[0-9]+}}, [pc
-// CHECK: movs r{{[0-9]+}}, #0
-// CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
+// CHECK-NEXT: movs r2, #0
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: str r2, [r3, #4]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed90
+// CHECK-EMPTY:
