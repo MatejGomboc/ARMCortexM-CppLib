@@ -45,7 +45,7 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 
 // Test reading LOAD register
 extern "C" [[gnu::naked]] void test_read_load() {
-    auto load = Cortex::M0Plus::SYS_TICK->LOAD;
+    uint32_t load = Cortex::M0Plus::SYS_TICK->LOAD;
     (void)load;
 }
 
@@ -71,7 +71,7 @@ extern "C" [[gnu::naked]] void test_write_load() {
 
 // Test reading VAL register
 extern "C" [[gnu::naked]] void test_read_val() {
-    auto val = Cortex::M0Plus::SYS_TICK->VAL;
+    uint32_t val = Cortex::M0Plus::SYS_TICK->VAL;
     (void)val;
 }
 

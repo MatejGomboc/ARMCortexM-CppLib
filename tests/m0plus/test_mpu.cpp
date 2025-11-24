@@ -56,7 +56,7 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 
 // Test reading RNR register
 extern "C" [[gnu::naked]] void test_read_rnr() {
-    auto rnr = Cortex::M0Plus::MPU->RNR;
+    uint32_t rnr = Cortex::M0Plus::MPU->RNR;
     (void)rnr;
 }
 
