@@ -20,8 +20,8 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: movs r{{[0-9]+}}, #7
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #7
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test reading LOAD register
@@ -60,8 +60,8 @@ extern "C" [[gnu::naked]] void test_write_val() {
 }
 
 // CHECK-LABEL: <test_write_val>:
-// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test reading CALIB register
@@ -83,8 +83,8 @@ extern "C" [[gnu::naked]] void test_enable_systick() {
 }
 
 // CHECK-LABEL: <test_enable_systick>:
-// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]
 
 // Test disabling SysTick
@@ -95,6 +95,6 @@ extern "C" [[gnu::naked]] void test_disable_systick() {
 }
 
 // CHECK-LABEL: <test_disable_systick>:
-// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #0]

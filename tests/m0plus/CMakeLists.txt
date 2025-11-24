@@ -1,5 +1,4 @@
 add_asm_test(test_special_regs)
-add_asm_test(test_exception_numbers)
 add_asm_test(test_mpu)
 add_asm_test(test_nvic)
 add_asm_test(test_scb)

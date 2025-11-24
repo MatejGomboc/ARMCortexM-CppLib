@@ -28,8 +28,8 @@ extern "C" [[gnu::naked]] void test_write_icsr() {
 }
 
 // CHECK-LABEL: <test_write_icsr>:
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #19
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
@@ -49,8 +49,8 @@ extern "C" [[gnu::naked]] void test_write_vtor() {
 }
 
 // CHECK-LABEL: <test_write_vtor>:
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #22
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
@@ -82,8 +82,8 @@ extern "C" [[gnu::naked]] void test_write_scr() {
 }
 
 // CHECK-LABEL: <test_write_scr>:
-// CHECK: movs r{{[0-9]+}}, #4
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #4
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #16]
 
 // Test reading CCR register
@@ -114,8 +114,8 @@ extern "C" [[gnu::naked]] void test_write_shpr2() {
 }
 
 // CHECK-LABEL: <test_write_shpr2>:
-// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #24
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #28]
 
@@ -151,7 +151,3 @@ extern "C" [[gnu::naked]] void test_read_shcsr() {
 // CHECK-LABEL: <test_read_shcsr>:
 // CHECK: ldr r{{[0-9]+}}, [pc
 // CHECK: ldr r{{[0-9]+}}, [r{{[0-9]+}}, #{{36|0x24}}]
-
-// Note: systemReset() is [[gnu::noreturn]] so we can't test it with naked functions
-// as it would never return. The function itself contains the necessary barriers and
-// register writes, which would be tested in integration tests.

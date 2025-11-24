@@ -29,8 +29,8 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test reading RNR register
@@ -49,8 +49,8 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 }
 
 // CHECK-LABEL: <test_write_rnr>:
-// CHECK: movs r{{[0-9]+}}, #3
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #3
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 
 // Test reading RBAR register
@@ -113,8 +113,8 @@ extern "C" [[gnu::naked]] void test_configure_region() {
 }
 
 // CHECK-LABEL: <test_configure_region>:
-// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #8]
 // CHECK: movs r{{[0-9]+}}, #{{128|0x80}}
 // CHECK: lsls r{{[0-9]+}}, r{{[0-9]+}}, #20
@@ -133,8 +133,8 @@ extern "C" [[gnu::naked]] void test_enable_mpu() {
 }
 
 // CHECK-LABEL: <test_enable_mpu>:
-// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #5
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
 
 // Test disabling MPU
@@ -145,6 +145,6 @@ extern "C" [[gnu::naked]] void test_disable_mpu() {
 }
 
 // CHECK-LABEL: <test_disable_mpu>:
-// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: ldr r{{[0-9]+}}, [pc
+// CHECK: movs r{{[0-9]+}}, #0
 // CHECK: str r{{[0-9]+}}, [r{{[0-9]+}}, #4]
