@@ -139,7 +139,7 @@ extern "C" [[gnu::naked]] void test_read_rasr() {
 extern "C" [[gnu::naked]] void test_write_rasr() {
     Cortex::M0Plus::Mpu::RASR rasr;
     rasr.bits.ENABLE = 1;
-    rasr.bits.SIZE = 10;  // 2KB region
+    rasr.bits.SIZE = 10; // 2KB region
     rasr.bits.AP = static_cast<uint32_t>(Cortex::M0Plus::Mpu::RASR::AP::RW);
     rasr.setScbFlags(Cortex::M0Plus::Mpu::RASR::SCB::INTERN_SRAM);
     Cortex::M0Plus::MPU->RASR = rasr.value;
