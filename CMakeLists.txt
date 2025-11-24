@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(ARMCortexM
     LANGUAGES CXX
-    VERSION 1.0.0
+    VERSION 0.1.0
     DESCRIPTION "CMSIS-like C++ library for ARM Cortex-M microcontrollers"
     HOMEPAGE_URL "https://github.com/MatejGomboc/ARMCortexM-CppLib"
 )
