@@ -22,11 +22,25 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK-NEXT: movs r2, #7
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #0]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000e010
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #7
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000e010
+
+// MINSIZE-CHECK-NEXT: movs r2, #7
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000e010
+
+// MAXSPEED-CHECK-NEXT: movs r2, #7
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000e010
+
 // CHECK-EMPTY:
 
 // Test reading LOAD register
@@ -73,11 +87,25 @@ extern "C" [[gnu::naked]] void test_write_val() {
 }
 
 // CHECK-LABEL: <test_write_val>:
-// CHECK-NEXT: movs r2, #0
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #8]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000e010
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #0
+// DEBUG-CHECK-NEXT: str r2, [r3, #8]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000e010
+
+// MINSIZE-CHECK-NEXT: movs r2, #0
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #8]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000e010
+
+// MAXSPEED-CHECK-NEXT: movs r2, #0
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #8]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000e010
+
 // CHECK-EMPTY:
 
 // Test reading CALIB register
@@ -101,11 +129,25 @@ extern "C" [[gnu::naked]] void test_enable_systick() {
 }
 
 // CHECK-LABEL: <test_enable_systick>:
-// CHECK-NEXT: movs r2, #5
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #0]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000e010
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #5
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000e010
+
+// MINSIZE-CHECK-NEXT: movs r2, #5
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000e010
+
+// MAXSPEED-CHECK-NEXT: movs r2, #5
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000e010
+
 // CHECK-EMPTY:
 
 // Test disabling SysTick
@@ -116,9 +158,23 @@ extern "C" [[gnu::naked]] void test_disable_systick() {
 }
 
 // CHECK-LABEL: <test_disable_systick>:
-// CHECK-NEXT: movs r2, #0
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #0]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000e010
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #0
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000e010
+
+// MINSIZE-CHECK-NEXT: movs r2, #0
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000e010
+
+// MAXSPEED-CHECK-NEXT: movs r2, #0
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000e010
+
 // CHECK-EMPTY:

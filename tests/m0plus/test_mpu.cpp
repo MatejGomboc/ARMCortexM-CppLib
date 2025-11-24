@@ -33,11 +33,25 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK-NEXT: movs r2, #5
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #4]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000ed90
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #5
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed90
+
+// MINSIZE-CHECK-NEXT: movs r2, #5
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed90
+
+// MAXSPEED-CHECK-NEXT: movs r2, #5
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed90
+
 // CHECK-EMPTY:
 
 // Test reading RNR register
@@ -58,11 +72,25 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 }
 
 // CHECK-LABEL: <test_write_rnr>:
-// CHECK-NEXT: movs r2, #3
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #8]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000ed90
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #3
+// DEBUG-CHECK-NEXT: str r2, [r3, #8]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed90
+
+// MINSIZE-CHECK-NEXT: movs r2, #3
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #8]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed90
+
+// MAXSPEED-CHECK-NEXT: movs r2, #3
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #8]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed90
+
 // CHECK-EMPTY:
 
 // Test reading RBAR register
@@ -137,18 +165,46 @@ extern "C" [[gnu::naked]] void test_configure_region() {
 }
 
 // CHECK-LABEL: <test_configure_region>:
-// CHECK-NEXT: movs r2, #0
-// CHECK-NEXT: ldr r3, [pc, #20]
-// CHECK-NEXT: str r2, [r3, #8]
-// CHECK-NEXT: movs r2, #128
-// CHECK-NEXT: lsls r2, r2, #20
-// CHECK-NEXT: str r2, [r3, #12]
-// CHECK-NEXT: ldr r2, [pc, #12]
-// CHECK-NEXT: str r2, [r3, #16]
-// CHECK-NEXT: dsb sy
-// CHECK-NEXT: isb sy
-// CHECK-NEXT: .word 0xe000ed90
-// CHECK-NEXT: .word 0x01040019
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #20]
+// DEBUG-CHECK-NEXT: movs r2, #0
+// DEBUG-CHECK-NEXT: str r2, [r3, #8]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #20
+// DEBUG-CHECK-NEXT: str r2, [r3, #12]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #12]
+// DEBUG-CHECK-NEXT: str r2, [r3, #16]
+// DEBUG-CHECK-NEXT: dsb sy
+// DEBUG-CHECK-NEXT: isb sy
+// DEBUG-CHECK-NEXT: .word 0xe000ed90
+// DEBUG-CHECK-NEXT: .word 0x01040019
+
+// MINSIZE-CHECK-NEXT: movs r2, #0
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #20]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #8]
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #20
+// MINSIZE-CHECK-NEXT: str r2, [r3, #12]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #12]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #16]
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: isb sy
+// MINSIZE-CHECK-NEXT: .word 0xe000ed90
+// MINSIZE-CHECK-NEXT: .word 0x01040019
+
+// MAXSPEED-CHECK-NEXT: movs r2, #0
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #20]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #8]
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #20
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #12]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #12]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #16]
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: isb sy
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed90
+// MAXSPEED-CHECK-NEXT: .word 0x01040019
+
 // CHECK-EMPTY:
 
 // Test enabling MPU
@@ -160,11 +216,25 @@ extern "C" [[gnu::naked]] void test_enable_mpu() {
 }
 
 // CHECK-LABEL: <test_enable_mpu>:
-// CHECK-NEXT: movs r2, #5
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #4]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000ed90
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #5
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed90
+
+// MINSIZE-CHECK-NEXT: movs r2, #5
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed90
+
+// MAXSPEED-CHECK-NEXT: movs r2, #5
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed90
+
 // CHECK-EMPTY:
 
 // Test disabling MPU
@@ -175,9 +245,23 @@ extern "C" [[gnu::naked]] void test_disable_mpu() {
 }
 
 // CHECK-LABEL: <test_disable_mpu>:
-// CHECK-NEXT: movs r2, #0
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: str r2, [r3, #4]
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0xe000ed90
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #0
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed90
+
+// MINSIZE-CHECK-NEXT: movs r2, #0
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed90
+
+// MAXSPEED-CHECK-NEXT: movs r2, #0
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed90
+
 // CHECK-EMPTY:
