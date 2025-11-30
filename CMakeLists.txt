@@ -65,6 +65,7 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/debugging.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/exceptions.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/hints.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/power_management.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
