@@ -47,13 +47,10 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
-# Base include directory for architecture-specific files (m0/, m3/, etc.)
 target_include_directories(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-# Common intrinsics - available on ALL Cortex-M architectures
-# This enables flat includes: #include "barriers.hpp" instead of #include "intrinsics/common/barriers.hpp"
 target_include_directories(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common"
 )
@@ -106,8 +103,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    # ARMv7-M intrinsics - available on M3, M4, M7
-    # This enables flat includes: #include "bit_operations.hpp"
     target_include_directories(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m"
     )
