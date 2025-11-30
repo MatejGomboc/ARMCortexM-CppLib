@@ -2,7 +2,7 @@
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::M0::SysTick::CTRL(Cortex::M0::SYS_TICK->CTRL);
+    auto ctrl = ArmCortex::M0::SysTick::CTRL(ArmCortex::M0::SYS_TICK->CTRL);
     (void)ctrl;
 }
 
@@ -110,7 +110,7 @@ extern "C" [[gnu::naked]] void test_write_val() {
 
 // Test reading CALIB register
 extern "C" [[gnu::naked]] void test_read_calib() {
-    auto calib = ArmCortex::M0::SysTick::CALIB(Cortex::M0::SYS_TICK->CALIB);
+    auto calib = ArmCortex::M0::SysTick::CALIB(ArmCortex::M0::SYS_TICK->CALIB);
     (void)calib;
 }
 
@@ -124,7 +124,7 @@ extern "C" [[gnu::naked]] void test_read_calib() {
 extern "C" [[gnu::naked]] void test_enable_systick() {
     ArmCortex::M0::SysTick::CTRL ctrl;
     ctrl.bits.ENABLE = 1;
-    ctrl.bits.CLKSOURCE = static_cast<uint32_t>(Cortex::M0::SysTick::CTRL::CLKSOURCE::CPU);
+    ctrl.bits.CLKSOURCE = static_cast<uint32_t>(ArmCortex::M0::SysTick::CTRL::CLKSOURCE::CPU);
     ArmCortex::M0::SYS_TICK->CTRL = ctrl.value;
 }
 

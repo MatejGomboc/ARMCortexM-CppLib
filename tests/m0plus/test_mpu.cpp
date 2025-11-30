@@ -2,7 +2,7 @@
 
 // Test reading TYPE register
 extern "C" [[gnu::naked]] void test_read_type() {
-    auto type = ArmCortex::M0Plus::Mpu::TYPE(Cortex::M0Plus::MPU->TYPE);
+    auto type = ArmCortex::M0Plus::Mpu::TYPE(ArmCortex::M0Plus::MPU->TYPE);
     (void)type;
 }
 
@@ -14,7 +14,7 @@ extern "C" [[gnu::naked]] void test_read_type() {
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::M0Plus::Mpu::CTRL(Cortex::M0Plus::MPU->CTRL);
+    auto ctrl = ArmCortex::M0Plus::Mpu::CTRL(ArmCortex::M0Plus::MPU->CTRL);
     (void)ctrl;
 }
 
@@ -95,7 +95,7 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 
 // Test reading RBAR register
 extern "C" [[gnu::naked]] void test_read_rbar() {
-    auto rbar = ArmCortex::M0Plus::Mpu::RBAR(Cortex::M0Plus::MPU->RBAR);
+    auto rbar = ArmCortex::M0Plus::Mpu::RBAR(ArmCortex::M0Plus::MPU->RBAR);
     (void)rbar;
 }
 
@@ -125,7 +125,7 @@ extern "C" [[gnu::naked]] void test_write_rbar() {
 
 // Test reading RASR register
 extern "C" [[gnu::naked]] void test_read_rasr() {
-    auto rasr = ArmCortex::M0Plus::Mpu::RASR(Cortex::M0Plus::MPU->RASR);
+    auto rasr = ArmCortex::M0Plus::Mpu::RASR(ArmCortex::M0Plus::MPU->RASR);
     (void)rasr;
 }
 
@@ -140,8 +140,8 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
     ArmCortex::M0Plus::Mpu::RASR rasr;
     rasr.bits.ENABLE = 1;
     rasr.bits.SIZE = 10; // 2KB region
-    rasr.bits.AP = static_cast<uint32_t>(Cortex::M0Plus::Mpu::RASR::AP::RW);
-    rasr.setScbFlags(Cortex::M0Plus::Mpu::RASR::SCB::INTERN_SRAM);
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::M0Plus::Mpu::RASR::AP::RW);
+    rasr.setScbFlags(ArmCortex::M0Plus::Mpu::RASR::SCB::INTERN_SRAM);
     ArmCortex::M0Plus::MPU->RASR = rasr.value;
 }
 
@@ -159,8 +159,8 @@ extern "C" [[gnu::naked]] void test_configure_region() {
     ArmCortex::M0Plus::Mpu::RASR rasr;
     rasr.bits.ENABLE = 1;
     rasr.bits.SIZE = 12;
-    rasr.bits.AP = static_cast<uint32_t>(Cortex::M0Plus::Mpu::RASR::AP::PRIV_RW);
-    rasr.setScbFlags(Cortex::M0Plus::Mpu::RASR::SCB::FLASH);
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::M0Plus::Mpu::RASR::AP::PRIV_RW);
+    rasr.setScbFlags(ArmCortex::M0Plus::Mpu::RASR::SCB::FLASH);
     ArmCortex::M0Plus::Mpu::configureRegion(0, 0x08000000, rasr);
 }
 

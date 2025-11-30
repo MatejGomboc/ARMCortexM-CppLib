@@ -2,7 +2,7 @@
 
 // Test reading ACTLR register
 extern "C" [[gnu::naked]] void test_read_actlr() {
-    auto actlr = ArmCortex::M1::ScnScb::ACTLR(Cortex::M1::SCN_SCB->ACTLR);
+    auto actlr = ArmCortex::M1::ScnScb::ACTLR(ArmCortex::M1::SCN_SCB->ACTLR);
     (void)actlr;
 }
 
