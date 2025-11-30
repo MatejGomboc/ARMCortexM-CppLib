@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "../intrinsics/common/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Mpu {
