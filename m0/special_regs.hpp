@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "special_regs.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0 {
@@ -65,7 +65,6 @@ namespace Cortex::M0 {
         }
     };
 
-    //! M0 CONTROL register (no nPRIV bit).
     union CONTROL {
         //! Active stack pointer selection.
         enum class SPSEL : bool {
@@ -91,81 +90,105 @@ namespace Cortex::M0 {
 
     static inline uint32_t getLr()
     {
-        return asmGetLr();
+        uint32_t value;
+        asm volatile("MOV %0, LR" : "=r" (value) : : "cc");
+        return value;
     }
 
     static inline PSR getApsrReg()
     {
-        return PSR { asmGetApsr() };
+        PSR psr;
+        asm volatile("MRS %0, APSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getIpsrReg()
     {
-        return PSR { asmGetIpsr() };
+        PSR psr;
+        asm volatile("MRS %0, IPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getEpsrReg()
     {
-        return PSR { asmGetEpsr() };
+        PSR psr;
+        asm volatile("MRS %0, EPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getIepsrReg()
     {
-        return PSR { asmGetIepsr() };
+        PSR psr;
+        asm volatile("MRS %0, IEPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getIapsrReg()
     {
-        return PSR { asmGetIapsr() };
+        PSR psr;
+        asm volatile("MRS %0, IAPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getEapsrReg()
     {
-        return PSR { asmGetEapsr() };
+        PSR psr;
+        asm volatile("MRS %0, EAPSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline PSR getPsrReg()
     {
-        return PSR { asmGetPsr() };
+        PSR psr;
+        asm volatile("MRS %0, PSR" : "=r" (psr.value) : : "cc");
+        return psr;
     }
 
     static inline uint32_t getMspReg()
     {
-        return asmGetMsp();
+        uint32_t value;
+        asm volatile("MRS %0, MSP" : "=r" (value) : : "cc");
+        return value;
     }
 
     static inline void setMspReg(uint32_t value)
     {
-        asmSetMsp(value);
+        asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
     }
 
     static inline uint32_t getPspReg()
     {
-        return asmGetPsp();
+        uint32_t value;
+        asm volatile("MRS %0, PSP" : "=r" (value) : : "cc");
+        return value;
     }
 
     static inline void setPspReg(uint32_t value)
     {
-        asmSetPsp(value);
+        asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
     }
 
     static inline PRIMASK getPrimaskReg()
     {
-        return PRIMASK { asmGetPrimask() };
+        PRIMASK primask;
+        asm volatile("MRS %0, PRIMASK" : "=r" (primask.value) : : "cc");
+        return primask;
     }
 
     static inline void setPrimaskReg(PRIMASK primask)
     {
-        asmSetPrimask(primask.value);
+        asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
     }
 
     static inline CONTROL getControlReg()
     {
-        return CONTROL { asmGetControl() };
+        CONTROL control;
+        asm volatile("MRS %0, CONTROL" : "=r" (control.value) : : "cc");
+        return control;
     }
 
     static inline void setControlReg(CONTROL control)
     {
-        asmSetControl(control.value);
+        asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
     }
 }
