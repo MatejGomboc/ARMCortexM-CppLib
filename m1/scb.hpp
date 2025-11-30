@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M1::Scb {
@@ -24,39 +24,31 @@ namespace Cortex::M1::Scb {
 
     struct Registers
     {
-        volatile uint32_t CPUID; //!< Processor part number, version, and implementation information.
-        volatile uint32_t ICSR; //!< Interrupt control and state register.
+        volatile uint32_t CPUID;
+        volatile uint32_t ICSR;
         volatile uint32_t RESERVED0;
-        volatile uint32_t AIRCR; //!< Application interrupt and reset control register.
-        volatile uint32_t SCR; //!< Low power state control.
-        volatile uint32_t CCR; //!< Configuration and control register (read-only).
+        volatile uint32_t AIRCR;
+        volatile uint32_t SCR;
+        volatile uint32_t CCR;
         volatile uint32_t RESERVED1;
-        volatile uint32_t SHPR2; //!< System handler priority register (SVCall).
-        volatile uint32_t SHPR3; //!< System handler priority register (PendSV, SysTick).
-        volatile uint32_t SHCSR; //!< System handler control and state register.
+        volatile uint32_t SHPR2;
+        volatile uint32_t SHPR3;
+        volatile uint32_t SHCSR;
     };
 
-    //! Processor part number, version, and implementation information.
     union CPUID {
         struct Bits {
-            uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
-            uint32_t PARTNO: 12; //!< Part number (0xC61: Cortex-M1).
-            uint32_t ARCHITECTURE: 4; //!< Architecture (0xC: ARMv6-M).
-            uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
-            uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
+            uint32_t REVISION: 4;
+            uint32_t PARTNO: 12;
+            uint32_t ARCHITECTURE: 4;
+            uint32_t VARIANT: 4;
+            uint32_t IMPLEMENTER: 8;
         } bits;
-
         uint32_t value = 0;
-
         CPUID() = default;
-
-        CPUID(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        CPUID(uint32_t new_value) { value = new_value; }
     };
 
-    //! Interrupt control and state register.
     union ICSR {
         struct Bits {
             uint32_t VECTACTIVE: 9;
@@ -73,21 +65,13 @@ namespace Cortex::M1::Scb {
             uint32_t RESERVED3: 2;
             uint32_t NMIPENDSET: 1;
         } bits;
-
         uint32_t value = 0;
-
         ICSR() = default;
-
-        ICSR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        ICSR(uint32_t new_value) { value = new_value; }
     };
 
-    //! Application interrupt and reset control register.
     union AIRCR {
         static constexpr uint16_t VECTKEY_VALUE = 0x05FA;
-
         struct Bits {
             uint32_t RESERVED0: 1;
             uint32_t VECTCLRACTIVE: 1;
@@ -96,18 +80,11 @@ namespace Cortex::M1::Scb {
             uint32_t ENDIANNESS: 1;
             uint32_t VECTKEY: 16;
         } bits;
-
         uint32_t value = 0;
-
         AIRCR() = default;
-
-        AIRCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        AIRCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! System control register.
     union SCR {
         struct Bits {
             uint32_t RESERVED0: 1;
@@ -117,18 +94,11 @@ namespace Cortex::M1::Scb {
             uint32_t SEVONPEND: 1;
             uint32_t RESERVED2: 27;
         } bits;
-
         uint32_t value = 0;
-
         SCR() = default;
-
-        SCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! Configuration and control register (read-only).
     union CCR {
         struct Bits {
             uint32_t RESERVED0: 3;
@@ -137,68 +107,41 @@ namespace Cortex::M1::Scb {
             uint32_t STKALIGN: 1;
             uint32_t RESERVED2: 22;
         } bits;
-
         uint32_t value = 0;
-
         CCR() = default;
-
-        CCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        CCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler priority register 2.
     union SHPR2 {
         struct Bits {
             uint32_t RESERVED0: 24;
             uint32_t PRI_11: 8;
         } bits;
-
         uint32_t value = 0;
-
         SHPR2() = default;
-
-        SHPR2(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHPR2(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler priority register 3.
     union SHPR3 {
         struct Bits {
             uint32_t RESERVED0: 16;
             uint32_t PRI_14: 8;
             uint32_t PRI_15: 8;
         } bits;
-
         uint32_t value = 0;
-
         SHPR3() = default;
-
-        SHPR3(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHPR3(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler control and state register.
     union SHCSR {
         struct Bits {
             uint32_t RESERVED0: 15;
             uint32_t SVCALLPENDED: 1;
             uint32_t RESERVED1: 16;
         } bits;
-
         uint32_t value = 0;
-
         SHCSR() = default;
-
-        SHCSR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHCSR(uint32_t new_value) { value = new_value; }
     };
 }
 
@@ -209,18 +152,16 @@ namespace Cortex::M1 {
 namespace Cortex::M1::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
-        Intrinsics::dsb();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
-
         aircr.bits.VECTCLRACTIVE = 0;
         aircr.bits.SYSRESETREQ = true;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
-
         SCB->AIRCR = aircr.value;
 
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }

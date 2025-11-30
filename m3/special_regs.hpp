@@ -16,8 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/special_regs.hpp"
-#include "intrinsics/armv7m/special_regs.hpp"
+#include "special_regs.hpp"
 #include <cstdint>
 
 namespace Cortex::M3 {
@@ -95,31 +94,28 @@ namespace Cortex::M3 {
         CONTROL(uint32_t new_value) { value = new_value; }
     };
 
-    static inline uint32_t getLr() { return Intrinsics::getLr(); }
-    static inline PSR getApsrReg() { return PSR { Intrinsics::getApsr() }; }
-    static inline PSR getIpsrReg() { return PSR { Intrinsics::getIpsr() }; }
-    static inline PSR getEpsrReg() { return PSR { Intrinsics::getEpsr() }; }
-    static inline PSR getIepsrReg() { return PSR { Intrinsics::getIepsr() }; }
-    static inline PSR getIapsrReg() { return PSR { Intrinsics::getIapsr() }; }
-    static inline PSR getEapsrReg() { return PSR { Intrinsics::getEapsr() }; }
-    static inline PSR getPsrReg() { return PSR { Intrinsics::getPsr() }; }
-
-    static inline uint32_t getMspReg() { return Intrinsics::getMsp(); }
-    static inline void setMspReg(uint32_t value) { Intrinsics::setMsp(value); }
-    static inline uint32_t getPspReg() { return Intrinsics::getPsp(); }
-    static inline void setPspReg(uint32_t value) { Intrinsics::setPsp(value); }
-
-    static inline PRIMASK getPrimaskReg() { return PRIMASK { Intrinsics::getPrimask() }; }
-    static inline void setPrimaskReg(PRIMASK primask) { Intrinsics::setPrimask(primask.value); }
-
-    static inline CONTROL getControlReg() { return CONTROL { Intrinsics::getControl() }; }
-    static inline void setControlReg(CONTROL control) { Intrinsics::setControl(control.value); }
+    // Common register accessors
+    static inline uint32_t getLr() { return asmGetLr(); }
+    static inline PSR getApsrReg() { return PSR { asmGetApsr() }; }
+    static inline PSR getIpsrReg() { return PSR { asmGetIpsr() }; }
+    static inline PSR getEpsrReg() { return PSR { asmGetEpsr() }; }
+    static inline PSR getIepsrReg() { return PSR { asmGetIepsr() }; }
+    static inline PSR getIapsrReg() { return PSR { asmGetIapsr() }; }
+    static inline PSR getEapsrReg() { return PSR { asmGetEapsr() }; }
+    static inline PSR getPsrReg() { return PSR { asmGetPsr() }; }
+    static inline uint32_t getMspReg() { return asmGetMsp(); }
+    static inline void setMspReg(uint32_t value) { asmSetMsp(value); }
+    static inline uint32_t getPspReg() { return asmGetPsp(); }
+    static inline void setPspReg(uint32_t value) { asmSetPsp(value); }
+    static inline PRIMASK getPrimaskReg() { return PRIMASK { asmGetPrimask() }; }
+    static inline void setPrimaskReg(PRIMASK primask) { asmSetPrimask(primask.value); }
+    static inline CONTROL getControlReg() { return CONTROL { asmGetControl() }; }
+    static inline void setControlReg(CONTROL control) { asmSetControl(control.value); }
 
     // ARMv7-M specific registers
-    static inline FAULTMASK getFaultmaskReg() { return FAULTMASK { Intrinsics::ARMv7M::getFaultmask() }; }
-    static inline void setFaultmaskReg(FAULTMASK faultmask) { Intrinsics::ARMv7M::setFaultmask(faultmask.value); }
-
-    static inline BASEPRI getBasepriReg() { return BASEPRI { Intrinsics::ARMv7M::getBasepri() }; }
-    static inline void setBasepriReg(BASEPRI basepri) { Intrinsics::ARMv7M::setBasepri(basepri.value); }
-    static inline void setBasepriMaxReg(BASEPRI basepri) { Intrinsics::ARMv7M::setBasepriMax(basepri.value); }
+    static inline FAULTMASK getFaultmaskReg() { return FAULTMASK { asmGetFaultmask() }; }
+    static inline void setFaultmaskReg(FAULTMASK faultmask) { asmSetFaultmask(faultmask.value); }
+    static inline BASEPRI getBasepriReg() { return BASEPRI { asmGetBasepri() }; }
+    static inline void setBasepriReg(BASEPRI basepri) { asmSetBasepri(basepri.value); }
+    static inline void setBasepriMaxReg(BASEPRI basepri) { asmSetBasepriMax(basepri.value); }
 }

@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Mpu {
@@ -82,14 +82,12 @@ namespace Cortex::M3::Mpu {
             RO = 0b110,
             RO_ALT = 0b111
         };
-
         enum class TEXSCB : uint8_t {
             PERIPHERAL = 0b000101,
             FLASH = 0b000010,
             INTERN_SRAM = 0b000110,
             EXTERN_SRAM = 0b000111
         };
-
         struct Bits {
             uint32_t ENABLE: 1;
             uint32_t SIZE: 5;
@@ -108,9 +106,7 @@ namespace Cortex::M3::Mpu {
         uint32_t value = 0;
         RASR() = default;
         RASR(uint32_t new_value) { value = new_value; }
-
-        void setTexScbFlags(TEXSCB texscb)
-        {
+        void setTexScbFlags(TEXSCB texscb) {
             constexpr uint8_t TEXSCB_BIT_POS = 16;
             value = (value & ~(0x3Fu << TEXSCB_BIT_POS)) | (static_cast<uint32_t>(texscb) << TEXSCB_BIT_POS);
         }
@@ -125,13 +121,11 @@ namespace Cortex::M3::Mpu {
     static inline void configureRegion(uint8_t region_number, uint32_t base_address, const RASR& region_attributes)
     {
         MPU->RNR = region_number;
-
         RBAR region_base;
         region_base.bits.ADDR = (base_address >> 5) & 0x7FFFFFF;
         MPU->RBAR = region_base.value;
         MPU->RASR = region_attributes.value;
-
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
     }
 }

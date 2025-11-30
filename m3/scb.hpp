@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Scb {
@@ -225,7 +225,7 @@ namespace Cortex::M3 {
 namespace Cortex::M3::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
-        Intrinsics::dsb();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
         aircr.bits.VECTRESET = 0;
@@ -234,23 +234,23 @@ namespace Cortex::M3::Scb {
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
         SCB->AIRCR = aircr.value;
 
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }
 
     static inline void setPriorityGrouping(uint32_t priority_group)
     {
-        Intrinsics::dsb();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
         aircr.bits.PRIGROUP = priority_group & 0x7;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
         SCB->AIRCR = aircr.value;
 
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
     }
 
     static inline uint32_t getPriorityGrouping()
