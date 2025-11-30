@@ -64,7 +64,7 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/byte_reversing.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/debugging.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/execution_hints.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/hints.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/power_management.hpp"
 )
 
@@ -107,12 +107,12 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
     # ARMv7-M intrinsics - available on M3, M4, M7
-    # This enables flat includes: #include "bit_manipulation.hpp"
+    # This enables flat includes: #include "bit_operations.hpp"
     target_include_directories(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m"
     )
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_manipulation.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_operations.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/saturation.hpp"
     )
