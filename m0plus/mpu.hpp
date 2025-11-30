@@ -22,7 +22,8 @@
 namespace Cortex::M0Plus::Mpu {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED90u;
 
-    struct Registers {
+    struct Registers
+    {
         volatile uint32_t TYPE;
         volatile uint32_t CTRL;
         volatile uint32_t RNR;
@@ -40,7 +41,10 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
         uint32_t value = 0;
         TYPE() = default;
-        TYPE(uint32_t new_value) { value = new_value; }
+        TYPE(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     union CTRL {
@@ -52,7 +56,10 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
         uint32_t value = 0;
         CTRL() = default;
-        CTRL(uint32_t new_value) { value = new_value; }
+        CTRL(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     union RBAR {
@@ -63,7 +70,10 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
         uint32_t value = 0;
         RBAR() = default;
-        RBAR(uint32_t new_value) { value = new_value; }
+        RBAR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     union RASR {
@@ -99,8 +109,12 @@ namespace Cortex::M0Plus::Mpu {
         } bits;
         uint32_t value = 0;
         RASR() = default;
-        RASR(uint32_t new_value) { value = new_value; }
-        void setScbFlags(SCB scb) {
+        RASR(uint32_t new_value)
+        {
+            value = new_value;
+        }
+        void setScbFlags(SCB scb)
+        {
             constexpr uint8_t SCB_BIT_POS = 16;
             value = (value & ~(0x7u << SCB_BIT_POS)) | (static_cast<uint32_t>(scb) << SCB_BIT_POS);
         }
