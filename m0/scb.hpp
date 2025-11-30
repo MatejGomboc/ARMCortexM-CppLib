@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0::Scb {
@@ -40,7 +40,7 @@ namespace Cortex::M0::Scb {
     union CPUID {
         struct Bits {
             uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
-            uint32_t PARTNO: 12; //!< Part number (0xC60: Cortex-M0).
+            uint32_t PARTNO: 12; //!< Part number (0xC20: Cortex-M0).
             uint32_t ARCHITECTURE: 4; //!< Architecture (0xC: ARMv6-M).
             uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
             uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
@@ -212,7 +212,7 @@ namespace Cortex::M0 {
 namespace Cortex::M0::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
-        Intrinsics::dsb();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -222,8 +222,8 @@ namespace Cortex::M0::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }

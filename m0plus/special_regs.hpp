@@ -16,161 +16,75 @@
 
 #pragma once
 
-#include "intrinsics/common/special_regs.hpp"
+#include "special_regs.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus {
-    //! Exception return values saved to LR on exception entry.
     enum class LrExceptionReturnValue : uint32_t {
-        HANDLER = 0xFFFFFFF1, //!< Return to Handler mode, use MSP.
-        THREAD_MSP = 0xFFFFFFF9, //!< Return to Thread mode, use MSP.
-        THREAD_PSP = 0xFFFFFFFD //!< Return to Thread mode, use PSP.
+        HANDLER = 0xFFFFFFF1,
+        THREAD_MSP = 0xFFFFFFF9,
+        THREAD_PSP = 0xFFFFFFFD
     };
 
     union PSR {
         struct Bits {
-            uint32_t ISR: 9; //!< Current exception number.
+            uint32_t ISR: 9;
             uint32_t RESERVED0: 15;
-            uint32_t T: 1; //!< Thumb mode flag.
+            uint32_t T: 1;
             uint32_t RESERVED1: 3;
-            uint32_t V: 1; //!< Overflow flag.
-            uint32_t C: 1; //!< Carry/borrow flag.
-            uint32_t Z: 1; //!< Zero flag.
-            uint32_t N: 1; //!< Negative flag.
+            uint32_t V: 1;
+            uint32_t C: 1;
+            uint32_t Z: 1;
+            uint32_t N: 1;
         } bits;
-
         uint32_t value = 0;
-
         PSR() = default;
-
-        PSR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        PSR(uint32_t new_value) { value = new_value; }
     };
 
     union PRIMASK {
         struct Bits {
-            uint32_t PRIMASK: 1; //!< Disable all exceptions except NMI and HardFault.
+            uint32_t PRIMASK: 1;
             uint32_t RESERVED: 31;
         } bits;
-
         uint32_t value = 0;
-
         PRIMASK() = default;
-
-        PRIMASK(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        PRIMASK(uint32_t new_value) { value = new_value; }
     };
 
     union CONTROL {
-        //! Thread mode privilege level.
         enum class nPRIV : bool {
-            PRIVILEGED = false, //!< Privileged thread mode.
-            UNPRIVILEGED = true //!< Unprivileged thread mode.
+            PRIVILEGED = false,
+            UNPRIVILEGED = true
         };
-
-        //! Active stack pointer selection.
         enum class SPSEL : bool {
-            MSP = false, //!< Main stack pointer.
-            PSP = true //!< Process stack pointer.
+            MSP = false,
+            PSP = true
         };
-
         struct Bits {
-            uint32_t nPRIV: 1; //!< Thread mode privilege level (0: privileged, 1: unprivileged).
-            uint32_t SPSEL: 1; //!< Active stack pointer (0: MSP, 1: PSP).
+            uint32_t nPRIV: 1;
+            uint32_t SPSEL: 1;
             uint32_t RESERVED: 30;
         } bits;
-
         uint32_t value = 0;
-
         CONTROL() = default;
-
-        CONTROL(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        CONTROL(uint32_t new_value) { value = new_value; }
     };
 
-    static inline uint32_t getLr()
-    {
-        return Intrinsics::getLr();
-    }
-
-    static inline PSR getApsrReg()
-    {
-        return PSR { Intrinsics::getApsr() };
-    }
-
-    static inline PSR getIpsrReg()
-    {
-        return PSR { Intrinsics::getIpsr() };
-    }
-
-    static inline PSR getEpsrReg()
-    {
-        return PSR { Intrinsics::getEpsr() };
-    }
-
-    static inline PSR getIepsrReg()
-    {
-        return PSR { Intrinsics::getIepsr() };
-    }
-
-    static inline PSR getIapsrReg()
-    {
-        return PSR { Intrinsics::getIapsr() };
-    }
-
-    static inline PSR getEapsrReg()
-    {
-        return PSR { Intrinsics::getEapsr() };
-    }
-
-    static inline PSR getPsrReg()
-    {
-        return PSR { Intrinsics::getPsr() };
-    }
-
-    static inline uint32_t getMspReg()
-    {
-        return Intrinsics::getMsp();
-    }
-
-    static inline void setMspReg(uint32_t value)
-    {
-        Intrinsics::setMsp(value);
-    }
-
-    static inline uint32_t getPspReg()
-    {
-        return Intrinsics::getPsp();
-    }
-
-    static inline void setPspReg(uint32_t value)
-    {
-        Intrinsics::setPsp(value);
-    }
-
-    static inline PRIMASK getPrimaskReg()
-    {
-        return PRIMASK { Intrinsics::getPrimask() };
-    }
-
-    static inline void setPrimaskReg(PRIMASK primask)
-    {
-        Intrinsics::setPrimask(primask.value);
-    }
-
-    static inline CONTROL getControlReg()
-    {
-        return CONTROL { Intrinsics::getControl() };
-    }
-
-    static inline void setControlReg(CONTROL control)
-    {
-        Intrinsics::setControl(control.value);
-    }
+    static inline uint32_t getLr() { return asmGetLr(); }
+    static inline PSR getApsrReg() { return PSR { asmGetApsr() }; }
+    static inline PSR getIpsrReg() { return PSR { asmGetIpsr() }; }
+    static inline PSR getEpsrReg() { return PSR { asmGetEpsr() }; }
+    static inline PSR getIepsrReg() { return PSR { asmGetIepsr() }; }
+    static inline PSR getIapsrReg() { return PSR { asmGetIapsr() }; }
+    static inline PSR getEapsrReg() { return PSR { asmGetEapsr() }; }
+    static inline PSR getPsrReg() { return PSR { asmGetPsr() }; }
+    static inline uint32_t getMspReg() { return asmGetMsp(); }
+    static inline void setMspReg(uint32_t value) { asmSetMsp(value); }
+    static inline uint32_t getPspReg() { return asmGetPsp(); }
+    static inline void setPspReg(uint32_t value) { asmSetPsp(value); }
+    static inline PRIMASK getPrimaskReg() { return PRIMASK { asmGetPrimask() }; }
+    static inline void setPrimaskReg(PRIMASK primask) { asmSetPrimask(primask.value); }
+    static inline CONTROL getControlReg() { return CONTROL { asmGetControl() }; }
+    static inline void setControlReg(CONTROL control) { asmSetControl(control.value); }
 }

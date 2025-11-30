@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/special_regs.hpp"
+#include "special_regs.hpp"
 #include <cstdint>
 
 namespace Cortex::M0 {
@@ -65,6 +65,7 @@ namespace Cortex::M0 {
         }
     };
 
+    //! M0 CONTROL register (no nPRIV bit).
     union CONTROL {
         //! Active stack pointer selection.
         enum class SPSEL : bool {
@@ -90,81 +91,81 @@ namespace Cortex::M0 {
 
     static inline uint32_t getLr()
     {
-        return Intrinsics::getLr();
+        return asmGetLr();
     }
 
     static inline PSR getApsrReg()
     {
-        return PSR { Intrinsics::getApsr() };
+        return PSR { asmGetApsr() };
     }
 
     static inline PSR getIpsrReg()
     {
-        return PSR { Intrinsics::getIpsr() };
+        return PSR { asmGetIpsr() };
     }
 
     static inline PSR getEpsrReg()
     {
-        return PSR { Intrinsics::getEpsr() };
+        return PSR { asmGetEpsr() };
     }
 
     static inline PSR getIepsrReg()
     {
-        return PSR { Intrinsics::getIepsr() };
+        return PSR { asmGetIepsr() };
     }
 
     static inline PSR getIapsrReg()
     {
-        return PSR { Intrinsics::getIapsr() };
+        return PSR { asmGetIapsr() };
     }
 
     static inline PSR getEapsrReg()
     {
-        return PSR { Intrinsics::getEapsr() };
+        return PSR { asmGetEapsr() };
     }
 
     static inline PSR getPsrReg()
     {
-        return PSR { Intrinsics::getPsr() };
+        return PSR { asmGetPsr() };
     }
 
     static inline uint32_t getMspReg()
     {
-        return Intrinsics::getMsp();
+        return asmGetMsp();
     }
 
     static inline void setMspReg(uint32_t value)
     {
-        Intrinsics::setMsp(value);
+        asmSetMsp(value);
     }
 
     static inline uint32_t getPspReg()
     {
-        return Intrinsics::getPsp();
+        return asmGetPsp();
     }
 
     static inline void setPspReg(uint32_t value)
     {
-        Intrinsics::setPsp(value);
+        asmSetPsp(value);
     }
 
     static inline PRIMASK getPrimaskReg()
     {
-        return PRIMASK { Intrinsics::getPrimask() };
+        return PRIMASK { asmGetPrimask() };
     }
 
     static inline void setPrimaskReg(PRIMASK primask)
     {
-        Intrinsics::setPrimask(primask.value);
+        asmSetPrimask(primask.value);
     }
 
     static inline CONTROL getControlReg()
     {
-        return CONTROL { Intrinsics::getControl() };
+        return CONTROL { asmGetControl() };
     }
 
     static inline void setControlReg(CONTROL control)
     {
-        Intrinsics::setControl(control.value);
+        asmSetControl(control.value);
     }
 }

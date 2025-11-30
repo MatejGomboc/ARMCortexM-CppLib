@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/common/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Scb {
@@ -24,184 +24,124 @@ namespace Cortex::M0Plus::Scb {
 
     struct Registers
     {
-        volatile uint32_t CPUID; //!< Processor part number, version, and implementation information.
-        volatile uint32_t ICSR; //!< Interrupt control and state register.
-        volatile uint32_t VTOR; //!< Vector table offset register.
-        volatile uint32_t AIRCR; //!< Application interrupt and reset control register.
-        volatile uint32_t SCR; //!< Low power state control.
-        volatile uint32_t CCR; //!< Configuration and control register (read-only).
+        volatile uint32_t CPUID;
+        volatile uint32_t ICSR;
+        volatile uint32_t VTOR;
+        volatile uint32_t AIRCR;
+        volatile uint32_t SCR;
+        volatile uint32_t CCR;
         volatile uint32_t RESERVED1;
-        volatile uint32_t SHPR2; //!< System handler priority register (SVCall).
-        volatile uint32_t SHPR3; //!< System handler priority register (PendSV, SysTick).
-        volatile uint32_t SHCSR; //!< System handler control and state register.
+        volatile uint32_t SHPR2;
+        volatile uint32_t SHPR3;
+        volatile uint32_t SHCSR;
     };
 
-    //! Processor part number, version, and implementation information.
     union CPUID {
         struct Bits {
-            uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
-            uint32_t PARTNO: 12; //!< Part number (0xC60: Cortex-M0+).
-            uint32_t ARCHITECTURE: 4; //!< Architecture (0xC: ARMv6-M).
-            uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
-            uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
+            uint32_t REVISION: 4;
+            uint32_t PARTNO: 12;
+            uint32_t ARCHITECTURE: 4;
+            uint32_t VARIANT: 4;
+            uint32_t IMPLEMENTER: 8;
         } bits;
-
         uint32_t value = 0;
-
         CPUID() = default;
-
-        CPUID(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        CPUID(uint32_t new_value) { value = new_value; }
     };
 
-    //! Interrupt control and state register.
-    //! Provides set/clear-pending bits for NMI, PendSV, and SysTick exceptions.
-    //! Indicates active and pending exception numbers.
-    //! \note Do not simultaneously set both set and clear bits for the same exception.
     union ICSR {
         struct Bits {
-            uint32_t VECTACTIVE: 9; //!< Active exception number.
+            uint32_t VECTACTIVE: 9;
             uint32_t RESERVED0: 3;
-            uint32_t VECTPENDING: 9; //!< Highest priority pending exception number (0: none).
+            uint32_t VECTPENDING: 9;
             uint32_t RESERVED1: 1;
-            uint32_t ISRPENDING: 1; //!< Interrupt pending (excluding NMI and faults).
-            uint32_t ISRPREEMPT: 1; //!< Preempted exception is active.
+            uint32_t ISRPENDING: 1;
+            uint32_t ISRPREEMPT: 1;
             uint32_t RESERVED2: 1;
-            uint32_t PENDSTCLR: 1; //!< Write 1 to clear SysTick pending state (write-only).
-            uint32_t PENDSTSET: 1; //!< SysTick pending (read), write 1 to set pending.
-            uint32_t PENDSVCLR: 1; //!< Write 1 to clear PendSV pending state (write-only).
-            uint32_t PENDSVSET: 1; //!< PendSV pending (read), write 1 to set pending.
+            uint32_t PENDSTCLR: 1;
+            uint32_t PENDSTSET: 1;
+            uint32_t PENDSVCLR: 1;
+            uint32_t PENDSVSET: 1;
             uint32_t RESERVED3: 2;
-            uint32_t NMIPENDSET: 1; //!< NMI pending (read), write 1 to set pending.
+            uint32_t NMIPENDSET: 1;
         } bits;
-
         uint32_t value = 0;
-
         ICSR() = default;
-
-        ICSR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        ICSR(uint32_t new_value) { value = new_value; }
     };
 
-    //! Application interrupt and reset control register.
     union AIRCR {
-        static constexpr uint16_t VECTKEY_VALUE = 0x05FA; //!< Write key to enable AIRCR writes.
-
+        static constexpr uint16_t VECTKEY_VALUE = 0x05FA;
         struct Bits {
             uint32_t RESERVED0: 1;
-            uint32_t VECTCLRACTIVE: 1; //!< Reserved. Write 0.
-            uint32_t SYSRESETREQ: 1; //!< System reset request.
+            uint32_t VECTCLRACTIVE: 1;
+            uint32_t SYSRESETREQ: 1;
             uint32_t RESERVED1: 12;
-            uint32_t ENDIANNESS: 1; //!< Data endianness (0: little endian).
-            uint32_t VECTKEY: 16; //!< Write VECTKEY_VALUE to enable writes, otherwise ignored.
+            uint32_t ENDIANNESS: 1;
+            uint32_t VECTKEY: 16;
         } bits;
-
         uint32_t value = 0;
-
         AIRCR() = default;
-
-        AIRCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        AIRCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! System control register - low power state configuration.
     union SCR {
         struct Bits {
             uint32_t RESERVED0: 1;
-            uint32_t SLEEPONEXIT: 1; //!< Enter sleep/deep sleep on ISR return to Thread mode.
-            uint32_t SLEEPDEEP: 1; //!< Use deep sleep instead of sleep.
+            uint32_t SLEEPONEXIT: 1;
+            uint32_t SLEEPDEEP: 1;
             uint32_t RESERVED1: 1;
-            uint32_t SEVONPEND: 1; //!< Wake from WFE on any interrupt (including disabled).
+            uint32_t SEVONPEND: 1;
             uint32_t RESERVED2: 27;
         } bits;
-
         uint32_t value = 0;
-
         SCR() = default;
-
-        SCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! Configuration and control register (read-only).
     union CCR {
         struct Bits {
             uint32_t RESERVED0: 3;
-            uint32_t UNALIGN_TRP: 1; //!< Always 1. All unaligned accesses generate HardFault.
+            uint32_t UNALIGN_TRP: 1;
             uint32_t RESERVED1: 5;
-            uint32_t STKALIGN: 1; //!< Always 1. 8-byte stack alignment on exception entry.
+            uint32_t STKALIGN: 1;
             uint32_t RESERVED2: 22;
         } bits;
-
         uint32_t value = 0;
-
         CCR() = default;
-
-        CCR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        CCR(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler priority register 2 (SVCall priority).
     union SHPR2 {
         struct Bits {
             uint32_t RESERVED0: 24;
-            uint32_t PRI_11: 8; //!< SVCall priority (exception 11).
+            uint32_t PRI_11: 8;
         } bits;
-
         uint32_t value = 0;
-
         SHPR2() = default;
-
-        SHPR2(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHPR2(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler priority register 3 (PendSV and SysTick priorities).
     union SHPR3 {
         struct Bits {
             uint32_t RESERVED0: 16;
-            uint32_t PRI_14: 8; //!< PendSV priority (exception 14).
-            uint32_t PRI_15: 8; //!< SysTick priority (exception 15).
+            uint32_t PRI_14: 8;
+            uint32_t PRI_15: 8;
         } bits;
-
         uint32_t value = 0;
-
         SHPR3() = default;
-
-        SHPR3(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHPR3(uint32_t new_value) { value = new_value; }
     };
 
-    //! System handler control and state register.
     union SHCSR {
         struct Bits {
             uint32_t RESERVED0: 15;
-            uint32_t SVCALLPENDED: 1; //!< SVCall pending state.
+            uint32_t SVCALLPENDED: 1;
             uint32_t RESERVED1: 16;
         } bits;
-
         uint32_t value = 0;
-
         SHCSR() = default;
-
-        SHCSR(uint32_t new_value)
-        {
-            value = new_value;
-        }
+        SHCSR(uint32_t new_value) { value = new_value; }
     };
 }
 
@@ -212,18 +152,16 @@ namespace Cortex::M0Plus {
 namespace Cortex::M0Plus::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
-        Intrinsics::dsb();
+        asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
-
         aircr.bits.VECTCLRACTIVE = 0;
         aircr.bits.SYSRESETREQ = true;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
-
         SCB->AIRCR = aircr.value;
 
-        Intrinsics::dsb();
-        Intrinsics::isb();
+        asmDsb();
+        asmIsb();
 
         while(true);
     }
