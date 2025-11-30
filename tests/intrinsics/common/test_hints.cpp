@@ -1,4 +1,4 @@
-#include "execution_hints.hpp"
+#include "hints.hpp"
 
 extern "C" [[gnu::naked]] void test_nop() {
     Cortex::asmNop();

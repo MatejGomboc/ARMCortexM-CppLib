@@ -1,4 +1,4 @@
-#include "bit_manipulation.hpp"
+#include "bit_operations.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_clz(uint32_t value) {
     return Cortex::asmClz(value);
