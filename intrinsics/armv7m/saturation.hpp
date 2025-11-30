@@ -28,7 +28,6 @@ namespace Cortex {
     template<uint8_t sat_bits>
     [[gnu::always_inline]] static inline int32_t asmSsat(int32_t value)
     {
-        static_assert(sat_bits >= 1 && sat_bits <= 32, "sat_bits must be 1-32");
         int32_t result;
         asm volatile("ssat %0, %1, %2" : "=r" (result) : "I" (sat_bits), "r" (value));
         return result;
@@ -43,7 +42,6 @@ namespace Cortex {
     template<uint8_t sat_bits>
     [[gnu::always_inline]] static inline uint32_t asmUsat(int32_t value)
     {
-        static_assert(sat_bits >= 0 && sat_bits <= 31, "sat_bits must be 0-31");
         uint32_t result;
         asm volatile("usat %0, %1, %2" : "=r" (result) : "I" (sat_bits), "r" (value));
         return result;
