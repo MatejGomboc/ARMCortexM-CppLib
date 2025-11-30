@@ -2,7 +2,7 @@
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::M0::SysTick::CTRL(ArmCortex::M0::SYS_TICK->CTRL);
+    auto ctrl = ArmCortex::SysTick::CTRL(ArmCortex::SYS_TICK->CTRL);
     (void)ctrl;
 }
 
@@ -14,11 +14,11 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 
 // Test writing CTRL register
 extern "C" [[gnu::naked]] void test_write_ctrl() {
-    ArmCortex::M0::SysTick::CTRL ctrl;
+    ArmCortex::SysTick::CTRL ctrl;
     ctrl.bits.ENABLE = 1;
     ctrl.bits.TICKINT = 1;
     ctrl.bits.CLKSOURCE = 1;
-    ArmCortex::M0::SYS_TICK->CTRL = ctrl.value;
+    ArmCortex::SYS_TICK->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
@@ -45,7 +45,7 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 
 // Test reading LOAD register
 extern "C" [[gnu::naked]] void test_read_load() {
-    uint32_t load = ArmCortex::M0::SYS_TICK->LOAD;
+    uint32_t load = ArmCortex::SYS_TICK->LOAD;
     (void)load;
 }
 
@@ -57,7 +57,7 @@ extern "C" [[gnu::naked]] void test_read_load() {
 
 // Test writing LOAD register
 extern "C" [[gnu::naked]] void test_write_load() {
-    ArmCortex::M0::SYS_TICK->LOAD = 0xFFFFFF;
+    ArmCortex::SYS_TICK->LOAD = 0xFFFFFF;
 }
 
 // CHECK-LABEL: <test_write_load>:
@@ -71,7 +71,7 @@ extern "C" [[gnu::naked]] void test_write_load() {
 
 // Test reading VAL register
 extern "C" [[gnu::naked]] void test_read_val() {
-    uint32_t val = ArmCortex::M0::SYS_TICK->VAL;
+    uint32_t val = ArmCortex::SYS_TICK->VAL;
     (void)val;
 }
 
@@ -83,7 +83,7 @@ extern "C" [[gnu::naked]] void test_read_val() {
 
 // Test writing VAL register (clears counter)
 extern "C" [[gnu::naked]] void test_write_val() {
-    ArmCortex::M0::SYS_TICK->VAL = 0;
+    ArmCortex::SYS_TICK->VAL = 0;
 }
 
 // CHECK-LABEL: <test_write_val>:
@@ -110,7 +110,7 @@ extern "C" [[gnu::naked]] void test_write_val() {
 
 // Test reading CALIB register
 extern "C" [[gnu::naked]] void test_read_calib() {
-    auto calib = ArmCortex::M0::SysTick::CALIB(ArmCortex::M0::SYS_TICK->CALIB);
+    auto calib = ArmCortex::SysTick::CALIB(ArmCortex::SYS_TICK->CALIB);
     (void)calib;
 }
 
@@ -122,10 +122,10 @@ extern "C" [[gnu::naked]] void test_read_calib() {
 
 // Test enabling SysTick with CPU clock
 extern "C" [[gnu::naked]] void test_enable_systick() {
-    ArmCortex::M0::SysTick::CTRL ctrl;
+    ArmCortex::SysTick::CTRL ctrl;
     ctrl.bits.ENABLE = 1;
-    ctrl.bits.CLKSOURCE = static_cast<uint32_t>(ArmCortex::M0::SysTick::CTRL::CLKSOURCE::CPU);
-    ArmCortex::M0::SYS_TICK->CTRL = ctrl.value;
+    ctrl.bits.CLKSOURCE = static_cast<uint32_t>(ArmCortex::SysTick::CTRL::CLKSOURCE::CPU);
+    ArmCortex::SYS_TICK->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_enable_systick>:
@@ -152,9 +152,9 @@ extern "C" [[gnu::naked]] void test_enable_systick() {
 
 // Test disabling SysTick
 extern "C" [[gnu::naked]] void test_disable_systick() {
-    ArmCortex::M0::SysTick::CTRL ctrl;
+    ArmCortex::SysTick::CTRL ctrl;
     ctrl.bits.ENABLE = 0;
-    ArmCortex::M0::SYS_TICK->CTRL = ctrl.value;
+    ArmCortex::SYS_TICK->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_disable_systick>:

@@ -2,7 +2,7 @@
 
 // Test reading CPUID register
 extern "C" [[gnu::naked]] void test_read_cpuid() {
-    auto cpuid = ArmCortex::M0Plus::Scb::CPUID(ArmCortex::M0Plus::SCB->CPUID);
+    auto cpuid = ArmCortex::Scb::CPUID(ArmCortex::SCB->CPUID);
     (void)cpuid;
 }
 
@@ -14,7 +14,7 @@ extern "C" [[gnu::naked]] void test_read_cpuid() {
 
 // Test reading ICSR register
 extern "C" [[gnu::naked]] void test_read_icsr() {
-    auto icsr = ArmCortex::M0Plus::Scb::ICSR(ArmCortex::M0Plus::SCB->ICSR);
+    auto icsr = ArmCortex::Scb::ICSR(ArmCortex::SCB->ICSR);
     (void)icsr;
 }
 
@@ -26,9 +26,9 @@ extern "C" [[gnu::naked]] void test_read_icsr() {
 
 // Test writing ICSR register
 extern "C" [[gnu::naked]] void test_write_icsr() {
-    ArmCortex::M0Plus::Scb::ICSR icsr;
+    ArmCortex::Scb::ICSR icsr;
     icsr.bits.PENDSTSET = 1;
-    ArmCortex::M0Plus::SCB->ICSR = icsr.value;
+    ArmCortex::SCB->ICSR = icsr.value;
 }
 
 // CHECK-LABEL: <test_write_icsr>:
@@ -55,7 +55,7 @@ extern "C" [[gnu::naked]] void test_write_icsr() {
 
 // Test reading VTOR register
 extern "C" [[gnu::naked]] void test_read_vtor() {
-    uint32_t vtor = ArmCortex::M0Plus::SCB->VTOR;
+    uint32_t vtor = ArmCortex::SCB->VTOR;
     (void)vtor;
 }
 
@@ -67,7 +67,7 @@ extern "C" [[gnu::naked]] void test_read_vtor() {
 
 // Test writing VTOR register
 extern "C" [[gnu::naked]] void test_write_vtor() {
-    ArmCortex::M0Plus::SCB->VTOR = 0x20000000;
+    ArmCortex::SCB->VTOR = 0x20000000;
 }
 
 // CHECK-LABEL: <test_write_vtor>:
@@ -94,7 +94,7 @@ extern "C" [[gnu::naked]] void test_write_vtor() {
 
 // Test reading AIRCR register
 extern "C" [[gnu::naked]] void test_read_aircr() {
-    auto aircr = ArmCortex::M0Plus::Scb::AIRCR(ArmCortex::M0Plus::SCB->AIRCR);
+    auto aircr = ArmCortex::Scb::AIRCR(ArmCortex::SCB->AIRCR);
     (void)aircr;
 }
 
@@ -106,7 +106,7 @@ extern "C" [[gnu::naked]] void test_read_aircr() {
 
 // Test reading SCR register
 extern "C" [[gnu::naked]] void test_read_scr() {
-    auto scr = ArmCortex::M0Plus::Scb::SCR(ArmCortex::M0Plus::SCB->SCR);
+    auto scr = ArmCortex::Scb::SCR(ArmCortex::SCB->SCR);
     (void)scr;
 }
 
@@ -118,9 +118,9 @@ extern "C" [[gnu::naked]] void test_read_scr() {
 
 // Test writing SCR register
 extern "C" [[gnu::naked]] void test_write_scr() {
-    ArmCortex::M0Plus::Scb::SCR scr;
+    ArmCortex::Scb::SCR scr;
     scr.bits.SLEEPDEEP = 1;
-    ArmCortex::M0Plus::SCB->SCR = scr.value;
+    ArmCortex::SCB->SCR = scr.value;
 }
 
 // CHECK-LABEL: <test_write_scr>:
@@ -147,7 +147,7 @@ extern "C" [[gnu::naked]] void test_write_scr() {
 
 // Test reading CCR register
 extern "C" [[gnu::naked]] void test_read_ccr() {
-    auto ccr = ArmCortex::M0Plus::Scb::CCR(ArmCortex::M0Plus::SCB->CCR);
+    auto ccr = ArmCortex::Scb::CCR(ArmCortex::SCB->CCR);
     (void)ccr;
 }
 
@@ -159,7 +159,7 @@ extern "C" [[gnu::naked]] void test_read_ccr() {
 
 // Test reading SHPR2 register
 extern "C" [[gnu::naked]] void test_read_shpr2() {
-    auto shpr2 = ArmCortex::M0Plus::Scb::SHPR2(ArmCortex::M0Plus::SCB->SHPR2);
+    auto shpr2 = ArmCortex::Scb::SHPR2(ArmCortex::SCB->SHPR2);
     (void)shpr2;
 }
 
@@ -171,9 +171,9 @@ extern "C" [[gnu::naked]] void test_read_shpr2() {
 
 // Test writing SHPR2 register
 extern "C" [[gnu::naked]] void test_write_shpr2() {
-    ArmCortex::M0Plus::Scb::SHPR2 shpr2;
+    ArmCortex::Scb::SHPR2 shpr2;
     shpr2.bits.PRI_11 = 0x80;
-    ArmCortex::M0Plus::SCB->SHPR2 = shpr2.value;
+    ArmCortex::SCB->SHPR2 = shpr2.value;
 }
 
 // CHECK-LABEL: <test_write_shpr2>:
@@ -200,7 +200,7 @@ extern "C" [[gnu::naked]] void test_write_shpr2() {
 
 // Test reading SHPR3 register
 extern "C" [[gnu::naked]] void test_read_shpr3() {
-    auto shpr3 = ArmCortex::M0Plus::Scb::SHPR3(ArmCortex::M0Plus::SCB->SHPR3);
+    auto shpr3 = ArmCortex::Scb::SHPR3(ArmCortex::SCB->SHPR3);
     (void)shpr3;
 }
 
@@ -212,10 +212,10 @@ extern "C" [[gnu::naked]] void test_read_shpr3() {
 
 // Test writing SHPR3 register
 extern "C" [[gnu::naked]] void test_write_shpr3() {
-    ArmCortex::M0Plus::Scb::SHPR3 shpr3;
+    ArmCortex::Scb::SHPR3 shpr3;
     shpr3.bits.PRI_14 = 0xC0;
     shpr3.bits.PRI_15 = 0x40;
-    ArmCortex::M0Plus::SCB->SHPR3 = shpr3.value;
+    ArmCortex::SCB->SHPR3 = shpr3.value;
 }
 
 // CHECK-LABEL: <test_write_shpr3>:
@@ -229,7 +229,7 @@ extern "C" [[gnu::naked]] void test_write_shpr3() {
 
 // Test reading SHCSR register
 extern "C" [[gnu::naked]] void test_read_shcsr() {
-    auto shcsr = ArmCortex::M0Plus::Scb::SHCSR(ArmCortex::M0Plus::SCB->SHCSR);
+    auto shcsr = ArmCortex::Scb::SHCSR(ArmCortex::SCB->SHCSR);
     (void)shcsr;
 }
 

@@ -19,7 +19,7 @@
 #include "bit_utils.hpp"
 #include <cstdint>
 
-namespace ArmCortex::M3::Nvic {
+namespace ArmCortex::Nvic {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E100u;
 
     struct Registers
@@ -40,11 +40,11 @@ namespace ArmCortex::M3::Nvic {
     };
 }
 
-namespace ArmCortex::M3 {
+namespace ArmCortex {
     inline volatile Nvic::Registers* const NVIC = reinterpret_cast<volatile Nvic::Registers*>(Nvic::BASE_ADDRESS);
 }
 
-namespace ArmCortex::M3::Nvic {
+namespace ArmCortex::Nvic {
     static inline bool isIrqEnabled(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
