@@ -1,7 +1,7 @@
 #include "barriers.hpp"
 
 extern "C" [[gnu::naked]] void test_dsb() {
-    Cortex::asmDsb();
+    ArmCortex::asmDsb();
 }
 
 // CHECK-LABEL: <test_dsb>:
@@ -9,7 +9,7 @@ extern "C" [[gnu::naked]] void test_dsb() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_isb() {
-    Cortex::asmIsb();
+    ArmCortex::asmIsb();
 }
 
 // CHECK-LABEL: <test_isb>:
@@ -17,7 +17,7 @@ extern "C" [[gnu::naked]] void test_isb() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_dmb() {
-    Cortex::asmDmb();
+    ArmCortex::asmDmb();
 }
 
 // CHECK-LABEL: <test_dmb>:

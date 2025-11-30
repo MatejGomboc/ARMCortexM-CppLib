@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace Cortex::M3 {
+namespace ArmCortex::M3 {
     //! Exception return values saved to LR on exception entry.
     enum class LrExceptionReturnValue : uint32_t {
         HANDLER = 0xFFFFFFF1, //!< Return to Handler mode, use MSP.

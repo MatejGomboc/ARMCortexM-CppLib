@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex::M1 {
+namespace ArmCortex::M1 {
     inline constexpr uint8_t NUM_OF_IRQS = 32;
 
     enum class ExceptionNumber : uint8_t {

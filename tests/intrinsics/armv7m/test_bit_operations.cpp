@@ -1,7 +1,7 @@
 #include "bit_operations.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_clz(uint32_t value) {
-    return Cortex::asmClz(value);
+    return ArmCortex::asmClz(value);
 }
 
 // CHECK-LABEL: <test_clz>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] uint32_t test_clz(uint32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_rbit(uint32_t value) {
-    return Cortex::asmRbit(value);
+    return ArmCortex::asmRbit(value);
 }
 
 // CHECK-LABEL: <test_rbit>:

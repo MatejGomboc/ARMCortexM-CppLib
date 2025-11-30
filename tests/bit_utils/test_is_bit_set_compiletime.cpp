@@ -5,7 +5,7 @@
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_false() {
-    return Cortex::isBitSet(uint8_t{0x00}, uint8_t{0});
+    return ArmCortex::isBitSet(uint8_t{0x00}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_0_false>:
@@ -14,7 +14,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_true() {
-    return Cortex::isBitSet(uint8_t{0x01}, uint8_t{0});
+    return ArmCortex::isBitSet(uint8_t{0x01}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_0_true>:
@@ -23,7 +23,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_false() {
-    return Cortex::isBitSet(uint8_t{0x00}, uint8_t{3});
+    return ArmCortex::isBitSet(uint8_t{0x00}, uint8_t{3});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_3_false>:
@@ -32,7 +32,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_true() {
-    return Cortex::isBitSet(uint8_t{0x08}, uint8_t{3});
+    return ArmCortex::isBitSet(uint8_t{0x08}, uint8_t{3});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_3_true>:
@@ -41,7 +41,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_false() {
-    return Cortex::isBitSet(uint8_t{0x00}, uint8_t{7});
+    return ArmCortex::isBitSet(uint8_t{0x00}, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_7_false>:
@@ -50,7 +50,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_true() {
-    return Cortex::isBitSet(uint8_t{0x80}, uint8_t{7});
+    return ArmCortex::isBitSet(uint8_t{0x80}, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_7_true>:
@@ -63,7 +63,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_true() {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_false() {
-    return Cortex::isBitSet(uint16_t{0x0000}, uint8_t{0});
+    return ArmCortex::isBitSet(uint16_t{0x0000}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_0_false>:
@@ -72,7 +72,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_true() {
-    return Cortex::isBitSet(uint16_t{0x0001}, uint8_t{0});
+    return ArmCortex::isBitSet(uint16_t{0x0001}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_0_true>:
@@ -81,7 +81,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_false() {
-    return Cortex::isBitSet(uint16_t{0x0000}, uint8_t{7});
+    return ArmCortex::isBitSet(uint16_t{0x0000}, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_7_false>:
@@ -90,7 +90,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_true() {
-    return Cortex::isBitSet(uint16_t{0x0080}, uint8_t{7});
+    return ArmCortex::isBitSet(uint16_t{0x0080}, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_7_true>:
@@ -99,7 +99,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_false() {
-    return Cortex::isBitSet(uint16_t{0x0000}, uint8_t{15});
+    return ArmCortex::isBitSet(uint16_t{0x0000}, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_15_false>:
@@ -108,7 +108,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_true() {
-    return Cortex::isBitSet(uint16_t{0x8000}, uint8_t{15});
+    return ArmCortex::isBitSet(uint16_t{0x8000}, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_15_true>:
@@ -121,7 +121,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_true() {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_false() {
-    return Cortex::isBitSet(uint32_t{0x00000000}, uint8_t{0});
+    return ArmCortex::isBitSet(uint32_t{0x00000000}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_0_false>:
@@ -130,7 +130,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_true() {
-    return Cortex::isBitSet(uint32_t{0x00000001}, uint8_t{0});
+    return ArmCortex::isBitSet(uint32_t{0x00000001}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_0_true>:
@@ -139,7 +139,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_false() {
-    return Cortex::isBitSet(uint32_t{0x00000000}, uint8_t{15});
+    return ArmCortex::isBitSet(uint32_t{0x00000000}, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_15_false>:
@@ -148,7 +148,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_true() {
-    return Cortex::isBitSet(uint32_t{0x00008000}, uint8_t{15});
+    return ArmCortex::isBitSet(uint32_t{0x00008000}, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_15_true>:
@@ -157,7 +157,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_false() {
-    return Cortex::isBitSet(uint32_t{0x00000000}, uint8_t{31});
+    return ArmCortex::isBitSet(uint32_t{0x00000000}, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_31_false>:
@@ -166,7 +166,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_true() {
-    return Cortex::isBitSet(uint32_t{0x80000000}, uint8_t{31});
+    return ArmCortex::isBitSet(uint32_t{0x80000000}, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_31_true>:
@@ -179,7 +179,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_true() {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_false() {
-    return Cortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{0});
+    return ArmCortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_0_false>:
@@ -188,7 +188,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_true() {
-    return Cortex::isBitSet(uint64_t{0x0000000000000001}, uint8_t{0});
+    return ArmCortex::isBitSet(uint64_t{0x0000000000000001}, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_0_true>:
@@ -197,7 +197,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_false() {
-    return Cortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{31});
+    return ArmCortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_31_false>:
@@ -206,7 +206,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_true() {
-    return Cortex::isBitSet(uint64_t{0x0000000080000000}, uint8_t{31});
+    return ArmCortex::isBitSet(uint64_t{0x0000000080000000}, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_31_true>:
@@ -215,7 +215,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_true() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_false() {
-    return Cortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{63});
+    return ArmCortex::isBitSet(uint64_t{0x0000000000000000}, uint8_t{63});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_63_false>:
@@ -224,7 +224,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_false() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_true() {
-    return Cortex::isBitSet(uint64_t{0x8000000000000000}, uint8_t{63});
+    return ArmCortex::isBitSet(uint64_t{0x8000000000000000}, uint8_t{63});
 }
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_63_true>:

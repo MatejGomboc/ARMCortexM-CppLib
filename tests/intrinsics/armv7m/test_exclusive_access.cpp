@@ -1,7 +1,7 @@
 #include "exclusive_access.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_ldrex(volatile uint32_t* addr) {
-    return Cortex::asmLdrex(addr);
+    return ArmCortex::asmLdrex(addr);
 }
 
 // CHECK-LABEL: <test_ldrex>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] uint32_t test_ldrex(volatile uint32_t* addr) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_ldrexh(volatile uint16_t* addr) {
-    return Cortex::asmLdrexh(addr);
+    return ArmCortex::asmLdrexh(addr);
 }
 
 // CHECK-LABEL: <test_ldrexh>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] uint16_t test_ldrexh(volatile uint16_t* addr) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_ldrexb(volatile uint8_t* addr) {
-    return Cortex::asmLdrexb(addr);
+    return ArmCortex::asmLdrexb(addr);
 }
 
 // CHECK-LABEL: <test_ldrexb>:
@@ -28,7 +28,7 @@ extern "C" [[gnu::naked]] uint8_t test_ldrexb(volatile uint8_t* addr) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_strex(uint32_t value, volatile uint32_t* addr) {
-    return Cortex::asmStrex(value, addr);
+    return ArmCortex::asmStrex(value, addr);
 }
 
 // CHECK-LABEL: <test_strex>:
@@ -37,7 +37,7 @@ extern "C" [[gnu::naked]] uint32_t test_strex(uint32_t value, volatile uint32_t*
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_strexh(uint16_t value, volatile uint16_t* addr) {
-    return Cortex::asmStrexh(value, addr);
+    return ArmCortex::asmStrexh(value, addr);
 }
 
 // CHECK-LABEL: <test_strexh>:
@@ -46,7 +46,7 @@ extern "C" [[gnu::naked]] uint32_t test_strexh(uint16_t value, volatile uint16_t
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_strexb(uint8_t value, volatile uint8_t* addr) {
-    return Cortex::asmStrexb(value, addr);
+    return ArmCortex::asmStrexb(value, addr);
 }
 
 // CHECK-LABEL: <test_strexb>:
@@ -55,7 +55,7 @@ extern "C" [[gnu::naked]] uint32_t test_strexb(uint8_t value, volatile uint8_t* 
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_clrex() {
-    Cortex::asmClrex();
+    ArmCortex::asmClrex();
 }
 
 // CHECK-LABEL: <test_clrex>:

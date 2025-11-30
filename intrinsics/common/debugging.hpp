@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Breakpoint.
     //! Causes the processor to enter Debug state if a debugger is attached.
     //! \tparam value 8-bit immediate value (0-255) for debugger identification.

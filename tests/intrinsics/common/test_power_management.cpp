@@ -1,7 +1,7 @@
 #include "power_management.hpp"
 
 extern "C" [[gnu::naked]] void test_sev() {
-    Cortex::asmSev();
+    ArmCortex::asmSev();
 }
 
 // CHECK-LABEL: <test_sev>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] void test_sev() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_wfe() {
-    Cortex::asmWfe();
+    ArmCortex::asmWfe();
 }
 
 // CHECK-LABEL: <test_wfe>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] void test_wfe() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_wfi() {
-    Cortex::asmWfi();
+    ArmCortex::asmWfi();
 }
 
 // CHECK-LABEL: <test_wfi>:

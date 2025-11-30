@@ -1,7 +1,7 @@
 #include "saturation.hpp"
 
 extern "C" [[gnu::naked]] int32_t test_ssat_8(int32_t value) {
-    return Cortex::asmSsat<8>(value);
+    return ArmCortex::asmSsat<8>(value);
 }
 
 // CHECK-LABEL: <test_ssat_8>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] int32_t test_ssat_8(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_ssat_16(int32_t value) {
-    return Cortex::asmSsat<16>(value);
+    return ArmCortex::asmSsat<16>(value);
 }
 
 // CHECK-LABEL: <test_ssat_16>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] int32_t test_ssat_16(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_ssat_32(int32_t value) {
-    return Cortex::asmSsat<32>(value);
+    return ArmCortex::asmSsat<32>(value);
 }
 
 // CHECK-LABEL: <test_ssat_32>:
@@ -28,7 +28,7 @@ extern "C" [[gnu::naked]] int32_t test_ssat_32(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_7(int32_t value) {
-    return Cortex::asmUsat<7>(value);
+    return ArmCortex::asmUsat<7>(value);
 }
 
 // CHECK-LABEL: <test_usat_7>:
@@ -37,7 +37,7 @@ extern "C" [[gnu::naked]] uint32_t test_usat_7(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_15(int32_t value) {
-    return Cortex::asmUsat<15>(value);
+    return ArmCortex::asmUsat<15>(value);
 }
 
 // CHECK-LABEL: <test_usat_15>:
@@ -46,7 +46,7 @@ extern "C" [[gnu::naked]] uint32_t test_usat_15(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_31(int32_t value) {
-    return Cortex::asmUsat<31>(value);
+    return ArmCortex::asmUsat<31>(value);
 }
 
 // CHECK-LABEL: <test_usat_31>:

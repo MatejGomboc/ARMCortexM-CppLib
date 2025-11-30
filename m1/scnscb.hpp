@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex::M1::ScnScb {
+namespace ArmCortex::M1::ScnScb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E000u;
 
     struct Registers
@@ -48,6 +48,6 @@ namespace Cortex::M1::ScnScb {
     };
 }
 
-namespace Cortex::M1 {
+namespace ArmCortex::M1 {
     inline volatile ScnScb::Registers* const SCN_SCB = reinterpret_cast<volatile ScnScb::Registers*>(ScnScb::BASE_ADDRESS);
 }

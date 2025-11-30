@@ -19,7 +19,7 @@
 #include <cstdint>
 #include <concepts>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Check if the n-th bit is set in the value.
     template<std::integral T>
     constexpr bool isBitSet(T value, uint8_t n)
