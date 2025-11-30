@@ -33,10 +33,10 @@ namespace Cortex::M3::Scb {
         volatile uint8_t SHPR[12]; //!< System handler priority registers.
         volatile uint32_t SHCSR; //!< System handler control and state register.
         volatile uint32_t CFSR; //!< Configurable fault status register.
-        volatile uint32_t HFSR; //!< Hard fault status register.
+        volatile uint32_t HFSR; //!< HardFault status register.
         volatile uint32_t DFSR; //!< Debug fault status register.
         volatile uint32_t MMFAR; //!< MemManage fault address register.
-        volatile uint32_t BFAR; //!< Bus fault address register.
+        volatile uint32_t BFAR; //!< BusFault address register.
         volatile uint32_t AFSR; //!< Auxiliary fault status register.
         volatile uint32_t ID_PFR[2]; //!< Processor feature registers.
         volatile uint32_t ID_DFR; //!< Debug feature register.
@@ -58,13 +58,20 @@ namespace Cortex::M3::Scb {
             uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
             uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).
         } bits;
+
         uint32_t value = 0;
+
         CPUID() = default;
-        CPUID(uint32_t new_value) { value = new_value; }
+
+        CPUID(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Interrupt control and state register.
-    //! Provides set/clear-pending bits for NMI, PendSV, and SysTick exceptions.
+    //! Provides set/clear-pending bits for PendSV and SysTick exceptions.
+    //! Provides set-pending bit for NMI exception.
     //! Indicates active and pending exception numbers.
     //! \note Do not simultaneously set both set and clear bits for the same exception.
     union ICSR {
@@ -84,17 +91,25 @@ namespace Cortex::M3::Scb {
             uint32_t RESERVED3: 2;
             uint32_t NMIPENDSET: 1; //!< NMI pending (read), write 1 to set pending.
         } bits;
+
         uint32_t value = 0;
+
         ICSR() = default;
-        ICSR(uint32_t new_value) { value = new_value; }
+
+        ICSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
+
 
     //! Application interrupt and reset control register.
     union AIRCR {
         static constexpr uint16_t VECTKEY_VALUE = 0x05FA; //!< Write key to enable AIRCR writes.
+
         struct Bits {
-            uint32_t VECTRESET: 1; //!< Reserved for debug use.
-            uint32_t VECTCLRACTIVE: 1; //!< Reserved for debug use.
+            uint32_t VECTRESET: 1; //!< System reset bit (deprecated, write 0).
+            uint32_t VECTCLRACTIVE: 1; //!< Clear all active state information for exceptions (write 0).
             uint32_t SYSRESETREQ: 1; //!< System reset request.
             uint32_t RESERVED0: 5;
             uint32_t PRIGROUP: 3; //!< Priority grouping (interrupt preemption level).
@@ -102,9 +117,15 @@ namespace Cortex::M3::Scb {
             uint32_t ENDIANNESS: 1; //!< Data endianness (0: little endian).
             uint32_t VECTKEY: 16; //!< Write VECTKEY_VALUE to enable writes, otherwise ignored.
         } bits;
+
         uint32_t value = 0;
+
         AIRCR() = default;
-        AIRCR(uint32_t new_value) { value = new_value; }
+
+        AIRCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System control register - low power state configuration.
@@ -117,9 +138,15 @@ namespace Cortex::M3::Scb {
             uint32_t SEVONPEND: 1; //!< Wake from WFE on any interrupt (including disabled).
             uint32_t RESERVED2: 27;
         } bits;
+
         uint32_t value = 0;
+
         SCR() = default;
-        SCR(uint32_t new_value) { value = new_value; }
+
+        SCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Configuration and control register.
@@ -131,47 +158,59 @@ namespace Cortex::M3::Scb {
             uint32_t UNALIGN_TRP: 1; //!< Trap on unaligned word/halfword access.
             uint32_t DIV_0_TRP: 1; //!< Trap on divide by zero.
             uint32_t RESERVED1: 3;
-            uint32_t BFHFNMIGN: 1; //!< Ignore bus faults in handlers (debug feature).
+            uint32_t BFHFNMIGN: 1; //!< Handlers with priority -1 or -2 ignore data bus faults.
             uint32_t STKALIGN: 1; //!< 8-byte stack alignment on exception entry.
             uint32_t RESERVED2: 22;
         } bits;
+
         uint32_t value = 0;
+
         CCR() = default;
-        CCR(uint32_t new_value) { value = new_value; }
+
+        CCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System handler control and state register.
     union SHCSR {
         struct Bits {
-            uint32_t MEMFAULTACT: 1; //!< MemManage fault active.
-            uint32_t BUSFAULTACT: 1; //!< Bus fault active.
+            uint32_t MEMFAULTACT: 1; //!< MemManage fault exception active.
+            uint32_t BUSFAULTACT: 1; //!< BusFault exception active.
             uint32_t RESERVED0: 1;
-            uint32_t USGFAULTACT: 1; //!< Usage fault active.
+            uint32_t USGFAULTACT: 1; //!< UsageFault exception active.
             uint32_t RESERVED1: 3;
             uint32_t SVCALLACT: 1; //!< SVCall active.
             uint32_t MONITORACT: 1; //!< Debug monitor active.
             uint32_t RESERVED2: 1;
-            uint32_t PENDSVACT: 1; //!< PendSV active.
-            uint32_t SYSTICKACT: 1; //!< SysTick active.
-            uint32_t USGFAULTPENDED: 1; //!< Usage fault pending.
-            uint32_t MEMFAULTPENDED: 1; //!< MemManage fault pending.
-            uint32_t BUSFAULTPENDED: 1; //!< Bus fault pending.
+            uint32_t PENDSVACT: 1; //!< PendSV exception active.
+            uint32_t SYSTICKACT: 1; //!< SysTick exception active.
+            uint32_t USGFAULTPENDED: 1; //!< UsageFault exception pending.
+            uint32_t MEMFAULTPENDED: 1; //!< MemManage fault exception pending.
+            uint32_t BUSFAULTPENDED: 1; //!< BusFault exception pending.
             uint32_t SVCALLPENDED: 1; //!< SVCall pending.
             uint32_t MEMFAULTENA: 1; //!< MemManage fault enable.
-            uint32_t BUSFAULTENA: 1; //!< Bus fault enable.
-            uint32_t USGFAULTENA: 1; //!< Usage fault enable.
+            uint32_t BUSFAULTENA: 1; //!< BusFault enable.
+            uint32_t USGFAULTENA: 1; //!< UsageFault enable.
             uint32_t RESERVED3: 13;
         } bits;
+
         uint32_t value = 0;
+
         SHCSR() = default;
-        SHCSR(uint32_t new_value) { value = new_value; }
+
+        SHCSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Configurable fault status register.
-    //! Contains MemManage, Bus Fault, and Usage Fault status bits.
+    //! Combines MemManage, BusFault, and UsageFault status registers.
     union CFSR {
         struct Bits {
-            // MemManage Fault Status Register (bits 0-7)
+            // MemManage Fault Status Register (MMFSR) - bits 0:7
             uint32_t IACCVIOL: 1; //!< Instruction access violation.
             uint32_t DACCVIOL: 1; //!< Data access violation.
             uint32_t RESERVED0: 1;
@@ -179,17 +218,19 @@ namespace Cortex::M3::Scb {
             uint32_t MSTKERR: 1; //!< MemManage fault on stacking.
             uint32_t RESERVED1: 1;
             uint32_t RESERVED2: 1;
-            uint32_t MMARVALID: 1; //!< MMFAR holds valid address.
-            // Bus Fault Status Register (bits 8-15)
+            uint32_t MMARVALID: 1; //!< MemManage fault address register valid.
+
+            // BusFault Status Register (BFSR) - bits 8:15
             uint32_t IBUSERR: 1; //!< Instruction bus error.
             uint32_t PRECISERR: 1; //!< Precise data bus error.
             uint32_t IMPRECISERR: 1; //!< Imprecise data bus error.
-            uint32_t UNSTKERR: 1; //!< Bus fault on unstacking.
-            uint32_t STKERR: 1; //!< Bus fault on stacking.
+            uint32_t UNSTKERR: 1; //!< BusFault on unstacking.
+            uint32_t STKERR: 1; //!< BusFault on stacking.
             uint32_t RESERVED3: 1;
             uint32_t RESERVED4: 1;
-            uint32_t BFARVALID: 1; //!< BFAR holds valid address.
-            // Usage Fault Status Register (bits 16-31)
+            uint32_t BFARVALID: 1; //!< BusFault address register valid.
+
+            // UsageFault Status Register (UFSR) - bits 16:31
             uint32_t UNDEFINSTR: 1; //!< Undefined instruction.
             uint32_t INVSTATE: 1; //!< Invalid state (e.g., ARM mode).
             uint32_t INVPC: 1; //!< Invalid PC load.
@@ -199,38 +240,56 @@ namespace Cortex::M3::Scb {
             uint32_t DIVBYZERO: 1; //!< Divide by zero.
             uint32_t RESERVED6: 6;
         } bits;
+
         uint32_t value = 0;
+
         CFSR() = default;
-        CFSR(uint32_t new_value) { value = new_value; }
+
+        CFSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
-    //! Hard fault status register.
+    //! HardFault status register.
     union HFSR {
         struct Bits {
             uint32_t RESERVED0: 1;
             uint32_t VECTTBL: 1; //!< Vector table read fault.
             uint32_t RESERVED1: 28;
-            uint32_t FORCED: 1; //!< Forced hard fault (escalated configurable fault).
-            uint32_t DEBUGEVT: 1; //!< Debug event hard fault.
+            uint32_t FORCED: 1; //!< Forced HardFault (escalated configurable fault).
+            uint32_t DEBUGEVT: 1; //!< Debug event HardFault.
         } bits;
+
         uint32_t value = 0;
+
         HFSR() = default;
-        HFSR(uint32_t new_value) { value = new_value; }
+
+        HFSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Debug fault status register.
     union DFSR {
         struct Bits {
-            uint32_t HALTED: 1; //!< Halt request.
-            uint32_t BKPT: 1; //!< Breakpoint.
-            uint32_t DWTTRAP: 1; //!< DWT match.
-            uint32_t VCATCH: 1; //!< Vector catch.
+            uint32_t HALTED: 1; //!< Halt request debug event.
+            uint32_t BKPT: 1; //!< Breakpoint debug event.
+            uint32_t DWTTRAP: 1; //!< Data Watchpoint and Trace (DWT) debug event.
+            uint32_t VCATCH: 1; //!< Vector catch debug event.
             uint32_t EXTERNAL: 1; //!< External debug request.
             uint32_t RESERVED: 27;
         } bits;
+
         uint32_t value = 0;
+
         DFSR() = default;
-        DFSR(uint32_t new_value) { value = new_value; }
+
+        DFSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 }
 
@@ -244,10 +303,12 @@ namespace Cortex::M3::Scb {
         asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
+
         aircr.bits.VECTRESET = 0;
         aircr.bits.VECTCLRACTIVE = 0;
         aircr.bits.SYSRESETREQ = true;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
+
         SCB->AIRCR = aircr.value;
 
         asmDsb();
@@ -261,8 +322,10 @@ namespace Cortex::M3::Scb {
         asmDsb();
 
         AIRCR aircr { SCB->AIRCR };
+
         aircr.bits.PRIGROUP = priority_group & 0x7;
         aircr.bits.VECTKEY = AIRCR::VECTKEY_VALUE;
+
         SCB->AIRCR = aircr.value;
 
         asmDsb();
