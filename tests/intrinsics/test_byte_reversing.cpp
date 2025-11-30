@@ -1,4 +1,4 @@
-#include "intrinsics/byte_reversing.hpp"
+#include "byte_reversing.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_rev(uint32_t value) {
     return Cortex::asmRev(value);
