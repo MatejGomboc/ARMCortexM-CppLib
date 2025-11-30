@@ -51,14 +51,15 @@ target_include_directories(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
+# Common intrinsics (available on all Cortex-M)
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/bit_utils.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/byte_reversing.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/debugging.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/events.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/hints.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/barriers.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/byte_reversing.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/debugging.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/hints.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/special_regs.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
@@ -99,6 +100,13 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
+    # ARMv7-M intrinsics (M3, M4, M7)
+    target_sources(${PROJECT_NAME} INTERFACE
+        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_manipulation.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/saturation.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/special_regs.hpp"
+    )
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/m3/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m3/mpu.hpp"
