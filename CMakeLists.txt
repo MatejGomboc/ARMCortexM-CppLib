@@ -47,18 +47,9 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
-# Primary include directory for flat "armcortex/..." includes
+# Include directory for flat "armcortex/..." includes
 target_include_directories(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-
-# Legacy include directories (for internal header resolution)
-target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}"
-)
-
-target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common"
 )
 
 # Forwarding headers for flat include interface (IDE visibility)
@@ -82,7 +73,7 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/systick.hpp"
 )
 
-# Common implementation sources
+# Implementation sources (IDE visibility)
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/bit_utils.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/barriers.hpp"
@@ -132,9 +123,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    target_include_directories(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m"
-    )
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_operations.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
