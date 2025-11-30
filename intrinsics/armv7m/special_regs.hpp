@@ -18,10 +18,11 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics::ARMv7M {
+namespace Cortex {
     //! Get BASEPRI register (raw value).
     //! Returns the current base priority mask for exception processing.
-    [[gnu::always_inline]] static inline uint32_t getBasepri()
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmGetBasepri()
     {
         uint32_t value;
         asm volatile("MRS %0, BASEPRI" : "=r" (value) : : "cc");
@@ -31,7 +32,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Set BASEPRI register (raw value).
     //! Sets the base priority mask for exception processing.
     //! Exceptions with priority >= BASEPRI are blocked.
-    [[gnu::always_inline]] static inline void setBasepri(uint32_t value)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmSetBasepri(uint32_t value)
     {
         asm volatile("MSR BASEPRI, %0" : : "r" (value) : "cc", "memory");
     }
@@ -39,14 +41,16 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Set BASEPRI_MAX register.
     //! Conditionally sets BASEPRI only if new value is higher priority (lower number)
     //! than current value. Use for raising priority level without risk of lowering it.
-    [[gnu::always_inline]] static inline void setBasepriMax(uint32_t value)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmSetBasepriMax(uint32_t value)
     {
         asm volatile("MSR BASEPRI_MAX, %0" : : "r" (value) : "cc", "memory");
     }
 
     //! Get FAULTMASK register (raw value).
     //! Returns the fault mask that disables all exceptions except NMI.
-    [[gnu::always_inline]] static inline uint32_t getFaultmask()
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmGetFaultmask()
     {
         uint32_t value;
         asm volatile("MRS %0, FAULTMASK" : "=r" (value) : : "cc");
@@ -56,7 +60,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Set FAULTMASK register (raw value).
     //! When set to 1, disables all exceptions except NMI.
     //! Automatically cleared on exception return.
-    [[gnu::always_inline]] static inline void setFaultmask(uint32_t value)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmSetFaultmask(uint32_t value)
     {
         asm volatile("MSR FAULTMASK, %0" : : "r" (value) : "cc", "memory");
     }

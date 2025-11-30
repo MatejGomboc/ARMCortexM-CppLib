@@ -18,12 +18,13 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics::ARMv7M {
+namespace Cortex {
     //! Load-Exclusive Word.
     //! Loads a word from memory and marks the address for exclusive access.
     //! \param addr Pointer to the memory location (must be word-aligned).
     //! \return Value at the memory location.
-    [[gnu::always_inline]] static inline uint32_t ldrex(volatile uint32_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmLdrex(volatile uint32_t* addr)
     {
         uint32_t result;
         asm volatile("ldrex %0, [%1]" : "=r" (result) : "r" (addr) : "memory");
@@ -34,7 +35,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Loads a halfword from memory and marks the address for exclusive access.
     //! \param addr Pointer to the memory location (must be halfword-aligned).
     //! \return Value at the memory location (zero-extended to 32 bits).
-    [[gnu::always_inline]] static inline uint16_t ldrexh(volatile uint16_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint16_t asmLdrexh(volatile uint16_t* addr)
     {
         uint16_t result;
         asm volatile("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory");
@@ -45,7 +47,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Loads a byte from memory and marks the address for exclusive access.
     //! \param addr Pointer to the memory location.
     //! \return Value at the memory location (zero-extended to 32 bits).
-    [[gnu::always_inline]] static inline uint8_t ldrexb(volatile uint8_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint8_t asmLdrexb(volatile uint8_t* addr)
     {
         uint8_t result;
         asm volatile("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory");
@@ -57,7 +60,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! \param value Value to store.
     //! \param addr Pointer to the memory location (must be word-aligned).
     //! \return 0 if store succeeded, 1 if store failed (exclusive access lost).
-    [[gnu::always_inline]] static inline uint32_t strex(uint32_t value, volatile uint32_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmStrex(uint32_t value, volatile uint32_t* addr)
     {
         uint32_t result;
         asm volatile("strex %0, %1, [%2]" : "=&r" (result) : "r" (value), "r" (addr) : "memory");
@@ -69,7 +73,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! \param value Value to store.
     //! \param addr Pointer to the memory location (must be halfword-aligned).
     //! \return 0 if store succeeded, 1 if store failed (exclusive access lost).
-    [[gnu::always_inline]] static inline uint32_t strexh(uint16_t value, volatile uint16_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmStrexh(uint16_t value, volatile uint16_t* addr)
     {
         uint32_t result;
         asm volatile("strexh %0, %1, [%2]" : "=&r" (result) : "r" (value), "r" (addr) : "memory");
@@ -81,7 +86,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! \param value Value to store.
     //! \param addr Pointer to the memory location.
     //! \return 0 if store succeeded, 1 if store failed (exclusive access lost).
-    [[gnu::always_inline]] static inline uint32_t strexb(uint8_t value, volatile uint8_t* addr)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmStrexb(uint8_t value, volatile uint8_t* addr)
     {
         uint32_t result;
         asm volatile("strexb %0, %1, [%2]" : "=&r" (result) : "r" (value), "r" (addr) : "memory");
@@ -91,7 +97,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Clear Exclusive.
     //! Clears the local exclusive access tag.
     //! Use after a failed exclusive sequence or when abandoning an exclusive access.
-    [[gnu::always_inline]] static inline void clrex()
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmClrex()
     {
         asm volatile("clrex" : : : "memory");
     }

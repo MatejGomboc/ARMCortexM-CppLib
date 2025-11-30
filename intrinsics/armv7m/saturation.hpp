@@ -18,14 +18,15 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics::ARMv7M {
+namespace Cortex {
     //! Signed Saturate.
     //! Saturates a signed value to a specified bit width.
     //! \tparam sat_bits Number of bits to saturate to (1-32).
     //! \param value Input value.
     //! \return Saturated value in range [-(2^(sat_bits-1)), 2^(sat_bits-1)-1].
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
     template<uint8_t sat_bits>
-    [[gnu::always_inline]] static inline int32_t ssat(int32_t value)
+    [[gnu::always_inline]] static inline int32_t asmSsat(int32_t value)
     {
         static_assert(sat_bits >= 1 && sat_bits <= 32, "sat_bits must be 1-32");
         int32_t result;
@@ -38,8 +39,9 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! \tparam sat_bits Number of bits to saturate to (0-31).
     //! \param value Input value.
     //! \return Saturated value in range [0, 2^sat_bits-1].
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
     template<uint8_t sat_bits>
-    [[gnu::always_inline]] static inline uint32_t usat(int32_t value)
+    [[gnu::always_inline]] static inline uint32_t asmUsat(int32_t value)
     {
         static_assert(sat_bits >= 0 && sat_bits <= 31, "sat_bits must be 0-31");
         uint32_t result;

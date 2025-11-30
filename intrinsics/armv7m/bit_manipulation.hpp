@@ -18,12 +18,13 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics::ARMv7M {
+namespace Cortex {
     //! Count Leading Zeros.
     //! Returns the number of consecutive zero bits starting from the MSB.
     //! \param value Input value.
     //! \return Number of leading zeros (0-32).
-    [[gnu::always_inline]] static inline uint32_t clz(uint32_t value)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmClz(uint32_t value)
     {
         uint32_t result;
         asm volatile("clz %0, %1" : "=r" (result) : "r" (value));
@@ -34,7 +35,8 @@ namespace Cortex::Intrinsics::ARMv7M {
     //! Reverses the bit order in a 32-bit word.
     //! \param value Input value.
     //! \return Value with all 32 bits reversed.
-    [[gnu::always_inline]] static inline uint32_t rbit(uint32_t value)
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline uint32_t asmRbit(uint32_t value)
     {
         uint32_t result;
         asm volatile("rbit %0, %1" : "=r" (result) : "r" (value));
