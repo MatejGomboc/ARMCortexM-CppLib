@@ -2,7 +2,7 @@
 
 // Test getLr()
 extern "C" [[gnu::naked]] void test_get_lr() {
-    uint32_t lr = Cortex::M0Plus::getLr();
+    uint32_t lr = ArmCortex::M0Plus::getLr();
     (void)lr;
 }
 
@@ -13,7 +13,7 @@ extern "C" [[gnu::naked]] void test_get_lr() {
 
 // Test getApsrReg()
 extern "C" [[gnu::naked]] void test_get_apsr() {
-    Cortex::M0Plus::PSR apsr = Cortex::M0Plus::getApsrReg();
+    ArmCortex::M0Plus::PSR apsr = ArmCortex::M0Plus::getApsrReg();
     (void)apsr;
 }
 
@@ -23,7 +23,7 @@ extern "C" [[gnu::naked]] void test_get_apsr() {
 
 // Test getIpsrReg()
 extern "C" [[gnu::naked]] void test_get_ipsr() {
-    Cortex::M0Plus::PSR ipsr = Cortex::M0Plus::getIpsrReg();
+    ArmCortex::M0Plus::PSR ipsr = ArmCortex::M0Plus::getIpsrReg();
     (void)ipsr;
 }
 
@@ -33,7 +33,7 @@ extern "C" [[gnu::naked]] void test_get_ipsr() {
 
 // Test getEpsrReg()
 extern "C" [[gnu::naked]] void test_get_epsr() {
-    Cortex::M0Plus::PSR epsr = Cortex::M0Plus::getEpsrReg();
+    ArmCortex::M0Plus::PSR epsr = ArmCortex::M0Plus::getEpsrReg();
     (void)epsr;
 }
 
@@ -43,7 +43,7 @@ extern "C" [[gnu::naked]] void test_get_epsr() {
 
 // Test getIepsrReg()
 extern "C" [[gnu::naked]] void test_get_iepsr() {
-    Cortex::M0Plus::PSR iepsr = Cortex::M0Plus::getIepsrReg();
+    ArmCortex::M0Plus::PSR iepsr = ArmCortex::M0Plus::getIepsrReg();
     (void)iepsr;
 }
 
@@ -53,7 +53,7 @@ extern "C" [[gnu::naked]] void test_get_iepsr() {
 
 // Test getIapsrReg()
 extern "C" [[gnu::naked]] void test_get_iapsr() {
-    Cortex::M0Plus::PSR iapsr = Cortex::M0Plus::getIapsrReg();
+    ArmCortex::M0Plus::PSR iapsr = ArmCortex::M0Plus::getIapsrReg();
     (void)iapsr;
 }
 
@@ -63,7 +63,7 @@ extern "C" [[gnu::naked]] void test_get_iapsr() {
 
 // Test getEapsrReg()
 extern "C" [[gnu::naked]] void test_get_eapsr() {
-    Cortex::M0Plus::PSR eapsr = Cortex::M0Plus::getEapsrReg();
+    ArmCortex::M0Plus::PSR eapsr = ArmCortex::M0Plus::getEapsrReg();
     (void)eapsr;
 }
 
@@ -73,7 +73,7 @@ extern "C" [[gnu::naked]] void test_get_eapsr() {
 
 // Test getPsrReg()
 extern "C" [[gnu::naked]] void test_get_psr() {
-    Cortex::M0Plus::PSR psr = Cortex::M0Plus::getPsrReg();
+    ArmCortex::M0Plus::PSR psr = ArmCortex::M0Plus::getPsrReg();
     (void)psr;
 }
 
@@ -83,7 +83,7 @@ extern "C" [[gnu::naked]] void test_get_psr() {
 
 // Test getMspReg()
 extern "C" [[gnu::naked]] void test_get_msp() {
-    uint32_t msp = Cortex::M0Plus::getMspReg();
+    uint32_t msp = ArmCortex::M0Plus::getMspReg();
     (void)msp;
 }
 
@@ -93,7 +93,7 @@ extern "C" [[gnu::naked]] void test_get_msp() {
 
 // Test setMspReg()
 extern "C" [[gnu::naked]] void test_set_msp() {
-    Cortex::M0Plus::setMspReg(0x20001000);
+    ArmCortex::M0Plus::setMspReg(0x20001000);
 }
 
 // CHECK-LABEL: <test_set_msp>:
@@ -105,7 +105,7 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 
 // Test getPspReg()
 extern "C" [[gnu::naked]] void test_get_psp() {
-    uint32_t psp = Cortex::M0Plus::getPspReg();
+    uint32_t psp = ArmCortex::M0Plus::getPspReg();
     (void)psp;
 }
 
@@ -115,7 +115,7 @@ extern "C" [[gnu::naked]] void test_get_psp() {
 
 // Test setPspReg()
 extern "C" [[gnu::naked]] void test_set_psp() {
-    Cortex::M0Plus::setPspReg(0x20002000);
+    ArmCortex::M0Plus::setPspReg(0x20002000);
 }
 
 // CHECK-LABEL: <test_set_psp>:
@@ -127,7 +127,7 @@ extern "C" [[gnu::naked]] void test_set_psp() {
 
 // Test getPrimaskReg()
 extern "C" [[gnu::naked]] void test_get_primask() {
-    Cortex::M0Plus::PRIMASK primask = Cortex::M0Plus::getPrimaskReg();
+    ArmCortex::M0Plus::PRIMASK primask = ArmCortex::M0Plus::getPrimaskReg();
     (void)primask;
 }
 
@@ -137,9 +137,9 @@ extern "C" [[gnu::naked]] void test_get_primask() {
 
 // Test setPrimaskReg()
 extern "C" [[gnu::naked]] void test_set_primask() {
-    Cortex::M0Plus::PRIMASK primask;
+    ArmCortex::M0Plus::PRIMASK primask;
     primask.bits.PRIMASK = 1;
-    Cortex::M0Plus::setPrimaskReg(primask);
+    ArmCortex::M0Plus::setPrimaskReg(primask);
 }
 
 // CHECK-LABEL: <test_set_primask>:
@@ -150,7 +150,7 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 
 // Test getControlReg()
 extern "C" [[gnu::naked]] void test_get_control() {
-    Cortex::M0Plus::CONTROL control = Cortex::M0Plus::getControlReg();
+    ArmCortex::M0Plus::CONTROL control = ArmCortex::M0Plus::getControlReg();
     (void)control;
 }
 
@@ -160,9 +160,9 @@ extern "C" [[gnu::naked]] void test_get_control() {
 
 // Test setControlReg()
 extern "C" [[gnu::naked]] void test_set_control() {
-    Cortex::M0Plus::CONTROL control;
+    ArmCortex::M0Plus::CONTROL control;
     control.bits.SPSEL = 1;
-    Cortex::M0Plus::setControlReg(control);
+    ArmCortex::M0Plus::setControlReg(control);
 }
 
 // CHECK-LABEL: <test_set_control>:

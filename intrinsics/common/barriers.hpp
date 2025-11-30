@@ -16,7 +16,7 @@
 
 #pragma once
 
-namespace Cortex {
+namespace ArmCortex {
     //! Data Synchronization Barrier.
     //! Ensures completion of all explicit memory accesses before continuing.
     [[gnu::always_inline]] static inline void asmDsb()

@@ -19,7 +19,7 @@
 #include "bit_utils.hpp"
 #include <cstdint>
 
-namespace Cortex::M3::Nvic {
+namespace ArmCortex::M3::Nvic {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E100u;
 
     struct Registers
@@ -40,57 +40,57 @@ namespace Cortex::M3::Nvic {
     };
 }
 
-namespace Cortex::M3 {
+namespace ArmCortex::M3 {
     inline volatile Nvic::Registers* const NVIC = reinterpret_cast<volatile Nvic::Registers*>(Nvic::BASE_ADDRESS);
 }
 
-namespace Cortex::M3::Nvic {
+namespace ArmCortex::M3::Nvic {
     static inline bool isIrqEnabled(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Cortex::isBitSet(NVIC->ISER[reg_idx], bit_idx);
+        return ArmCortex::isBitSet(NVIC->ISER[reg_idx], bit_idx);
     }
 
     static inline void enableIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Cortex::setBit(NVIC->ISER[reg_idx], bit_idx);
+        ArmCortex::setBit(NVIC->ISER[reg_idx], bit_idx);
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Cortex::setBit(NVIC->ICER[reg_idx], bit_idx);
+        ArmCortex::setBit(NVIC->ICER[reg_idx], bit_idx);
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Cortex::isBitSet(NVIC->ISPR[reg_idx], bit_idx);
+        return ArmCortex::isBitSet(NVIC->ISPR[reg_idx], bit_idx);
     }
 
     static inline void setPendingIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Cortex::setBit(NVIC->ISPR[reg_idx], bit_idx);
+        ArmCortex::setBit(NVIC->ISPR[reg_idx], bit_idx);
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        Cortex::setBit(NVIC->ICPR[reg_idx], bit_idx);
+        ArmCortex::setBit(NVIC->ICPR[reg_idx], bit_idx);
     }
 
     static inline bool isIrqActive(uint8_t irq_number)
     {
         uint8_t reg_idx = irq_number / 32;
         uint8_t bit_idx = irq_number % 32;
-        return Cortex::isBitSet(NVIC->IABR[reg_idx], bit_idx);
+        return ArmCortex::isBitSet(NVIC->IABR[reg_idx], bit_idx);
     }
 }

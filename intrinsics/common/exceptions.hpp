@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Enable interrupts (clear PRIMASK).
     //! Enables all interrupts with configurable priority.
     [[gnu::always_inline]] static inline void asmCpsie()

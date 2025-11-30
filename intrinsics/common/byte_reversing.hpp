@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Reverse byte order in a 32-bit word.
     //! Converts between little-endian and big-endian.
     //! \param value Input value.

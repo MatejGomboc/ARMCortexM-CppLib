@@ -1,7 +1,7 @@
 #include "hints.hpp"
 
 extern "C" [[gnu::naked]] void test_nop() {
-    Cortex::asmNop();
+    ArmCortex::asmNop();
 }
 
 // CHECK-LABEL: <test_nop>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] void test_nop() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_yield() {
-    Cortex::asmYield();
+    ArmCortex::asmYield();
 }
 
 // CHECK-LABEL: <test_yield>:

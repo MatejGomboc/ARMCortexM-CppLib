@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Count Leading Zeros.
     //! Returns the number of consecutive zero bits starting from the MSB.
     //! \param value Input value.

@@ -1,7 +1,7 @@
 #include "exceptions.hpp"
 
 extern "C" [[gnu::naked]] void test_cpsie() {
-    Cortex::asmCpsie();
+    ArmCortex::asmCpsie();
 }
 
 // CHECK-LABEL: <test_cpsie>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] void test_cpsie() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_cpsid() {
-    Cortex::asmCpsid();
+    ArmCortex::asmCpsid();
 }
 
 // CHECK-LABEL: <test_cpsid>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] void test_cpsid() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_0() {
-    Cortex::asmSvc<0>();
+    ArmCortex::asmSvc<0>();
 }
 
 // CHECK-LABEL: <test_svc_0>:
@@ -28,7 +28,7 @@ extern "C" [[gnu::naked]] void test_svc_0() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_1() {
-    Cortex::asmSvc<1>();
+    ArmCortex::asmSvc<1>();
 }
 
 // CHECK-LABEL: <test_svc_1>:
@@ -37,7 +37,7 @@ extern "C" [[gnu::naked]] void test_svc_1() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_8() {
-    Cortex::asmSvc<8>();
+    ArmCortex::asmSvc<8>();
 }
 
 // CHECK-LABEL: <test_svc_8>:
@@ -46,7 +46,7 @@ extern "C" [[gnu::naked]] void test_svc_8() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_128() {
-    Cortex::asmSvc<128>();
+    ArmCortex::asmSvc<128>();
 }
 
 // CHECK-LABEL: <test_svc_128>:
@@ -55,7 +55,7 @@ extern "C" [[gnu::naked]] void test_svc_128() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_svc_255() {
-    Cortex::asmSvc<255>();
+    ArmCortex::asmSvc<255>();
 }
 
 // CHECK-LABEL: <test_svc_255>:

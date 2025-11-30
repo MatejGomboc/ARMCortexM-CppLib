@@ -6,7 +6,7 @@
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_0() {
     uint8_t value = 0xFF;
-    Cortex::clearBit(value, uint8_t{0});
+    ArmCortex::clearBit(value, uint8_t{0});
     return value;
 }
 
@@ -17,7 +17,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_0() {
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_3() {
     uint8_t value = 0xFF;
-    Cortex::clearBit(value, uint8_t{3});
+    ArmCortex::clearBit(value, uint8_t{3});
     return value;
 }
 
@@ -28,7 +28,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_3() {
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_7() {
     uint8_t value = 0xFF;
-    Cortex::clearBit(value, uint8_t{7});
+    ArmCortex::clearBit(value, uint8_t{7});
     return value;
 }
 
@@ -39,9 +39,9 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_7() {
 
 extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_multiple() {
     uint8_t value = 0xFF;
-    Cortex::clearBit(value, uint8_t{0});
-    Cortex::clearBit(value, uint8_t{3});
-    Cortex::clearBit(value, uint8_t{7});
+    ArmCortex::clearBit(value, uint8_t{0});
+    ArmCortex::clearBit(value, uint8_t{3});
+    ArmCortex::clearBit(value, uint8_t{7});
     return value;
 }
 
@@ -56,7 +56,7 @@ extern "C" [[gnu::naked]] uint8_t test_clear_bit_compiletime_8_multiple() {
 
 extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_0() {
     uint16_t value = 0xFFFF;
-    Cortex::clearBit(value, uint8_t{0});
+    ArmCortex::clearBit(value, uint8_t{0});
     return value;
 }
 
@@ -68,7 +68,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_0() {
 
 extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_7() {
     uint16_t value = 0xFFFF;
-    Cortex::clearBit(value, uint8_t{7});
+    ArmCortex::clearBit(value, uint8_t{7});
     return value;
 }
 
@@ -80,7 +80,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_7() {
 
 extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_15() {
     uint16_t value = 0xFFFF;
-    Cortex::clearBit(value, uint8_t{15});
+    ArmCortex::clearBit(value, uint8_t{15});
     return value;
 }
 
@@ -96,7 +96,7 @@ extern "C" [[gnu::naked]] uint16_t test_clear_bit_compiletime_16_15() {
 
 extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_0() {
     uint32_t value = 0xFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{0});
+    ArmCortex::clearBit(value, uint8_t{0});
     return value;
 }
 
@@ -115,7 +115,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_0() {
 
 extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_15() {
     uint32_t value = 0xFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{15});
+    ArmCortex::clearBit(value, uint8_t{15});
     return value;
 }
 
@@ -127,7 +127,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_15() {
 
 extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_31() {
     uint32_t value = 0xFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{31});
+    ArmCortex::clearBit(value, uint8_t{31});
     return value;
 }
 
@@ -143,7 +143,7 @@ extern "C" [[gnu::naked]] uint32_t test_clear_bit_compiletime_32_31() {
 
 extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_0() {
     uint64_t value = 0xFFFFFFFFFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{0});
+    ArmCortex::clearBit(value, uint8_t{0});
     return value;
 }
 
@@ -166,7 +166,7 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_0() {
 
 extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_31() {
     uint64_t value = 0xFFFFFFFFFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{31});
+    ArmCortex::clearBit(value, uint8_t{31});
     return value;
 }
 
@@ -192,7 +192,7 @@ extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_31() {
 
 extern "C" [[gnu::naked]] uint64_t test_clear_bit_compiletime_64_63() {
     uint64_t value = 0xFFFFFFFFFFFFFFFF;
-    Cortex::clearBit(value, uint8_t{63});
+    ArmCortex::clearBit(value, uint8_t{63});
     return value;
 }
 

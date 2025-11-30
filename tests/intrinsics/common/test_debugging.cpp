@@ -1,7 +1,7 @@
 #include "debugging.hpp"
 
 extern "C" [[gnu::naked]] void test_bkpt_0() {
-    Cortex::asmBkpt<0>();
+    ArmCortex::asmBkpt<0>();
 }
 
 // CHECK-LABEL: <test_bkpt_0>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] void test_bkpt_0() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_bkpt_1() {
-    Cortex::asmBkpt<1>();
+    ArmCortex::asmBkpt<1>();
 }
 
 // CHECK-LABEL: <test_bkpt_1>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] void test_bkpt_1() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_bkpt_8() {
-    Cortex::asmBkpt<8>();
+    ArmCortex::asmBkpt<8>();
 }
 
 // CHECK-LABEL: <test_bkpt_8>:
@@ -28,7 +28,7 @@ extern "C" [[gnu::naked]] void test_bkpt_8() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_bkpt_128() {
-    Cortex::asmBkpt<128>();
+    ArmCortex::asmBkpt<128>();
 }
 
 // CHECK-LABEL: <test_bkpt_128>:
@@ -37,7 +37,7 @@ extern "C" [[gnu::naked]] void test_bkpt_128() {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] void test_bkpt_255() {
-    Cortex::asmBkpt<255>();
+    ArmCortex::asmBkpt<255>();
 }
 
 // CHECK-LABEL: <test_bkpt_255>:

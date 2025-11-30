@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace Cortex::M0::Scb {
+namespace ArmCortex::M0::Scb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED00u;
 
     struct Registers
@@ -205,11 +205,11 @@ namespace Cortex::M0::Scb {
     };
 }
 
-namespace Cortex::M0 {
+namespace ArmCortex::M0 {
     inline volatile Scb::Registers* const SCB = reinterpret_cast<volatile Scb::Registers*>(Scb::BASE_ADDRESS);
 }
 
-namespace Cortex::M0::Scb {
+namespace ArmCortex::M0::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
         asmDsb();

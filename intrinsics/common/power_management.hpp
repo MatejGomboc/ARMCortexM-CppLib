@@ -16,7 +16,7 @@
 
 #pragma once
 
-namespace Cortex {
+namespace ArmCortex {
     //! Send Event.
     //! Signals an event to all processors in a multiprocessor system.
     //! Can be used to wake up processors waiting in WFE.

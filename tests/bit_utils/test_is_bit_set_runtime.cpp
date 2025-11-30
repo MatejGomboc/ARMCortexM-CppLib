@@ -5,7 +5,7 @@
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_0(uint8_t value) {
-    return Cortex::isBitSet(value, uint8_t{0});
+    return ArmCortex::isBitSet(value, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_8_0>:
@@ -22,7 +22,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_0(uint8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_3(uint8_t value) {
-    return Cortex::isBitSet(value, uint8_t{3});
+    return ArmCortex::isBitSet(value, uint8_t{3});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_8_3>:
@@ -31,7 +31,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_3(uint8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_7(uint8_t value) {
-    return Cortex::isBitSet(value, uint8_t{7});
+    return ArmCortex::isBitSet(value, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_8_7>:
@@ -44,7 +44,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_8_7(uint8_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_0(uint16_t value) {
-    return Cortex::isBitSet(value, uint8_t{0});
+    return ArmCortex::isBitSet(value, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_16_0>:
@@ -61,7 +61,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_0(uint16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_7(uint16_t value) {
-    return Cortex::isBitSet(value, uint8_t{7});
+    return ArmCortex::isBitSet(value, uint8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_16_7>:
@@ -70,7 +70,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_7(uint16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_15(uint16_t value) {
-    return Cortex::isBitSet(value, uint8_t{15});
+    return ArmCortex::isBitSet(value, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_16_15>:
@@ -83,7 +83,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_16_15(uint16_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_0(uint32_t value) {
-    return Cortex::isBitSet(value, uint8_t{0});
+    return ArmCortex::isBitSet(value, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_32_0>:
@@ -92,7 +92,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_0(uint32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_15(uint32_t value) {
-    return Cortex::isBitSet(value, uint8_t{15});
+    return ArmCortex::isBitSet(value, uint8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_32_15>:
@@ -101,7 +101,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_15(uint32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_31(uint32_t value) {
-    return Cortex::isBitSet(value, uint8_t{31});
+    return ArmCortex::isBitSet(value, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_32_31>:
@@ -114,7 +114,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_32_31(uint32_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_0(uint64_t value) {
-    return Cortex::isBitSet(value, uint8_t{0});
+    return ArmCortex::isBitSet(value, uint8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_64_0>:
@@ -123,7 +123,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_0(uint64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_31(uint64_t value) {
-    return Cortex::isBitSet(value, uint8_t{31});
+    return ArmCortex::isBitSet(value, uint8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_64_31>:
@@ -132,7 +132,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_31(uint64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_63(uint64_t value) {
-    return Cortex::isBitSet(value, uint8_t{63});
+    return ArmCortex::isBitSet(value, uint8_t{63});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_u_64_63>:
@@ -145,7 +145,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_u_64_63(uint64_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_0(int8_t value) {
-    return Cortex::isBitSet(value, int8_t{0});
+    return ArmCortex::isBitSet(value, int8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_8_0>:
@@ -162,7 +162,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_0(int8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_3(int8_t value) {
-    return Cortex::isBitSet(value, int8_t{3});
+    return ArmCortex::isBitSet(value, int8_t{3});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_8_3>:
@@ -171,7 +171,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_3(int8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_7(int8_t value) {
-    return Cortex::isBitSet(value, int8_t{7});
+    return ArmCortex::isBitSet(value, int8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_8_7>:
@@ -184,7 +184,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_8_7(int8_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_0(int16_t value) {
-    return Cortex::isBitSet(value, int8_t{0});
+    return ArmCortex::isBitSet(value, int8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_16_0>:
@@ -201,7 +201,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_0(int16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_7(int16_t value) {
-    return Cortex::isBitSet(value, int8_t{7});
+    return ArmCortex::isBitSet(value, int8_t{7});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_16_7>:
@@ -210,7 +210,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_7(int16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_15(int16_t value) {
-    return Cortex::isBitSet(value, int8_t{15});
+    return ArmCortex::isBitSet(value, int8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_16_15>:
@@ -223,7 +223,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_16_15(int16_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_0(int32_t value) {
-    return Cortex::isBitSet(value, int8_t{0});
+    return ArmCortex::isBitSet(value, int8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_32_0>:
@@ -232,7 +232,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_0(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_15(int32_t value) {
-    return Cortex::isBitSet(value, int8_t{15});
+    return ArmCortex::isBitSet(value, int8_t{15});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_32_15>:
@@ -241,7 +241,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_15(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_31(int32_t value) {
-    return Cortex::isBitSet(value, int8_t{31});
+    return ArmCortex::isBitSet(value, int8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_32_31>:
@@ -254,7 +254,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_32_31(int32_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_64_0(int64_t value) {
-    return Cortex::isBitSet(value, int8_t{0});
+    return ArmCortex::isBitSet(value, int8_t{0});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_64_0>:
@@ -263,7 +263,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_64_0(int64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_64_31(int64_t value) {
-    return Cortex::isBitSet(value, int8_t{31});
+    return ArmCortex::isBitSet(value, int8_t{31});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_64_31>:
@@ -272,7 +272,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_64_31(int64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_runtime_s_64_63(int64_t value) {
-    return Cortex::isBitSet(value, int8_t{63});
+    return ArmCortex::isBitSet(value, int8_t{63});
 }
 
 // CHECK-LABEL: <test_is_bit_set_runtime_s_64_63>:

@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Signed Saturate.
     //! Saturates a signed value to a specified bit width.
     //! \tparam sat_bits Number of bits to saturate to (1-32).

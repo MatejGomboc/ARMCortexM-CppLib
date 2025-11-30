@@ -1,7 +1,7 @@
 #include "byte_reversing.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_rev(uint32_t value) {
-    return Cortex::asmRev(value);
+    return ArmCortex::asmRev(value);
 }
 
 // CHECK-LABEL: <test_rev>:
@@ -10,7 +10,7 @@ extern "C" [[gnu::naked]] uint32_t test_rev(uint32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_rev16(uint32_t value) {
-    return Cortex::asmRev16(value);
+    return ArmCortex::asmRev16(value);
 }
 
 // CHECK-LABEL: <test_rev16>:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] uint32_t test_rev16(uint32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_revsh(uint32_t value) {
-    return Cortex::asmRevsh(value);
+    return ArmCortex::asmRevsh(value);
 }
 
 // CHECK-LABEL: <test_revsh>:

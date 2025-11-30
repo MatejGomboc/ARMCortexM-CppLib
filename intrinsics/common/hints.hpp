@@ -16,7 +16,7 @@
 
 #pragma once
 
-namespace Cortex {
+namespace ArmCortex {
     //! No Operation.
     //! Does nothing, can be used for instruction alignment or timing.
     [[gnu::always_inline]] static inline void asmNop()
@@ -26,7 +26,7 @@ namespace Cortex {
 
     //! Yield.
     //! Hint that the current thread should yield to other threads.
-    //! On Cortex-M0/M0+/M1 this is a NOP, on M3+ it's a hint to the processor.
+    //! On ArmCortex-M0/M0+/M1 this is a NOP, on M3+ it's a hint to the processor.
     [[gnu::always_inline]] static inline void asmYield()
     {
         asm volatile("yield");

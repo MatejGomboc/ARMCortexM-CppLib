@@ -19,7 +19,7 @@
 #include "bit_utils.hpp"
 #include <cstdint>
 
-namespace Cortex::M0::Nvic {
+namespace ArmCortex::M0::Nvic {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E100u;
 
     struct Registers
@@ -37,38 +37,38 @@ namespace Cortex::M0::Nvic {
     };
 }
 
-namespace Cortex::M0 {
+namespace ArmCortex::M0 {
     inline volatile Nvic::Registers* const NVIC = reinterpret_cast<volatile Nvic::Registers*>(Nvic::BASE_ADDRESS);
 }
 
-namespace Cortex::M0::Nvic {
+namespace ArmCortex::M0::Nvic {
     static inline bool isIrqEnabled(uint8_t irq_number)
     {
-        return Cortex::isBitSet(NVIC->ISER, irq_number);
+        return ArmCortex::isBitSet(NVIC->ISER, irq_number);
     }
 
     static inline void enableIrq(uint8_t irq_number)
     {
-        Cortex::setBit(NVIC->ISER, irq_number);
+        ArmCortex::setBit(NVIC->ISER, irq_number);
     }
 
     static inline void disableIrq(uint8_t irq_number)
     {
-        Cortex::setBit(NVIC->ICER, irq_number);
+        ArmCortex::setBit(NVIC->ICER, irq_number);
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
     {
-        return Cortex::isBitSet(NVIC->ISPR, irq_number);
+        return ArmCortex::isBitSet(NVIC->ISPR, irq_number);
     }
 
     static inline void setPendingIrq(uint8_t irq_number)
     {
-        Cortex::setBit(NVIC->ISPR, irq_number);
+        ArmCortex::setBit(NVIC->ISPR, irq_number);
     }
 
     static inline void clearPendingIrq(uint8_t irq_number)
     {
-        Cortex::setBit(NVIC->ICPR, irq_number);
+        ArmCortex::setBit(NVIC->ICPR, irq_number);
     }
 }

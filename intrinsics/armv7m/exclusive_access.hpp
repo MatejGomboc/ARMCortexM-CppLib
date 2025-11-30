@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace Cortex {
+namespace ArmCortex {
     //! Load-Exclusive Word.
     //! Loads a word from memory and marks the address for exclusive access.
     //! \param addr Pointer to the memory location (must be word-aligned).

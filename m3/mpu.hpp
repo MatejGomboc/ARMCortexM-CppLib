@@ -19,7 +19,7 @@
 #include "barriers.hpp"
 #include <cstdint>
 
-namespace Cortex::M3::Mpu {
+namespace ArmCortex::M3::Mpu {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000ED90u;
 
     struct Registers {
@@ -148,11 +148,11 @@ namespace Cortex::M3::Mpu {
     };
 }
 
-namespace Cortex::M3 {
+namespace ArmCortex::M3 {
     inline volatile Mpu::Registers* const MPU = reinterpret_cast<volatile Mpu::Registers*>(Mpu::BASE_ADDRESS);
 }
 
-namespace Cortex::M3::Mpu {
+namespace ArmCortex::M3::Mpu {
     static inline void configureRegion(uint8_t region_number, uint32_t base_address, const RASR& region_attributes)
     {
         MPU->RNR = region_number;
