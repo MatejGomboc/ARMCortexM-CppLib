@@ -47,7 +47,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         CPUID() = default;
-        CPUID(uint32_t new_value) { value = new_value; }
+        CPUID(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Interrupt control and state register.
@@ -72,7 +75,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         ICSR() = default;
-        ICSR(uint32_t new_value) { value = new_value; }
+        ICSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Application interrupt and reset control register.
@@ -88,7 +94,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         AIRCR() = default;
-        AIRCR(uint32_t new_value) { value = new_value; }
+        AIRCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System control register - low power state configuration.
@@ -103,7 +112,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         SCR() = default;
-        SCR(uint32_t new_value) { value = new_value; }
+        SCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! Configuration and control register (read-only).
@@ -117,7 +129,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         CCR() = default;
-        CCR(uint32_t new_value) { value = new_value; }
+        CCR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System handler priority register 2 (SVCall priority).
@@ -128,7 +143,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         SHPR2() = default;
-        SHPR2(uint32_t new_value) { value = new_value; }
+        SHPR2(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System handler priority register 3 (PendSV and SysTick priorities).
@@ -140,7 +158,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         SHPR3() = default;
-        SHPR3(uint32_t new_value) { value = new_value; }
+        SHPR3(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 
     //! System handler control and state register.
@@ -152,7 +173,10 @@ namespace Cortex::M0Plus::Scb {
         } bits;
         uint32_t value = 0;
         SHCSR() = default;
-        SHCSR(uint32_t new_value) { value = new_value; }
+        SHCSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
     };
 }
 
