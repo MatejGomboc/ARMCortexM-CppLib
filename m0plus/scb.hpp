@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/barriers.hpp"
+#include "intrinsics/common/barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Scb {
@@ -212,7 +212,7 @@ namespace Cortex::M0Plus {
 namespace Cortex::M0Plus::Scb {
     [[gnu::noreturn]] static inline void systemReset()
     {
-        asmDsb();
+        Intrinsics::dsb();
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -222,8 +222,8 @@ namespace Cortex::M0Plus::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        asmDsb();
-        asmIsb();
+        Intrinsics::dsb();
+        Intrinsics::isb();
 
         while(true);
     }

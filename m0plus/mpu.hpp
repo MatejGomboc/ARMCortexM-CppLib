@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/barriers.hpp"
+#include "intrinsics/common/barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M0Plus::Mpu {
@@ -157,7 +157,7 @@ namespace Cortex::M0Plus::Mpu {
 
         MPU->RASR = region_attributes.value;
 
-        asmDsb();
-        asmIsb();
+        Intrinsics::dsb();
+        Intrinsics::isb();
     }
 }
