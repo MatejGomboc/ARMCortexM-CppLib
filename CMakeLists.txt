@@ -65,7 +65,6 @@ target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/debugging.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/exceptions.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/hints.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/special_regs.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
@@ -115,7 +114,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_manipulation.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/saturation.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/special_regs.hpp"
     )
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/m3/exceptions.hpp"
