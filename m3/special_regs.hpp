@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3 {

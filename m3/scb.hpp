@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M3::Scb {
@@ -30,7 +30,7 @@ namespace Cortex::M3::Scb {
         volatile uint32_t AIRCR; //!< Application interrupt and reset control register.
         volatile uint32_t SCR; //!< Low power state control.
         volatile uint32_t CCR; //!< Configuration and control register.
-        volatile uint8_t SHPR[12]; //!< System handlers priority registers (4-7, 8-11, 12-15).
+        volatile uint8_t SHPR[12]; //!< System handler priority registers.
         volatile uint32_t SHCSR; //!< System handler control and state register.
         volatile uint32_t CFSR; //!< Configurable fault status register.
         volatile uint32_t HFSR; //!< HardFault status register.
@@ -38,11 +38,11 @@ namespace Cortex::M3::Scb {
         volatile uint32_t MMFAR; //!< MemManage fault address register.
         volatile uint32_t BFAR; //!< BusFault address register.
         volatile uint32_t AFSR; //!< Auxiliary fault status register.
-        volatile uint32_t ID_PFR[2]; //!< Processor feature register.
+        volatile uint32_t ID_PFR[2]; //!< Processor feature registers.
         volatile uint32_t ID_DFR; //!< Debug feature register.
         volatile uint32_t ID_AFR; //!< Auxiliary feature register.
-        volatile uint32_t ID_MMFR[4]; //!< Memory model feature register.
-        volatile uint32_t ID_ISAR[5]; //!< Instruction set attributes register.
+        volatile uint32_t ID_MMFR[4]; //!< Memory model feature registers.
+        volatile uint32_t ID_ISAR[5]; //!< Instruction set attribute registers.
         volatile uint32_t RESERVED0[5];
         volatile uint32_t CPACR; //!< Coprocessor access control register.
         volatile uint32_t RESERVED3[93];
@@ -78,7 +78,7 @@ namespace Cortex::M3::Scb {
         struct Bits {
             uint32_t VECTACTIVE: 9; //!< Active exception number.
             uint32_t RESERVED0: 2;
-            uint32_t RETTOBASE: 1; //!< Return to base level.
+            uint32_t RETTOBASE: 1; //!< No preempted active exceptions.
             uint32_t VECTPENDING: 9; //!< Highest priority pending exception number (0: none).
             uint32_t RESERVED1: 1;
             uint32_t ISRPENDING: 1; //!< Interrupt pending (excluding NMI and faults).
@@ -112,7 +112,7 @@ namespace Cortex::M3::Scb {
             uint32_t VECTCLRACTIVE: 1; //!< Clear all active state information for exceptions (write 0).
             uint32_t SYSRESETREQ: 1; //!< System reset request.
             uint32_t RESERVED0: 5;
-            uint32_t PRIGROUP: 3; //!< Priority grouping field.
+            uint32_t PRIGROUP: 3; //!< Priority grouping (interrupt preemption level).
             uint32_t RESERVED1: 4;
             uint32_t ENDIANNESS: 1; //!< Data endianness (0: little endian).
             uint32_t VECTKEY: 16; //!< Write VECTKEY_VALUE to enable writes, otherwise ignored.
@@ -152,11 +152,11 @@ namespace Cortex::M3::Scb {
     //! Configuration and control register.
     union CCR {
         struct Bits {
-            uint32_t NONBASETHRDENA: 1; //!< How processor enters Thread mode.
-            uint32_t USERSETMPEND: 1; //!< Enables unprivileged software access to STIR.
+            uint32_t NONBASETHRDENA: 1; //!< Allow Thread mode with active exceptions.
+            uint32_t USERSETMPEND: 1; //!< Allow unprivileged software to access STIR.
             uint32_t RESERVED0: 1;
-            uint32_t UNALIGN_TRP: 1; //!< Unaligned access traps enabled.
-            uint32_t DIV_0_TRP: 1; //!< Divide by zero trap enabled.
+            uint32_t UNALIGN_TRP: 1; //!< Trap on unaligned word/halfword access.
+            uint32_t DIV_0_TRP: 1; //!< Trap on divide by zero.
             uint32_t RESERVED1: 3;
             uint32_t BFHFNMIGN: 1; //!< Handlers with priority -1 or -2 ignore data bus faults.
             uint32_t STKALIGN: 1; //!< 8-byte stack alignment on exception entry.
@@ -232,7 +232,7 @@ namespace Cortex::M3::Scb {
 
             // UsageFault Status Register (UFSR) - bits 16:31
             uint32_t UNDEFINSTR: 1; //!< Undefined instruction.
-            uint32_t INVSTATE: 1; //!< Invalid state.
+            uint32_t INVSTATE: 1; //!< Invalid state (e.g., ARM mode).
             uint32_t INVPC: 1; //!< Invalid PC load.
             uint32_t NOCP: 1; //!< No coprocessor.
             uint32_t RESERVED5: 4;
@@ -257,7 +257,7 @@ namespace Cortex::M3::Scb {
             uint32_t RESERVED0: 1;
             uint32_t VECTTBL: 1; //!< Vector table read fault.
             uint32_t RESERVED1: 28;
-            uint32_t FORCED: 1; //!< Forced HardFault (escalated fault).
+            uint32_t FORCED: 1; //!< Forced HardFault (escalated configurable fault).
             uint32_t DEBUGEVT: 1; //!< Debug event HardFault.
         } bits;
 

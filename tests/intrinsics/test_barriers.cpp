@@ -1,4 +1,4 @@
-#include "intrinsics/barriers.hpp"
+#include "barriers.hpp"
 
 extern "C" [[gnu::naked]] void test_dsb() {
     Cortex::asmDsb();

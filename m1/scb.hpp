@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "intrinsics/barriers.hpp"
+#include "barriers.hpp"
 #include <cstdint>
 
 namespace Cortex::M1::Scb {
@@ -40,7 +40,7 @@ namespace Cortex::M1::Scb {
     union CPUID {
         struct Bits {
             uint32_t REVISION: 4; //!< Patch release (p in Rnpn).
-            uint32_t PARTNO: 12; //!< Part number (0xC61: Cortex-M1).
+            uint32_t PARTNO: 12; //!< Part number (0xC21: Cortex-M1).
             uint32_t ARCHITECTURE: 4; //!< Architecture (0xC: ARMv6-M).
             uint32_t VARIANT: 4; //!< Variant number (r in Rnpn).
             uint32_t IMPLEMENTER: 8; //!< Implementer code (0x41: ARM).

@@ -17,23 +17,18 @@
 #pragma once
 
 namespace Cortex {
-    [[gnu::always_inline]] static inline void asmDsb()
+    //! No Operation.
+    //! Does nothing, can be used for instruction alignment or timing.
+    [[gnu::always_inline]] static inline void asmNop()
     {
-        asm volatile("dsb" : : : "memory");
+        asm volatile("nop");
     }
 
-    [[gnu::always_inline]] static inline void asmIsb()
+    //! Yield.
+    //! Hint that the current thread should yield to other threads.
+    //! On Cortex-M0/M0+/M1 this is a NOP, on M3+ it's a hint to the processor.
+    [[gnu::always_inline]] static inline void asmYield()
     {
-        asm volatile("isb" : : : "memory");
-    }
-
-    [[gnu::always_inline]] static inline void asmDmb()
-    {
-        asm volatile("dmb" : : : "memory");
-    }
-
-    [[gnu::always_inline]] static inline void compilerBarrier()
-    {
-        asm volatile("" : : : "memory");
+        asm volatile("yield");
     }
 }

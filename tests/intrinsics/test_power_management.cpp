@@ -1,4 +1,4 @@
-#include "intrinsics/events.hpp"
+#include "power_management.hpp"
 
 extern "C" [[gnu::naked]] void test_sev() {
     Cortex::asmSev();

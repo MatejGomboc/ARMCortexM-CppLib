@@ -16,19 +16,15 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace Cortex {
-    [[gnu::always_inline]] static inline void asmSev()
+    //! Breakpoint.
+    //! Causes the processor to enter Debug state if a debugger is attached.
+    //! \tparam value 8-bit immediate value (0-255) for debugger identification.
+    template<uint8_t value>
+    [[gnu::always_inline]] static inline void asmBkpt()
     {
-        asm volatile("sev" : : : "memory");
-    }
-
-    [[gnu::always_inline]] static inline void asmWfe()
-    {
-        asm volatile("wfe" : : : "memory");
-    }
-
-    [[gnu::always_inline]] static inline void asmWfi()
-    {
-        asm volatile("wfi" : : : "memory");
+        asm volatile("bkpt %0" : : "i" (static_cast<uint16_t>(value)));
     }
 }
