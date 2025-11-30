@@ -1,4 +1,4 @@
-#include "barriers.hpp"
+#include "armcortex/barriers.hpp"
 
 extern "C" [[gnu::naked]] void test_dsb() {
     ArmCortex::asmDsb();

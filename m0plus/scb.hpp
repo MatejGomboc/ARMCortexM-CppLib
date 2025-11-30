@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "../intrinsics/common/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Scb {
@@ -30,7 +30,7 @@ namespace ArmCortex::Scb {
         volatile uint32_t AIRCR; //!< Application interrupt and reset control register.
         volatile uint32_t SCR; //!< Low power state control.
         volatile uint32_t CCR; //!< Configuration and control register (read-only).
-        volatile uint32_t RESERVED1;
+        volatile uint32_t RESERVED0;
         volatile uint32_t SHPR2; //!< System handler priority register (SVCall).
         volatile uint32_t SHPR3; //!< System handler priority register (PendSV, SysTick).
         volatile uint32_t SHCSR; //!< System handler control and state register.
@@ -82,6 +82,23 @@ namespace ArmCortex::Scb {
         ICSR() = default;
 
         ICSR(uint32_t new_value)
+        {
+            value = new_value;
+        }
+    };
+
+    //! Vector table offset register.
+    union VTOR {
+        struct Bits {
+            uint32_t RESERVED: 8;
+            uint32_t TBLOFF: 24; //!< Vector table base offset field.
+        } bits;
+
+        uint32_t value = 0;
+
+        VTOR() = default;
+
+        VTOR(uint32_t new_value)
         {
             value = new_value;
         }

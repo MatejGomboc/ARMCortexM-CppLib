@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "../intrinsics/common/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex {
@@ -66,12 +66,6 @@ namespace ArmCortex {
     };
 
     union CONTROL {
-        //! Thread mode privilege level.
-        enum class nPRIV : bool {
-            PRIVILEGED = false, //!< Privileged thread mode.
-            UNPRIVILEGED = true //!< Unprivileged thread mode.
-        };
-
         //! Active stack pointer selection.
         enum class SPSEL : bool {
             MSP = false, //!< Main stack pointer.
