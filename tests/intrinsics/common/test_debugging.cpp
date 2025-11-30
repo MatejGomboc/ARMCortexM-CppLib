@@ -1,4 +1,4 @@
-#include "debugging.hpp"
+#include "intrinsics/common/debugging.hpp"
 
 extern "C" [[gnu::naked]] void test_bkpt_0() {
     ArmCortex::asmBkpt<0>();

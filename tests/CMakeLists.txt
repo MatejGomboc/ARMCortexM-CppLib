@@ -26,6 +26,9 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Add source root as include directory for tests (organized directory structure)
+set(ARMCORTEXM_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/..")
+
 function(add_asm_test TEST_NAME)
     add_library(${TEST_NAME} STATIC
         ${TEST_NAME}.cpp
@@ -33,6 +36,11 @@ function(add_asm_test TEST_NAME)
 
     target_link_libraries(${TEST_NAME} PRIVATE
         ARMCortexM
+    )
+
+    # Tests use organized directory paths, not flat interface
+    target_include_directories(${TEST_NAME} PRIVATE
+        "${ARMCORTEXM_SOURCE_ROOT}"
     )
 
     add_custom_target(${TEST_NAME}_asm
