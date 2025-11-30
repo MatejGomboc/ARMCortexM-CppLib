@@ -31,25 +31,4 @@ namespace Cortex {
     {
         asm volatile("yield");
     }
-
-    //! Send Event.
-    //! Signals an event to all processors in a multiprocessor system.
-    [[gnu::always_inline]] static inline void asmSev()
-    {
-        asm volatile("sev" : : : "memory");
-    }
-
-    //! Wait For Event.
-    //! Suspends execution until an event occurs.
-    [[gnu::always_inline]] static inline void asmWfe()
-    {
-        asm volatile("wfe" : : : "memory");
-    }
-
-    //! Wait For Interrupt.
-    //! Suspends execution until an interrupt or debug event occurs.
-    [[gnu::always_inline]] static inline void asmWfi()
-    {
-        asm volatile("wfi" : : : "memory");
-    }
 }
