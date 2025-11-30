@@ -16,10 +16,10 @@
 
 #pragma once
 
-namespace Cortex::Intrinsics {
+namespace Cortex {
     //! No Operation.
     //! Does nothing, can be used for instruction alignment or timing.
-    [[gnu::always_inline]] static inline void nop()
+    [[gnu::always_inline]] static inline void asmNop()
     {
         asm volatile("nop");
     }
@@ -27,28 +27,28 @@ namespace Cortex::Intrinsics {
     //! Yield.
     //! Hint that the current thread should yield to other threads.
     //! On Cortex-M0/M0+/M1 this is a NOP, on M3+ it's a hint to the processor.
-    [[gnu::always_inline]] static inline void yield()
+    [[gnu::always_inline]] static inline void asmYield()
     {
         asm volatile("yield");
     }
 
     //! Send Event.
     //! Signals an event to all processors in a multiprocessor system.
-    [[gnu::always_inline]] static inline void sev()
+    [[gnu::always_inline]] static inline void asmSev()
     {
         asm volatile("sev" : : : "memory");
     }
 
     //! Wait For Event.
     //! Suspends execution until an event occurs.
-    [[gnu::always_inline]] static inline void wfe()
+    [[gnu::always_inline]] static inline void asmWfe()
     {
         asm volatile("wfe" : : : "memory");
     }
 
     //! Wait For Interrupt.
     //! Suspends execution until an interrupt or debug event occurs.
-    [[gnu::always_inline]] static inline void wfi()
+    [[gnu::always_inline]] static inline void asmWfi()
     {
         asm volatile("wfi" : : : "memory");
     }

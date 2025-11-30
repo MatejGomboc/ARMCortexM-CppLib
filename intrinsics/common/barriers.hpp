@@ -16,31 +16,31 @@
 
 #pragma once
 
-namespace Cortex::Intrinsics {
+namespace Cortex {
     //! Data Synchronization Barrier.
     //! Ensures completion of all explicit memory accesses before continuing.
-    [[gnu::always_inline]] static inline void dsb()
+    [[gnu::always_inline]] static inline void asmDsb()
     {
         asm volatile("dsb" : : : "memory");
     }
 
     //! Instruction Synchronization Barrier.
     //! Flushes the pipeline and ensures all previous instructions are completed.
-    [[gnu::always_inline]] static inline void isb()
+    [[gnu::always_inline]] static inline void asmIsb()
     {
         asm volatile("isb" : : : "memory");
     }
 
     //! Data Memory Barrier.
     //! Ensures ordering of memory accesses.
-    [[gnu::always_inline]] static inline void dmb()
+    [[gnu::always_inline]] static inline void asmDmb()
     {
         asm volatile("dmb" : : : "memory");
     }
 
     //! Compiler memory barrier.
     //! Prevents compiler reordering of memory accesses across this point.
-    [[gnu::always_inline]] static inline void compilerBarrier()
+    [[gnu::always_inline]] static inline void asmCompilerBarrier()
     {
         asm volatile("" : : : "memory");
     }

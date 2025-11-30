@@ -18,9 +18,9 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics {
+namespace Cortex {
     //! Get Link Register value.
-    [[gnu::always_inline]] static inline uint32_t getLr()
+    [[gnu::always_inline]] static inline uint32_t asmGetLr()
     {
         uint32_t value;
         asm volatile("MOV %0, LR" : "=r" (value) : : "cc");
@@ -28,7 +28,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get Main Stack Pointer.
-    [[gnu::always_inline]] static inline uint32_t getMsp()
+    [[gnu::always_inline]] static inline uint32_t asmGetMsp()
     {
         uint32_t value;
         asm volatile("MRS %0, MSP" : "=r" (value) : : "cc");
@@ -36,13 +36,13 @@ namespace Cortex::Intrinsics {
     }
 
     //! Set Main Stack Pointer.
-    [[gnu::always_inline]] static inline void setMsp(uint32_t value)
+    [[gnu::always_inline]] static inline void asmSetMsp(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
     }
 
     //! Get Process Stack Pointer.
-    [[gnu::always_inline]] static inline uint32_t getPsp()
+    [[gnu::always_inline]] static inline uint32_t asmGetPsp()
     {
         uint32_t value;
         asm volatile("MRS %0, PSP" : "=r" (value) : : "cc");
@@ -50,13 +50,13 @@ namespace Cortex::Intrinsics {
     }
 
     //! Set Process Stack Pointer.
-    [[gnu::always_inline]] static inline void setPsp(uint32_t value)
+    [[gnu::always_inline]] static inline void asmSetPsp(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
     }
 
     //! Get PRIMASK register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getPrimask()
+    [[gnu::always_inline]] static inline uint32_t asmGetPrimask()
     {
         uint32_t value;
         asm volatile("MRS %0, PRIMASK" : "=r" (value) : : "cc");
@@ -64,13 +64,13 @@ namespace Cortex::Intrinsics {
     }
 
     //! Set PRIMASK register (raw value).
-    [[gnu::always_inline]] static inline void setPrimask(uint32_t value)
+    [[gnu::always_inline]] static inline void asmSetPrimask(uint32_t value)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (value) : "cc", "memory");
     }
 
     //! Get CONTROL register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getControl()
+    [[gnu::always_inline]] static inline uint32_t asmGetControl()
     {
         uint32_t value;
         asm volatile("MRS %0, CONTROL" : "=r" (value) : : "cc");
@@ -78,13 +78,13 @@ namespace Cortex::Intrinsics {
     }
 
     //! Set CONTROL register (raw value).
-    [[gnu::always_inline]] static inline void setControl(uint32_t value)
+    [[gnu::always_inline]] static inline void asmSetControl(uint32_t value)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (value) : "cc", "memory");
     }
 
     //! Get Application Program Status Register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getApsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetApsr()
     {
         uint32_t value;
         asm volatile("MRS %0, APSR" : "=r" (value) : : "cc");
@@ -92,7 +92,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get Interrupt Program Status Register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getIpsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetIpsr()
     {
         uint32_t value;
         asm volatile("MRS %0, IPSR" : "=r" (value) : : "cc");
@@ -100,7 +100,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get Execution Program Status Register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getEpsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetEpsr()
     {
         uint32_t value;
         asm volatile("MRS %0, EPSR" : "=r" (value) : : "cc");
@@ -108,7 +108,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get combined xPSR register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getPsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetPsr()
     {
         uint32_t value;
         asm volatile("MRS %0, PSR" : "=r" (value) : : "cc");
@@ -116,7 +116,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get IEPSR (combined IPSR and EPSR) register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getIepsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetIepsr()
     {
         uint32_t value;
         asm volatile("MRS %0, IEPSR" : "=r" (value) : : "cc");
@@ -124,7 +124,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get IAPSR (combined IPSR and APSR) register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getIapsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetIapsr()
     {
         uint32_t value;
         asm volatile("MRS %0, IAPSR" : "=r" (value) : : "cc");
@@ -132,7 +132,7 @@ namespace Cortex::Intrinsics {
     }
 
     //! Get EAPSR (combined EPSR and APSR) register (raw value).
-    [[gnu::always_inline]] static inline uint32_t getEapsr()
+    [[gnu::always_inline]] static inline uint32_t asmGetEapsr()
     {
         uint32_t value;
         asm volatile("MRS %0, EAPSR" : "=r" (value) : : "cc");

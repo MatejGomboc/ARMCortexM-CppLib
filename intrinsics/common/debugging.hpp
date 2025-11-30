@@ -18,12 +18,12 @@
 
 #include <cstdint>
 
-namespace Cortex::Intrinsics {
+namespace Cortex {
     //! Breakpoint.
     //! Causes the processor to enter Debug state if a debugger is attached.
     //! \tparam value 8-bit immediate value (0-255) for debugger identification.
     template<uint8_t value>
-    [[gnu::always_inline]] static inline void bkpt()
+    [[gnu::always_inline]] static inline void asmBkpt()
     {
         asm volatile("bkpt %0" : : "i" (static_cast<uint16_t>(value)));
     }
