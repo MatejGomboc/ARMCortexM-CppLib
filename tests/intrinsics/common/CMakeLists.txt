@@ -1,0 +1,6 @@
+add_asm_test(test_barriers)
+add_asm_test(test_byte_reversing)
+add_asm_test(test_debugging)
+add_asm_test(test_exceptions)
+add_asm_test(test_execution_hints)
+add_asm_test(test_power_management)

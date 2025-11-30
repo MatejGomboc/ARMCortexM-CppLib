@@ -1,6 +1,5 @@
-add_asm_test(test_barriers)
-add_asm_test(test_byte_reversing)
-add_asm_test(test_debugging)
-add_asm_test(test_exceptions)
-add_asm_test(test_execution_hints)
-add_asm_test(test_power_management)
+add_subdirectory(common)
+
+if(ARM_CORTEX_M_ARCH STREQUAL "M3" OR ARM_CORTEX_M_ARCH STREQUAL "M4" OR ARM_CORTEX_M_ARCH STREQUAL "M7")
+    add_subdirectory(armv7m)
+endif()
