@@ -1,4 +1,4 @@
-#include "saturation.hpp"
+#include "intrinsics/armv7m/saturation.hpp"
 
 extern "C" [[gnu::naked]] int32_t test_ssat_8(int32_t value) {
     return ArmCortex::asmSsat<8>(value);

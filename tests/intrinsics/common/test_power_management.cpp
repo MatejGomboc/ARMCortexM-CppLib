@@ -1,4 +1,4 @@
-#include "power_management.hpp"
+#include "intrinsics/common/power_management.hpp"
 
 extern "C" [[gnu::naked]] void test_sev() {
     ArmCortex::asmSev();

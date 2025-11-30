@@ -1,4 +1,4 @@
-#include "bit_operations.hpp"
+#include "intrinsics/armv7m/bit_operations.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_clz(uint32_t value) {
     return ArmCortex::asmClz(value);

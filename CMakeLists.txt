@@ -47,14 +47,33 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
+# Include directory for flat "armcortex/..." includes
 target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
-target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common"
+# Forwarding headers for flat include interface (IDE visibility)
+target_sources(${PROJECT_NAME} INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/barriers.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/bit_operations.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/bit_utils.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/byte_reversing.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/debugging.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/exclusive_access.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/hints.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/mpu.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/nvic.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/power_management.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/saturation.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/scb.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/scnscb.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/special_regs.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/systick.hpp"
 )
 
+# Implementation sources (IDE visibility)
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/bit_utils.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/barriers.hpp"
@@ -95,6 +114,7 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
         "${CMAKE_CURRENT_SOURCE_DIR}/m1/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m1/nvic.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m1/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/m1/scnscb.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m1/special_regs.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/m1/systick.hpp"
     )
@@ -103,9 +123,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    target_include_directories(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m"
-    )
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_operations.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
