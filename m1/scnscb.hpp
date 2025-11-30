@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace ArmCortex::M1::ScnScb {
+namespace ArmCortex::ScnScb {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E000u;
 
     struct Registers

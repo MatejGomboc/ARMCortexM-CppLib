@@ -2,7 +2,7 @@
 
 // Test reading TYPE register
 extern "C" [[gnu::naked]] void test_read_type() {
-    auto type = ArmCortex::M0Plus::Mpu::TYPE(ArmCortex::M0Plus::MPU->TYPE);
+    auto type = ArmCortex::Mpu::TYPE(ArmCortex::MPU->TYPE);
     (void)type;
 }
 
@@ -14,7 +14,7 @@ extern "C" [[gnu::naked]] void test_read_type() {
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::M0Plus::Mpu::CTRL(ArmCortex::M0Plus::MPU->CTRL);
+    auto ctrl = ArmCortex::Mpu::CTRL(ArmCortex::MPU->CTRL);
     (void)ctrl;
 }
 
@@ -26,10 +26,10 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 
 // Test writing CTRL register
 extern "C" [[gnu::naked]] void test_write_ctrl() {
-    ArmCortex::M0Plus::Mpu::CTRL ctrl;
+    ArmCortex::Mpu::CTRL ctrl;
     ctrl.bits.ENABLE = 1;
     ctrl.bits.PRIVDEFENA = 1;
-    ArmCortex::M0Plus::MPU->CTRL = ctrl.value;
+    ArmCortex::MPU->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
@@ -56,7 +56,7 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 
 // Test reading RNR register
 extern "C" [[gnu::naked]] void test_read_rnr() {
-    uint32_t rnr = ArmCortex::M0Plus::MPU->RNR;
+    uint32_t rnr = ArmCortex::MPU->RNR;
     (void)rnr;
 }
 
@@ -68,7 +68,7 @@ extern "C" [[gnu::naked]] void test_read_rnr() {
 
 // Test writing RNR register
 extern "C" [[gnu::naked]] void test_write_rnr() {
-    ArmCortex::M0Plus::MPU->RNR = 3;
+    ArmCortex::MPU->RNR = 3;
 }
 
 // CHECK-LABEL: <test_write_rnr>:
@@ -95,7 +95,7 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 
 // Test reading RBAR register
 extern "C" [[gnu::naked]] void test_read_rbar() {
-    auto rbar = ArmCortex::M0Plus::Mpu::RBAR(ArmCortex::M0Plus::MPU->RBAR);
+    auto rbar = ArmCortex::Mpu::RBAR(ArmCortex::MPU->RBAR);
     (void)rbar;
 }
 
@@ -107,11 +107,11 @@ extern "C" [[gnu::naked]] void test_read_rbar() {
 
 // Test writing RBAR register
 extern "C" [[gnu::naked]] void test_write_rbar() {
-    ArmCortex::M0Plus::Mpu::RBAR rbar;
+    ArmCortex::Mpu::RBAR rbar;
     rbar.bits.ADDR = 0x20000000 >> 5;
     rbar.bits.VALID = 1;
     rbar.bits.REGION = 2;
-    ArmCortex::M0Plus::MPU->RBAR = rbar.value;
+    ArmCortex::MPU->RBAR = rbar.value;
 }
 
 // CHECK-LABEL: <test_write_rbar>:
@@ -125,7 +125,7 @@ extern "C" [[gnu::naked]] void test_write_rbar() {
 
 // Test reading RASR register
 extern "C" [[gnu::naked]] void test_read_rasr() {
-    auto rasr = ArmCortex::M0Plus::Mpu::RASR(ArmCortex::M0Plus::MPU->RASR);
+    auto rasr = ArmCortex::Mpu::RASR(ArmCortex::MPU->RASR);
     (void)rasr;
 }
 
@@ -137,12 +137,12 @@ extern "C" [[gnu::naked]] void test_read_rasr() {
 
 // Test writing RASR register
 extern "C" [[gnu::naked]] void test_write_rasr() {
-    ArmCortex::M0Plus::Mpu::RASR rasr;
+    ArmCortex::Mpu::RASR rasr;
     rasr.bits.ENABLE = 1;
     rasr.bits.SIZE = 10; // 2KB region
-    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::M0Plus::Mpu::RASR::AP::RW);
-    rasr.setScbFlags(ArmCortex::M0Plus::Mpu::RASR::SCB::INTERN_SRAM);
-    ArmCortex::M0Plus::MPU->RASR = rasr.value;
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::Mpu::RASR::AP::RW);
+    rasr.setScbFlags(ArmCortex::Mpu::RASR::SCB::INTERN_SRAM);
+    ArmCortex::MPU->RASR = rasr.value;
 }
 
 // CHECK-LABEL: <test_write_rasr>:
@@ -156,12 +156,12 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
 
 // Test configureRegion function
 extern "C" [[gnu::naked]] void test_configure_region() {
-    ArmCortex::M0Plus::Mpu::RASR rasr;
+    ArmCortex::Mpu::RASR rasr;
     rasr.bits.ENABLE = 1;
     rasr.bits.SIZE = 12;
-    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::M0Plus::Mpu::RASR::AP::PRIV_RW);
-    rasr.setScbFlags(ArmCortex::M0Plus::Mpu::RASR::SCB::FLASH);
-    ArmCortex::M0Plus::Mpu::configureRegion(0, 0x08000000, rasr);
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::Mpu::RASR::AP::PRIV_RW);
+    rasr.setScbFlags(ArmCortex::Mpu::RASR::SCB::FLASH);
+    ArmCortex::Mpu::configureRegion(0, 0x08000000, rasr);
 }
 
 // CHECK-LABEL: <test_configure_region>:
@@ -209,10 +209,10 @@ extern "C" [[gnu::naked]] void test_configure_region() {
 
 // Test enabling MPU
 extern "C" [[gnu::naked]] void test_enable_mpu() {
-    ArmCortex::M0Plus::Mpu::CTRL ctrl;
+    ArmCortex::Mpu::CTRL ctrl;
     ctrl.bits.ENABLE = 1;
     ctrl.bits.PRIVDEFENA = 1;
-    ArmCortex::M0Plus::MPU->CTRL = ctrl.value;
+    ArmCortex::MPU->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_enable_mpu>:
@@ -239,9 +239,9 @@ extern "C" [[gnu::naked]] void test_enable_mpu() {
 
 // Test disabling MPU
 extern "C" [[gnu::naked]] void test_disable_mpu() {
-    ArmCortex::M0Plus::Mpu::CTRL ctrl;
+    ArmCortex::Mpu::CTRL ctrl;
     ctrl.bits.ENABLE = 0;
-    ArmCortex::M0Plus::MPU->CTRL = ctrl.value;
+    ArmCortex::MPU->CTRL = ctrl.value;
 }
 
 // CHECK-LABEL: <test_disable_mpu>:

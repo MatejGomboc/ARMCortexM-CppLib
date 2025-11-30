@@ -2,7 +2,7 @@
 
 // Test isIrqEnabled()
 extern "C" [[gnu::naked]] void test_is_irq_enabled() {
-    bool enabled = ArmCortex::M0::Nvic::isIrqEnabled(5);
+    bool enabled = ArmCortex::Nvic::isIrqEnabled(5);
     (void)enabled;
 }
 
@@ -14,7 +14,7 @@ extern "C" [[gnu::naked]] void test_is_irq_enabled() {
 
 // Test enableIrq()
 extern "C" [[gnu::naked]] void test_enable_irq() {
-    ArmCortex::M0::Nvic::enableIrq(10);
+    ArmCortex::Nvic::enableIrq(10);
 }
 
 // CHECK-LABEL: <test_enable_irq>:
@@ -47,7 +47,7 @@ extern "C" [[gnu::naked]] void test_enable_irq() {
 
 // Test disableIrq()
 extern "C" [[gnu::naked]] void test_disable_irq() {
-    ArmCortex::M0::Nvic::disableIrq(7);
+    ArmCortex::Nvic::disableIrq(7);
 }
 
 // CHECK-LABEL: <test_disable_irq>:
@@ -80,7 +80,7 @@ extern "C" [[gnu::naked]] void test_disable_irq() {
 
 // Test isIrqPending()
 extern "C" [[gnu::naked]] void test_is_irq_pending() {
-    bool pending = ArmCortex::M0::Nvic::isIrqPending(3);
+    bool pending = ArmCortex::Nvic::isIrqPending(3);
     (void)pending;
 }
 
@@ -106,7 +106,7 @@ extern "C" [[gnu::naked]] void test_is_irq_pending() {
 
 // Test setPendingIrq()
 extern "C" [[gnu::naked]] void test_set_pending_irq() {
-    ArmCortex::M0::Nvic::setPendingIrq(12);
+    ArmCortex::Nvic::setPendingIrq(12);
 }
 
 // CHECK-LABEL: <test_set_pending_irq>:
@@ -139,7 +139,7 @@ extern "C" [[gnu::naked]] void test_set_pending_irq() {
 
 // Test clearPendingIrq()
 extern "C" [[gnu::naked]] void test_clear_pending_irq() {
-    ArmCortex::M0::Nvic::clearPendingIrq(15);
+    ArmCortex::Nvic::clearPendingIrq(15);
 }
 
 // CHECK-LABEL: <test_clear_pending_irq>:

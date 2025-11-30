@@ -18,7 +18,7 @@
 
 #include <cstdint>
 
-namespace ArmCortex::M1::SysTick {
+namespace ArmCortex::SysTick {
     inline constexpr uintptr_t BASE_ADDRESS = 0xE000E010u;
 
     struct Registers

@@ -2,7 +2,7 @@
 
 // Test reading ACTLR register
 extern "C" [[gnu::naked]] void test_read_actlr() {
-    auto actlr = ArmCortex::M1::ScnScb::ACTLR(ArmCortex::M1::SCN_SCB->ACTLR);
+    auto actlr = ArmCortex::ScnScb::ACTLR(ArmCortex::SCN_SCB->ACTLR);
     (void)actlr;
 }
 
@@ -14,9 +14,9 @@ extern "C" [[gnu::naked]] void test_read_actlr() {
 
 // Test writing ACTLR register with ITCMLAEN enabled
 extern "C" [[gnu::naked]] void test_write_actlr_itcmlaen() {
-    ArmCortex::M1::ScnScb::ACTLR actlr;
+    ArmCortex::ScnScb::ACTLR actlr;
     actlr.bits.ITCMLAEN = 1;
-    ArmCortex::M1::SCN_SCB->ACTLR = actlr.value;
+    ArmCortex::SCN_SCB->ACTLR = actlr.value;
 }
 
 // CHECK-LABEL: <test_write_actlr_itcmlaen>:
@@ -43,9 +43,9 @@ extern "C" [[gnu::naked]] void test_write_actlr_itcmlaen() {
 
 // Test writing ACTLR register with ITCMUAEN enabled
 extern "C" [[gnu::naked]] void test_write_actlr_itcmuaen() {
-    ArmCortex::M1::ScnScb::ACTLR actlr;
+    ArmCortex::ScnScb::ACTLR actlr;
     actlr.bits.ITCMUAEN = 1;
-    ArmCortex::M1::SCN_SCB->ACTLR = actlr.value;
+    ArmCortex::SCN_SCB->ACTLR = actlr.value;
 }
 
 // CHECK-LABEL: <test_write_actlr_itcmuaen>:
@@ -72,10 +72,10 @@ extern "C" [[gnu::naked]] void test_write_actlr_itcmuaen() {
 
 // Test writing ACTLR register with both ITCMLAEN and ITCMUAEN enabled
 extern "C" [[gnu::naked]] void test_write_actlr_both() {
-    ArmCortex::M1::ScnScb::ACTLR actlr;
+    ArmCortex::ScnScb::ACTLR actlr;
     actlr.bits.ITCMLAEN = 1;
     actlr.bits.ITCMUAEN = 1;
-    ArmCortex::M1::SCN_SCB->ACTLR = actlr.value;
+    ArmCortex::SCN_SCB->ACTLR = actlr.value;
 }
 
 // CHECK-LABEL: <test_write_actlr_both>:
