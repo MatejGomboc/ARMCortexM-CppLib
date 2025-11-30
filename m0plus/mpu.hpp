@@ -142,7 +142,7 @@ namespace ArmCortex::Mpu {
     };
 }
 
-namespace ArmCortex::M0Plus {
+namespace ArmCortex {
     inline volatile Mpu::Registers* const MPU = reinterpret_cast<volatile Mpu::Registers*>(Mpu::BASE_ADDRESS);
 }
 

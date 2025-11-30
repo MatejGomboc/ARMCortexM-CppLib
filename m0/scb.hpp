@@ -205,7 +205,7 @@ namespace ArmCortex::Scb {
     };
 }
 
-namespace ArmCortex::M0 {
+namespace ArmCortex {
     inline volatile Scb::Registers* const SCB = reinterpret_cast<volatile Scb::Registers*>(Scb::BASE_ADDRESS);
 }
 

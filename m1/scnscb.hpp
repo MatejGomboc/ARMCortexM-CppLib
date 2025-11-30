@@ -48,6 +48,6 @@ namespace ArmCortex::ScnScb {
     };
 }
 
-namespace ArmCortex::M1 {
+namespace ArmCortex {
     inline volatile ScnScb::Registers* const SCN_SCB = reinterpret_cast<volatile ScnScb::Registers*>(ScnScb::BASE_ADDRESS);
 }

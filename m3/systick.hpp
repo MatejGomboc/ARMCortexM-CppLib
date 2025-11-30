@@ -76,6 +76,6 @@ namespace ArmCortex::SysTick {
     };
 }
 
-namespace ArmCortex::M3 {
+namespace ArmCortex {
     inline volatile SysTick::Registers* const SYS_TICK = reinterpret_cast<volatile SysTick::Registers*>(SysTick::BASE_ADDRESS);
 }

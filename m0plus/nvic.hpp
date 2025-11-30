@@ -37,7 +37,7 @@ namespace ArmCortex::Nvic {
     };
 }
 
-namespace ArmCortex::M0Plus {
+namespace ArmCortex {
     inline volatile Nvic::Registers* const NVIC = reinterpret_cast<volatile Nvic::Registers*>(Nvic::BASE_ADDRESS);
 }
 
