@@ -1,4 +1,4 @@
-#include "exceptions.hpp"
+#include "intrinsics/common/exceptions.hpp"
 
 extern "C" [[gnu::naked]] void test_cpsie() {
     ArmCortex::asmCpsie();
