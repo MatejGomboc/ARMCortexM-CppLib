@@ -254,12 +254,37 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 }
 
 // CHECK-LABEL: <test_system_reset>:
-// CHECK-NEXT: dsb sy
-// CHECK-NEXT: ldr r3, [pc,
-// CHECK: ldr r2, [r3, #12]
-// CHECK: ldr r1, [pc,
-// CHECK: orrs r2, r1
-// CHECK: str r2, [r3, #12]
-// CHECK-NEXT: dsb sy
-// CHECK-NEXT: isb sy
-// CHECK: b
+
+// DEBUG-CHECK-NEXT: bl
+
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: ldr r1, [pc, #20]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #24]
+// MINSIZE-CHECK-NEXT: ldr r2, [r1, #12]
+// MINSIZE-CHECK-NEXT: ands r2, r3
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #20]
+// MINSIZE-CHECK-NEXT: orrs r3, r2
+// MINSIZE-CHECK-NEXT: str r3, [r1, #12]
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: isb sy
+// MINSIZE-CHECK-NEXT: b.n
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x0000fff9
+// MINSIZE-CHECK-NEXT: .word 0x05fa0004
+
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: ldr r1, [pc, #20]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #24]
+// MAXSPEED-CHECK-NEXT: ldr r2, [r1, #12]
+// MAXSPEED-CHECK-NEXT: ands r2, r3
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #20]
+// MAXSPEED-CHECK-NEXT: orrs r3, r2
+// MAXSPEED-CHECK-NEXT: str r3, [r1, #12]
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: isb sy
+// MAXSPEED-CHECK-NEXT: b.n
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x0000fff9
+// MAXSPEED-CHECK-NEXT: .word 0x05fa0004
+
+// CHECK-EMPTY:
