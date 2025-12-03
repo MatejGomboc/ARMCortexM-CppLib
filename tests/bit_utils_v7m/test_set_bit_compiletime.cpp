@@ -31,7 +31,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_7() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_7>:
-// CHECK-NEXT: movs r0, #128
+// CHECK-NEXT: movs r0, #128 @ 0x80
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_multiple() {
@@ -43,7 +43,7 @@ extern "C" [[gnu::naked]] uint8_t test_set_bit_compiletime_8_multiple() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_8_multiple>:
-// CHECK-NEXT: movs r0, #137
+// CHECK-NEXT: movs r0, #137 @ 0x89
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -67,7 +67,7 @@ extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_7() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_16_7>:
-// CHECK-NEXT: movs r0, #128
+// CHECK-NEXT: movs r0, #128 @ 0x80
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_15() {
@@ -77,7 +77,7 @@ extern "C" [[gnu::naked]] uint16_t test_set_bit_compiletime_16_15() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_16_15>:
-// CHECK-NEXT: mov.w r0, #32768
+// CHECK-NEXT: mov.w r0, #32768 @ 0x8000
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -101,7 +101,7 @@ extern "C" [[gnu::naked]] uint32_t test_set_bit_compiletime_32_15() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_32_15>:
-// CHECK-NEXT: mov.w r0, #32768
+// CHECK-NEXT: mov.w r0, #32768 @ 0x8000
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_set_bit_compiletime_32_31() {
@@ -111,7 +111,7 @@ extern "C" [[gnu::naked]] uint32_t test_set_bit_compiletime_32_31() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_32_31>:
-// CHECK-NEXT: mov.w r0, #2147483648
+// CHECK-NEXT: mov.w r0, #2147483648 @ 0x80000000
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -136,7 +136,7 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_31() {
 }
 
 // CHECK-LABEL: <test_set_bit_compiletime_64_31>:
-// CHECK-NEXT: mov.w r0, #2147483648
+// CHECK-NEXT: mov.w r0, #2147483648 @ 0x80000000
 // CHECK-NEXT: movs r1, #0
 // CHECK-EMPTY:
 
@@ -148,5 +148,5 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_compiletime_64_63() {
 
 // CHECK-LABEL: <test_set_bit_compiletime_64_63>:
 // CHECK-NEXT: movs r0, #0
-// CHECK-NEXT: mov.w r1, #2147483648
+// CHECK-NEXT: mov.w r1, #2147483648 @ 0x80000000
 // CHECK-EMPTY:
