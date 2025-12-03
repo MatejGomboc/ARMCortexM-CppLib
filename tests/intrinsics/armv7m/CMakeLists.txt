@@ -1,3 +1,0 @@
-add_asm_test(test_bit_operations)
-add_asm_test(test_exclusive_access)
-add_asm_test(test_saturation)

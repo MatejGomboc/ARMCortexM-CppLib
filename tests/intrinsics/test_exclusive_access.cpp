@@ -1,4 +1,4 @@
-#include "exclusive_access.hpp"
+#include "armcortex/intrinsics/exclusive_access.hpp"
 
 extern "C" [[gnu::naked]] uint32_t test_ldrex(volatile uint32_t* addr) {
     return ArmCortex::asmLdrex(addr);
