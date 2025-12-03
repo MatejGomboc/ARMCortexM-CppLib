@@ -1,4 +1,4 @@
-#include "bit_utils.hpp"
+#include "armcortex/bit_utils.hpp"
 
 // ============================================================================
 // uint8_t tests

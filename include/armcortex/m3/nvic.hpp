@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "bit_utils.hpp"
+#include "armcortex/bit_utils.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Nvic {
