@@ -16,7 +16,7 @@ jobs:
             max-parallel: 20 # Use maximum possible parallelisation.
 
             matrix:
-                arch: [m0, m0plus, m1]
+                arch: [m0, m0plus, m1, m3]
 
         runs-on: ubuntu-latest
 
