@@ -67,6 +67,23 @@ extern "C" [[gnu::naked]] void test_read_aircr() {
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
+// Test writing AIRCR register (with VECTKEY)
+extern "C" [[gnu::naked]] void test_write_aircr() {
+    ArmCortex::Scb::AIRCR aircr;
+    aircr.bits.SYSRESETREQ = 1;
+    aircr.bits.VECTKEY = ArmCortex::Scb::AIRCR::VECTKEY_VALUE;
+    ArmCortex::SCB->AIRCR = aircr.value;
+}
+
+// CHECK-LABEL: <test_write_aircr>:
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #12]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
+// CHECK-NEXT: .word 0x05fa0004
+// CHECK-EMPTY:
+
 // Test reading SCR register
 extern "C" [[gnu::naked]] void test_read_scr() {
     auto scr = ArmCortex::Scb::SCR(ArmCortex::SCB->SCR);
@@ -200,4 +217,74 @@ extern "C" [[gnu::naked]] void test_read_shcsr() {
 // CHECK-NEXT: ldr r3, [pc, #0]
 // CHECK-NEXT: ldr r3, [r3, #36]
 // CHECK-NEXT: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing SHCSR register
+extern "C" [[gnu::naked]] void test_write_shcsr() {
+    ArmCortex::Scb::SHCSR shcsr;
+    shcsr.bits.SVCALLPENDED = 1;
+    ArmCortex::SCB->SHCSR = shcsr.value;
+}
+
+// CHECK-LABEL: <test_write_shcsr>:
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #8
+// DEBUG-CHECK-NEXT: str r2, [r3, #36]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #8
+// MINSIZE-CHECK-NEXT: str r2, [r3, #36]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #8
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #36]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
+// CHECK-EMPTY:
+
+// Test systemReset() function
+extern "C" [[gnu::naked]] void test_system_reset() {
+    ArmCortex::Scb::systemReset();
+}
+
+// CHECK-LABEL: <test_system_reset>:
+
+// DEBUG-CHECK-NEXT: bl
+
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: ldr r1, [pc, #20]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #24]
+// MINSIZE-CHECK-NEXT: ldr r2, [r1, #12]
+// MINSIZE-CHECK-NEXT: ands r2, r3
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #20]
+// MINSIZE-CHECK-NEXT: orrs r3, r2
+// MINSIZE-CHECK-NEXT: str r3, [r1, #12]
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: isb sy
+// MINSIZE-CHECK-NEXT: b.n
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x0000fff9
+// MINSIZE-CHECK-NEXT: .word 0x05fa0004
+
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: ldr r1, [pc, #20]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #24]
+// MAXSPEED-CHECK-NEXT: ldr r2, [r1, #12]
+// MAXSPEED-CHECK-NEXT: ands r2, r3
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #20]
+// MAXSPEED-CHECK-NEXT: orrs r3, r2
+// MAXSPEED-CHECK-NEXT: str r3, [r1, #12]
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: isb sy
+// MAXSPEED-CHECK-NEXT: b.n
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x0000fff9
+// MAXSPEED-CHECK-NEXT: .word 0x05fa0004
+
 // CHECK-EMPTY:
