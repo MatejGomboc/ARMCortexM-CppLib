@@ -48,30 +48,26 @@ add_library(${PROJECT_NAME} INTERFACE)
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
 target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}"
-)
-
-target_include_directories(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 target_sources(${PROJECT_NAME} INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/bit_utils.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/byte_reversing.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/debugging.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/hints.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/common/power_management.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/bit_utils.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/barriers.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/byte_reversing.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/debugging.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/events.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/exceptions.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/hints.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0)
@@ -79,12 +75,12 @@ if(ARM_CORTEX_M_ARCH STREQUAL "M0")
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M0PLUS")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/mpu.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m0plus/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m0plus/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M0PLUS)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m0plus)
@@ -92,32 +88,29 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M0PLUS")
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/m1/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m1/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m1/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m1/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m1/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m1/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m1/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m1/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m1/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m1/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M1)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    target_include_directories(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m"
+    target_sources(${PROJECT_NAME} INTERFACE
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/bit_operations.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/exclusive_access.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/saturation.hpp"
     )
     target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/bit_operations.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/exclusive_access.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/intrinsics/armv7m/saturation.hpp"
-    )
-    target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/exceptions.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/mpu.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/nvic.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/scb.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/special_regs.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/m3/systick.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/exceptions.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/mpu.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/nvic.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/scb.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/special_regs.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/systick.hpp"
     )
     target_compile_definitions(${PROJECT_NAME} INTERFACE ARM_CORTEX_M3)
     target_compile_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m3)

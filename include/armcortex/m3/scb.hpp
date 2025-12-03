@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "barriers.hpp"
+#include "armcortex/intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Scb {

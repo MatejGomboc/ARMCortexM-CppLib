@@ -1,4 +1,4 @@
-#include "m1/nvic.hpp"
+#include "armcortex/m1/nvic.hpp"
 
 // Test isIrqEnabled()
 extern "C" [[gnu::naked]] void test_is_irq_enabled() {

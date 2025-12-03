@@ -1,4 +1,4 @@
-#include "hints.hpp"
+#include "armcortex/intrinsics/hints.hpp"
 
 extern "C" [[gnu::naked]] void test_nop() {
     ArmCortex::asmNop();

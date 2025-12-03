@@ -1,4 +1,4 @@
-#include "m1/scb.hpp"
+#include "armcortex/m1/scb.hpp"
 
 // Test reading CPUID register
 extern "C" [[gnu::naked]] void test_read_cpuid() {

@@ -1,4 +1,4 @@
-#include "m0/systick.hpp"
+#include "armcortex/m0/systick.hpp"
 
 // Test reading CTRL register
 extern "C" [[gnu::naked]] void test_read_ctrl() {

@@ -1,4 +1,4 @@
-#include "m0plus/mpu.hpp"
+#include "armcortex/m0plus/mpu.hpp"
 
 // Test reading TYPE register
 extern "C" [[gnu::naked]] void test_read_type() {

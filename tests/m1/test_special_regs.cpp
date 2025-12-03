@@ -1,4 +1,4 @@
-#include "m1/special_regs.hpp"
+#include "armcortex/m1/special_regs.hpp"
 
 // Test getLr()
 extern "C" [[gnu::naked]] void test_get_lr() {

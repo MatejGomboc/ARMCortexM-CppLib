@@ -1,4 +1,4 @@
-#include "m1/scnscb.hpp"
+#include "armcortex/m1/scnscb.hpp"
 
 // Test reading ACTLR register
 extern "C" [[gnu::naked]] void test_read_actlr() {
