@@ -52,7 +52,13 @@ function(add_asm_test TEST_NAME)
     )
 endfunction()
 
-add_subdirectory(bit_utils)
+# Architecture-specific bit_utils tests
+if(ARM_CORTEX_M_ARCH STREQUAL "M0" OR ARM_CORTEX_M_ARCH STREQUAL "M0PLUS" OR ARM_CORTEX_M_ARCH STREQUAL "M1")
+    add_subdirectory(bit_utils_v6m)
+elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
+    add_subdirectory(bit_utils_v7m)
+endif()
+
 add_subdirectory(intrinsics)
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
