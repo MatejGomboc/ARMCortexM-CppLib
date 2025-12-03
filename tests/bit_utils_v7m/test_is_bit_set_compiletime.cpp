@@ -10,6 +10,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_0_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_true() {
@@ -18,6 +19,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_0_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_0_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_false() {
@@ -26,6 +28,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_3_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_true() {
@@ -34,6 +37,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_3_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_3_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_false() {
@@ -42,6 +46,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_7_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_true() {
@@ -50,6 +55,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_8_7_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_8_7_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -62,6 +68,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_0_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_true() {
@@ -70,6 +77,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_0_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_0_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_false() {
@@ -78,6 +86,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_7_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_true() {
@@ -86,6 +95,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_7_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_7_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_false() {
@@ -94,6 +104,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_15_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_true() {
@@ -102,6 +113,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_16_15_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_16_15_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -114,6 +126,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_0_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_true() {
@@ -122,6 +135,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_0_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_0_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_false() {
@@ -130,6 +144,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_15_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_true() {
@@ -138,6 +153,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_15_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_15_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_false() {
@@ -146,6 +162,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_31_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_true() {
@@ -154,6 +171,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_32_31_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_32_31_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -166,6 +184,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_0_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_true() {
@@ -174,6 +193,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_0_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_0_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_false() {
@@ -182,6 +202,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_31_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_true() {
@@ -190,6 +211,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_31_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_31_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_false() {
@@ -198,6 +220,7 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_false() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_63_false>:
 // CHECK-NEXT: movs r0, #0
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_true() {
@@ -206,4 +229,5 @@ extern "C" [[gnu::naked]] bool test_is_bit_set_compiletime_64_63_true() {
 
 // CHECK-LABEL: <test_is_bit_set_compiletime_64_63_true>:
 // CHECK-NEXT: movs r0, #1
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
