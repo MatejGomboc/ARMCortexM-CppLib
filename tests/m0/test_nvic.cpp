@@ -169,3 +169,48 @@ extern "C" [[gnu::naked]] void test_clear_pending_irq() {
 // MAXSPEED-CHECK-NEXT: .word 0xe000e280
 
 // CHECK-EMPTY:
+
+// Test reading IPR (interrupt priority)
+extern "C" [[gnu::naked]] void test_read_ipr() {
+    uint8_t priority = ArmCortex::NVIC->IPR[5];
+    (void)priority;
+}
+
+// CHECK-LABEL: <test_read_ipr>:
+// CHECK-NEXT: ldr r2, [pc, #4]
+// CHECK-NEXT: ldr r3, [pc, #8]
+// CHECK-NEXT: ldrb r3, [r2, r3]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000e100
+// CHECK-NEXT: .word 0x00000305
+// CHECK-EMPTY:
+
+// Test writing IPR (interrupt priority)
+extern "C" [[gnu::naked]] void test_write_ipr() {
+    ArmCortex::NVIC->IPR[5] = 0x80;
+}
+
+// CHECK-LABEL: <test_write_ipr>:
+
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #4]
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: movs r1, #128
+// DEBUG-CHECK-NEXT: strb r1, [r2, r3]
+// DEBUG-CHECK-NEXT: .word 0xe000e100
+// DEBUG-CHECK-NEXT: .word 0x00000305
+
+// MINSIZE-CHECK-NEXT: movs r1, #128
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: strb r1, [r2, r3]
+// MINSIZE-CHECK-NEXT: .word 0xe000e100
+// MINSIZE-CHECK-NEXT: .word 0x00000305
+
+// MAXSPEED-CHECK-NEXT: movs r1, #128
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: strb r1, [r2, r3]
+// MAXSPEED-CHECK-NEXT: .word 0xe000e100
+// MAXSPEED-CHECK-NEXT: .word 0x00000305
+
+// CHECK-EMPTY:
