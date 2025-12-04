@@ -1,2 +1,1 @@
-# Cortex-M3 specific tests
-# TODO: Add test files as they are created
+add_asm_test(test_nvic)
