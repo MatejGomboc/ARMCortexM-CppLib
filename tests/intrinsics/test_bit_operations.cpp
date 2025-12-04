@@ -6,7 +6,6 @@ extern "C" [[gnu::naked]] uint32_t test_clz(uint32_t value) {
 
 // CHECK-LABEL: <test_clz>:
 // CHECK-NEXT: clz r0, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_rbit(uint32_t value) {
@@ -15,5 +14,4 @@ extern "C" [[gnu::naked]] uint32_t test_rbit(uint32_t value) {
 
 // CHECK-LABEL: <test_rbit>:
 // CHECK-NEXT: rbit r0, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:

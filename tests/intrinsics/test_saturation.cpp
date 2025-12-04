@@ -6,7 +6,6 @@ extern "C" [[gnu::naked]] int32_t test_ssat_8(int32_t value) {
 
 // CHECK-LABEL: <test_ssat_8>:
 // CHECK-NEXT: ssat r0, #8, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_ssat_16(int32_t value) {
@@ -15,7 +14,6 @@ extern "C" [[gnu::naked]] int32_t test_ssat_16(int32_t value) {
 
 // CHECK-LABEL: <test_ssat_16>:
 // CHECK-NEXT: ssat r0, #16, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_ssat_32(int32_t value) {
@@ -24,7 +22,6 @@ extern "C" [[gnu::naked]] int32_t test_ssat_32(int32_t value) {
 
 // CHECK-LABEL: <test_ssat_32>:
 // CHECK-NEXT: ssat r0, #32, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_7(int32_t value) {
@@ -33,7 +30,6 @@ extern "C" [[gnu::naked]] uint32_t test_usat_7(int32_t value) {
 
 // CHECK-LABEL: <test_usat_7>:
 // CHECK-NEXT: usat r0, #7, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_15(int32_t value) {
@@ -42,7 +38,6 @@ extern "C" [[gnu::naked]] uint32_t test_usat_15(int32_t value) {
 
 // CHECK-LABEL: <test_usat_15>:
 // CHECK-NEXT: usat r0, #15, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] uint32_t test_usat_31(int32_t value) {
@@ -51,5 +46,4 @@ extern "C" [[gnu::naked]] uint32_t test_usat_31(int32_t value) {
 
 // CHECK-LABEL: <test_usat_31>:
 // CHECK-NEXT: usat r0, #31, r0
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
