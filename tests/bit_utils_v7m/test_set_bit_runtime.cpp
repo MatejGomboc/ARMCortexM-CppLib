@@ -152,7 +152,7 @@ extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_7(int8_t value) {
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_8_7>:
-// CHECK-NEXT: orr.w r0, r0, #128
+// CHECK-NEXT: orn r0, r0, #127
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -183,7 +183,8 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_16_15>:
-// CHECK-NEXT: orr.w r0, r0, #32768
+// CHECK-NEXT: mvn.w r0, r0, lsl #17
+// CHECK-NEXT: mvn.w r0, r0, lsr #17
 // CHECK-EMPTY:
 
 // ============================================================================

@@ -152,7 +152,7 @@ extern "C" [[gnu::naked]] int8_t test_clear_bit_runtime_s_8_7(int8_t value) {
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_8_7>:
-// CHECK-NEXT: bic.w r0, r0, #128
+// CHECK-NEXT: and.w r0, r0, #127
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -183,7 +183,7 @@ extern "C" [[gnu::naked]] int16_t test_clear_bit_runtime_s_16_15(int16_t value) 
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_16_15>:
-// CHECK-NEXT: bic.w r0, r0, #32768
+// CHECK-NEXT: ubfx r0, r0, #0, #15
 // CHECK-EMPTY:
 
 // ============================================================================
