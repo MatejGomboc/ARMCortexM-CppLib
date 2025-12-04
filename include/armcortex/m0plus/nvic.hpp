@@ -24,13 +24,13 @@ namespace ArmCortex::Nvic {
 
     struct Registers
     {
-        volatile uint32_t ISER; //!< Interrupt set-enable register.
+        volatile uint32_t ISER; //!< Interrupt set-enable register (W1S).
         volatile uint32_t RESERVED0[31];
-        volatile uint32_t ICER; //!< Interrupt clear-enable register.
+        volatile uint32_t ICER; //!< Interrupt clear-enable register (W1C).
         volatile uint32_t RESERVED1[31];
-        volatile uint32_t ISPR; //!< Interrupt set-pending register.
+        volatile uint32_t ISPR; //!< Interrupt set-pending register (W1S).
         volatile uint32_t RESERVED2[31];
-        volatile uint32_t ICPR; //!< Interrupt clear-pending register.
+        volatile uint32_t ICPR; //!< Interrupt clear-pending register (W1C).
         volatile uint32_t RESERVED3[31];
         volatile uint32_t RESERVED4[64];
         volatile uint8_t IPR[32]; //!< Interrupt priority registers (byte-accessible).
@@ -47,14 +47,16 @@ namespace ArmCortex::Nvic {
         return ArmCortex::isBitSet(NVIC->ISER, irq_number);
     }
 
+    //! Enable an interrupt. ISER is W1S (write-1-to-set).
     static inline void enableIrq(uint8_t irq_number)
     {
-        ArmCortex::setBit(NVIC->ISER, irq_number);
+        NVIC->ISER = uint32_t{1} << irq_number;
     }
 
+    //! Disable an interrupt. ICER is W1C (write-1-to-clear).
     static inline void disableIrq(uint8_t irq_number)
     {
-        ArmCortex::setBit(NVIC->ICER, irq_number);
+        NVIC->ICER = uint32_t{1} << irq_number;
     }
 
     static inline bool isIrqPending(uint8_t irq_number)
@@ -62,13 +64,15 @@ namespace ArmCortex::Nvic {
         return ArmCortex::isBitSet(NVIC->ISPR, irq_number);
     }
 
+    //! Set an interrupt pending. ISPR is W1S (write-1-to-set).
     static inline void setPendingIrq(uint8_t irq_number)
     {
-        ArmCortex::setBit(NVIC->ISPR, irq_number);
+        NVIC->ISPR = uint32_t{1} << irq_number;
     }
 
+    //! Clear a pending interrupt. ICPR is W1C (write-1-to-clear).
     static inline void clearPendingIrq(uint8_t irq_number)
     {
-        ArmCortex::setBit(NVIC->ICPR, irq_number);
+        NVIC->ICPR = uint32_t{1} << irq_number;
     }
 }
