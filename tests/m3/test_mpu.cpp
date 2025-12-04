@@ -183,6 +183,173 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
 
 // CHECK-EMPTY:
 
+// ============================================================================
+// M3-specific alias registers below (for programming multiple regions at once)
+// ============================================================================
+
+// Test reading RBAR_A1 register
+extern "C" [[gnu::naked]] void test_read_rbar_a1() {
+    uint32_t rbar_a1 = ArmCortex::MPU->RBAR_A1;
+    (void)rbar_a1;
+}
+
+// CHECK-LABEL: <test_read_rbar_a1>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RBAR_A1 register
+extern "C" [[gnu::naked]] void test_write_rbar_a1() {
+    ArmCortex::Mpu::RBAR rbar;
+    rbar.bits.ADDR = 0x20001000 >> 5;
+    rbar.bits.VALID = 1;
+    rbar.bits.REGION = 1;
+    ArmCortex::MPU->RBAR_A1 = rbar.value;
+}
+
+// CHECK-LABEL: <test_write_rbar_a1>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x20001011
+// CHECK-EMPTY:
+
+// Test reading RASR_A1 register
+extern "C" [[gnu::naked]] void test_read_rasr_a1() {
+    uint32_t rasr_a1 = ArmCortex::MPU->RASR_A1;
+    (void)rasr_a1;
+}
+
+// CHECK-LABEL: <test_read_rasr_a1>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RASR_A1 register
+extern "C" [[gnu::naked]] void test_write_rasr_a1() {
+    ArmCortex::Mpu::RASR rasr;
+    rasr.bits.ENABLE = 1;
+    rasr.bits.SIZE = 11; // 4KB region
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::Mpu::RASR::AP::RW);
+    rasr.setTexScbFlags(ArmCortex::Mpu::RASR::TEXSCB::INTERN_SRAM);
+    ArmCortex::MPU->RASR_A1 = rasr.value;
+}
+
+// CHECK-LABEL: <test_write_rasr_a1>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x03060017
+// CHECK-EMPTY:
+
+// Test reading RBAR_A2 register
+extern "C" [[gnu::naked]] void test_read_rbar_a2() {
+    uint32_t rbar_a2 = ArmCortex::MPU->RBAR_A2;
+    (void)rbar_a2;
+}
+
+// CHECK-LABEL: <test_read_rbar_a2>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RBAR_A2 register
+extern "C" [[gnu::naked]] void test_write_rbar_a2() {
+    ArmCortex::Mpu::RBAR rbar;
+    rbar.bits.ADDR = 0x20002000 >> 5;
+    rbar.bits.VALID = 1;
+    rbar.bits.REGION = 2;
+    ArmCortex::MPU->RBAR_A2 = rbar.value;
+}
+
+// CHECK-LABEL: <test_write_rbar_a2>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x20002012
+// CHECK-EMPTY:
+
+// Test reading RASR_A2 register
+extern "C" [[gnu::naked]] void test_read_rasr_a2() {
+    uint32_t rasr_a2 = ArmCortex::MPU->RASR_A2;
+    (void)rasr_a2;
+}
+
+// CHECK-LABEL: <test_read_rasr_a2>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RASR_A2 register
+extern "C" [[gnu::naked]] void test_write_rasr_a2() {
+    ArmCortex::Mpu::RASR rasr;
+    rasr.bits.ENABLE = 1;
+    rasr.bits.SIZE = 12; // 8KB region
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::Mpu::RASR::AP::RO);
+    rasr.setTexScbFlags(ArmCortex::Mpu::RASR::TEXSCB::FLASH);
+    ArmCortex::MPU->RASR_A2 = rasr.value;
+}
+
+// CHECK-LABEL: <test_write_rasr_a2>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x06020019
+// CHECK-EMPTY:
+
+// Test reading RBAR_A3 register
+extern "C" [[gnu::naked]] void test_read_rbar_a3() {
+    uint32_t rbar_a3 = ArmCortex::MPU->RBAR_A3;
+    (void)rbar_a3;
+}
+
+// CHECK-LABEL: <test_read_rbar_a3>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RBAR_A3 register
+extern "C" [[gnu::naked]] void test_write_rbar_a3() {
+    ArmCortex::Mpu::RBAR rbar;
+    rbar.bits.ADDR = 0x40000000 >> 5;
+    rbar.bits.VALID = 1;
+    rbar.bits.REGION = 3;
+    ArmCortex::MPU->RBAR_A3 = rbar.value;
+}
+
+// CHECK-LABEL: <test_write_rbar_a3>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x40000013
+// CHECK-EMPTY:
+
+// Test reading RASR_A3 register
+extern "C" [[gnu::naked]] void test_read_rasr_a3() {
+    uint32_t rasr_a3 = ArmCortex::MPU->RASR_A3;
+    (void)rasr_a3;
+}
+
+// CHECK-LABEL: <test_read_rasr_a3>:
+// CHECK: ldr{{.w?}} r3,
+// CHECK: .word 0xe000ed00
+// CHECK-EMPTY:
+
+// Test writing RASR_A3 register
+extern "C" [[gnu::naked]] void test_write_rasr_a3() {
+    ArmCortex::Mpu::RASR rasr;
+    rasr.bits.ENABLE = 1;
+    rasr.bits.SIZE = 19; // 1MB region
+    rasr.bits.AP = static_cast<uint32_t>(ArmCortex::Mpu::RASR::AP::PRIV_RW);
+    rasr.setTexScbFlags(ArmCortex::Mpu::RASR::TEXSCB::PERIPHERAL);
+    ArmCortex::MPU->RASR_A3 = rasr.value;
+}
+
+// CHECK-LABEL: <test_write_rasr_a3>:
+// CHECK: str.w r{{[0-9]}},
+// CHECK: .word 0xe000ed00
+// CHECK: .word 0x01050027
+// CHECK-EMPTY:
+
+// ============================================================================
+// Helper function and enable/disable tests
+// ============================================================================
+
 // Test configureRegion function
 extern "C" [[gnu::naked]] void test_configure_region() {
     ArmCortex::Mpu::RASR rasr;
