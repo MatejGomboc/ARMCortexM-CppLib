@@ -12,67 +12,57 @@ extern "C" [[gnu::naked]] void test_is_irq_enabled() {
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
-// Test enableIrq()
+// Test enableIrq() - optimized: direct write, no read-modify-write
+// ISER is W1S (write-1-to-set), writing 0 has no effect
 extern "C" [[gnu::naked]] void test_enable_irq() {
     ArmCortex::Nvic::enableIrq(10);
 }
 
 // CHECK-LABEL: <test_enable_irq>:
 
-// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
-// DEBUG-CHECK-NEXT: ldr r1, [r2, #0]
-// DEBUG-CHECK-NEXT: movs r3, #128
-// DEBUG-CHECK-NEXT: lsls r3, r3, #3
-// DEBUG-CHECK-NEXT: orrs r3, r1
-// DEBUG-CHECK-NEXT: str r3, [r2, #0]
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #3
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
 // DEBUG-CHECK-NEXT: .word 0xe000e100
 
-// MINSIZE-CHECK-NEXT: movs r3, #128
-// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
-// MINSIZE-CHECK-NEXT: lsls r3, r3, #3
-// MINSIZE-CHECK-NEXT: ldr r1, [r2, #0]
-// MINSIZE-CHECK-NEXT: orrs r3, r1
-// MINSIZE-CHECK-NEXT: str r3, [r2, #0]
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #3
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
 // MINSIZE-CHECK-NEXT: .word 0xe000e100
 
-// MAXSPEED-CHECK-NEXT: movs r3, #128
-// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
-// MAXSPEED-CHECK-NEXT: lsls r3, r3, #3
-// MAXSPEED-CHECK-NEXT: ldr r1, [r2, #0]
-// MAXSPEED-CHECK-NEXT: orrs r3, r1
-// MAXSPEED-CHECK-NEXT: str r3, [r2, #0]
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #3
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
 // MAXSPEED-CHECK-NEXT: .word 0xe000e100
 
 // CHECK-EMPTY:
 
-// Test disableIrq()
+// Test disableIrq() - optimized: direct write, no read-modify-write
+// ICER is W1C (write-1-to-clear), writing 0 has no effect
 extern "C" [[gnu::naked]] void test_disable_irq() {
     ArmCortex::Nvic::disableIrq(7);
 }
 
 // CHECK-LABEL: <test_disable_irq>:
 
-// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
-// DEBUG-CHECK-NEXT: ldr r3, [r2, #0]
-// DEBUG-CHECK-NEXT: movs r1, #128
-// DEBUG-CHECK-NEXT: orrs r3, r1
-// DEBUG-CHECK-NEXT: str r3, [r2, #0]
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
 // DEBUG-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: .word 0xe000e180
 
-// MINSIZE-CHECK-NEXT: movs r3, #128
-// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
-// MINSIZE-CHECK-NEXT: ldr r1, [r2, #0]
-// MINSIZE-CHECK-NEXT: orrs r3, r1
-// MINSIZE-CHECK-NEXT: str r3, [r2, #0]
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
 // MINSIZE-CHECK-NEXT: nop
 // MINSIZE-CHECK-NEXT: .word 0xe000e180
 
-// MAXSPEED-CHECK-NEXT: movs r1, #128
-// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
-// MAXSPEED-CHECK-NEXT: ldr r3, [r2, #0]
-// MAXSPEED-CHECK-NEXT: orrs r3, r1
-// MAXSPEED-CHECK-NEXT: str r3, [r2, #0]
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
 // MAXSPEED-CHECK-NEXT: nop
 // MAXSPEED-CHECK-NEXT: .word 0xe000e180
 
@@ -104,68 +94,58 @@ extern "C" [[gnu::naked]] void test_is_irq_pending() {
 
 // CHECK-EMPTY:
 
-// Test setPendingIrq()
+// Test setPendingIrq() - optimized: direct write, no read-modify-write
+// ISPR is W1S (write-1-to-set), writing 0 has no effect
 extern "C" [[gnu::naked]] void test_set_pending_irq() {
     ArmCortex::Nvic::setPendingIrq(12);
 }
 
 // CHECK-LABEL: <test_set_pending_irq>:
 
-// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
-// DEBUG-CHECK-NEXT: ldr r1, [r2, #0]
-// DEBUG-CHECK-NEXT: movs r3, #128
-// DEBUG-CHECK-NEXT: lsls r3, r3, #5
-// DEBUG-CHECK-NEXT: orrs r3, r1
-// DEBUG-CHECK-NEXT: str r3, [r2, #0]
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #5
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
 // DEBUG-CHECK-NEXT: .word 0xe000e200
 
-// MINSIZE-CHECK-NEXT: movs r3, #128
-// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
-// MINSIZE-CHECK-NEXT: lsls r3, r3, #5
-// MINSIZE-CHECK-NEXT: ldr r1, [r2, #0]
-// MINSIZE-CHECK-NEXT: orrs r3, r1
-// MINSIZE-CHECK-NEXT: str r3, [r2, #0]
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #5
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
 // MINSIZE-CHECK-NEXT: .word 0xe000e200
 
-// MAXSPEED-CHECK-NEXT: movs r3, #128
-// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
-// MAXSPEED-CHECK-NEXT: lsls r3, r3, #5
-// MAXSPEED-CHECK-NEXT: ldr r1, [r2, #0]
-// MAXSPEED-CHECK-NEXT: orrs r3, r1
-// MAXSPEED-CHECK-NEXT: str r3, [r2, #0]
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #5
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
 // MAXSPEED-CHECK-NEXT: .word 0xe000e200
 
 // CHECK-EMPTY:
 
-// Test clearPendingIrq()
+// Test clearPendingIrq() - optimized: direct write, no read-modify-write
+// ICPR is W1C (write-1-to-clear), writing 0 has no effect
 extern "C" [[gnu::naked]] void test_clear_pending_irq() {
     ArmCortex::Nvic::clearPendingIrq(15);
 }
 
 // CHECK-LABEL: <test_clear_pending_irq>:
 
-// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
-// DEBUG-CHECK-NEXT: ldr r1, [r2, #0]
-// DEBUG-CHECK-NEXT: movs r3, #128
-// DEBUG-CHECK-NEXT: lsls r3, r3, #8
-// DEBUG-CHECK-NEXT: orrs r3, r1
-// DEBUG-CHECK-NEXT: str r3, [r2, #0]
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #8
+// DEBUG-CHECK-NEXT: str r2, [r3, #0]
 // DEBUG-CHECK-NEXT: .word 0xe000e280
 
-// MINSIZE-CHECK-NEXT: movs r3, #128
-// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
-// MINSIZE-CHECK-NEXT: lsls r3, r3, #8
-// MINSIZE-CHECK-NEXT: ldr r1, [r2, #0]
-// MINSIZE-CHECK-NEXT: orrs r3, r1
-// MINSIZE-CHECK-NEXT: str r3, [r2, #0]
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #8
+// MINSIZE-CHECK-NEXT: str r2, [r3, #0]
 // MINSIZE-CHECK-NEXT: .word 0xe000e280
 
-// MAXSPEED-CHECK-NEXT: movs r3, #128
-// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
-// MAXSPEED-CHECK-NEXT: lsls r3, r3, #8
-// MAXSPEED-CHECK-NEXT: ldr r1, [r2, #0]
-// MAXSPEED-CHECK-NEXT: orrs r3, r1
-// MAXSPEED-CHECK-NEXT: str r3, [r2, #0]
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #8
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #0]
 // MAXSPEED-CHECK-NEXT: .word 0xe000e280
 
 // CHECK-EMPTY:
