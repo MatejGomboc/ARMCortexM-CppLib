@@ -12,8 +12,7 @@ extern "C" [[gnu::naked]] void test_is_irq_enabled() {
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
-// Test enableIrq() - optimized: direct write, no read-modify-write
-// ISER is W1S (write-1-to-set), writing 0 has no effect
+// Test enableIrq()
 extern "C" [[gnu::naked]] void test_enable_irq() {
     ArmCortex::Nvic::enableIrq(10);
 }
@@ -40,8 +39,7 @@ extern "C" [[gnu::naked]] void test_enable_irq() {
 
 // CHECK-EMPTY:
 
-// Test disableIrq() - optimized: direct write, no read-modify-write
-// ICER is W1C (write-1-to-clear), writing 0 has no effect
+// Test disableIrq()
 extern "C" [[gnu::naked]] void test_disable_irq() {
     ArmCortex::Nvic::disableIrq(7);
 }
@@ -94,8 +92,7 @@ extern "C" [[gnu::naked]] void test_is_irq_pending() {
 
 // CHECK-EMPTY:
 
-// Test setPendingIrq() - optimized: direct write, no read-modify-write
-// ISPR is W1S (write-1-to-set), writing 0 has no effect
+// Test setPendingIrq()
 extern "C" [[gnu::naked]] void test_set_pending_irq() {
     ArmCortex::Nvic::setPendingIrq(12);
 }
@@ -122,8 +119,7 @@ extern "C" [[gnu::naked]] void test_set_pending_irq() {
 
 // CHECK-EMPTY:
 
-// Test clearPendingIrq() - optimized: direct write, no read-modify-write
-// ICPR is W1C (write-1-to-clear), writing 0 has no effect
+// Test clearPendingIrq()
 extern "C" [[gnu::naked]] void test_clear_pending_irq() {
     ArmCortex::Nvic::clearPendingIrq(15);
 }
