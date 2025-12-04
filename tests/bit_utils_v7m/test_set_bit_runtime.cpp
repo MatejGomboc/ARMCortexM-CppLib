@@ -129,7 +129,7 @@ extern "C" [[gnu::naked]] uint64_t test_set_bit_runtime_u_64_63(uint64_t value) 
 // ============================================================================
 
 extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_0(int8_t value) {
-    ArmCortex::setBit(value, int8_t{0});
+    ArmCortex::setBit(value, uint8_t{0});
     return value;
 }
 
@@ -138,7 +138,7 @@ extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_0(int8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_3(int8_t value) {
-    ArmCortex::setBit(value, int8_t{3});
+    ArmCortex::setBit(value, uint8_t{3});
     return value;
 }
 
@@ -147,12 +147,12 @@ extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_3(int8_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_7(int8_t value) {
-    ArmCortex::setBit(value, int8_t{7});
+    ArmCortex::setBit(value, uint8_t{7});
     return value;
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_8_7>:
-// CHECK-NEXT: orn r0, r0, #127
+// CHECK-NEXT: orr.w r0, r0, #128
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -160,7 +160,7 @@ extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_7(int8_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_0(int16_t value) {
-    ArmCortex::setBit(value, int8_t{0});
+    ArmCortex::setBit(value, uint8_t{0});
     return value;
 }
 
@@ -169,7 +169,7 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_0(int16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_7(int16_t value) {
-    ArmCortex::setBit(value, int8_t{7});
+    ArmCortex::setBit(value, uint8_t{7});
     return value;
 }
 
@@ -178,13 +178,12 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_7(int16_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
-    ArmCortex::setBit(value, int8_t{15});
+    ArmCortex::setBit(value, uint8_t{15});
     return value;
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_16_15>:
-// CHECK-NEXT: mvn.w r0, r0, lsl #17
-// CHECK-NEXT: mvn.w r0, r0, lsr #17
+// CHECK-NEXT: orr.w r0, r0, #32768
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -192,7 +191,7 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_0(int32_t value) {
-    ArmCortex::setBit(value, int8_t{0});
+    ArmCortex::setBit(value, uint8_t{0});
     return value;
 }
 
@@ -201,7 +200,7 @@ extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_0(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_15(int32_t value) {
-    ArmCortex::setBit(value, int8_t{15});
+    ArmCortex::setBit(value, uint8_t{15});
     return value;
 }
 
@@ -210,7 +209,7 @@ extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_15(int32_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_31(int32_t value) {
-    ArmCortex::setBit(value, int8_t{31});
+    ArmCortex::setBit(value, uint8_t{31});
     return value;
 }
 
@@ -223,7 +222,7 @@ extern "C" [[gnu::naked]] int32_t test_set_bit_runtime_s_32_31(int32_t value) {
 // ============================================================================
 
 extern "C" [[gnu::naked]] int64_t test_set_bit_runtime_s_64_0(int64_t value) {
-    ArmCortex::setBit(value, int8_t{0});
+    ArmCortex::setBit(value, uint8_t{0});
     return value;
 }
 
@@ -232,7 +231,7 @@ extern "C" [[gnu::naked]] int64_t test_set_bit_runtime_s_64_0(int64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int64_t test_set_bit_runtime_s_64_31(int64_t value) {
-    ArmCortex::setBit(value, int8_t{31});
+    ArmCortex::setBit(value, uint8_t{31});
     return value;
 }
 
@@ -241,7 +240,7 @@ extern "C" [[gnu::naked]] int64_t test_set_bit_runtime_s_64_31(int64_t value) {
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int64_t test_set_bit_runtime_s_64_63(int64_t value) {
-    ArmCortex::setBit(value, int8_t{63});
+    ArmCortex::setBit(value, uint8_t{63});
     return value;
 }
 
