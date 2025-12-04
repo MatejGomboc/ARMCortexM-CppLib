@@ -194,8 +194,10 @@ extern "C" [[gnu::naked]] void test_read_rbar_a1() {
 }
 
 // CHECK-LABEL: <test_read_rbar_a1>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #164]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RBAR_A1 register
@@ -208,7 +210,7 @@ extern "C" [[gnu::naked]] void test_write_rbar_a1() {
 }
 
 // CHECK-LABEL: <test_write_rbar_a1>:
-// CHECK: str.w r{{[0-9]}},
+// CHECK: str.w r{{[0-9]}}, [r{{[0-9]}}, #164]
 // CHECK: .word 0xe000ed00
 // CHECK: .word 0x20001011
 // CHECK-EMPTY:
@@ -220,8 +222,10 @@ extern "C" [[gnu::naked]] void test_read_rasr_a1() {
 }
 
 // CHECK-LABEL: <test_read_rasr_a1>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #168]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RASR_A1 register
@@ -235,9 +239,27 @@ extern "C" [[gnu::naked]] void test_write_rasr_a1() {
 }
 
 // CHECK-LABEL: <test_write_rasr_a1>:
-// CHECK: str.w r{{[0-9]}},
-// CHECK: .word 0xe000ed00
-// CHECK: .word 0x03060017
+
+// DEBUG-CHECK-NEXT: movs r3, #1
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
+// DEBUG-CHECK-NEXT: str.w r2, [r3, #168]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x03060017
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
+// MINSIZE-CHECK-NEXT: str.w r2, [r3, #168]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x03060017
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
+// MAXSPEED-CHECK-NEXT: str.w r2, [r3, #168]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x03060017
+
 // CHECK-EMPTY:
 
 // Test reading RBAR_A2 register
@@ -247,8 +269,10 @@ extern "C" [[gnu::naked]] void test_read_rbar_a2() {
 }
 
 // CHECK-LABEL: <test_read_rbar_a2>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #172]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RBAR_A2 register
@@ -261,9 +285,27 @@ extern "C" [[gnu::naked]] void test_write_rbar_a2() {
 }
 
 // CHECK-LABEL: <test_write_rbar_a2>:
-// CHECK: str.w r{{[0-9]}},
-// CHECK: .word 0xe000ed00
-// CHECK: .word 0x20002012
+
+// DEBUG-CHECK-NEXT: movs r3, #0
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
+// DEBUG-CHECK-NEXT: str.w r2, [r3, #172]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x20002012
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
+// MINSIZE-CHECK-NEXT: str.w r2, [r3, #172]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x20002012
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
+// MAXSPEED-CHECK-NEXT: str.w r2, [r3, #172]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x20002012
+
 // CHECK-EMPTY:
 
 // Test reading RASR_A2 register
@@ -273,8 +315,10 @@ extern "C" [[gnu::naked]] void test_read_rasr_a2() {
 }
 
 // CHECK-LABEL: <test_read_rasr_a2>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #176]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RASR_A2 register
@@ -288,9 +332,27 @@ extern "C" [[gnu::naked]] void test_write_rasr_a2() {
 }
 
 // CHECK-LABEL: <test_write_rasr_a2>:
-// CHECK: str.w r{{[0-9]}},
-// CHECK: .word 0xe000ed00
-// CHECK: .word 0x06020019
+
+// DEBUG-CHECK-NEXT: movs r3, #1
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
+// DEBUG-CHECK-NEXT: str.w r2, [r3, #176]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x06020019
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
+// MINSIZE-CHECK-NEXT: str.w r2, [r3, #176]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x06020019
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
+// MAXSPEED-CHECK-NEXT: str.w r2, [r3, #176]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x06020019
+
 // CHECK-EMPTY:
 
 // Test reading RBAR_A3 register
@@ -300,8 +362,10 @@ extern "C" [[gnu::naked]] void test_read_rbar_a3() {
 }
 
 // CHECK-LABEL: <test_read_rbar_a3>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #180]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RBAR_A3 register
@@ -314,9 +378,27 @@ extern "C" [[gnu::naked]] void test_write_rbar_a3() {
 }
 
 // CHECK-LABEL: <test_write_rbar_a3>:
-// CHECK: str.w r{{[0-9]}},
-// CHECK: .word 0xe000ed00
-// CHECK: .word 0x40000013
+
+// DEBUG-CHECK-NEXT: movs r3, #0
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
+// DEBUG-CHECK-NEXT: str.w r2, [r3, #180]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x40000013
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
+// MINSIZE-CHECK-NEXT: str.w r2, [r3, #180]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x40000013
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
+// MAXSPEED-CHECK-NEXT: str.w r2, [r3, #180]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x40000013
+
 // CHECK-EMPTY:
 
 // Test reading RASR_A3 register
@@ -326,8 +408,10 @@ extern "C" [[gnu::naked]] void test_read_rasr_a3() {
 }
 
 // CHECK-LABEL: <test_read_rasr_a3>:
-// CHECK: ldr{{.w?}} r3,
-// CHECK: .word 0xe000ed00
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr.w r3, [r3, #184]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test writing RASR_A3 register
@@ -341,9 +425,27 @@ extern "C" [[gnu::naked]] void test_write_rasr_a3() {
 }
 
 // CHECK-LABEL: <test_write_rasr_a3>:
-// CHECK: str.w r{{[0-9]}},
-// CHECK: .word 0xe000ed00
-// CHECK: .word 0x01050027
+
+// DEBUG-CHECK-NEXT: movs r3, #1
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
+// DEBUG-CHECK-NEXT: str.w r2, [r3, #184]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x01050027
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r2, [pc, #8]
+// MINSIZE-CHECK-NEXT: str.w r2, [r3, #184]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x01050027
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
+// MAXSPEED-CHECK-NEXT: str.w r2, [r3, #184]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x01050027
+
 // CHECK-EMPTY:
 
 // ============================================================================
