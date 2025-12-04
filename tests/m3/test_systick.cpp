@@ -7,9 +7,9 @@ extern "C" [[gnu::naked]] void test_read_ctrl() {
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #0]
-// CHECK-NEXT: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: ldr r3, [r3, #16]
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test writing CTRL register
@@ -22,9 +22,9 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 }
 
 // CHECK-LABEL: <test_write_ctrl>:
-// CHECK: movs r{{[0-9]}}, #7
-// CHECK: str r{{[0-9]}}, [r{{[0-9]}}, #0]
-// CHECK: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: movs r2, #7
+// CHECK-NEXT: str r2, [r3, #16]
 // CHECK-EMPTY:
 
 // Test reading LOAD register
@@ -34,9 +34,9 @@ extern "C" [[gnu::naked]] void test_read_load() {
 }
 
 // CHECK-LABEL: <test_read_load>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #4]
-// CHECK-NEXT: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: ldr r3, [r3, #20]
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test writing LOAD register
@@ -45,9 +45,10 @@ extern "C" [[gnu::naked]] void test_write_load() {
 }
 
 // CHECK-LABEL: <test_write_load>:
-// CHECK: str r{{[0-9]}}, [r{{[0-9]}}, #4]
-// CHECK: .word 0xe000e010
-// CHECK: .word 0x00ffffff
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: mvn.w r2, #4278190080
+// CHECK-NEXT: str r2, [r3, #20]
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test reading VAL register
@@ -57,9 +58,9 @@ extern "C" [[gnu::naked]] void test_read_val() {
 }
 
 // CHECK-LABEL: <test_read_val>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #8]
-// CHECK-NEXT: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: ldr r3, [r3, #24]
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test writing VAL register (clears counter)
@@ -68,9 +69,9 @@ extern "C" [[gnu::naked]] void test_write_val() {
 }
 
 // CHECK-LABEL: <test_write_val>:
-// CHECK: movs r{{[0-9]}}, #0
-// CHECK: str r{{[0-9]}}, [r{{[0-9]}}, #8]
-// CHECK: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: movs r2, #0
+// CHECK-NEXT: str r2, [r3, #24]
 // CHECK-EMPTY:
 
 // Test reading CALIB register
@@ -80,9 +81,9 @@ extern "C" [[gnu::naked]] void test_read_calib() {
 }
 
 // CHECK-LABEL: <test_read_calib>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #12]
-// CHECK-NEXT: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: ldr r3, [r3, #28]
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test enabling SysTick with CPU clock
@@ -94,9 +95,9 @@ extern "C" [[gnu::naked]] void test_enable_systick() {
 }
 
 // CHECK-LABEL: <test_enable_systick>:
-// CHECK: movs r{{[0-9]}}, #5
-// CHECK: str r{{[0-9]}}, [r{{[0-9]}}, #0]
-// CHECK: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: movs r2, #5
+// CHECK-NEXT: str r2, [r3, #16]
 // CHECK-EMPTY:
 
 // Test disabling SysTick
@@ -107,7 +108,7 @@ extern "C" [[gnu::naked]] void test_disable_systick() {
 }
 
 // CHECK-LABEL: <test_disable_systick>:
-// CHECK: movs r{{[0-9]}}, #0
-// CHECK: str r{{[0-9]}}, [r{{[0-9]}}, #0]
-// CHECK: .word 0xe000e010
+// CHECK-NEXT: mov.w r3, #3758153728
+// CHECK-NEXT: movs r2, #0
+// CHECK-NEXT: str r2, [r3, #16]
 // CHECK-EMPTY:
