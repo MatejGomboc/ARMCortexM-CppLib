@@ -167,8 +167,8 @@ extern "C" [[gnu::naked]] int8_t test_clear_bit_runtime_s_8_7(int8_t value) {
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_8_7>:
-// CHECK-NEXT: movs r3, #128
-// CHECK-NEXT: bics r0, r3
+// CHECK-NEXT: movs r3, #127
+// CHECK-NEXT: ands r0, r3
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -201,10 +201,8 @@ extern "C" [[gnu::naked]] int16_t test_clear_bit_runtime_s_16_15(int16_t value) 
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_16_15>:
-// CHECK-NEXT: movs r3, #128
-// CHECK-NEXT: lsls r3, r3, #8
-// CHECK-NEXT: bics r0, r3
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: lsls r0, r0, #17
+// CHECK-NEXT: lsrs r0, r0, #17
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -227,10 +225,9 @@ extern "C" [[gnu::naked]] int32_t test_clear_bit_runtime_s_32_15(int32_t value) 
 }
 
 // CHECK-LABEL: <test_clear_bit_runtime_s_32_15>:
-// CHECK-NEXT: movs r3, #128
-// CHECK-NEXT: lsls r3, r3, #8
-// CHECK-NEXT: bics r0, r3
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ands r0, r3
+// CHECK-NEXT: .word
 // CHECK-EMPTY:
 
 extern "C" [[gnu::naked]] int32_t test_clear_bit_runtime_s_32_31(int32_t value) {

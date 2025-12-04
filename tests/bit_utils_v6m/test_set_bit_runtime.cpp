@@ -205,7 +205,9 @@ extern "C" [[gnu::naked]] int8_t test_set_bit_runtime_s_8_7(int8_t value) {
 
 // CHECK-LABEL: <test_set_bit_runtime_s_8_7>:
 // CHECK-NEXT: movs r3, #128
+// CHECK-NEXT: negs r3, r3
 // CHECK-NEXT: orrs r0, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -240,10 +242,20 @@ extern "C" [[gnu::naked]] int16_t test_set_bit_runtime_s_16_15(int16_t value) {
 }
 
 // CHECK-LABEL: <test_set_bit_runtime_s_16_15>:
-// CHECK-NEXT: movs r3, #128
-// CHECK-NEXT: lsls r3, r3, #8
-// CHECK-NEXT: orrs r0, r3
-// MAXSPEED-CHECK-NEXT: nop
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: orrs r0, r3
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xffff8000
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: orrs r0, r3
+// MINSIZE-CHECK-NEXT: .word 0xffff8000
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: orrs r0, r3
+// MAXSPEED-CHECK-NEXT: .word 0xffff8000
+
 // CHECK-EMPTY:
 
 // ============================================================================
