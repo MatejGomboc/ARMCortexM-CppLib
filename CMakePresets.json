@@ -31,6 +31,13 @@
             "cacheVariables": {
                 "ARM_CORTEX_M_ARCH": "M1"
             }
+        },
+        {
+            "name": "m3",
+            "inherits": "common",
+            "cacheVariables": {
+                "ARM_CORTEX_M_ARCH": "M3"
+            }
         }
     ],
     "buildPresets": [
@@ -77,6 +84,21 @@
         {
             "name": "m1-minsize",
             "configurePreset": "m1",
+            "configuration": "MinSize"
+        },
+        {
+            "name": "m3-debug",
+            "configurePreset": "m3",
+            "configuration": "Debug"
+        },
+        {
+            "name": "m3-maxspeed",
+            "configurePreset": "m3",
+            "configuration": "MaxSpeed"
+        },
+        {
+            "name": "m3-minsize",
+            "configurePreset": "m3",
             "configuration": "MinSize"
         }
     ],
@@ -144,6 +166,24 @@
             "name": "m1-minsize",
             "inherits": "common",
             "configurePreset": "m1",
+            "configuration": "MinSize"
+        },
+        {
+            "name": "m3-debug",
+            "inherits": "common",
+            "configurePreset": "m3",
+            "configuration": "Debug"
+        },
+        {
+            "name": "m3-maxspeed",
+            "inherits": "common",
+            "configurePreset": "m3",
+            "configuration": "MaxSpeed"
+        },
+        {
+            "name": "m3-minsize",
+            "inherits": "common",
+            "configurePreset": "m3",
             "configuration": "MinSize"
         }
     ],
@@ -244,6 +284,39 @@
                 {
                     "type": "test",
                     "name": "m1-minsize"
+                }
+            ]
+        },
+        {
+            "name": "m3",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "m3"
+                },
+                {
+                    "type": "build",
+                    "name": "m3-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "m3-maxspeed"
+                },
+                {
+                    "type": "build",
+                    "name": "m3-minsize"
+                },
+                {
+                    "type": "test",
+                    "name": "m3-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "m3-maxspeed"
+                },
+                {
+                    "type": "test",
+                    "name": "m3-minsize"
                 }
             ]
         }
