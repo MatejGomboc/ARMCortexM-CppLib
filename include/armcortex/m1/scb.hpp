@@ -210,7 +210,7 @@ namespace ArmCortex {
 }
 
 namespace ArmCortex::Scb {
-    [[gnu::noreturn]] static inline void systemReset()
+    [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
         asmDsb();
 
