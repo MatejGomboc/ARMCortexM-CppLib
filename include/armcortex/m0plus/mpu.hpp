@@ -147,7 +147,7 @@ namespace ArmCortex {
 }
 
 namespace ArmCortex::Mpu {
-    static inline void configureRegion(uint8_t region_number, uint32_t base_address, const RASR& region_attributes)
+    [[gnu::always_inline]] static inline void configureRegion(uint8_t region_number, uint32_t base_address, const RASR& region_attributes)
     {
         MPU->RNR = region_number;
 
