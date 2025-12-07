@@ -592,3 +592,172 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // MAXSPEED-CHECK-NEXT: .word 0x05fa0004
 
 // CHECK-EMPTY:
+
+// =============================================================================
+// ICSR W1S/W1C Helper Function Tests
+// =============================================================================
+
+// Test isSysTickPending() - reads ICSR and checks bit 26
+extern "C" [[gnu::naked]] bool test_is_systick_pending() {
+    return ArmCortex::Scb::isSysTickPending();
+}
+
+// CHECK-LABEL: <test_is_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test setSysTickPending() - writes 1 to bit 26 (W1S)
+extern "C" [[gnu::naked]] void test_set_systick_pending() {
+    ArmCortex::Scb::setSysTickPending();
+}
+
+// CHECK-LABEL: <test_set_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearSysTickPending() - writes 1 to bit 25 (W1C)
+extern "C" [[gnu::naked]] void test_clear_systick_pending() {
+    ArmCortex::Scb::clearSysTickPending();
+}
+
+// CHECK-LABEL: <test_clear_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test isPendSVPending() - reads ICSR and checks bit 28
+extern "C" [[gnu::naked]] bool test_is_pendsv_pending() {
+    return ArmCortex::Scb::isPendSVPending();
+}
+
+// CHECK-LABEL: <test_is_pendsv_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test setPendSV() - writes 1 to bit 28 (W1S)
+extern "C" [[gnu::naked]] void test_set_pendsv() {
+    ArmCortex::Scb::setPendSV();
+}
+
+// CHECK-LABEL: <test_set_pendsv>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearPendSV() - writes 1 to bit 27 (W1C)
+extern "C" [[gnu::naked]] void test_clear_pendsv() {
+    ArmCortex::Scb::clearPendSV();
+}
+
+// CHECK-LABEL: <test_clear_pendsv>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test isNMIPending() - reads ICSR and checks bit 31
+extern "C" [[gnu::naked]] bool test_is_nmi_pending() {
+    return ArmCortex::Scb::isNMIPending();
+}
+
+// CHECK-LABEL: <test_is_nmi_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test triggerNMI() - writes 1 to bit 31 (W1S)
+extern "C" [[gnu::naked]] void test_trigger_nmi() {
+    ArmCortex::Scb::triggerNMI();
+}
+
+// CHECK-LABEL: <test_trigger_nmi>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// =============================================================================
+// CFSR W1C Helper Function Tests (Configurable Fault Status)
+// =============================================================================
+
+// Test getFaultStatus() - reads CFSR
+extern "C" [[gnu::naked]] ArmCortex::Scb::CFSR test_get_fault_status() {
+    return ArmCortex::Scb::getFaultStatus();
+}
+
+// CHECK-LABEL: <test_get_fault_status>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearMemManageFaults() - writes 0x9B to CFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_memmanage_faults() {
+    ArmCortex::Scb::clearMemManageFaults();
+}
+
+// CHECK-LABEL: <test_clear_memmanage_faults>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearBusFaults() - writes 0x9F00 to CFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_bus_faults() {
+    ArmCortex::Scb::clearBusFaults();
+}
+
+// CHECK-LABEL: <test_clear_bus_faults>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearUsageFaults() - writes 0x030F0000 to CFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_usage_faults() {
+    ArmCortex::Scb::clearUsageFaults();
+}
+
+// CHECK-LABEL: <test_clear_usage_faults>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearAllConfigurableFaults() - writes 0x030F9F9B to CFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_all_configurable_faults() {
+    ArmCortex::Scb::clearAllConfigurableFaults();
+}
+
+// CHECK-LABEL: <test_clear_all_configurable_faults>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// =============================================================================
+// HFSR W1C Helper Function Tests (HardFault Status)
+// =============================================================================
+
+// Test getHardFaultStatus() - reads HFSR
+extern "C" [[gnu::naked]] ArmCortex::Scb::HFSR test_get_hardfault_status() {
+    return ArmCortex::Scb::getHardFaultStatus();
+}
+
+// CHECK-LABEL: <test_get_hardfault_status>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearHardFaultStatus() - writes 0xC0000002 to HFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_hardfault_status() {
+    ArmCortex::Scb::clearHardFaultStatus();
+}
+
+// CHECK-LABEL: <test_clear_hardfault_status>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// =============================================================================
+// DFSR W1C Helper Function Tests (Debug Fault Status)
+// =============================================================================
+
+// Test getDebugFaultStatus() - reads DFSR
+extern "C" [[gnu::naked]] ArmCortex::Scb::DFSR test_get_debugfault_status() {
+    return ArmCortex::Scb::getDebugFaultStatus();
+}
+
+// CHECK-LABEL: <test_get_debugfault_status>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearDebugFaultStatus() - writes 0x1F to DFSR (W1C mask)
+extern "C" [[gnu::naked]] void test_clear_debugfault_status() {
+    ArmCortex::Scb::clearDebugFaultStatus();
+}
+
+// CHECK-LABEL: <test_clear_debugfault_status>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
