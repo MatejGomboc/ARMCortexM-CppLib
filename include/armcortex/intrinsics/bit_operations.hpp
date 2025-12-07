@@ -42,18 +42,4 @@ namespace ArmCortex {
         asm volatile("rbit %0, %1" : "=r" (result) : "r" (value));
         return result;
     }
-
-    //! Rotate Right with Extend.
-    //! Performs a 33-bit rotate right through the carry flag.
-    //! Shifts value right by 1, with carry flag shifted into bit 31.
-    //! \param value Input value.
-    //! \return Value rotated right by 1 with carry shifted in.
-    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
-    //! \note The carry flag input depends on previous operations.
-    [[gnu::always_inline]] static inline uint32_t asmRrx(uint32_t value)
-    {
-        uint32_t result;
-        asm volatile("rrx %0, %1" : "=r" (result) : "r" (value));
-        return result;
-    }
 }
