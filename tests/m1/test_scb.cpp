@@ -38,20 +38,21 @@ extern "C" [[gnu::naked]] void test_write_icsr() {
 // DEBUG-CHECK-NEXT: lsls r2, r2, #19
 // DEBUG-CHECK-NEXT: str r2, [r3, #4]
 // DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-EMPTY:
 
 // MINSIZE-CHECK-NEXT: movs r2, #128
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
 // MINSIZE-CHECK-NEXT: lsls r2, r2, #19
 // MINSIZE-CHECK-NEXT: str r2, [r3, #4]
 // MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-EMPTY:
 
 // MAXSPEED-CHECK-NEXT: movs r2, #128
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
 // MAXSPEED-CHECK-NEXT: lsls r2, r2, #19
 // MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
 // MAXSPEED-CHECK-NEXT: .word 0xe000ed00
-
-// CHECK-EMPTY:
+// MAXSPEED-CHECK-EMPTY:
 
 // Note: M1 does not have VTOR register (unlike M0Plus)
 
@@ -110,20 +111,21 @@ extern "C" [[gnu::naked]] void test_write_scr() {
 // DEBUG-CHECK-NEXT: str r2, [r3, #16]
 // DEBUG-CHECK-NEXT: nop
 // DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-EMPTY:
 
 // MINSIZE-CHECK-NEXT: movs r2, #4
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
 // MINSIZE-CHECK-NEXT: str r2, [r3, #16]
 // MINSIZE-CHECK-NEXT: nop
 // MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-EMPTY:
 
 // MAXSPEED-CHECK-NEXT: movs r2, #4
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
 // MAXSPEED-CHECK-NEXT: str r2, [r3, #16]
 // MAXSPEED-CHECK-NEXT: nop
 // MAXSPEED-CHECK-NEXT: .word 0xe000ed00
-
-// CHECK-EMPTY:
+// MAXSPEED-CHECK-EMPTY:
 
 // Test reading CCR register
 extern "C" [[gnu::naked]] void test_read_ccr() {
@@ -163,20 +165,21 @@ extern "C" [[gnu::naked]] void test_write_shpr2() {
 // DEBUG-CHECK-NEXT: lsls r2, r2, #24
 // DEBUG-CHECK-NEXT: str r2, [r3, #28]
 // DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-EMPTY:
 
 // MINSIZE-CHECK-NEXT: movs r2, #128
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
 // MINSIZE-CHECK-NEXT: lsls r2, r2, #24
 // MINSIZE-CHECK-NEXT: str r2, [r3, #28]
 // MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-EMPTY:
 
 // MAXSPEED-CHECK-NEXT: movs r2, #128
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
 // MAXSPEED-CHECK-NEXT: lsls r2, r2, #24
 // MAXSPEED-CHECK-NEXT: str r2, [r3, #28]
 // MAXSPEED-CHECK-NEXT: .word 0xe000ed00
-
-// CHECK-EMPTY:
+// MAXSPEED-CHECK-EMPTY:
 
 // Test reading SHPR3 register
 extern "C" [[gnu::naked]] void test_read_shpr3() {
@@ -233,20 +236,21 @@ extern "C" [[gnu::naked]] void test_write_shcsr() {
 // DEBUG-CHECK-NEXT: lsls r2, r2, #8
 // DEBUG-CHECK-NEXT: str r2, [r3, #36]
 // DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-EMPTY:
 
 // MINSIZE-CHECK-NEXT: movs r2, #128
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
 // MINSIZE-CHECK-NEXT: lsls r2, r2, #8
 // MINSIZE-CHECK-NEXT: str r2, [r3, #36]
 // MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-EMPTY:
 
 // MAXSPEED-CHECK-NEXT: movs r2, #128
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
 // MAXSPEED-CHECK-NEXT: lsls r2, r2, #8
 // MAXSPEED-CHECK-NEXT: str r2, [r3, #36]
 // MAXSPEED-CHECK-NEXT: .word 0xe000ed00
-
-// CHECK-EMPTY:
+// MAXSPEED-CHECK-EMPTY:
 
 // Test systemReset() function (always inlined with [[gnu::always_inline]])
 extern "C" [[gnu::naked]] void test_system_reset() {
@@ -272,6 +276,7 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // DEBUG-CHECK-NEXT: b.n
 // DEBUG-CHECK-NEXT: .word 0xe000ed00
 // DEBUG-CHECK-NEXT: .word 0x05fa0000
+// DEBUG-CHECK-EMPTY:
 
 // MINSIZE-CHECK-NEXT: ldr r1, [pc, #20]
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #24]
@@ -286,6 +291,7 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // MINSIZE-CHECK-NEXT: .word 0xe000ed00
 // MINSIZE-CHECK-NEXT: .word 0x0000fff9
 // MINSIZE-CHECK-NEXT: .word 0x05fa0004
+// MINSIZE-CHECK-EMPTY:
 
 // MAXSPEED-CHECK-NEXT: ldr r1, [pc, #20]
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #24]
@@ -300,5 +306,4 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // MAXSPEED-CHECK-NEXT: .word 0xe000ed00
 // MAXSPEED-CHECK-NEXT: .word 0x0000fff9
 // MAXSPEED-CHECK-NEXT: .word 0x05fa0004
-
-// CHECK-EMPTY:
+// MAXSPEED-CHECK-EMPTY:
