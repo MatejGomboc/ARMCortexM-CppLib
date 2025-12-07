@@ -1,14 +1,13 @@
 #include "armcortex/m1/scnscb.hpp"
 
 // Test reading ACTLR register
-extern "C" [[gnu::naked]] void test_read_actlr() {
-    auto actlr = ArmCortex::ScnScb::ACTLR(ArmCortex::SCN_SCB->ACTLR);
-    (void)actlr;
+extern "C" [[gnu::naked]] auto test_read_actlr() {
+    return ArmCortex::ScnScb::ACTLR(ArmCortex::SCN_SCB->ACTLR);
 }
 
 // CHECK-LABEL: <test_read_actlr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #8]
+// CHECK-NEXT: ldr r0, [r3, #8]
 // CHECK-NEXT: .word 0xe000e000
 // CHECK-EMPTY:
 
