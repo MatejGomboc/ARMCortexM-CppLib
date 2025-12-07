@@ -1,9 +1,8 @@
 #include "armcortex/m3/mpu.hpp"
 
 // Test reading TYPE register
-extern "C" [[gnu::naked]] void test_read_type() {
-    auto type = ArmCortex::Mpu::TYPE(ArmCortex::MPU->TYPE);
-    (void)type;
+extern "C" [[gnu::naked]] auto test_read_type() {
+    return ArmCortex::Mpu::TYPE(ArmCortex::MPU->TYPE);
 }
 
 // CHECK-LABEL: <test_read_type>:
@@ -14,9 +13,8 @@ extern "C" [[gnu::naked]] void test_read_type() {
 // CHECK-EMPTY:
 
 // Test reading CTRL register
-extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::Mpu::CTRL(ArmCortex::MPU->CTRL);
-    (void)ctrl;
+extern "C" [[gnu::naked]] auto test_read_ctrl() {
+    return ArmCortex::Mpu::CTRL(ArmCortex::MPU->CTRL);
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
@@ -54,9 +52,8 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 // CHECK-EMPTY:
 
 // Test reading RNR register
-extern "C" [[gnu::naked]] void test_read_rnr() {
-    uint32_t rnr = ArmCortex::MPU->RNR;
-    (void)rnr;
+extern "C" [[gnu::naked]] uint32_t test_read_rnr() {
+    return ArmCortex::MPU->RNR;
 }
 
 // CHECK-LABEL: <test_read_rnr>:
@@ -91,9 +88,8 @@ extern "C" [[gnu::naked]] void test_write_rnr() {
 // CHECK-EMPTY:
 
 // Test reading RBAR register
-extern "C" [[gnu::naked]] void test_read_rbar() {
-    auto rbar = ArmCortex::Mpu::RBAR(ArmCortex::MPU->RBAR);
-    (void)rbar;
+extern "C" [[gnu::naked]] auto test_read_rbar() {
+    return ArmCortex::Mpu::RBAR(ArmCortex::MPU->RBAR);
 }
 
 // CHECK-LABEL: <test_read_rbar>:
@@ -137,9 +133,8 @@ extern "C" [[gnu::naked]] void test_write_rbar() {
 // CHECK-EMPTY:
 
 // Test reading RASR register
-extern "C" [[gnu::naked]] void test_read_rasr() {
-    auto rasr = ArmCortex::Mpu::RASR(ArmCortex::MPU->RASR);
-    (void)rasr;
+extern "C" [[gnu::naked]] auto test_read_rasr() {
+    return ArmCortex::Mpu::RASR(ArmCortex::MPU->RASR);
 }
 
 // CHECK-LABEL: <test_read_rasr>:
@@ -188,9 +183,8 @@ extern "C" [[gnu::naked]] void test_write_rasr() {
 // ============================================================================
 
 // Test reading RBAR_A1 register
-extern "C" [[gnu::naked]] void test_read_rbar_a1() {
-    uint32_t rbar_a1 = ArmCortex::MPU->RBAR_A1;
-    (void)rbar_a1;
+extern "C" [[gnu::naked]] uint32_t test_read_rbar_a1() {
+    return ArmCortex::MPU->RBAR_A1;
 }
 
 // CHECK-LABEL: <test_read_rbar_a1>:
@@ -226,9 +220,8 @@ extern "C" [[gnu::naked]] void test_write_rbar_a1() {
 // CHECK-EMPTY:
 
 // Test reading RASR_A1 register
-extern "C" [[gnu::naked]] void test_read_rasr_a1() {
-    uint32_t rasr_a1 = ArmCortex::MPU->RASR_A1;
-    (void)rasr_a1;
+extern "C" [[gnu::naked]] uint32_t test_read_rasr_a1() {
+    return ArmCortex::MPU->RASR_A1;
 }
 
 // CHECK-LABEL: <test_read_rasr_a1>:
@@ -273,9 +266,8 @@ extern "C" [[gnu::naked]] void test_write_rasr_a1() {
 // CHECK-EMPTY:
 
 // Test reading RBAR_A2 register
-extern "C" [[gnu::naked]] void test_read_rbar_a2() {
-    uint32_t rbar_a2 = ArmCortex::MPU->RBAR_A2;
-    (void)rbar_a2;
+extern "C" [[gnu::naked]] uint32_t test_read_rbar_a2() {
+    return ArmCortex::MPU->RBAR_A2;
 }
 
 // CHECK-LABEL: <test_read_rbar_a2>:
@@ -319,9 +311,8 @@ extern "C" [[gnu::naked]] void test_write_rbar_a2() {
 // CHECK-EMPTY:
 
 // Test reading RASR_A2 register
-extern "C" [[gnu::naked]] void test_read_rasr_a2() {
-    uint32_t rasr_a2 = ArmCortex::MPU->RASR_A2;
-    (void)rasr_a2;
+extern "C" [[gnu::naked]] uint32_t test_read_rasr_a2() {
+    return ArmCortex::MPU->RASR_A2;
 }
 
 // CHECK-LABEL: <test_read_rasr_a2>:
@@ -366,9 +357,8 @@ extern "C" [[gnu::naked]] void test_write_rasr_a2() {
 // CHECK-EMPTY:
 
 // Test reading RBAR_A3 register
-extern "C" [[gnu::naked]] void test_read_rbar_a3() {
-    uint32_t rbar_a3 = ArmCortex::MPU->RBAR_A3;
-    (void)rbar_a3;
+extern "C" [[gnu::naked]] uint32_t test_read_rbar_a3() {
+    return ArmCortex::MPU->RBAR_A3;
 }
 
 // CHECK-LABEL: <test_read_rbar_a3>:
@@ -412,9 +402,8 @@ extern "C" [[gnu::naked]] void test_write_rbar_a3() {
 // CHECK-EMPTY:
 
 // Test reading RASR_A3 register
-extern "C" [[gnu::naked]] void test_read_rasr_a3() {
-    uint32_t rasr_a3 = ArmCortex::MPU->RASR_A3;
-    (void)rasr_a3;
+extern "C" [[gnu::naked]] uint32_t test_read_rasr_a3() {
+    return ArmCortex::MPU->RASR_A3;
 }
 
 // CHECK-LABEL: <test_read_rasr_a3>:
