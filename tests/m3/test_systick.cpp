@@ -7,8 +7,7 @@ extern "C" [[gnu::naked]] auto test_read_ctrl() {
 
 // CHECK-LABEL: <test_read_ctrl>:
 // CHECK-NEXT: mov.w r3, #3758153728
-// CHECK-NEXT: ldr r3, [r3, #16]
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: ldr r0, [r3, #16]
 // CHECK-EMPTY:
 
 // Test writing CTRL register
@@ -33,8 +32,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_load() {
 
 // CHECK-LABEL: <test_read_load>:
 // CHECK-NEXT: mov.w r3, #3758153728
-// CHECK-NEXT: ldr r3, [r3, #20]
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: ldr r0, [r3, #20]
 // CHECK-EMPTY:
 
 // Test writing LOAD register
@@ -46,7 +44,6 @@ extern "C" [[gnu::naked]] void test_write_load() {
 // CHECK-NEXT: mov.w r3, #3758153728
 // CHECK-NEXT: mvn.w r2, #4278190080
 // CHECK-NEXT: str r2, [r3, #20]
-// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test reading VAL register
@@ -56,8 +53,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_val() {
 
 // CHECK-LABEL: <test_read_val>:
 // CHECK-NEXT: mov.w r3, #3758153728
-// CHECK-NEXT: ldr r3, [r3, #24]
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: ldr r0, [r3, #24]
 // CHECK-EMPTY:
 
 // Test writing VAL register (clears counter)
@@ -78,8 +74,7 @@ extern "C" [[gnu::naked]] auto test_read_calib() {
 
 // CHECK-LABEL: <test_read_calib>:
 // CHECK-NEXT: mov.w r3, #3758153728
-// CHECK-NEXT: ldr r3, [r3, #28]
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: ldr r0, [r3, #28]
 // CHECK-EMPTY:
 
 // Test enabling SysTick with CPU clock
