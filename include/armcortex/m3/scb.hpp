@@ -298,7 +298,7 @@ namespace ArmCortex {
 }
 
 namespace ArmCortex::Scb {
-    [[gnu::noreturn]] static inline void systemReset()
+    [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
         asmDsb();
 
@@ -317,7 +317,7 @@ namespace ArmCortex::Scb {
         while(true);
     }
 
-    static inline void setPriorityGrouping(uint32_t priority_group)
+    [[gnu::always_inline]] static inline void setPriorityGrouping(uint32_t priority_group)
     {
         asmDsb();
 
@@ -332,7 +332,7 @@ namespace ArmCortex::Scb {
         asmIsb();
     }
 
-    static inline uint32_t getPriorityGrouping()
+    [[gnu::always_inline]] static inline uint32_t getPriorityGrouping()
     {
         AIRCR aircr { SCB->AIRCR };
         return aircr.bits.PRIGROUP;

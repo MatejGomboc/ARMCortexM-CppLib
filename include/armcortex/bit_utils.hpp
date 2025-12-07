@@ -22,21 +22,21 @@
 namespace ArmCortex {
     //! Check if the n-th bit is set in the value.
     template<std::integral T>
-    constexpr bool isBitSet(T value, uint8_t n)
+    [[gnu::always_inline]] constexpr bool isBitSet(T value, uint8_t n)
     {
         return (value >> n) & T{1};
     }
 
     //! Sets the n-th bit in the value.
     template<std::integral T>
-    constexpr void setBit(T& value, uint8_t n)
+    [[gnu::always_inline]] constexpr void setBit(T& value, uint8_t n)
     {
         value |= T{1} << n;
     }
 
     //! Clears the n-th bit in the value.
     template<std::integral T>
-    constexpr void clearBit(T& value, uint8_t n)
+    [[gnu::always_inline]] constexpr void clearBit(T& value, uint8_t n)
     {
         value &= ~(T{1} << n);
     }

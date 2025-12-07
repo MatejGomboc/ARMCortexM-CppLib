@@ -45,41 +45,41 @@ namespace ArmCortex {
 }
 
 namespace ArmCortex::Nvic {
-    static inline bool isIrqEnabled(uint8_t irq_number)
+    [[gnu::always_inline]] static inline bool isIrqEnabled(uint8_t irq_number)
     {
         return ArmCortex::isBitSet(NVIC->ISER[irq_number / 32], irq_number % 32);
     }
 
     //! Enable an interrupt. ISER is W1S (write-1-to-set).
-    static inline void enableIrq(uint8_t irq_number)
+    [[gnu::always_inline]] static inline void enableIrq(uint8_t irq_number)
     {
         NVIC->ISER[irq_number / 32] = uint32_t{1} << (irq_number % 32);
     }
 
     //! Disable an interrupt. ICER is W1C (write-1-to-clear).
-    static inline void disableIrq(uint8_t irq_number)
+    [[gnu::always_inline]] static inline void disableIrq(uint8_t irq_number)
     {
         NVIC->ICER[irq_number / 32] = uint32_t{1} << (irq_number % 32);
     }
 
-    static inline bool isIrqPending(uint8_t irq_number)
+    [[gnu::always_inline]] static inline bool isIrqPending(uint8_t irq_number)
     {
         return ArmCortex::isBitSet(NVIC->ISPR[irq_number / 32], irq_number % 32);
     }
 
     //! Set an interrupt pending. ISPR is W1S (write-1-to-set).
-    static inline void setPendingIrq(uint8_t irq_number)
+    [[gnu::always_inline]] static inline void setPendingIrq(uint8_t irq_number)
     {
         NVIC->ISPR[irq_number / 32] = uint32_t{1} << (irq_number % 32);
     }
 
     //! Clear a pending interrupt. ICPR is W1C (write-1-to-clear).
-    static inline void clearPendingIrq(uint8_t irq_number)
+    [[gnu::always_inline]] static inline void clearPendingIrq(uint8_t irq_number)
     {
         NVIC->ICPR[irq_number / 32] = uint32_t{1} << (irq_number % 32);
     }
 
-    static inline bool isIrqActive(uint8_t irq_number)
+    [[gnu::always_inline]] static inline bool isIrqActive(uint8_t irq_number)
     {
         return ArmCortex::isBitSet(NVIC->IABR[irq_number / 32], irq_number % 32);
     }
