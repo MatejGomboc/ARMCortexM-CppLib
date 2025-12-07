@@ -285,16 +285,31 @@ extern "C" [[gnu::naked]] void test_write_shcsr() {
 
 // CHECK-EMPTY:
 
-// Test systemReset() function
+// Test systemReset() function (always inlined with [[gnu::always_inline]])
 extern "C" [[gnu::naked]] void test_system_reset() {
     ArmCortex::Scb::systemReset();
 }
 
 // CHECK-LABEL: <test_system_reset>:
+// CHECK-NEXT: dsb sy
 
-// DEBUG-CHECK-NEXT: bl
+// DEBUG-CHECK-NEXT: ldr r1, [pc, #28]
+// DEBUG-CHECK-NEXT: ldr r3, [r1, #12]
+// DEBUG-CHECK-NEXT: movs r2, #2
+// DEBUG-CHECK-NEXT: bics r3, r2
+// DEBUG-CHECK-NEXT: adds r2, #2
+// DEBUG-CHECK-NEXT: orrs r3, r2
+// DEBUG-CHECK-NEXT: lsls r3, r3, #16
+// DEBUG-CHECK-NEXT: lsrs r3, r3, #16
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #16]
+// DEBUG-CHECK-NEXT: orrs r3, r2
+// DEBUG-CHECK-NEXT: str r3, [r1, #12]
+// DEBUG-CHECK-NEXT: dsb sy
+// DEBUG-CHECK-NEXT: isb sy
+// DEBUG-CHECK-NEXT: b.n
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: .word 0x05fa0000
 
-// MINSIZE-CHECK-NEXT: dsb sy
 // MINSIZE-CHECK-NEXT: ldr r1, [pc, #20]
 // MINSIZE-CHECK-NEXT: ldr r3, [pc, #24]
 // MINSIZE-CHECK-NEXT: ldr r2, [r1, #12]
@@ -309,7 +324,6 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // MINSIZE-CHECK-NEXT: .word 0x0000fff9
 // MINSIZE-CHECK-NEXT: .word 0x05fa0004
 
-// MAXSPEED-CHECK-NEXT: dsb sy
 // MAXSPEED-CHECK-NEXT: ldr r1, [pc, #20]
 // MAXSPEED-CHECK-NEXT: ldr r3, [pc, #24]
 // MAXSPEED-CHECK-NEXT: ldr r2, [r1, #12]
