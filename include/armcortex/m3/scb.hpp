@@ -471,6 +471,6 @@ namespace ArmCortex::Scb {
     [[gnu::always_inline]] static inline void clearDebugFaultStatus()
     {
         constexpr uint32_t DFSR_W1C_MASK = 0x1Fu;  // bits 0-4
-        SCB->CFSR = DFSR_W1C_MASK;
+        SCB->DFSR = DFSR_W1C_MASK;
     }
 }
