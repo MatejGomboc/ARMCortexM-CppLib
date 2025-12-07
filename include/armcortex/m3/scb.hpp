@@ -208,6 +208,7 @@ namespace ArmCortex::Scb {
 
     //! Configurable fault status register.
     //! Combines MemManage, BusFault, and UsageFault status registers.
+    //! All status bits are W1C (write-1-to-clear).
     union CFSR {
         struct Bits {
             // MemManage Fault Status Register (MMFSR) - bits 0:7
@@ -252,6 +253,7 @@ namespace ArmCortex::Scb {
     };
 
     //! HardFault status register.
+    //! All status bits are W1C (write-1-to-clear).
     union HFSR {
         struct Bits {
             uint32_t RESERVED0: 1;
@@ -272,6 +274,7 @@ namespace ArmCortex::Scb {
     };
 
     //! Debug fault status register.
+    //! All status bits are W1C (write-1-to-clear).
     union DFSR {
         struct Bits {
             uint32_t HALTED: 1; //!< Halt request debug event.
@@ -336,5 +339,138 @@ namespace ArmCortex::Scb {
     {
         AIRCR aircr { SCB->AIRCR };
         return aircr.bits.PRIGROUP;
+    }
+
+    // =========================================================================
+    // ICSR W1S/W1C Helper Functions
+    // =========================================================================
+
+    //! Check if SysTick exception is pending.
+    [[gnu::always_inline]] static inline bool isSysTickPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.PENDSTSET;
+    }
+
+    //! Set SysTick exception pending. PENDSTSET is W1S (write-1-to-set).
+    [[gnu::always_inline]] static inline void setSysTickPending()
+    {
+        constexpr uint32_t PENDSTSET_BIT = uint32_t{1} << 26;
+        SCB->ICSR = PENDSTSET_BIT;
+    }
+
+    //! Clear SysTick exception pending. PENDSTCLR is W1C (write-1-to-clear).
+    [[gnu::always_inline]] static inline void clearSysTickPending()
+    {
+        constexpr uint32_t PENDSTCLR_BIT = uint32_t{1} << 25;
+        SCB->ICSR = PENDSTCLR_BIT;
+    }
+
+    //! Check if PendSV exception is pending.
+    [[gnu::always_inline]] static inline bool isPendSVPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.PENDSVSET;
+    }
+
+    //! Set PendSV exception pending. PENDSVSET is W1S (write-1-to-set).
+    [[gnu::always_inline]] static inline void setPendSV()
+    {
+        constexpr uint32_t PENDSVSET_BIT = uint32_t{1} << 28;
+        SCB->ICSR = PENDSVSET_BIT;
+    }
+
+    //! Clear PendSV exception pending. PENDSVCLR is W1C (write-1-to-clear).
+    [[gnu::always_inline]] static inline void clearPendSV()
+    {
+        constexpr uint32_t PENDSVCLR_BIT = uint32_t{1} << 27;
+        SCB->ICSR = PENDSVCLR_BIT;
+    }
+
+    //! Check if NMI exception is pending.
+    [[gnu::always_inline]] static inline bool isNMIPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.NMIPENDSET;
+    }
+
+    //! Trigger NMI exception. NMIPENDSET is W1S (write-1-to-set).
+    //! \note NMI cannot be cleared by software once set.
+    [[gnu::always_inline]] static inline void triggerNMI()
+    {
+        constexpr uint32_t NMIPENDSET_BIT = uint32_t{1} << 31;
+        SCB->ICSR = NMIPENDSET_BIT;
+    }
+
+    // =========================================================================
+    // CFSR W1C Helper Functions (Configurable Fault Status)
+    // =========================================================================
+
+    //! Get the current configurable fault status.
+    [[gnu::always_inline]] static inline CFSR getFaultStatus()
+    {
+        return CFSR { SCB->CFSR };
+    }
+
+    //! Clear all MemManage fault flags. All MMFSR bits are W1C.
+    [[gnu::always_inline]] static inline void clearMemManageFaults()
+    {
+        constexpr uint32_t MMFSR_W1C_MASK = 0x9Bu;  // bits 0,1,3,4,7
+        SCB->CFSR = MMFSR_W1C_MASK;
+    }
+
+    //! Clear all BusFault flags. All BFSR bits are W1C.
+    [[gnu::always_inline]] static inline void clearBusFaults()
+    {
+        constexpr uint32_t BFSR_W1C_MASK = 0x9F00u;  // bits 8,9,10,11,12,15
+        SCB->CFSR = BFSR_W1C_MASK;
+    }
+
+    //! Clear all UsageFault flags. All UFSR bits are W1C.
+    [[gnu::always_inline]] static inline void clearUsageFaults()
+    {
+        constexpr uint32_t UFSR_W1C_MASK = 0x030F0000u;  // bits 16,17,18,19,24,25
+        SCB->CFSR = UFSR_W1C_MASK;
+    }
+
+    //! Clear all configurable fault flags (MemManage, BusFault, UsageFault).
+    [[gnu::always_inline]] static inline void clearAllConfigurableFaults()
+    {
+        constexpr uint32_t CFSR_W1C_MASK = 0x030F9F9Bu;  // all W1C bits
+        SCB->CFSR = CFSR_W1C_MASK;
+    }
+
+    // =========================================================================
+    // HFSR W1C Helper Functions (HardFault Status)
+    // =========================================================================
+
+    //! Get the current HardFault status.
+    [[gnu::always_inline]] static inline HFSR getHardFaultStatus()
+    {
+        return HFSR { SCB->HFSR };
+    }
+
+    //! Clear all HardFault status flags. All HFSR status bits are W1C.
+    [[gnu::always_inline]] static inline void clearHardFaultStatus()
+    {
+        constexpr uint32_t HFSR_W1C_MASK = 0xC0000002u;  // bits 1, 30, 31
+        SCB->HFSR = HFSR_W1C_MASK;
+    }
+
+    // =========================================================================
+    // DFSR W1C Helper Functions (Debug Fault Status)
+    // =========================================================================
+
+    //! Get the current debug fault status.
+    [[gnu::always_inline]] static inline DFSR getDebugFaultStatus()
+    {
+        return DFSR { SCB->DFSR };
+    }
+
+    //! Clear all debug fault status flags. All DFSR bits are W1C.
+    [[gnu::always_inline]] static inline void clearDebugFaultStatus()
+    {
+        constexpr uint32_t DFSR_W1C_MASK = 0x1Fu;  // bits 0-4
+        SCB->DFSR = DFSR_W1C_MASK;
     }
 }

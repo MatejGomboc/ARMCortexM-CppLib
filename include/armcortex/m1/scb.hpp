@@ -227,4 +227,65 @@ namespace ArmCortex::Scb {
 
         while(true);
     }
+
+    // =========================================================================
+    // ICSR W1S/W1C Helper Functions
+    // =========================================================================
+
+    //! Check if SysTick exception is pending.
+    [[gnu::always_inline]] static inline bool isSysTickPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.PENDSTSET;
+    }
+
+    //! Set SysTick exception pending. PENDSTSET is W1S (write-1-to-set).
+    [[gnu::always_inline]] static inline void setSysTickPending()
+    {
+        constexpr uint32_t PENDSTSET_BIT = uint32_t{1} << 26;
+        SCB->ICSR = PENDSTSET_BIT;
+    }
+
+    //! Clear SysTick exception pending. PENDSTCLR is W1C (write-1-to-clear).
+    [[gnu::always_inline]] static inline void clearSysTickPending()
+    {
+        constexpr uint32_t PENDSTCLR_BIT = uint32_t{1} << 25;
+        SCB->ICSR = PENDSTCLR_BIT;
+    }
+
+    //! Check if PendSV exception is pending.
+    [[gnu::always_inline]] static inline bool isPendSVPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.PENDSVSET;
+    }
+
+    //! Set PendSV exception pending. PENDSVSET is W1S (write-1-to-set).
+    [[gnu::always_inline]] static inline void setPendSV()
+    {
+        constexpr uint32_t PENDSVSET_BIT = uint32_t{1} << 28;
+        SCB->ICSR = PENDSVSET_BIT;
+    }
+
+    //! Clear PendSV exception pending. PENDSVCLR is W1C (write-1-to-clear).
+    [[gnu::always_inline]] static inline void clearPendSV()
+    {
+        constexpr uint32_t PENDSVCLR_BIT = uint32_t{1} << 27;
+        SCB->ICSR = PENDSVCLR_BIT;
+    }
+
+    //! Check if NMI exception is pending.
+    [[gnu::always_inline]] static inline bool isNMIPending()
+    {
+        ICSR icsr { SCB->ICSR };
+        return icsr.bits.NMIPENDSET;
+    }
+
+    //! Trigger NMI exception. NMIPENDSET is W1S (write-1-to-set).
+    //! \note NMI cannot be cleared by software once set.
+    [[gnu::always_inline]] static inline void triggerNMI()
+    {
+        constexpr uint32_t NMIPENDSET_BIT = uint32_t{1} << 31;
+        SCB->ICSR = NMIPENDSET_BIT;
+    }
 }
