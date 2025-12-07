@@ -313,7 +313,27 @@ extern "C" [[gnu::naked]] bool test_is_systick_pending() {
 }
 
 // CHECK-LABEL: <test_is_systick_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r0, [r3, #4]
+// DEBUG-CHECK-NEXT: lsrs r0, r0, #24
+// DEBUG-CHECK-NEXT: lsls r0, r0, #29
+// DEBUG-CHECK-NEXT: lsrs r0, r0, #31
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r0, [r3, #4]
+// MINSIZE-CHECK-NEXT: lsls r0, r0, #5
+// MINSIZE-CHECK-NEXT: lsrs r0, r0, #31
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r0, [r3, #4]
+// MAXSPEED-CHECK-NEXT: lsls r0, r0, #5
+// MAXSPEED-CHECK-NEXT: lsrs r0, r0, #31
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test setSysTickPending() - writes 1 to bit 26 (W1S)
@@ -322,7 +342,25 @@ extern "C" [[gnu::naked]] void test_set_systick_pending() {
 }
 
 // CHECK-LABEL: <test_set_systick_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #19
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #19
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #19
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearSysTickPending() - writes 1 to bit 25 (W1C)
@@ -331,7 +369,25 @@ extern "C" [[gnu::naked]] void test_clear_systick_pending() {
 }
 
 // CHECK-LABEL: <test_clear_systick_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #18
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #18
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #18
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test isPendSVPending() - reads ICSR and checks bit 28
@@ -340,7 +396,27 @@ extern "C" [[gnu::naked]] bool test_is_pendsv_pending() {
 }
 
 // CHECK-LABEL: <test_is_pendsv_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #8]
+// DEBUG-CHECK-NEXT: ldr r0, [r3, #4]
+// DEBUG-CHECK-NEXT: lsrs r0, r0, #24
+// DEBUG-CHECK-NEXT: lsls r0, r0, #27
+// DEBUG-CHECK-NEXT: lsrs r0, r0, #31
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r0, [r3, #4]
+// MINSIZE-CHECK-NEXT: lsls r0, r0, #3
+// MINSIZE-CHECK-NEXT: lsrs r0, r0, #31
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r0, [r3, #4]
+// MAXSPEED-CHECK-NEXT: lsls r0, r0, #3
+// MAXSPEED-CHECK-NEXT: lsrs r0, r0, #31
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test setPendSV() - writes 1 to bit 28 (W1S)
@@ -349,7 +425,25 @@ extern "C" [[gnu::naked]] void test_set_pendsv() {
 }
 
 // CHECK-LABEL: <test_set_pendsv>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #21
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #21
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #21
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearPendSV() - writes 1 to bit 27 (W1C)
@@ -358,7 +452,25 @@ extern "C" [[gnu::naked]] void test_clear_pendsv() {
 }
 
 // CHECK-LABEL: <test_clear_pendsv>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #20
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #20
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #20
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test isNMIPending() - reads ICSR and checks bit 31
@@ -367,7 +479,11 @@ extern "C" [[gnu::naked]] bool test_is_nmi_pending() {
 }
 
 // CHECK-LABEL: <test_is_nmi_pending>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
+// CHECK-NEXT: lsrs r0, r0, #31
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test triggerNMI() - writes 1 to bit 31 (W1S)
@@ -376,5 +492,23 @@ extern "C" [[gnu::naked]] void test_trigger_nmi() {
 }
 
 // CHECK-LABEL: <test_trigger_nmi>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #128
+// DEBUG-CHECK-NEXT: lsls r2, r2, #24
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #128
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #24
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #128
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: lsls r2, r2, #24
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
