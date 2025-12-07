@@ -603,7 +603,10 @@ extern "C" [[gnu::naked]] bool test_is_systick_pending() {
 }
 
 // CHECK-LABEL: <test_is_systick_pending>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
+// CHECK-NEXT: ubfx r0, r0, #26, #1
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test setSysTickPending() - writes 1 to bit 26 (W1S)
@@ -612,7 +615,22 @@ extern "C" [[gnu::naked]] void test_set_systick_pending() {
 }
 
 // CHECK-LABEL: <test_set_systick_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #67108864
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #67108864
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #67108864
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearSysTickPending() - writes 1 to bit 25 (W1C)
@@ -621,7 +639,22 @@ extern "C" [[gnu::naked]] void test_clear_systick_pending() {
 }
 
 // CHECK-LABEL: <test_clear_systick_pending>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #33554432
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #33554432
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #33554432
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test isPendSVPending() - reads ICSR and checks bit 28
@@ -630,7 +663,10 @@ extern "C" [[gnu::naked]] bool test_is_pendsv_pending() {
 }
 
 // CHECK-LABEL: <test_is_pendsv_pending>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
+// CHECK-NEXT: ubfx r0, r0, #28, #1
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test setPendSV() - writes 1 to bit 28 (W1S)
@@ -639,7 +675,22 @@ extern "C" [[gnu::naked]] void test_set_pendsv() {
 }
 
 // CHECK-LABEL: <test_set_pendsv>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #268435456
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #268435456
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #268435456
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearPendSV() - writes 1 to bit 27 (W1C)
@@ -648,7 +699,22 @@ extern "C" [[gnu::naked]] void test_clear_pendsv() {
 }
 
 // CHECK-LABEL: <test_clear_pendsv>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #134217728
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #134217728
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #134217728
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test isNMIPending() - reads ICSR and checks bit 31
@@ -657,7 +723,11 @@ extern "C" [[gnu::naked]] bool test_is_nmi_pending() {
 }
 
 // CHECK-LABEL: <test_is_nmi_pending>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
+// CHECK-NEXT: lsrs r0, r0, #31
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test triggerNMI() - writes 1 to bit 31 (W1S)
@@ -666,7 +736,22 @@ extern "C" [[gnu::naked]] void test_trigger_nmi() {
 }
 
 // CHECK-LABEL: <test_trigger_nmi>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #2147483648
+// DEBUG-CHECK-NEXT: str r2, [r3, #4]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #2147483648
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #4]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #2147483648
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #4]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // =============================================================================
@@ -679,7 +764,9 @@ extern "C" [[gnu::naked]] ArmCortex::Scb::CFSR test_get_fault_status() {
 }
 
 // CHECK-LABEL: <test_get_fault_status>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r0, [r3, #40]
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test clearMemManageFaults() - writes 0x9B to CFSR (W1C mask)
@@ -688,7 +775,25 @@ extern "C" [[gnu::naked]] void test_clear_memmanage_faults() {
 }
 
 // CHECK-LABEL: <test_clear_memmanage_faults>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #155
+// DEBUG-CHECK-NEXT: str r2, [r3, #40]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #155
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #40]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #155
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #40]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearBusFaults() - writes 0x9F00 to CFSR (W1C mask)
@@ -697,7 +802,22 @@ extern "C" [[gnu::naked]] void test_clear_bus_faults() {
 }
 
 // CHECK-LABEL: <test_clear_bus_faults>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: mov.w r2, #40704
+// DEBUG-CHECK-NEXT: str r2, [r3, #40]
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: mov.w r2, #40704
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #40]
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: mov.w r2, #40704
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #0]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #40]
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
 
 // Test clearUsageFaults() - writes 0x030F0000 to CFSR (W1C mask)
@@ -706,7 +826,12 @@ extern "C" [[gnu::naked]] void test_clear_usage_faults() {
 }
 
 // CHECK-LABEL: <test_clear_usage_faults>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #40]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
+// CHECK-NEXT: .word 0x030f0000
 // CHECK-EMPTY:
 
 // Test clearAllConfigurableFaults() - writes 0x030F9F9B to CFSR (W1C mask)
@@ -715,7 +840,12 @@ extern "C" [[gnu::naked]] void test_clear_all_configurable_faults() {
 }
 
 // CHECK-LABEL: <test_clear_all_configurable_faults>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #40]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
+// CHECK-NEXT: .word 0x030f9f9b
 // CHECK-EMPTY:
 
 // =============================================================================
@@ -728,7 +858,9 @@ extern "C" [[gnu::naked]] ArmCortex::Scb::HFSR test_get_hardfault_status() {
 }
 
 // CHECK-LABEL: <test_get_hardfault_status>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r0, [r3, #44]
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test clearHardFaultStatus() - writes 0xC0000002 to HFSR (W1C mask)
@@ -737,7 +869,12 @@ extern "C" [[gnu::naked]] void test_clear_hardfault_status() {
 }
 
 // CHECK-LABEL: <test_clear_hardfault_status>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r2, [pc, #8]
+// CHECK-NEXT: str r2, [r3, #44]
+// CHECK-NEXT: nop
+// CHECK-NEXT: .word 0xe000ed00
+// CHECK-NEXT: .word 0xc0000002
 // CHECK-EMPTY:
 
 // =============================================================================
@@ -750,7 +887,9 @@ extern "C" [[gnu::naked]] ArmCortex::Scb::DFSR test_get_debugfault_status() {
 }
 
 // CHECK-LABEL: <test_get_debugfault_status>:
-// TODO: Fill in after compilation
+// CHECK-NEXT: ldr r3, [pc, #0]
+// CHECK-NEXT: ldr r0, [r3, #48]
+// CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test clearDebugFaultStatus() - writes 0x1F to DFSR (W1C mask)
@@ -759,5 +898,23 @@ extern "C" [[gnu::naked]] void test_clear_debugfault_status() {
 }
 
 // CHECK-LABEL: <test_clear_debugfault_status>:
-// TODO: Fill in after compilation
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: movs r2, #31
+// DEBUG-CHECK-NEXT: str r2, [r3, #48]
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
+
+// MINSIZE-CHECK-NEXT: movs r2, #31
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: str r2, [r3, #48]
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+
+// MAXSPEED-CHECK-NEXT: movs r2, #31
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: str r2, [r3, #48]
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+
 // CHECK-EMPTY:
