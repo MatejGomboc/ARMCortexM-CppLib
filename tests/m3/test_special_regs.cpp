@@ -7,6 +7,7 @@ extern "C" [[gnu::naked]] uint32_t test_get_lr() {
 
 // CHECK-LABEL: <test_get_lr>:
 // CHECK-NEXT: mov r0, lr
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test getApsrReg()
@@ -89,6 +90,7 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 // CHECK-LABEL: <test_set_msp>:
 // CHECK-NEXT: ldr r3, [pc, #4]
 // CHECK-NEXT: msr MSP, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-NEXT: .word 0x20001000
 // CHECK-EMPTY:
 
@@ -130,6 +132,7 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 // CHECK-LABEL: <test_set_primask>:
 // CHECK-NEXT: movs r3, #1
 // CHECK-NEXT: msr PRIMASK, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test getControlReg()
@@ -151,6 +154,7 @@ extern "C" [[gnu::naked]] void test_set_control() {
 // CHECK-LABEL: <test_set_control>:
 // CHECK-NEXT: movs r3, #2
 // CHECK-NEXT: msr CONTROL, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // ============================================================================
@@ -176,6 +180,7 @@ extern "C" [[gnu::naked]] void test_set_faultmask() {
 // CHECK-LABEL: <test_set_faultmask>:
 // CHECK-NEXT: movs r3, #1
 // CHECK-NEXT: msr FAULTMASK, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test getBasepriReg()
@@ -197,6 +202,7 @@ extern "C" [[gnu::naked]] void test_set_basepri() {
 // CHECK-LABEL: <test_set_basepri>:
 // CHECK-NEXT: movs r3, #64
 // CHECK-NEXT: msr BASEPRI, r3
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
 
 // Test setBasepriMaxReg()
@@ -209,5 +215,5 @@ extern "C" [[gnu::naked]] void test_set_basepri_max() {
 // CHECK-LABEL: <test_set_basepri_max>:
 // CHECK-NEXT: movs r3, #128
 // CHECK-NEXT: msr BASEPRI_MAX, r3
-// CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: nop
 // CHECK-EMPTY:
