@@ -1,9 +1,8 @@
 #include "armcortex/m3/special_regs.hpp"
 
 // Test getLr()
-extern "C" [[gnu::naked]] void test_get_lr() {
-    uint32_t lr = ArmCortex::getLr();
-    (void)lr;
+extern "C" [[gnu::naked]] uint32_t test_get_lr() {
+    return ArmCortex::getLr();
 }
 
 // CHECK-LABEL: <test_get_lr>:
@@ -12,9 +11,8 @@ extern "C" [[gnu::naked]] void test_get_lr() {
 // CHECK-EMPTY:
 
 // Test getApsrReg()
-extern "C" [[gnu::naked]] void test_get_apsr() {
-    ArmCortex::PSR apsr = ArmCortex::getApsrReg();
-    (void)apsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_apsr() {
+    return ArmCortex::getApsrReg();
 }
 
 // CHECK-LABEL: <test_get_apsr>:
@@ -22,9 +20,8 @@ extern "C" [[gnu::naked]] void test_get_apsr() {
 // CHECK-EMPTY:
 
 // Test getIpsrReg()
-extern "C" [[gnu::naked]] void test_get_ipsr() {
-    ArmCortex::PSR ipsr = ArmCortex::getIpsrReg();
-    (void)ipsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_ipsr() {
+    return ArmCortex::getIpsrReg();
 }
 
 // CHECK-LABEL: <test_get_ipsr>:
@@ -32,9 +29,8 @@ extern "C" [[gnu::naked]] void test_get_ipsr() {
 // CHECK-EMPTY:
 
 // Test getEpsrReg()
-extern "C" [[gnu::naked]] void test_get_epsr() {
-    ArmCortex::PSR epsr = ArmCortex::getEpsrReg();
-    (void)epsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_epsr() {
+    return ArmCortex::getEpsrReg();
 }
 
 // CHECK-LABEL: <test_get_epsr>:
@@ -42,9 +38,8 @@ extern "C" [[gnu::naked]] void test_get_epsr() {
 // CHECK-EMPTY:
 
 // Test getIepsrReg()
-extern "C" [[gnu::naked]] void test_get_iepsr() {
-    ArmCortex::PSR iepsr = ArmCortex::getIepsrReg();
-    (void)iepsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_iepsr() {
+    return ArmCortex::getIepsrReg();
 }
 
 // CHECK-LABEL: <test_get_iepsr>:
@@ -52,9 +47,8 @@ extern "C" [[gnu::naked]] void test_get_iepsr() {
 // CHECK-EMPTY:
 
 // Test getIapsrReg()
-extern "C" [[gnu::naked]] void test_get_iapsr() {
-    ArmCortex::PSR iapsr = ArmCortex::getIapsrReg();
-    (void)iapsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_iapsr() {
+    return ArmCortex::getIapsrReg();
 }
 
 // CHECK-LABEL: <test_get_iapsr>:
@@ -62,9 +56,8 @@ extern "C" [[gnu::naked]] void test_get_iapsr() {
 // CHECK-EMPTY:
 
 // Test getEapsrReg()
-extern "C" [[gnu::naked]] void test_get_eapsr() {
-    ArmCortex::PSR eapsr = ArmCortex::getEapsrReg();
-    (void)eapsr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_eapsr() {
+    return ArmCortex::getEapsrReg();
 }
 
 // CHECK-LABEL: <test_get_eapsr>:
@@ -72,9 +65,8 @@ extern "C" [[gnu::naked]] void test_get_eapsr() {
 // CHECK-EMPTY:
 
 // Test getPsrReg()
-extern "C" [[gnu::naked]] void test_get_psr() {
-    ArmCortex::PSR psr = ArmCortex::getPsrReg();
-    (void)psr;
+extern "C" [[gnu::naked]] ArmCortex::PSR test_get_psr() {
+    return ArmCortex::getPsrReg();
 }
 
 // CHECK-LABEL: <test_get_psr>:
@@ -82,9 +74,8 @@ extern "C" [[gnu::naked]] void test_get_psr() {
 // CHECK-EMPTY:
 
 // Test getMspReg()
-extern "C" [[gnu::naked]] void test_get_msp() {
-    uint32_t msp = ArmCortex::getMspReg();
-    (void)msp;
+extern "C" [[gnu::naked]] uint32_t test_get_msp() {
+    return ArmCortex::getMspReg();
 }
 
 // CHECK-LABEL: <test_get_msp>:
@@ -104,9 +95,8 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 // CHECK-EMPTY:
 
 // Test getPspReg()
-extern "C" [[gnu::naked]] void test_get_psp() {
-    uint32_t psp = ArmCortex::getPspReg();
-    (void)psp;
+extern "C" [[gnu::naked]] uint32_t test_get_psp() {
+    return ArmCortex::getPspReg();
 }
 
 // CHECK-LABEL: <test_get_psp>:
@@ -124,9 +114,8 @@ extern "C" [[gnu::naked]] void test_set_psp() {
 // CHECK-EMPTY:
 
 // Test getPrimaskReg()
-extern "C" [[gnu::naked]] void test_get_primask() {
-    ArmCortex::PRIMASK primask = ArmCortex::getPrimaskReg();
-    (void)primask;
+extern "C" [[gnu::naked]] ArmCortex::PRIMASK test_get_primask() {
+    return ArmCortex::getPrimaskReg();
 }
 
 // CHECK-LABEL: <test_get_primask>:
@@ -147,9 +136,8 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 // CHECK-EMPTY:
 
 // Test getControlReg()
-extern "C" [[gnu::naked]] void test_get_control() {
-    ArmCortex::CONTROL control = ArmCortex::getControlReg();
-    (void)control;
+extern "C" [[gnu::naked]] ArmCortex::CONTROL test_get_control() {
+    return ArmCortex::getControlReg();
 }
 
 // CHECK-LABEL: <test_get_control>:
@@ -174,9 +162,8 @@ extern "C" [[gnu::naked]] void test_set_control() {
 // ============================================================================
 
 // Test getFaultmaskReg()
-extern "C" [[gnu::naked]] void test_get_faultmask() {
-    ArmCortex::FAULTMASK faultmask = ArmCortex::getFaultmaskReg();
-    (void)faultmask;
+extern "C" [[gnu::naked]] ArmCortex::FAULTMASK test_get_faultmask() {
+    return ArmCortex::getFaultmaskReg();
 }
 
 // CHECK-LABEL: <test_get_faultmask>:
@@ -197,9 +184,8 @@ extern "C" [[gnu::naked]] void test_set_faultmask() {
 // CHECK-EMPTY:
 
 // Test getBasepriReg()
-extern "C" [[gnu::naked]] void test_get_basepri() {
-    ArmCortex::BASEPRI basepri = ArmCortex::getBasepriReg();
-    (void)basepri;
+extern "C" [[gnu::naked]] ArmCortex::BASEPRI test_get_basepri() {
+    return ArmCortex::getBasepriReg();
 }
 
 // CHECK-LABEL: <test_get_basepri>:
