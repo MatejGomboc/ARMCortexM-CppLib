@@ -6,8 +6,14 @@ extern "C" [[gnu::naked]] uint32_t test_get_lr() {
 }
 
 // CHECK-LABEL: <test_get_lr>:
-// CHECK-NEXT: mov r0, lr
+
+// DEBUG-CHECK-NEXT: mov r0, lr
+
+// MINSIZE-CHECK-NEXT: mov r0, lr
+
+// MAXSPEED-CHECK-NEXT: mov r0, lr
 // MAXSPEED-CHECK-NEXT: nop
+
 // CHECK-EMPTY:
 
 // Test getApsrReg()
@@ -88,10 +94,20 @@ extern "C" [[gnu::naked]] void test_set_msp() {
 }
 
 // CHECK-LABEL: <test_set_msp>:
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: msr MSP, r3
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: msr MSP, r3
+// DEBUG-CHECK-NEXT: .word 0x20001000
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: msr MSP, r3
+// MINSIZE-CHECK-NEXT: .word 0x20001000
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: msr MSP, r3
 // MAXSPEED-CHECK-NEXT: nop
-// CHECK-NEXT: .word 0x20001000
+// MAXSPEED-CHECK-NEXT: .word 0x20001000
+
 // CHECK-EMPTY:
 
 // Test getPspReg()
@@ -109,10 +125,22 @@ extern "C" [[gnu::naked]] void test_set_psp() {
 }
 
 // CHECK-LABEL: <test_set_psp>:
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: msr PSP, r3
-// CHECK-NEXT: nop
-// CHECK-NEXT: .word 0x20002000
+
+// DEBUG-CHECK-NEXT: ldr r3, [pc, #4]
+// DEBUG-CHECK-NEXT: msr PSP, r3
+// DEBUG-CHECK-NEXT: nop
+// DEBUG-CHECK-NEXT: .word 0x20002000
+
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: msr PSP, r3
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0x20002000
+
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #4]
+// MAXSPEED-CHECK-NEXT: msr PSP, r3
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0x20002000
+
 // CHECK-EMPTY:
 
 // Test getPrimaskReg()
@@ -132,9 +160,17 @@ extern "C" [[gnu::naked]] void test_set_primask() {
 }
 
 // CHECK-LABEL: <test_set_primask>:
-// CHECK-NEXT: movs r3, #1
-// CHECK-NEXT: msr PRIMASK, r3
+
+// DEBUG-CHECK-NEXT: movs r3, #1
+// DEBUG-CHECK-NEXT: msr PRIMASK, r3
+
+// MINSIZE-CHECK-NEXT: movs r3, #1
+// MINSIZE-CHECK-NEXT: msr PRIMASK, r3
+
+// MAXSPEED-CHECK-NEXT: movs r3, #1
+// MAXSPEED-CHECK-NEXT: msr PRIMASK, r3
 // MAXSPEED-CHECK-NEXT: nop
+
 // CHECK-EMPTY:
 
 // Test getControlReg()
@@ -154,7 +190,15 @@ extern "C" [[gnu::naked]] void test_set_control() {
 }
 
 // CHECK-LABEL: <test_set_control>:
-// CHECK-NEXT: movs r3, #2
-// CHECK-NEXT: msr CONTROL, r3
+
+// DEBUG-CHECK-NEXT: movs r3, #2
+// DEBUG-CHECK-NEXT: msr CONTROL, r3
+
+// MINSIZE-CHECK-NEXT: movs r3, #2
+// MINSIZE-CHECK-NEXT: msr CONTROL, r3
+
+// MAXSPEED-CHECK-NEXT: movs r3, #2
+// MAXSPEED-CHECK-NEXT: msr CONTROL, r3
 // MAXSPEED-CHECK-NEXT: nop
+
 // CHECK-EMPTY:
