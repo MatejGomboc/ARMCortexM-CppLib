@@ -88,106 +88,106 @@ namespace ArmCortex {
         }
     };
 
-    static inline uint32_t getLr()
+    [[gnu::always_inline]] static inline uint32_t getLr()
     {
         uint32_t value;
         asm volatile("MOV %0, LR" : "=r" (value) : : "cc");
         return value;
     }
 
-    static inline PSR getApsrReg()
+    [[gnu::always_inline]] static inline PSR getApsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, APSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getIpsrReg()
+    [[gnu::always_inline]] static inline PSR getIpsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, IPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getEpsrReg()
+    [[gnu::always_inline]] static inline PSR getEpsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, EPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getIepsrReg()
+    [[gnu::always_inline]] static inline PSR getIepsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, IEPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getIapsrReg()
+    [[gnu::always_inline]] static inline PSR getIapsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, IAPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getEapsrReg()
+    [[gnu::always_inline]] static inline PSR getEapsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, EAPSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline PSR getPsrReg()
+    [[gnu::always_inline]] static inline PSR getPsrReg()
     {
         PSR psr;
         asm volatile("MRS %0, PSR" : "=r" (psr.value) : : "cc");
         return psr;
     }
 
-    static inline uint32_t getMspReg()
+    [[gnu::always_inline]] static inline uint32_t getMspReg()
     {
         uint32_t value;
         asm volatile("MRS %0, MSP" : "=r" (value) : : "cc");
         return value;
     }
 
-    static inline void setMspReg(uint32_t value)
+    [[gnu::always_inline]] static inline void setMspReg(uint32_t value)
     {
         asm volatile("MSR MSP, %0" : : "r" (value) : "cc", "memory");
     }
 
-    static inline uint32_t getPspReg()
+    [[gnu::always_inline]] static inline uint32_t getPspReg()
     {
         uint32_t value;
         asm volatile("MRS %0, PSP" : "=r" (value) : : "cc");
         return value;
     }
 
-    static inline void setPspReg(uint32_t value)
+    [[gnu::always_inline]] static inline void setPspReg(uint32_t value)
     {
         asm volatile("MSR PSP, %0" : : "r" (value) : "cc", "memory");
     }
 
-    static inline PRIMASK getPrimaskReg()
+    [[gnu::always_inline]] static inline PRIMASK getPrimaskReg()
     {
         PRIMASK primask;
         asm volatile("MRS %0, PRIMASK" : "=r" (primask.value) : : "cc");
         return primask;
     }
 
-    static inline void setPrimaskReg(PRIMASK primask)
+    [[gnu::always_inline]] static inline void setPrimaskReg(PRIMASK primask)
     {
         asm volatile("MSR PRIMASK, %0" : : "r" (primask.value) : "cc", "memory");
     }
 
-    static inline CONTROL getControlReg()
+    [[gnu::always_inline]] static inline CONTROL getControlReg()
     {
         CONTROL control;
         asm volatile("MRS %0, CONTROL" : "=r" (control.value) : : "cc");
         return control;
     }
 
-    static inline void setControlReg(CONTROL control)
+    [[gnu::always_inline]] static inline void setControlReg(CONTROL control)
     {
         asm volatile("MSR CONTROL, %0" : : "r" (control.value) : "cc", "memory");
     }
