@@ -21,5 +21,5 @@ extern "C" [[gnu::naked]] uint32_t test_rrx(uint32_t value) {
 }
 
 // CHECK-LABEL: <test_rrx>:
-// CHECK-NEXT: rrx r0, r0
+// CHECK-NEXT: mov.w r0, r0, rrx
 // CHECK-EMPTY:
