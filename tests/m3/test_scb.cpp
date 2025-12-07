@@ -484,15 +484,16 @@ extern "C" [[gnu::naked]] void test_read_afsr() {
 // Helper functions (always inlined with [[gnu::always_inline]])
 // =============================================================================
 
-// Test getPriorityGrouping function
-extern "C" [[gnu::naked]] void test_get_priority_grouping() {
-    uint32_t prigroup = ArmCortex::Scb::getPriorityGrouping();
-    (void)prigroup;
+// Test getPriorityGrouping function (always inlined)
+// Returns PRIGROUP field (bits 10:8) from AIRCR - must return value to prevent optimization
+extern "C" [[gnu::naked]] uint32_t test_get_priority_grouping() {
+    return ArmCortex::Scb::getPriorityGrouping();
 }
 
 // CHECK-LABEL: <test_get_priority_grouping>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #12]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #12]
+// CHECK-NEXT: ubfx r0, r0, #8, #3
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
