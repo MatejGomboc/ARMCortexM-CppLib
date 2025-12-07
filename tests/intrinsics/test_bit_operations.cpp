@@ -15,11 +15,3 @@ extern "C" [[gnu::naked]] uint32_t test_rbit(uint32_t value) {
 // CHECK-LABEL: <test_rbit>:
 // CHECK-NEXT: rbit r0, r0
 // CHECK-EMPTY:
-
-extern "C" [[gnu::naked]] uint32_t test_rrx(uint32_t value) {
-    return ArmCortex::asmRrx(value);
-}
-
-// CHECK-LABEL: <test_rrx>:
-// CHECK-NEXT: mov.w r0, r0, rrx
-// CHECK-EMPTY:
