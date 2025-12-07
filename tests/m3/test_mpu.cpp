@@ -7,7 +7,7 @@ extern "C" [[gnu::naked]] auto test_read_type() {
 
 // CHECK-LABEL: <test_read_type>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #144]
+// CHECK-NEXT: ldr.w r0, [r3, #144]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -19,7 +19,7 @@ extern "C" [[gnu::naked]] auto test_read_ctrl() {
 
 // CHECK-LABEL: <test_read_ctrl>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #148]
+// CHECK-NEXT: ldr.w r0, [r3, #148]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -58,7 +58,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rnr() {
 
 // CHECK-LABEL: <test_read_rnr>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #152]
+// CHECK-NEXT: ldr.w r0, [r3, #152]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -94,7 +94,7 @@ extern "C" [[gnu::naked]] auto test_read_rbar() {
 
 // CHECK-LABEL: <test_read_rbar>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #156]
+// CHECK-NEXT: ldr.w r0, [r3, #156]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -139,7 +139,7 @@ extern "C" [[gnu::naked]] auto test_read_rasr() {
 
 // CHECK-LABEL: <test_read_rasr>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #160]
+// CHECK-NEXT: ldr.w r0, [r3, #160]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -189,7 +189,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rbar_a1() {
 
 // CHECK-LABEL: <test_read_rbar_a1>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #164]
+// CHECK-NEXT: ldr.w r0, [r3, #164]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -226,7 +226,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rasr_a1() {
 
 // CHECK-LABEL: <test_read_rasr_a1>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #168]
+// CHECK-NEXT: ldr.w r0, [r3, #168]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -272,7 +272,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rbar_a2() {
 
 // CHECK-LABEL: <test_read_rbar_a2>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #172]
+// CHECK-NEXT: ldr.w r0, [r3, #172]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -317,7 +317,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rasr_a2() {
 
 // CHECK-LABEL: <test_read_rasr_a2>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #176]
+// CHECK-NEXT: ldr.w r0, [r3, #176]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -363,7 +363,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rbar_a3() {
 
 // CHECK-LABEL: <test_read_rbar_a3>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #180]
+// CHECK-NEXT: ldr.w r0, [r3, #180]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
@@ -408,7 +408,7 @@ extern "C" [[gnu::naked]] uint32_t test_read_rasr_a3() {
 
 // CHECK-LABEL: <test_read_rasr_a3>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #184]
+// CHECK-NEXT: ldr.w r0, [r3, #184]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
