@@ -339,3 +339,79 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // MAXSPEED-CHECK-NEXT: .word 0x05fa0004
 
 // CHECK-EMPTY:
+
+// =============================================================================
+// ICSR W1S/W1C Helper Function Tests
+// =============================================================================
+
+// Test isSysTickPending() - reads ICSR and checks bit 26
+extern "C" [[gnu::naked]] bool test_is_systick_pending() {
+    return ArmCortex::Scb::isSysTickPending();
+}
+
+// CHECK-LABEL: <test_is_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test setSysTickPending() - writes 1 to bit 26 (W1S)
+extern "C" [[gnu::naked]] void test_set_systick_pending() {
+    ArmCortex::Scb::setSysTickPending();
+}
+
+// CHECK-LABEL: <test_set_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearSysTickPending() - writes 1 to bit 25 (W1C)
+extern "C" [[gnu::naked]] void test_clear_systick_pending() {
+    ArmCortex::Scb::clearSysTickPending();
+}
+
+// CHECK-LABEL: <test_clear_systick_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test isPendSVPending() - reads ICSR and checks bit 28
+extern "C" [[gnu::naked]] bool test_is_pendsv_pending() {
+    return ArmCortex::Scb::isPendSVPending();
+}
+
+// CHECK-LABEL: <test_is_pendsv_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test setPendSV() - writes 1 to bit 28 (W1S)
+extern "C" [[gnu::naked]] void test_set_pendsv() {
+    ArmCortex::Scb::setPendSV();
+}
+
+// CHECK-LABEL: <test_set_pendsv>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test clearPendSV() - writes 1 to bit 27 (W1C)
+extern "C" [[gnu::naked]] void test_clear_pendsv() {
+    ArmCortex::Scb::clearPendSV();
+}
+
+// CHECK-LABEL: <test_clear_pendsv>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test isNMIPending() - reads ICSR and checks bit 31
+extern "C" [[gnu::naked]] bool test_is_nmi_pending() {
+    return ArmCortex::Scb::isNMIPending();
+}
+
+// CHECK-LABEL: <test_is_nmi_pending>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
+
+// Test triggerNMI() - writes 1 to bit 31 (W1S)
+extern "C" [[gnu::naked]] void test_trigger_nmi() {
+    ArmCortex::Scb::triggerNMI();
+}
+
+// CHECK-LABEL: <test_trigger_nmi>:
+// TODO: Fill in after compilation
+// CHECK-EMPTY:
