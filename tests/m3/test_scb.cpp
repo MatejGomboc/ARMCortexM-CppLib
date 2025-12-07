@@ -481,7 +481,7 @@ extern "C" [[gnu::naked]] void test_read_afsr() {
 // CHECK-EMPTY:
 
 // =============================================================================
-// Helper functions
+// Helper functions (always inlined with [[gnu::always_inline]])
 // =============================================================================
 
 // Test getPriorityGrouping function
@@ -496,7 +496,7 @@ extern "C" [[gnu::naked]] void test_get_priority_grouping() {
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
-// Test setPriorityGrouping function (now always inlined)
+// Test setPriorityGrouping function (always inlined)
 extern "C" [[gnu::naked]] void test_set_priority_grouping() {
     ArmCortex::Scb::setPriorityGrouping(3);
 }
@@ -504,28 +504,45 @@ extern "C" [[gnu::naked]] void test_set_priority_grouping() {
 // CHECK-LABEL: &lt;test_set_priority_grouping&gt;:
 // CHECK-NEXT: dsb sy
 
-// DEBUG-CHECK: bfi r3, r1, #8, #3
-// DEBUG-CHECK: movt r3, #1530
-// DEBUG-CHECK: str r3, [r2, #12]
-// DEBUG-CHECK: dsb sy
-// DEBUG-CHECK: isb sy
-// DEBUG-CHECK: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #20]
+// DEBUG-CHECK-NEXT: ldr r3, [r2, #12]
+// DEBUG-CHECK-NEXT: movs r1, #3
+// DEBUG-CHECK-NEXT: bfi r3, r1, #8, #3
+// DEBUG-CHECK-NEXT: movt r3, #1530
+// DEBUG-CHECK-NEXT: str r3, [r2, #12]
+// DEBUG-CHECK-NEXT: dsb sy
+// DEBUG-CHECK-NEXT: isb sy
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
 
-// MINSIZE-CHECK: str r3, [r1, #12]
-// MINSIZE-CHECK: dsb sy
-// MINSIZE-CHECK: isb sy
-// MINSIZE-CHECK: .word 0xe000ed00
-// MINSIZE-CHECK: .word 0x05fa0300
+// MINSIZE-CHECK-NEXT: ldr r1, [pc, #24]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #28]
+// MINSIZE-CHECK-NEXT: ldr r2, [r1, #12]
+// MINSIZE-CHECK-NEXT: bic.w r2, r2, #1792
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #16
+// MINSIZE-CHECK-NEXT: lsrs r2, r2, #16
+// MINSIZE-CHECK-NEXT: orrs r3, r2
+// MINSIZE-CHECK-NEXT: str r3, [r1, #12]
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: isb sy
+// MINSIZE-CHECK-NEXT: nop
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x05fa0300
 
-// MAXSPEED-CHECK: str r3, [r1, #12]
-// MAXSPEED-CHECK: dsb sy
-// MAXSPEED-CHECK: isb sy
-// MAXSPEED-CHECK: .word 0xe000ed00
-// MAXSPEED-CHECK: .word 0x05fa0300
+// MAXSPEED-CHECK-NEXT: movw r0, #63743
+// MAXSPEED-CHECK-NEXT: ldr r1, [pc, #16]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #20]
+// MAXSPEED-CHECK-NEXT: ldr r2, [r1, #12]
+// MAXSPEED-CHECK-NEXT: ands r2, r0
+// MAXSPEED-CHECK-NEXT: orrs r3, r2
+// MAXSPEED-CHECK-NEXT: str r3, [r1, #12]
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: isb sy
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x05fa0300
 
 // CHECK-EMPTY:
 
-// Test systemReset function (now always inlined)
+// Test systemReset function (always inlined)
 extern "C" [[gnu::naked]] void test_system_reset() {
     ArmCortex::Scb::systemReset();
 }
@@ -533,28 +550,44 @@ extern "C" [[gnu::naked]] void test_system_reset() {
 // CHECK-LABEL: &lt;test_system_reset&gt;:
 // CHECK-NEXT: dsb sy
 
-// DEBUG-CHECK: bic.w r3, r3, #1
-// DEBUG-CHECK: bic.w r3, r3, #2
-// DEBUG-CHECK: orr.w r3, r3, #4
-// DEBUG-CHECK: movt r3, #1530
-// DEBUG-CHECK: str r3, [r2, #12]
-// DEBUG-CHECK: dsb sy
-// DEBUG-CHECK: isb sy
-// DEBUG-CHECK: b.n
-// DEBUG-CHECK: .word 0xe000ed00
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #28]
+// DEBUG-CHECK-NEXT: ldr r3, [r2, #12]
+// DEBUG-CHECK-NEXT: bic.w r3, r3, #1
+// DEBUG-CHECK-NEXT: bic.w r3, r3, #2
+// DEBUG-CHECK-NEXT: orr.w r3, r3, #4
+// DEBUG-CHECK-NEXT: movt r3, #1530
+// DEBUG-CHECK-NEXT: str r3, [r2, #12]
+// DEBUG-CHECK-NEXT: dsb sy
+// DEBUG-CHECK-NEXT: isb sy
+// DEBUG-CHECK-NEXT: b.n
+// DEBUG-CHECK-NEXT: .word 0xe000ed00
 
-// MINSIZE-CHECK: str r3, [r1, #12]
-// MINSIZE-CHECK: dsb sy
-// MINSIZE-CHECK: isb sy
-// MINSIZE-CHECK: b.n
-// MINSIZE-CHECK: .word 0xe000ed00
-// MINSIZE-CHECK: .word 0x05fa0004
+// MINSIZE-CHECK-NEXT: ldr r1, [pc, #24]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #28]
+// MINSIZE-CHECK-NEXT: ldr r2, [r1, #12]
+// MINSIZE-CHECK-NEXT: bic.w r2, r2, #7
+// MINSIZE-CHECK-NEXT: lsls r2, r2, #16
+// MINSIZE-CHECK-NEXT: lsrs r2, r2, #16
+// MINSIZE-CHECK-NEXT: orrs r3, r2
+// MINSIZE-CHECK-NEXT: str r3, [r1, #12]
+// MINSIZE-CHECK-NEXT: dsb sy
+// MINSIZE-CHECK-NEXT: isb sy
+// MINSIZE-CHECK-NEXT: b.n
+// MINSIZE-CHECK-NEXT: .word 0xe000ed00
+// MINSIZE-CHECK-NEXT: .word 0x05fa0004
 
-// MAXSPEED-CHECK: str r3, [r1, #12]
-// MAXSPEED-CHECK: dsb sy
-// MAXSPEED-CHECK: isb sy
-// MAXSPEED-CHECK: b.n
-// MAXSPEED-CHECK: .word 0xe000ed00
-// MAXSPEED-CHECK: .word 0x05fa0004
+// MAXSPEED-CHECK-NEXT: movw r0, #65528
+// MAXSPEED-CHECK-NEXT: ldr r1, [pc, #20]
+// MAXSPEED-CHECK-NEXT: ldr r3, [pc, #24]
+// MAXSPEED-CHECK-NEXT: ldr r2, [r1, #12]
+// MAXSPEED-CHECK-NEXT: ands r2, r0
+// MAXSPEED-CHECK-NEXT: orrs r3, r2
+// MAXSPEED-CHECK-NEXT: str r3, [r1, #12]
+// MAXSPEED-CHECK-NEXT: dsb sy
+// MAXSPEED-CHECK-NEXT: isb sy
+// MAXSPEED-CHECK-NEXT: b.n
+// MAXSPEED-CHECK-NEXT: nop
+// MAXSPEED-CHECK-NEXT: .word 0xe000ed00
+// MAXSPEED-CHECK-NEXT: .word 0x05fa0004
 
 // CHECK-EMPTY:
