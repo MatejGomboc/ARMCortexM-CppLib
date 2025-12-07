@@ -34,6 +34,23 @@ namespace ArmCortex {
         asm volatile("cpsid i" : : : "memory");
     }
 
+    //! Enable faults (clear FAULTMASK).
+    //! Enables all exceptions except NMI.
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmCpsieF()
+    {
+        asm volatile("cpsie f" : : : "memory");
+    }
+
+    //! Disable faults (set FAULTMASK).
+    //! Disables all exceptions except NMI.
+    //! Escalates all faults to HardFault which is then ignored.
+    //! \note Available on ARMv7-M (Cortex-M3, M4, M7) only.
+    [[gnu::always_inline]] static inline void asmCpsidF()
+    {
+        asm volatile("cpsid f" : : : "memory");
+    }
+
     //! Supervisor Call.
     //! Triggers SVCall exception with immediate value for handler identification.
     //! \tparam value 8-bit immediate value (0-255) passed to SVCall handler.
