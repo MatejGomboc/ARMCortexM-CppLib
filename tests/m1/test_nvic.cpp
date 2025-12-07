@@ -1,14 +1,15 @@
 #include "armcortex/m1/nvic.hpp"
 
 // Test isIrqEnabled()
-extern "C" [[gnu::naked]] void test_is_irq_enabled() {
-    bool enabled = ArmCortex::Nvic::isIrqEnabled(5);
-    (void)enabled;
+extern "C" [[gnu::naked]] bool test_is_irq_enabled() {
+    return ArmCortex::Nvic::isIrqEnabled(5);
 }
 
 // CHECK-LABEL: <test_is_irq_enabled>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #0]
+// CHECK-NEXT: lsls r0, r0, #26
+// CHECK-NEXT: lsrs r0, r0, #31
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
@@ -67,27 +68,32 @@ extern "C" [[gnu::naked]] void test_disable_irq() {
 // CHECK-EMPTY:
 
 // Test isIrqPending()
-extern "C" [[gnu::naked]] void test_is_irq_pending() {
-    bool pending = ArmCortex::Nvic::isIrqPending(3);
-    (void)pending;
+extern "C" [[gnu::naked]] bool test_is_irq_pending() {
+    return ArmCortex::Nvic::isIrqPending(3);
 }
 
 // CHECK-LABEL: <test_is_irq_pending>:
 
-// DEBUG-CHECK-NEXT: ldr r2, [pc, #4]
+// DEBUG-CHECK-NEXT: ldr r2, [pc, #8]
 // DEBUG-CHECK-NEXT: movs r3, #128
 // DEBUG-CHECK-NEXT: lsls r3, r3, #1
-// DEBUG-CHECK-NEXT: ldr r3, [r2, r3]
+// DEBUG-CHECK-NEXT: ldr r0, [r2, r3]
+// DEBUG-CHECK-NEXT: lsls r0, r0, #28
+// DEBUG-CHECK-NEXT: lsrs r0, r0, #31
 // DEBUG-CHECK-NEXT: .word 0xe000e100
 
-// MINSIZE-CHECK-NEXT: ldr r3, [pc, #0]
-// MINSIZE-CHECK-NEXT: ldr r3, [r3, #4]
+// MINSIZE-CHECK-NEXT: ldr r3, [pc, #4]
+// MINSIZE-CHECK-NEXT: ldr r0, [r3, #4]
+// MINSIZE-CHECK-NEXT: lsls r0, r0, #28
+// MINSIZE-CHECK-NEXT: lsrs r0, r0, #31
 // MINSIZE-CHECK-NEXT: .word 0xe000e1fc
 
 // MAXSPEED-CHECK-NEXT: movs r3, #128
-// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #4]
+// MAXSPEED-CHECK-NEXT: ldr r2, [pc, #8]
 // MAXSPEED-CHECK-NEXT: lsls r3, r3, #1
-// MAXSPEED-CHECK-NEXT: ldr r3, [r2, r3]
+// MAXSPEED-CHECK-NEXT: ldr r0, [r2, r3]
+// MAXSPEED-CHECK-NEXT: lsls r0, r0, #28
+// MAXSPEED-CHECK-NEXT: lsrs r0, r0, #31
 // MAXSPEED-CHECK-NEXT: .word 0xe000e100
 
 // CHECK-EMPTY:
@@ -157,16 +163,15 @@ extern "C" [[gnu::naked]] void test_clear_pending_irq() {
 // CHECK-EMPTY:
 
 // Test reading IPR (interrupt priority)
-extern "C" [[gnu::naked]] void test_read_ipr() {
-    uint8_t priority = ArmCortex::NVIC->IPR[5];
-    (void)priority;
+extern "C" [[gnu::naked]] uint8_t test_read_ipr() {
+    return ArmCortex::NVIC->IPR[5];
 }
 
 // CHECK-LABEL: <test_read_ipr>:
 // CHECK-NEXT: ldr r2, [pc, #4]
 // CHECK-NEXT: ldr r3, [pc, #8]
-// CHECK-NEXT: ldrb r3, [r2, r3]
-// CHECK-NEXT: nop
+// CHECK-NEXT: ldrb r0, [r2, r3]
+// CHECK-NEXT: uxtb r0, r0
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-NEXT: .word 0x00000305
 // CHECK-EMPTY:
