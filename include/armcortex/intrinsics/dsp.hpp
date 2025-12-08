@@ -1052,4 +1052,25 @@ namespace ArmCortex {
         return result;
     }
 
+    // =========================================================================
+    // Unsigned Multiply Accumulate Accumulate Long (32×32 + 32 + 32 → 64)
+    // =========================================================================
+
+    //! Unsigned Multiply Accumulate Accumulate Long.
+    //! Computes (a × b) + accLo + accHi, returning full 64-bit result.
+    //! Useful for multi-precision arithmetic and cryptography.
+    [[gnu::always_inline]] static inline uint64_t asmUmaal(uint32_t a, uint32_t b, uint32_t accLo, uint32_t accHi)
+    {
+        union {
+            struct { uint32_t lo; uint32_t hi; } parts;
+            uint64_t value;
+        } result;
+        result.parts.lo = accLo;
+        result.parts.hi = accHi;
+        asm volatile("umaal %0, %1, %2, %3"
+            : "+r" (result.parts.lo), "+r" (result.parts.hi)
+            : "r" (a), "r" (b));
+        return result.value;
+    }
+
 }
