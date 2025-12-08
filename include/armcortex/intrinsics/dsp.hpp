@@ -306,6 +306,36 @@ namespace ArmCortex {
     }
 
     // =========================================================================
+    // Parallel 16-bit Saturation Instructions
+    // =========================================================================
+
+    //! Signed Saturate 16-bit (2 lanes).
+    //! Saturates two signed 16-bit values to a signed range of -2^(sat-1) to 2^(sat-1)-1.
+    //! Sets Q flag if saturation occurs.
+    //! \tparam sat Saturation bit position (1-16).
+    template<uint8_t sat>
+    [[gnu::always_inline]] static inline uint32_t asmSsat16(uint32_t a)
+    {
+        static_assert(sat >= 1 && sat <= 16, "SSAT16 saturation must be 1-16");
+        uint32_t result;
+        asm volatile("ssat16 %0, %1, %2" : "=r" (result) : "I" (sat), "r" (a) : "cc");
+        return result;
+    }
+
+    //! Unsigned Saturate 16-bit (2 lanes).
+    //! Saturates two signed 16-bit values to an unsigned range of 0 to 2^sat-1.
+    //! Sets Q flag if saturation occurs.
+    //! \tparam sat Saturation bit position (0-15).
+    template<uint8_t sat>
+    [[gnu::always_inline]] static inline uint32_t asmUsat16(uint32_t a)
+    {
+        static_assert(sat <= 15, "USAT16 saturation must be 0-15");
+        uint32_t result;
+        asm volatile("usat16 %0, %1, %2" : "=r" (result) : "I" (sat), "r" (a) : "cc");
+        return result;
+    }
+
+    // =========================================================================
     // Halving Signed SIMD Arithmetic
     // =========================================================================
 
@@ -486,6 +516,40 @@ namespace ArmCortex {
             asm volatile("pkhtb %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
         } else {
             asm volatile("pkhtb %0, %1, %2, asr %3" : "=r" (result) : "r" (a), "r" (b), "I" (shift));
+        }
+        return result;
+    }
+
+    // =========================================================================
+    // Byte Extend Instructions (No Add)
+    // =========================================================================
+
+    //! Sign Extend Two Bytes to Two Halfwords.
+    //! Sign-extends bytes [7:0] and [23:16] to halfwords [15:0] and [31:16].
+    //! \tparam rotation Rotation amount: 0, 8, 16, or 24.
+    template<uint8_t rotation = 0>
+    [[gnu::always_inline]] static inline uint32_t asmSxtb16(uint32_t a)
+    {
+        uint32_t result;
+        if constexpr (rotation == 0) {
+            asm volatile("sxtb16 %0, %1" : "=r" (result) : "r" (a));
+        } else {
+            asm volatile("sxtb16 %0, %1, ror %2" : "=r" (result) : "r" (a), "I" (rotation));
+        }
+        return result;
+    }
+
+    //! Zero Extend Two Bytes to Two Halfwords.
+    //! Zero-extends bytes [7:0] and [23:16] to halfwords [15:0] and [31:16].
+    //! \tparam rotation Rotation amount: 0, 8, 16, or 24.
+    template<uint8_t rotation = 0>
+    [[gnu::always_inline]] static inline uint32_t asmUxtb16(uint32_t a)
+    {
+        uint32_t result;
+        if constexpr (rotation == 0) {
+            asm volatile("uxtb16 %0, %1" : "=r" (result) : "r" (a));
+        } else {
+            asm volatile("uxtb16 %0, %1, ror %2" : "=r" (result) : "r" (a), "I" (rotation));
         }
         return result;
     }
