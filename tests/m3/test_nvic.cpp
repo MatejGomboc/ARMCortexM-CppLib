@@ -1,26 +1,26 @@
 #include "armcortex/m3/nvic.hpp"
 
 // Test isIrqEnabled() - IRQ in first register
-extern "C" [[gnu::naked]] void test_is_irq_enabled() {
-    bool enabled = ArmCortex::Nvic::isIrqEnabled(5);
-    (void)enabled;
+extern "C" [[gnu::naked]] bool test_is_irq_enabled() {
+    return ArmCortex::Nvic::isIrqEnabled(5);
 }
 
 // CHECK-LABEL: <test_is_irq_enabled>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #0]
+// CHECK-NEXT: ubfx r0, r0, #5, #1
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
 // Test isIrqEnabled() - IRQ in second register (tests array indexing)
-extern "C" [[gnu::naked]] void test_is_irq_enabled_high() {
-    bool enabled = ArmCortex::Nvic::isIrqEnabled(45);
-    (void)enabled;
+extern "C" [[gnu::naked]] bool test_is_irq_enabled_high() {
+    return ArmCortex::Nvic::isIrqEnabled(45);
 }
 
 // CHECK-LABEL: <test_is_irq_enabled_high>:
-// CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #4]
+// CHECK-NEXT: ldr r3, [pc, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
+// CHECK-NEXT: ubfx r0, r0, #13, #1
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
@@ -124,14 +124,14 @@ extern "C" [[gnu::naked]] void test_disable_irq_high() {
 // CHECK-EMPTY:
 
 // Test isIrqPending()
-extern "C" [[gnu::naked]] void test_is_irq_pending() {
-    bool pending = ArmCortex::Nvic::isIrqPending(3);
-    (void)pending;
+extern "C" [[gnu::naked]] bool test_is_irq_pending() {
+    return ArmCortex::Nvic::isIrqPending(3);
 }
 
 // CHECK-LABEL: <test_is_irq_pending>:
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #256]
+// CHECK-NEXT: ldr r3, [pc, #8]
+// CHECK-NEXT: ldr.w r0, [r3, #256]
+// CHECK-NEXT: ubfx r0, r0, #3, #1
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
@@ -191,27 +191,26 @@ extern "C" [[gnu::naked]] void test_clear_pending_irq() {
 // CHECK-EMPTY:
 
 // Test isIrqActive() - M3-specific
-extern "C" [[gnu::naked]] void test_is_irq_active() {
-    bool active = ArmCortex::Nvic::isIrqActive(8);
-    (void)active;
+extern "C" [[gnu::naked]] bool test_is_irq_active() {
+    return ArmCortex::Nvic::isIrqActive(8);
 }
 
 // CHECK-LABEL: <test_is_irq_active>:
-// CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldr.w r3, [r3, #512]
+// CHECK-NEXT: ldr r3, [pc, #8]
+// CHECK-NEXT: ldr.w r0, [r3, #512]
+// CHECK-NEXT: ubfx r0, r0, #8, #1
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:
 
 // Test reading IPR (interrupt priority)
-extern "C" [[gnu::naked]] void test_read_ipr() {
-    uint8_t priority = ArmCortex::NVIC->IPR[5];
-    (void)priority;
+extern "C" [[gnu::naked]] uint8_t test_read_ipr() {
+    return ArmCortex::NVIC->IPR[5];
 }
 
 // CHECK-LABEL: <test_read_ipr>:
 // CHECK-NEXT: ldr r3, [pc, #4]
-// CHECK-NEXT: ldrb.w r3, [r3, #773]
+// CHECK-NEXT: ldrb.w r0, [r3, #773]
 // CHECK-NEXT: nop
 // CHECK-NEXT: .word 0xe000e100
 // CHECK-EMPTY:

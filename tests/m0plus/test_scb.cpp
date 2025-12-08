@@ -1,26 +1,24 @@
 #include "armcortex/m0plus/scb.hpp"
 
 // Test reading CPUID register
-extern "C" [[gnu::naked]] void test_read_cpuid() {
-    auto cpuid = ArmCortex::Scb::CPUID(ArmCortex::SCB->CPUID);
-    (void)cpuid;
+extern "C" [[gnu::naked]] auto test_read_cpuid() {
+    return ArmCortex::Scb::CPUID(ArmCortex::SCB->CPUID);
 }
 
 // CHECK-LABEL: <test_read_cpuid>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: ldr r0, [r3, #0]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test reading ICSR register
-extern "C" [[gnu::naked]] void test_read_icsr() {
-    auto icsr = ArmCortex::Scb::ICSR(ArmCortex::SCB->ICSR);
-    (void)icsr;
+extern "C" [[gnu::naked]] auto test_read_icsr() {
+    return ArmCortex::Scb::ICSR(ArmCortex::SCB->ICSR);
 }
 
 // CHECK-LABEL: <test_read_icsr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -54,14 +52,13 @@ extern "C" [[gnu::naked]] void test_write_icsr() {
 // CHECK-EMPTY:
 
 // Test reading VTOR register (M0+ has VTOR, unlike M0)
-extern "C" [[gnu::naked]] void test_read_vtor() {
-    uint32_t vtor = ArmCortex::SCB->VTOR;
-    (void)vtor;
+extern "C" [[gnu::naked]] uint32_t test_read_vtor() {
+    return ArmCortex::SCB->VTOR;
 }
 
 // CHECK-LABEL: <test_read_vtor>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #8]
+// CHECK-NEXT: ldr r0, [r3, #8]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -93,14 +90,13 @@ extern "C" [[gnu::naked]] void test_write_vtor() {
 // CHECK-EMPTY:
 
 // Test reading AIRCR register
-extern "C" [[gnu::naked]] void test_read_aircr() {
-    auto aircr = ArmCortex::Scb::AIRCR(ArmCortex::SCB->AIRCR);
-    (void)aircr;
+extern "C" [[gnu::naked]] auto test_read_aircr() {
+    return ArmCortex::Scb::AIRCR(ArmCortex::SCB->AIRCR);
 }
 
 // CHECK-LABEL: <test_read_aircr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #12]
+// CHECK-NEXT: ldr r0, [r3, #12]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -122,14 +118,13 @@ extern "C" [[gnu::naked]] void test_write_aircr() {
 // CHECK-EMPTY:
 
 // Test reading SCR register
-extern "C" [[gnu::naked]] void test_read_scr() {
-    auto scr = ArmCortex::Scb::SCR(ArmCortex::SCB->SCR);
-    (void)scr;
+extern "C" [[gnu::naked]] auto test_read_scr() {
+    return ArmCortex::Scb::SCR(ArmCortex::SCB->SCR);
 }
 
 // CHECK-LABEL: <test_read_scr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #16]
+// CHECK-NEXT: ldr r0, [r3, #16]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -163,26 +158,24 @@ extern "C" [[gnu::naked]] void test_write_scr() {
 // CHECK-EMPTY:
 
 // Test reading CCR register
-extern "C" [[gnu::naked]] void test_read_ccr() {
-    auto ccr = ArmCortex::Scb::CCR(ArmCortex::SCB->CCR);
-    (void)ccr;
+extern "C" [[gnu::naked]] auto test_read_ccr() {
+    return ArmCortex::Scb::CCR(ArmCortex::SCB->CCR);
 }
 
 // CHECK-LABEL: <test_read_ccr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #20]
+// CHECK-NEXT: ldr r0, [r3, #20]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
 // Test reading SHPR2 register
-extern "C" [[gnu::naked]] void test_read_shpr2() {
-    auto shpr2 = ArmCortex::Scb::SHPR2(ArmCortex::SCB->SHPR2);
-    (void)shpr2;
+extern "C" [[gnu::naked]] auto test_read_shpr2() {
+    return ArmCortex::Scb::SHPR2(ArmCortex::SCB->SHPR2);
 }
 
 // CHECK-LABEL: <test_read_shpr2>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #28]
+// CHECK-NEXT: ldr r0, [r3, #28]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -216,14 +209,13 @@ extern "C" [[gnu::naked]] void test_write_shpr2() {
 // CHECK-EMPTY:
 
 // Test reading SHPR3 register
-extern "C" [[gnu::naked]] void test_read_shpr3() {
-    auto shpr3 = ArmCortex::Scb::SHPR3(ArmCortex::SCB->SHPR3);
-    (void)shpr3;
+extern "C" [[gnu::naked]] auto test_read_shpr3() {
+    return ArmCortex::Scb::SHPR3(ArmCortex::SCB->SHPR3);
 }
 
 // CHECK-LABEL: <test_read_shpr3>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #32]
+// CHECK-NEXT: ldr r0, [r3, #32]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 
@@ -245,14 +237,13 @@ extern "C" [[gnu::naked]] void test_write_shpr3() {
 // CHECK-EMPTY:
 
 // Test reading SHCSR register
-extern "C" [[gnu::naked]] void test_read_shcsr() {
-    auto shcsr = ArmCortex::Scb::SHCSR(ArmCortex::SCB->SHCSR);
-    (void)shcsr;
+extern "C" [[gnu::naked]] auto test_read_shcsr() {
+    return ArmCortex::Scb::SHCSR(ArmCortex::SCB->SHCSR);
 }
 
 // CHECK-LABEL: <test_read_shcsr>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #36]
+// CHECK-NEXT: ldr r0, [r3, #36]
 // CHECK-NEXT: .word 0xe000ed00
 // CHECK-EMPTY:
 

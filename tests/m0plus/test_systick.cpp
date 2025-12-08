@@ -1,14 +1,13 @@
 #include "armcortex/m0plus/systick.hpp"
 
 // Test reading CTRL register
-extern "C" [[gnu::naked]] void test_read_ctrl() {
-    auto ctrl = ArmCortex::SysTick::CTRL(ArmCortex::SYS_TICK->CTRL);
-    (void)ctrl;
+extern "C" [[gnu::naked]] auto test_read_ctrl() {
+    return ArmCortex::SysTick::CTRL(ArmCortex::SYS_TICK->CTRL);
 }
 
 // CHECK-LABEL: <test_read_ctrl>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #0]
+// CHECK-NEXT: ldr r0, [r3, #0]
 // CHECK-NEXT: .word 0xe000e010
 // CHECK-EMPTY:
 
@@ -44,14 +43,13 @@ extern "C" [[gnu::naked]] void test_write_ctrl() {
 // CHECK-EMPTY:
 
 // Test reading LOAD register
-extern "C" [[gnu::naked]] void test_read_load() {
-    uint32_t load = ArmCortex::SYS_TICK->LOAD;
-    (void)load;
+extern "C" [[gnu::naked]] uint32_t test_read_load() {
+    return ArmCortex::SYS_TICK->LOAD;
 }
 
 // CHECK-LABEL: <test_read_load>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #4]
+// CHECK-NEXT: ldr r0, [r3, #4]
 // CHECK-NEXT: .word 0xe000e010
 // CHECK-EMPTY:
 
@@ -70,14 +68,13 @@ extern "C" [[gnu::naked]] void test_write_load() {
 // CHECK-EMPTY:
 
 // Test reading VAL register
-extern "C" [[gnu::naked]] void test_read_val() {
-    uint32_t val = ArmCortex::SYS_TICK->VAL;
-    (void)val;
+extern "C" [[gnu::naked]] uint32_t test_read_val() {
+    return ArmCortex::SYS_TICK->VAL;
 }
 
 // CHECK-LABEL: <test_read_val>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #8]
+// CHECK-NEXT: ldr r0, [r3, #8]
 // CHECK-NEXT: .word 0xe000e010
 // CHECK-EMPTY:
 
@@ -109,14 +106,13 @@ extern "C" [[gnu::naked]] void test_write_val() {
 // CHECK-EMPTY:
 
 // Test reading CALIB register
-extern "C" [[gnu::naked]] void test_read_calib() {
-    auto calib = ArmCortex::SysTick::CALIB(ArmCortex::SYS_TICK->CALIB);
-    (void)calib;
+extern "C" [[gnu::naked]] auto test_read_calib() {
+    return ArmCortex::SysTick::CALIB(ArmCortex::SYS_TICK->CALIB);
 }
 
 // CHECK-LABEL: <test_read_calib>:
 // CHECK-NEXT: ldr r3, [pc, #0]
-// CHECK-NEXT: ldr r3, [r3, #12]
+// CHECK-NEXT: ldr r0, [r3, #12]
 // CHECK-NEXT: .word 0xe000e010
 // CHECK-EMPTY:
 
