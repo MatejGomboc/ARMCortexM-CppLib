@@ -215,5 +215,5 @@ extern "C" [[gnu::naked]] void test_set_basepri_max() {
 // CHECK-LABEL: <test_set_basepri_max>:
 // CHECK-NEXT: movs r3, #128
 // CHECK-NEXT: msr BASEPRI_MAX, r3
-// MAXSPEED-CHECK-NEXT: nop
+// CHECK-NEXT: nop
 // CHECK-EMPTY:
