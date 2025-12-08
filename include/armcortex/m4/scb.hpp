@@ -379,32 +379,6 @@ namespace ArmCortex::Scb {
     }
 
     // =========================================================================
-    // FPU Access Control
-    // =========================================================================
-
-    //! Enable full access to the FPU (CP10 and CP11).
-    [[gnu::always_inline]] static inline void enableFpu()
-    {
-        CPACR cpacr { SCB->CPACR };
-        cpacr.bits.CP10 = static_cast<uint32_t>(CPACR::Access::FULL);
-        cpacr.bits.CP11 = static_cast<uint32_t>(CPACR::Access::FULL);
-        SCB->CPACR = cpacr.value;
-        asmDsb();
-        asmIsb();
-    }
-
-    //! Disable access to the FPU (CP10 and CP11).
-    [[gnu::always_inline]] static inline void disableFpu()
-    {
-        CPACR cpacr { SCB->CPACR };
-        cpacr.bits.CP10 = static_cast<uint32_t>(CPACR::Access::DENIED);
-        cpacr.bits.CP11 = static_cast<uint32_t>(CPACR::Access::DENIED);
-        SCB->CPACR = cpacr.value;
-        asmDsb();
-        asmIsb();
-    }
-
-    // =========================================================================
     // ICSR W1S/W1C Helper Functions
     // =========================================================================
 
