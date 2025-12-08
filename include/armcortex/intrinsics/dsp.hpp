@@ -589,6 +589,200 @@ namespace ArmCortex {
     }
 
     // =========================================================================
+    // Signed Halfword Multiply Instructions (16×16 → 32)
+    // =========================================================================
+
+    //! Signed Multiply Bottom Bottom.
+    //! Multiplies bottom halfwords of a and b.
+    [[gnu::always_inline]] static inline int32_t asmSmulbb(uint32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smulbb %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    //! Signed Multiply Bottom Top.
+    //! Multiplies bottom halfword of a with top halfword of b.
+    [[gnu::always_inline]] static inline int32_t asmSmulbt(uint32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smulbt %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    //! Signed Multiply Top Bottom.
+    //! Multiplies top halfword of a with bottom halfword of b.
+    [[gnu::always_inline]] static inline int32_t asmSmultb(uint32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smultb %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    //! Signed Multiply Top Top.
+    //! Multiplies top halfwords of a and b.
+    [[gnu::always_inline]] static inline int32_t asmSmultt(uint32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smultt %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    // =========================================================================
+    // Signed Halfword Multiply Word Instructions (32×16 → 32, top 32 bits)
+    // =========================================================================
+
+    //! Signed Multiply Word Bottom.
+    //! Multiplies 32-bit a with bottom halfword of b, returns top 32 bits.
+    [[gnu::always_inline]] static inline int32_t asmSmulwb(int32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smulwb %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    //! Signed Multiply Word Top.
+    //! Multiplies 32-bit a with top halfword of b, returns top 32 bits.
+    [[gnu::always_inline]] static inline int32_t asmSmulwt(int32_t a, uint32_t b)
+    {
+        int32_t result;
+        asm volatile("smulwt %0, %1, %2" : "=r" (result) : "r" (a), "r" (b));
+        return result;
+    }
+
+    // =========================================================================
+    // Signed Halfword Multiply Accumulate Instructions (16×16 + 32 → 32)
+    // =========================================================================
+
+    //! Signed Multiply Accumulate Bottom Bottom.
+    //! Multiplies bottom halfwords and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlabb(uint32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlabb %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    //! Signed Multiply Accumulate Bottom Top.
+    //! Multiplies bottom halfword of a with top halfword of b and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlabt(uint32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlabt %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    //! Signed Multiply Accumulate Top Bottom.
+    //! Multiplies top halfword of a with bottom halfword of b and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlatb(uint32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlatb %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    //! Signed Multiply Accumulate Top Top.
+    //! Multiplies top halfwords and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlatt(uint32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlatt %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    // =========================================================================
+    // Signed Halfword Multiply Accumulate Word Instructions (32×16 + 32 → 32)
+    // =========================================================================
+
+    //! Signed Multiply Accumulate Word Bottom.
+    //! Multiplies 32-bit a with bottom halfword of b (top 32 bits) and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlawb(int32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlawb %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    //! Signed Multiply Accumulate Word Top.
+    //! Multiplies 32-bit a with top halfword of b (top 32 bits) and adds to accumulator.
+    //! Sets Q flag on overflow.
+    [[gnu::always_inline]] static inline int32_t asmSmlawt(int32_t a, uint32_t b, int32_t acc)
+    {
+        int32_t result;
+        asm volatile("smlawt %0, %1, %2, %3" : "=r" (result) : "r" (a), "r" (b), "r" (acc) : "cc");
+        return result;
+    }
+
+    // =========================================================================
+    // Signed Halfword Multiply Accumulate Long Instructions (16×16 + 64 → 64)
+    // =========================================================================
+
+    //! Signed Multiply Accumulate Long Bottom Bottom.
+    //! Multiplies bottom halfwords and adds to 64-bit accumulator.
+    [[gnu::always_inline]] static inline int64_t asmSmlalbb(uint32_t a, uint32_t b, int64_t acc)
+    {
+        union {
+            struct { uint32_t lo; uint32_t hi; } parts;
+            int64_t value;
+        } result;
+        result.value = acc;
+        asm volatile("smlalbb %0, %1, %2, %3"
+            : "+r" (result.parts.lo), "+r" (result.parts.hi)
+            : "r" (a), "r" (b));
+        return result.value;
+    }
+
+    //! Signed Multiply Accumulate Long Bottom Top.
+    //! Multiplies bottom halfword of a with top halfword of b and adds to 64-bit accumulator.
+    [[gnu::always_inline]] static inline int64_t asmSmlalbt(uint32_t a, uint32_t b, int64_t acc)
+    {
+        union {
+            struct { uint32_t lo; uint32_t hi; } parts;
+            int64_t value;
+        } result;
+        result.value = acc;
+        asm volatile("smlalbt %0, %1, %2, %3"
+            : "+r" (result.parts.lo), "+r" (result.parts.hi)
+            : "r" (a), "r" (b));
+        return result.value;
+    }
+
+    //! Signed Multiply Accumulate Long Top Bottom.
+    //! Multiplies top halfword of a with bottom halfword of b and adds to 64-bit accumulator.
+    [[gnu::always_inline]] static inline int64_t asmSmlaltb(uint32_t a, uint32_t b, int64_t acc)
+    {
+        union {
+            struct { uint32_t lo; uint32_t hi; } parts;
+            int64_t value;
+        } result;
+        result.value = acc;
+        asm volatile("smlaltb %0, %1, %2, %3"
+            : "+r" (result.parts.lo), "+r" (result.parts.hi)
+            : "r" (a), "r" (b));
+        return result.value;
+    }
+
+    //! Signed Multiply Accumulate Long Top Top.
+    //! Multiplies top halfwords and adds to 64-bit accumulator.
+    [[gnu::always_inline]] static inline int64_t asmSmlaltt(uint32_t a, uint32_t b, int64_t acc)
+    {
+        union {
+            struct { uint32_t lo; uint32_t hi; } parts;
+            int64_t value;
+        } result;
+        result.value = acc;
+        asm volatile("smlaltt %0, %1, %2, %3"
+            : "+r" (result.parts.lo), "+r" (result.parts.hi)
+            : "r" (a), "r" (b));
+        return result.value;
+    }
+
+    // =========================================================================
     // Dual 16-bit Multiply Instructions
     // =========================================================================
 
