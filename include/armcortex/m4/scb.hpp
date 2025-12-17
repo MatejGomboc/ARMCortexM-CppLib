@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include "armcortex/intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Scb {
@@ -340,7 +339,7 @@ namespace ArmCortex {
 namespace ArmCortex::Scb {
     [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
-        asmDsb();
+        asm volatile("dsb sy" ::: "memory");
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -351,15 +350,15 @@ namespace ArmCortex::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        asmDsb();
-        asmIsb();
+        asm volatile("dsb sy" ::: "memory");
+        asm volatile("isb sy" ::: "memory");
 
         while(true);
     }
 
     [[gnu::always_inline]] static inline void setPriorityGrouping(uint32_t priority_group)
     {
-        asmDsb();
+        asm volatile("dsb sy" ::: "memory");
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -368,8 +367,8 @@ namespace ArmCortex::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        asmDsb();
-        asmIsb();
+        asm volatile("dsb sy" ::: "memory");
+        asm volatile("isb sy" ::: "memory");
     }
 
     [[gnu::always_inline]] static inline uint32_t getPriorityGrouping()

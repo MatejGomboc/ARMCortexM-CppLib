@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include "armcortex/intrinsics/barriers.hpp"
 #include <cstdint>
 
 namespace ArmCortex::Mpu {
@@ -157,7 +156,7 @@ namespace ArmCortex::Mpu {
 
         MPU->RASR = region_attributes.value;
 
-        asmDsb();
-        asmIsb();
+        asm volatile("dsb sy" ::: "memory");
+        asm volatile("isb sy" ::: "memory");
     }
 }

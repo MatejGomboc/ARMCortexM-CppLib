@@ -53,12 +53,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 target_sources(${PROJECT_NAME} INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/bit_utils.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/barriers.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/byte_reversing.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/debugging.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/events.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/exceptions.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/hints.hpp"
 )
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M0")
@@ -99,11 +94,6 @@ elseif(ARM_CORTEX_M_ARCH STREQUAL "M1")
     target_link_options(${PROJECT_NAME} INTERFACE -mcpu=cortex-m1)
 
 elseif(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    target_sources(${PROJECT_NAME} INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/bit_operations.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/exclusive_access.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/intrinsics/saturation.hpp"
-    )
     target_sources(${PROJECT_NAME} INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/exceptions.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/include/armcortex/m3/mpu.hpp"
