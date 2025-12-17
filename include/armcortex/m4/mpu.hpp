@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <arm_acle.h>
 #include <cstdint>
 
 namespace ArmCortex::Mpu {
@@ -163,7 +162,7 @@ namespace ArmCortex::Mpu {
 
         MPU->RASR = region_attributes.value;
 
-        __dsb(0xF);
-        __isb(0xF);
+        __builtin_arm_dsb(0xF);
+        __builtin_arm_isb(0xF);
     }
 }
