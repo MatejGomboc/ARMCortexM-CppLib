@@ -162,7 +162,7 @@ namespace ArmCortex::Mpu {
 
         MPU->RASR = region_attributes.value;
 
-        __builtin_arm_dsb(0xF);
-        __builtin_arm_isb(0xF);
+        __asm__ volatile("dsb sy" ::: "memory");
+        __asm__ volatile("isb sy" ::: "memory");
     }
 }
