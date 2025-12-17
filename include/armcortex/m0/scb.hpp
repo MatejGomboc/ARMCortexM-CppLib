@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "armcortex/intrinsics/barriers.hpp"
+#include <arm_acle.h>
 #include <cstdint>
 
 namespace ArmCortex::Scb {
@@ -212,7 +212,7 @@ namespace ArmCortex {
 namespace ArmCortex::Scb {
     [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
-        asmDsb();
+        __dsb(0xF);
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -222,8 +222,8 @@ namespace ArmCortex::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        asmDsb();
-        asmIsb();
+        __dsb(0xF);
+        __isb(0xF);
 
         while(true);
     }
