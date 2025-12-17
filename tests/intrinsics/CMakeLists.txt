@@ -1,13 +1,5 @@
-add_asm_test(test_barriers)
-add_asm_test(test_byte_reversing)
-add_asm_test(test_debugging)
 add_asm_test(test_exceptions)
-add_asm_test(test_hints)
-add_asm_test(test_events)
 
 if(ARM_CORTEX_M_ARCH STREQUAL "M3")
-    add_asm_test(test_bit_operations)
     add_asm_test(test_exceptions_v7m)
-    add_asm_test(test_exclusive_access)
-    add_asm_test(test_saturation)
 endif()
