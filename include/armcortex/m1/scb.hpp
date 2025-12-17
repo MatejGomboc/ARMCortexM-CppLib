@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <arm_acle.h>
 #include <cstdint>
 
 namespace ArmCortex::Scb {
@@ -212,7 +211,7 @@ namespace ArmCortex {
 namespace ArmCortex::Scb {
     [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
-        __dsb(0xF);
+        __builtin_arm_dsb(0xF);
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -222,8 +221,8 @@ namespace ArmCortex::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        __dsb(0xF);
-        __isb(0xF);
+        __builtin_arm_dsb(0xF);
+        __builtin_arm_isb(0xF);
 
         while(true);
     }
