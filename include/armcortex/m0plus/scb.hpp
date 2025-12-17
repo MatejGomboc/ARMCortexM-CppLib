@@ -211,7 +211,7 @@ namespace ArmCortex {
 namespace ArmCortex::Scb {
     [[gnu::noreturn, gnu::always_inline]] static inline void systemReset()
     {
-        __asm__ volatile("dsb sy" ::: "memory");
+        asm volatile("dsb sy" ::: "memory");
 
         AIRCR aircr { SCB->AIRCR };
 
@@ -221,8 +221,8 @@ namespace ArmCortex::Scb {
 
         SCB->AIRCR = aircr.value;
 
-        __asm__ volatile("dsb sy" ::: "memory");
-        __asm__ volatile("isb sy" ::: "memory");
+        asm volatile("dsb sy" ::: "memory");
+        asm volatile("isb sy" ::: "memory");
 
         while(true);
     }
