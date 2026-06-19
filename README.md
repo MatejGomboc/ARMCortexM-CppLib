@@ -2,7 +2,7 @@
 
 CMSIS-like C++ library for ARM Cortex-M microcontrollers
 
-*NOTE: This project is in the process of being deprecated. Please, look at the Embedded Societies' repos: <https://github.com/embedded-society>!*
+*NOTE: This project is in the process of being deprecated. Please, look at the Embedded Society's repos: <https://github.com/embedded-society>!*
 
 ## Supported Architectures
 
