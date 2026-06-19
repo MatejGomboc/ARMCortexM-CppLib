@@ -28,7 +28,7 @@ jobs:
 
         steps:
             - name: Checkout Github repository
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
 
             - name: Run CMake Workflow
               run: cmake --workflow --preset=${{ matrix.arch }}
