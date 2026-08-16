@@ -21,7 +21,7 @@
 #include <cstdint>
 
 namespace CortexM0::Nvic {
-    static uint32_t* const BASE_ADDR = reinterpret_cast<uint32_t*>(0xE000E100);
+    static constexpr uint32_t* BASE_ADDR = static_cast<uint32_t*>(0xE000E100);
 
     struct Registers
     {
@@ -37,9 +37,8 @@ namespace CortexM0::Nvic {
         volatile uint8_t ipr[32]; //!< sets priorities of interrupts
     };
 
-    static inline volatile Registers* registers()
-    {
-        return reinterpret_cast<volatile Registers*>(BASE_ADDR);
+    static constexpr volatile Registers* NVIC{
+        reinterpret_cast<volatile Registers*>(BASE_ADDR);
     }
 
     static inline bool isIrqEnabled(uint8_t irq_number)

@@ -1,1 +1,3 @@
 add_asm_test(test_const_int_ceil_div)
+#add_asm_test(test_runtime_int_ceil_div)
+#add_asm_test(test_is_bit_set)

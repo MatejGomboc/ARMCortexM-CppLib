@@ -19,7 +19,7 @@
 #include <cstdint>
 
 namespace CortexM0::SysTick {
-    static uint32_t* const BASE_ADDR = reinterpret_cast<uint32_t*>(0xE000E010);
+    static constexpr uint32_t* BASE_ADDR = static_cast<uint32_t*>(0xE000E010);
 
     union CtrlStatus {
         //! timer clock source
@@ -79,6 +79,6 @@ namespace CortexM0::SysTick {
 
     static inline volatile Registers* registers()
     {
-        return reinterpret_cast<volatile Registers*>(BASE_ADDR);
+        return static_cast<volatile Registers*>(BASE_ADDR);
     }
 }

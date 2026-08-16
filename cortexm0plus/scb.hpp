@@ -20,7 +20,7 @@
 #include <cstdint>
 
 namespace CortexM0Plus::Scb {
-    static uint32_t* const BASE_ADDR = reinterpret_cast<uint32_t*>(0xE000ED00);
+    static constexpr uint32_t* BASE_ADDR = static_cast<uint32_t*>(0xE000ED00);
 
     //! is a read-only register and contains the processor part number, version, and implementation information
     union Cpuid {
@@ -188,7 +188,7 @@ namespace CortexM0Plus::Scb {
 
     static inline volatile Registers* registers()
     {
-        return reinterpret_cast<volatile Registers*>(BASE_ADDR);
+        return static_cast<volatile Registers*>(BASE_ADDR);
     }
 
     [[noreturn]] static inline void systemReset()
