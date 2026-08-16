@@ -2,7 +2,11 @@
 
 CMSIS-like C++ library for ARM Cortex-M microcontrollers
 
-*NOTE: This project is in the process of being deprecated. Please, look at the Embedded Society's repos: <https://github.com/embedded-society>!*
+> [!IMPORTANT]
+> **This project is retired and the repository is archived.** It lives on in the
+> [Embedded Society organisation](https://github.com/embedded-society), split into per-core
+> libraries (`arm-cortex-m0-core`, `arm-cortex-m0plus-core`, `arm-cortex-m1-core`,
+> `arm-cortex-m3-core`, `arm-cortex-m4-core`) with matching `armv*-intrinsics` companions.
 
 ## Supported Architectures
 
